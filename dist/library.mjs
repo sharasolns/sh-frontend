@@ -3,6 +3,7 @@ import NProgress from 'nprogress';
 import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx, pushScopeId, popScopeId, createVNode } from 'vue';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import { defineStore } from 'pinia';
 
 function setItem (key, value) {
   let toStore = value;
@@ -3359,27 +3360,79 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script.render = render;
-script.__scopeId = "data-v-3628b6a6";
 script.__file = "src/views/ShTabs.vue";
 
-var components = {
-  ShForm: script$5,
-  ShCanvas: script$4,
-  ShModal: script$3,
-  ShPhone: script$6,
-  ShTable: script$1,
-  ShTabs: script
-};
-
-const plugin = {
-  install (Vue) {
-    for (const prop in components) {
-      if (components.hasOwnProperty(prop)) {
-        const component = components[prop];
-        Vue.component(component.name, component);
+const useUserStore = defineStore('user-store', {
+  state: () => ({
+    user: null,
+    role: null,
+    permissions: null,
+    menus: [],
+    loggedOut: false
+  }),
+  actions: {
+    setUser (){
+      const user = shstorage.getItem('user') ? JSON.parse(shstorage.getItem('user')) : null;
+      if (user) {
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
       }
+      this.user = user;
+      apis.doGet('auth/user').then(res => {
+        shstorage.setItem('user',res.data);
+        const user = res.data;
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+        this.user = user;
+      }).catch((reason) => {
+        if (reason.response && reason.response.status) {
+          this.loggedOut = true;
+        }
+      });
+      if (this.user) {
+        if (typeof this.user.permissions === 'string') {
+          this.permissions = JSON.parse(this.user.permissions);
+        } else {
+          this.permissions = this.user.permissions;
+        }
+      }
+    },
+    signOut () {
+      shstorage.setItem('user',null);
+      shstorage.setItem('access_token',null);
+      this.user = null;
+    },
+    logOut () {
+      shstorage.setItem('user',null);
+      shstorage.setItem('access_token',null);
+      this.user = null;
+    }
+  },
+  getters: {
+    userId (state) {
+      return state.user === null ? null:state.user.id
     }
   }
-};
+});
 
-export { plugin as default };
+export { script$4 as ShCanvas, script$5 as ShForm, script$3 as ShModal, script$6 as ShPhone, script$1 as ShTable, script as ShTabs, apis as shApis, helpers as shRepo, shstorage as shStorage, useUserStore };

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import shstorage from '../repositories/shstorage.js'
-import apis from '../helpers/apis.js'
+import shstorage from '../repositories/ShStorage.js'
+import apis from '../helpers/ShApis.js'
 
 export const useUserStore = defineStore('user-store', {
   state: () => ({

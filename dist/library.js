@@ -1,10 +1,13 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 var Axios = require('axios');
 var NProgress = require('nprogress');
 var vue = require('vue');
 var moment = require('moment');
 var Swal = require('sweetalert2');
+var pinia = require('pinia');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -3368,27 +3371,88 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script.render = render;
-script.__scopeId = "data-v-3628b6a6";
 script.__file = "src/views/ShTabs.vue";
 
-var components = {
-  ShForm: script$5,
-  ShCanvas: script$4,
-  ShModal: script$3,
-  ShPhone: script$6,
-  ShTable: script$1,
-  ShTabs: script
-};
-
-const plugin = {
-  install (Vue) {
-    for (const prop in components) {
-      if (components.hasOwnProperty(prop)) {
-        const component = components[prop];
-        Vue.component(component.name, component);
+const useUserStore = pinia.defineStore('user-store', {
+  state: () => ({
+    user: null,
+    role: null,
+    permissions: null,
+    menus: [],
+    loggedOut: false
+  }),
+  actions: {
+    setUser (){
+      const user = shstorage.getItem('user') ? JSON.parse(shstorage.getItem('user')) : null;
+      if (user) {
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
       }
+      this.user = user;
+      apis.doGet('auth/user').then(res => {
+        shstorage.setItem('user',res.data);
+        const user = res.data;
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+        this.user = user;
+      }).catch((reason) => {
+        if (reason.response && reason.response.status) {
+          this.loggedOut = true;
+        }
+      });
+      if (this.user) {
+        if (typeof this.user.permissions === 'string') {
+          this.permissions = JSON.parse(this.user.permissions);
+        } else {
+          this.permissions = this.user.permissions;
+        }
+      }
+    },
+    signOut () {
+      shstorage.setItem('user',null);
+      shstorage.setItem('access_token',null);
+      this.user = null;
+    },
+    logOut () {
+      shstorage.setItem('user',null);
+      shstorage.setItem('access_token',null);
+      this.user = null;
+    }
+  },
+  getters: {
+    userId (state) {
+      return state.user === null ? null:state.user.id
     }
   }
-};
+});
 
-module.exports = plugin;
+exports.ShCanvas = script$4;
+exports.ShForm = script$5;
+exports.ShModal = script$3;
+exports.ShPhone = script$6;
+exports.ShTable = script$1;
+exports.ShTabs = script;
+exports.shApis = apis;
+exports.shRepo = helpers;
+exports.shStorage = shstorage;
+exports.useUserStore = useUserStore;

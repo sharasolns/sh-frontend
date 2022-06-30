@@ -36,7 +36,7 @@
   </form>
 </template>
 <script>
-import apis from './../repo/helpers/apis'
+import apis from './../repo/helpers/ShApis.js'
 import NProgress from 'nprogress'
 import ShPhone from './ShPhone.vue'
 export default {

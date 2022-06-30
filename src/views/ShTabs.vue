@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import apis from './../repo/helpers/apis'
+import apis from './../repo/helpers/ShApis.js'
 
 export default {
   name: 'ShTabs',
@@ -88,31 +88,5 @@ export default {
 }
 </script>
 <style scoped>
-.nav.nav-tabs .nav-item .nav-link{
-  color: unset;
-  border: none!important;
-  padding: .75rem 1rem;
-  margin: 0;
-  font-size: 1.25rem;
-}
-.active.nav-link {
-  /*color: #8b8f9a !important;*/
-  color: var(--s-primary) !important;
-  background-color: transparent !important;
-  border-color: #dee2e6 #dee2e6 #fff;
-}
-.active.nav-link{
-  position: relative;
-}
-.nav.nav-tabs .nav-item .active.nav-link:before {
-  content: "";
-  width: 100%;
-  height: 2px;
-  /*background-color: #ffc107;*/
-  background-color: var(--s-primary);
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
+
 </style>
