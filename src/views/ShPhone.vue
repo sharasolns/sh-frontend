@@ -26,8 +26,8 @@ export default {
         isoCode: 'KE',
         flag: 'https://www.countryflags.io/KE/flat/64.png'
       },
-      flag: import.meta.env.VITE_APP_HOME_URL + 'flags/ke.svg',
-      appUrl: import.meta.env.VITE_APP_HOME_URL
+      flag: window.VITE_APP_HOME_URL + 'flags/ke.svg',
+      appUrl: window.VITE_APP_HOME_URL
     }
   },
   updated () {

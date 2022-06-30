@@ -151,7 +151,7 @@ export default {
       moreDetailsId: null,
       moreDetailsModel: null,
       downloading: false,
-      appUrl: import.meta.env.VITE_APP_API_URL
+      appUrl: window.VITE_APP_API_URL
     }
   },
   mounted () {

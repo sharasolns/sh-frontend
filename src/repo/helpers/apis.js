@@ -1,8 +1,8 @@
 import Axios from 'axios'
 import shstorage from '../repositories/shstorage.js'
-let apiUrl = import.meta.env.VITE_APP_API_URL
+let apiUrl = window.VITE_APP_API_URL
 if (process.env.NODE_ENV === 'production') {
-  apiUrl = import.meta.env.VITE_APP_API_PRODUCTION_URL
+  apiUrl = window.VITE_APP_API_PRODUCTION_URL
 }
 const axios = Axios.create({
   baseURL: apiUrl
