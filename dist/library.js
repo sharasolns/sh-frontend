@@ -3392,8 +3392,4 @@ const plugin = {
   }
 };
 
-var index = {
-  plugin
-};
-
-module.exports = index;
+module.exports = plugin;

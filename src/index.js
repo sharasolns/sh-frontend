@@ -11,6 +11,5 @@ const plugin = {
   }
 }
 
-export default {
-  plugin
-}
+export default plugin
+

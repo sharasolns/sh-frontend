@@ -3383,8 +3383,4 @@ const plugin = {
   }
 };
 
-var index = {
-  plugin
-};
-
-export { index as default };
+export { plugin as default };
