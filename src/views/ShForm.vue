@@ -41,7 +41,6 @@ import NProgress from 'nprogress'
 import ShPhone from './ShPhone.vue'
 export default {
   name: 'ShForm',
-  inject: ['global'],
   components: {
     ShPhone
   },
@@ -57,7 +56,7 @@ export default {
       selectData: {},
       users: [],
       allPlaceHolders: {},
-      user: this.global.state.user,
+      user: null,
       allLabels: {}
     }
   },

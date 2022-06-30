@@ -1649,7 +1649,6 @@ script$6.__file = "src/views/ShPhone.vue";
 
 var script$5 = {
   name: 'ShForm',
-  inject: ['global'],
   components: {
     ShPhone: script$6
   },
@@ -1665,7 +1664,7 @@ var script$5 = {
       selectData: {},
       users: [],
       allPlaceHolders: {},
-      user: this.global.state.user,
+      user: null,
       allLabels: {}
     }
   },

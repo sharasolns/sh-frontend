@@ -1,5 +1,4 @@
 import components from './views/components.js'
-
 const plugin = {
   install (Vue) {
     for (const prop in components) {
