@@ -33,9 +33,9 @@ var shstorage = {
   removeItem
 };
 
-let apiUrl = undefined.VITE_APP_API_URL;
+let apiUrl = window.VITE_APP_API_URL;
 if (process.env.NODE_ENV === 'production') {
-  apiUrl = undefined.VITE_APP_API_PRODUCTION_URL;
+  apiUrl = window.VITE_APP_API_PRODUCTION_URL;
 }
 const axios = Axios__default["default"].create({
   baseURL: apiUrl
@@ -1552,8 +1552,8 @@ var script$6 = {
         isoCode: 'KE',
         flag: 'https://www.countryflags.io/KE/flat/64.png'
       },
-      flag: undefined.VITE_APP_HOME_URL + 'flags/ke.svg',
-      appUrl: undefined.VITE_APP_HOME_URL
+      flag: window.VITE_APP_HOME_URL + 'flags/ke.svg',
+      appUrl: window.VITE_APP_HOME_URL
     }
   },
   updated () {
@@ -2637,7 +2637,7 @@ var script$1 = {
       moreDetailsId: null,
       moreDetailsModel: null,
       downloading: false,
-      appUrl: undefined.VITE_APP_API_URL
+      appUrl: window.VITE_APP_API_URL
     }
   },
   mounted () {
@@ -3392,4 +3392,8 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+var index = {
+  plugin
+};
+
+module.exports = index;
