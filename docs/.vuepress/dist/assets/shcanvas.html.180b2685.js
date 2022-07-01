@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-574dca82","path":"/guide/components/shcanvas.html","title":"Sh Canvas","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1656685997000,"contributors":[{"name":"Hosea Kibet","email":"kibethosea8@gmail.com","commits":1}]},"filePathRelative":"guide/components/shcanvas.md"}');export{e as data};

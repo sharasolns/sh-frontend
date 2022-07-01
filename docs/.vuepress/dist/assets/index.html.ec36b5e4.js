@@ -1,0 +1,1 @@
+import{_ as e,o,c as t,a as n}from"./app.4825f7b8.js";const _={},c=n("p",null,"#Framework Components",-1),r=[c];function s(a,l){return o(),t("div",null,r)}var i=e(_,[["render",s],["__file","index.html.vue"]]);export{i as default};

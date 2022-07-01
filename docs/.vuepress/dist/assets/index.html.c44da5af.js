@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as n,a as o}from"./app.4825f7b8.js";const r={},_=o("p",null,"#Frontend Framework Guide",-1),c=[_];function a(s,d){return t(),n("div",null,c)}var i=e(r,[["render",a],["__file","index.html.vue"]]);export{i as default};
