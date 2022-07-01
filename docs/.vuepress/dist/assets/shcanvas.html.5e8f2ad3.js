@@ -1,1 +1,0 @@
-import{_ as e,o as s,c,a,d as t}from"./app.4825f7b8.js";const n={},r=a("h1",{id:"sh-canvas",tabindex:"-1"},[a("a",{class:"header-anchor",href:"#sh-canvas","aria-hidden":"true"},"#"),t(" Sh Canvas")],-1),o=[r];function _(h,d){return s(),c("div",null,o)}var l=e(n,[["render",_],["__file","shcanvas.html.vue"]]);export{l as default};

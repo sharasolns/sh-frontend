@@ -1,1 +1,0 @@
-import{_ as a,o as s,c as t,a as e,d as r}from"./app.4825f7b8.js";const c={},o=e("h1",{id:"sh-tabs",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#sh-tabs","aria-hidden":"true"},"#"),r(" Sh Tabs")],-1),_=[o];function h(n,d){return s(),t("div",null,_)}var l=a(c,[["render",h],["__file","shtabs.html.vue"]]);export{l as default};

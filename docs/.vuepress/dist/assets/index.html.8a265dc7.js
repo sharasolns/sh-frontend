@@ -1,1 +1,0 @@
-import{_ as e,o as t,c as n,a as _}from"./app.4825f7b8.js";const c={},o=_("p",null,"#Api Request Handling",-1),s=[o];function a(r,l){return t(),n("div",null,s)}var d=e(c,[["render",a],["__file","index.html.vue"]]);export{d as default};
