@@ -1,4 +1,4 @@
-export const data = JSON.parse("{\"key\":\"v-574dca82\",\"path\":\"/guide/components/shcanvas.html\",\"title\":\"Sh Canvas\",\"lang\":\"en-US\",\"frontmatter\":{},\"excerpt\":\"\",\"headers\":[],\"git\":{\"updatedTime\":1656685997000,\"contributors\":[{\"name\":\"Hosea Kibet\",\"email\":\"kibethosea8@gmail.com\",\"commits\":1}]},\"filePathRelative\":\"guide/components/shcanvas.md\"}")
+export const data = JSON.parse("{\"key\":\"v-574dca82\",\"path\":\"/guide/components/shcanvas.html\",\"title\":\"Sh Canvas\",\"lang\":\"en-US\",\"frontmatter\":{},\"excerpt\":\"\",\"headers\":[],\"git\":{\"updatedTime\":1656690308000,\"contributors\":[{\"name\":\"Hosea Kibet\",\"email\":\"kibethosea8@gmail.com\",\"commits\":2}]},\"filePathRelative\":\"guide/components/shcanvas.md\"}")
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()

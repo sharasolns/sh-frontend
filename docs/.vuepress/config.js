@@ -4,6 +4,10 @@ module.exports = {
   lang: 'en-US',
   title: 'Sh Frontend!',
   description: 'This is my first VuePress site',
+  sidebar: 'auto',
+  themeConfig: {
+    sidebar: 'auto'
+  },
   theme: defaultTheme({
     // set config here
     colorMode: 'auto',

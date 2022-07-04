@@ -8,8 +8,8 @@ export const pagesRoutes = [
   ["v-187b9b64","/guide/components/shmodal.html",{"title":""},["/guide/components/shmodal","/guide/components/shmodal.md"]],
   ["v-1f930466","/guide/components/shtable.html",{"title":"Sh Table"},["/guide/components/shtable","/guide/components/shtable.md"]],
   ["v-21493bd9","/guide/components/shtabs.html",{"title":"Sh Tabs"},["/guide/components/shtabs","/guide/components/shtabs.md"]],
-  ["v-58e3e44a","/guide/apis/",{"title":""},["/guide/apis/index.html","/guide/apis/README.md"]],
-  ["v-3af6b4ac","/guide/state/",{"title":""},["/guide/state/index.html","/guide/state/README.md"]],
   ["v-53551194","/guide/helpers/",{"title":""},["/guide/helpers/index.html","/guide/helpers/README.md"]],
+  ["v-3af6b4ac","/guide/state/",{"title":""},["/guide/state/index.html","/guide/state/README.md"]],
+  ["v-58e3e44a","/guide/apis/",{"title":""},["/guide/apis/index.html","/guide/apis/README.md"]],
   ["v-3706649a","/404.html",{"title":""},["/404"]],
 ]
