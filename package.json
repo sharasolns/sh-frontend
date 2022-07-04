@@ -21,7 +21,7 @@
     "moment": "^2.29.3",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.13",
-    "sweetalert2": "^11.4.14",
+    "sweetalert2": "^11.4.14"
   },
   "devDependencies": {
     "rollup": "^2.75.7",
