@@ -2843,13 +2843,12 @@ const _hoisted_2$1 = {
 const _hoisted_3$1 = ["disabled"];
 const _hoisted_4 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */));
 const _hoisted_5 = /*#__PURE__*/vue.createTextVNode(" Export ");
-const _hoisted_6 = {
-  key: 0,
-  style: {"height":"1rem"},
-  class: "float-start",
-  src: "/assets/img/spinner.gif"
-};
-const _hoisted_7 = /*#__PURE__*/vue.createTextVNode(" Exporting ... ");
+const _hoisted_6 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("span", {
+  class: "spinner-border spinner-border-sm",
+  role: "status",
+  "aria-hidden": "true"
+}, null, -1 /* HOISTED */));
+const _hoisted_7 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */));
 const _hoisted_8 = {
   key: 1,
   class: "row"
@@ -2876,7 +2875,14 @@ const _hoisted_18 = {
   class: "text-center"
 };
 const _hoisted_19 = ["colspan"];
-const _hoisted_20 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("img", { src: "/assets/img/loading.gif" }, null, -1 /* HOISTED */));
+const _hoisted_20 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
+  /*#__PURE__*/vue.createElementVNode("div", {
+    class: "spinner-border",
+    role: "status"
+  }, [
+    /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...")
+  ])
+], -1 /* HOISTED */));
 const _hoisted_21 = [
   _hoisted_20
 ];
@@ -2971,9 +2977,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                   _hoisted_5
                 ], 64 /* STABLE_FRAGMENT */))
               : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
-                  ($data.downloading)
-                    ? (vue.openBlock(), vue.createElementBlock("img", _hoisted_6))
-                    : vue.createCommentVNode("v-if", true),
+                  _hoisted_6,
                   _hoisted_7
                 ], 64 /* STABLE_FRAGMENT */))
           ], 8 /* PROPS */, _hoisted_3$1)

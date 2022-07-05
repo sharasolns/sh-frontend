@@ -6,8 +6,8 @@
         <i class="bi-download"></i> Export
       </template>
       <template v-else>
-        <img v-if="downloading" style="height: 1rem" class="float-start" src="/assets/img/spinner.gif">
-        Exporting ...
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="visually-hidden">Loading...</span>
       </template>
     </button>
   </div>
@@ -37,7 +37,11 @@
       <tbody>
       <tr class="text-center" v-if="loading === 'loading'">
         <td :colspan="headers.length">
-          <img src="/assets/img/loading.gif">
+          <div class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </td>
       </tr>
       <tr class="text-center alert alert-danger" v-else-if="loading === 'error'">
