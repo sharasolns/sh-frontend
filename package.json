@@ -1,6 +1,6 @@
 {
   "name": "@iankibetsh/shframework",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Vue library for handling laravel backend",
   "main": "dist/library.js",
   "module": "dist/library.mjs",
@@ -21,7 +21,8 @@
     "moment": "^2.29.3",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.13",
-    "sweetalert2": "^11.4.14"
+    "sweetalert2": "^11.4.14",
+    "vue": "^3.2.37"
   },
   "devDependencies": {
     "rollup": "^2.75.7",

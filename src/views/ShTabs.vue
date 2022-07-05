@@ -2,11 +2,11 @@
   <div class="common_tabs">
     <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
       <li class="nav-item" v-for="tab in tabs" :key="tab">
-        <router-link :active-class="'active'" class="nav-link text-capitalize"  :to="base_url+'/tab/'+tab" role="tab" :id="'sh_tab_' + tab">{{ tab.replace(/_/g, ' ') }}</router-link>
+        <router-link :active-class="'active'" class="nav-link text-capitalize"  :to="baseUrl+'/tab/'+tab" role="tab" :id="'sh_tab_' + tab">{{ tab.replace(/_/g, ' ') }}</router-link>
       </li>
     </ul>
     <div class="tab-content">
-      <router-view :current_tab="currentTab" :shared_data="shared_data" :tab_counts="tab_counts"></router-view>
+      <router-view :current_tab="currentTab" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
     </div>
   </div>
 </template>
@@ -15,8 +15,7 @@ import apis from './../repo/helpers/ShApis.js'
 
 export default {
   name: 'ShTabs',
-  props: ['tabs', 'base_url', 'shared_data', 'tab_counts'],
-  inject: ['global'],
+  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts'],
   data () {
     return {
       currentTab: ''
@@ -25,18 +24,17 @@ export default {
   watch: {
     refreshStatus: function (state) {
       if (state === 0) {
-        if (this.tab_counts) {
-          this.setTabCounts(this.tab_counts)
+        if (this.tabCounts) {
+          this.setTabCounts(this.tabCounts)
         }
       }
     },
-    tab_counts: function () {
+    tabCounts: function () {
       this.resetTabCounts()
     }
   },
   computed: {
     refreshStatus () {
-      return this.global.state.refetch
     }
   },
   mounted () {
@@ -59,8 +57,8 @@ export default {
       } else {
         this.currentTab = arr[arr.length - 1]
       }
-      if (this.tab_counts) {
-        this.setTabCounts(this.tab_counts)
+      if (this.tabCounts) {
+        this.setTabCounts(this.tabCounts)
       }
     },
     tabExistsInUrl: function () {

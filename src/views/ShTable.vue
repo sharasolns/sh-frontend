@@ -134,7 +134,7 @@ import moment from 'moment'
 import helpers from './../repo/helpers/ShRepo.js'
 export default {
   name: 'sh-table',
-  props: ['end_point', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'mobile_view', 'hideSearch', 'custom_template', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'mobile_view', 'hideSearch', 'custom_template', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
   inject: ['channel', 'global'],
   data () {
     return {
@@ -260,7 +260,7 @@ export default {
         titles: headers,
         export: 1
       }
-      apis.doPost(this.end_point, data).then(res => {
+      apis.doPost(this.endPoint, data).then(res => {
         this.downloading = false
         if (res.data.file) {
           const url = this.appUrl + 'external-download?file=' + res.data.file + '&name=' + res.data.name;
@@ -290,7 +290,7 @@ export default {
       if (this.pagination_data) {
         this.pagination_data.loading = 1
       }
-      apis.doGet(this.end_point, data).then(req => {
+      apis.doGet(this.endPoint, data).then(req => {
         this.loading = 'done'
         const response = req.data.data
         this.pagination_data = {
@@ -318,7 +318,7 @@ export default {
           this.records = response.data
         }
       }).catch(reason => {
-        const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText} (${this.end_point})`
+        const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText} (${this.endPoint})`
         this.loading_error = error
         this.loading = 'error'
       })

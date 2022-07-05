@@ -2611,7 +2611,7 @@ var helpers = {
 
 var script$1 = {
   name: 'sh-table',
-  props: ['end_point', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'mobile_view', 'hideSearch', 'custom_template', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'mobile_view', 'hideSearch', 'custom_template', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
   inject: ['channel', 'global'],
   data () {
     return {
@@ -2735,7 +2735,7 @@ var script$1 = {
         titles: headers,
         export: 1
       };
-      apis.doPost(this.end_point, data).then(res => {
+      apis.doPost(this.endPoint, data).then(res => {
         this.downloading = false;
         if (res.data.file) {
           const url = this.appUrl + 'external-download?file=' + res.data.file + '&name=' + res.data.name;
@@ -2765,7 +2765,7 @@ var script$1 = {
       if (this.pagination_data) {
         this.pagination_data.loading = 1;
       }
-      apis.doGet(this.end_point, data).then(req => {
+      apis.doGet(this.endPoint, data).then(req => {
         this.loading = 'done';
         const response = req.data.data;
         this.pagination_data = {
@@ -2793,7 +2793,7 @@ var script$1 = {
           this.records = response.data;
         }
       }).catch(reason => {
-        const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText} (${this.end_point})`;
+        const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText} (${this.endPoint})`;
         this.loading_error = error;
         this.loading = 'error';
       });
@@ -3243,8 +3243,7 @@ script$1.__file = "src/views/ShTable.vue";
 
 var script = {
   name: 'ShTabs',
-  props: ['tabs', 'base_url', 'shared_data', 'tab_counts'],
-  inject: ['global'],
+  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts'],
   data () {
     return {
       currentTab: ''
@@ -3253,18 +3252,17 @@ var script = {
   watch: {
     refreshStatus: function (state) {
       if (state === 0) {
-        if (this.tab_counts) {
-          this.setTabCounts(this.tab_counts);
+        if (this.tabCounts) {
+          this.setTabCounts(this.tabCounts);
         }
       }
     },
-    tab_counts: function () {
+    tabCounts: function () {
       this.resetTabCounts();
     }
   },
   computed: {
     refreshStatus () {
-      return this.global.state.refetch
     }
   },
   mounted () {
@@ -3287,8 +3285,8 @@ var script = {
       } else {
         this.currentTab = arr[arr.length - 1];
       }
-      if (this.tab_counts) {
-        this.setTabCounts(this.tab_counts);
+      if (this.tabCounts) {
+        this.setTabCounts(this.tabCounts);
       }
     },
     tabExistsInUrl: function () {
@@ -3337,7 +3335,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           createVNode(_component_router_link, {
             "active-class": 'active',
             class: "nav-link text-capitalize",
-            to: $props.base_url+'/tab/'+tab,
+            to: $props.baseUrl+'/tab/'+tab,
             role: "tab",
             id: 'sh_tab_' + tab
           }, {
@@ -3352,9 +3350,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     createElementVNode("div", _hoisted_3, [
       createVNode(_component_router_view, {
         current_tab: $data.currentTab,
-        shared_data: $props.shared_data,
-        tab_counts: $props.tab_counts
-      }, null, 8 /* PROPS */, ["current_tab", "shared_data", "tab_counts"])
+        sharedData: $props.sharedData,
+        tabCounts: $props.tabCounts
+      }, null, 8 /* PROPS */, ["current_tab", "sharedData", "tabCounts"])
     ])
   ]))
 }
