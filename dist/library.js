@@ -2155,7 +2155,7 @@ script$5.__file = "src/views/ShForm.vue";
 
 var script$4 = {
   name: 'ShCanvas',
-  props: ['canvas_title', 'canvas_id', 'position'],
+  props: ['canvasTitle', 'canvasId', 'position'],
   components: {
   },
   data () {
@@ -2183,11 +2183,11 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
     class: vue.normalizeClass(["offcanvas", $data.side]),
     "data-bs-scroll": "true",
     tabindex: "-1",
-    id: $props.canvas_id,
+    id: $props.canvasId,
     "aria-labelledby": "offcanvasScrollingLabel"
   }, [
     vue.createElementVNode("div", _hoisted_2$4, [
-      vue.createElementVNode("h5", _hoisted_3$4, vue.toDisplayString($props.canvas_title), 1 /* TEXT */),
+      vue.createElementVNode("h5", _hoisted_3$4, vue.toDisplayString($props.canvasTitle), 1 /* TEXT */),
       vue.createElementVNode("button", {
         type: "button",
         ref: "closecanvas",
@@ -2208,9 +2208,8 @@ script$4.__file = "src/views/ShCanvas.vue";
 
 var script$3 = {
   name: 'ShModal',
-  props: ['modal_title', 'modal_id', 'modal_size'],
+  props: ['modalTitle', 'modalId', 'modalSize'],
   components: {
-
   }
 };
 
@@ -2230,16 +2229,16 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", {
     class: "modal fade",
     tabindex: "-1",
-    id: $props.modal_id,
+    id: $props.modalId,
     "data-focus": "false",
     "aria-hidden": "true"
   }, [
     vue.createElementVNode("div", {
-      class: vue.normalizeClass(["modal-dialog", `modal-${$props.modal_size}`])
+      class: vue.normalizeClass(["modal-dialog", `modal-${$props.modalSize}`])
     }, [
       vue.createElementVNode("div", _hoisted_2$3, [
         vue.createElementVNode("div", _hoisted_3$3, [
-          vue.createElementVNode("h3", _hoisted_4$2, vue.toDisplayString($props.modal_title), 1 /* TEXT */),
+          vue.createElementVNode("h3", _hoisted_4$2, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
           _hoisted_5$2
         ]),
         vue.createElementVNode("div", _hoisted_6$1, [
@@ -2622,7 +2621,7 @@ var helpers = {
 
 var script$1 = {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'mobile_view', 'hideSearch', 'custom_template', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
   inject: ['channel', 'global'],
   data () {
     return {
@@ -2834,21 +2833,20 @@ var script$1 = {
   }
 };
 
-const _withScopeId = n => (vue.pushScopeId("data-v-a10546a2"),n=n(),vue.popScopeId(),n);
 const _hoisted_1$1 = { class: "auto-table mt-2" };
 const _hoisted_2$1 = {
   key: 0,
   class: "col-md-4 mb-2"
 };
 const _hoisted_3$1 = ["disabled"];
-const _hoisted_4 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */));
+const _hoisted_4 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
 const _hoisted_5 = /*#__PURE__*/vue.createTextVNode(" Export ");
-const _hoisted_6 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("span", {
+const _hoisted_6 = /*#__PURE__*/vue.createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
-}, null, -1 /* HOISTED */));
-const _hoisted_7 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */));
+}, null, -1 /* HOISTED */);
+const _hoisted_7 = /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */);
 const _hoisted_8 = {
   key: 1,
   class: "row"
@@ -2856,9 +2854,9 @@ const _hoisted_8 = {
 const _hoisted_9 = { class: "col-12 mb-3" };
 const _hoisted_10 = { class: "sh-search-bar" };
 const _hoisted_11 = ["placeholder"];
-const _hoisted_12 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("span", { class: "sh-search-icon" }, [
+const _hoisted_12 = /*#__PURE__*/vue.createElementVNode("span", { class: "sh-search-icon" }, [
   /*#__PURE__*/vue.createElementVNode("i", { class: "bi bi-search mb-0" })
-], -1 /* HOISTED */));
+], -1 /* HOISTED */);
 const _hoisted_13 = {
   key: 2,
   class: "table"
@@ -2875,14 +2873,14 @@ const _hoisted_18 = {
   class: "text-center"
 };
 const _hoisted_19 = ["colspan"];
-const _hoisted_20 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
+const _hoisted_20 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/vue.createElementVNode("div", {
     class: "spinner-border",
     role: "status"
   }, [
     /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
-], -1 /* HOISTED */));
+], -1 /* HOISTED */);
 const _hoisted_21 = [
   _hoisted_20
 ];
@@ -2896,7 +2894,7 @@ const _hoisted_24 = {
   class: "text-center alert alert-info no_records"
 };
 const _hoisted_25 = ["colspan"];
-const _hoisted_26 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */));
+const _hoisted_26 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
 const _hoisted_27 = /*#__PURE__*/vue.createTextVNode(" No records found ");
 const _hoisted_28 = [
   _hoisted_26,
@@ -2922,42 +2920,46 @@ const _hoisted_39 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_40 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("span", { colspan: 2 }, [
-  /*#__PURE__*/vue.createElementVNode("img", { src: "/assets/img/loading.gif" })
-], -1 /* HOISTED */));
+const _hoisted_40 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
+  /*#__PURE__*/vue.createElementVNode("div", {
+    class: "spinner-border",
+    role: "status"
+  }, [
+    /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...")
+  ])
+], -1 /* HOISTED */);
 const _hoisted_41 = [
   _hoisted_40
 ];
 const _hoisted_42 = { key: 1 };
-const _hoisted_43 = { colspan: 2 };
-const _hoisted_44 = {
+const _hoisted_43 = {
   key: 2,
   class: "mobile-list-items"
 };
-const _hoisted_45 = ["onClick"];
-const _hoisted_46 = {
+const _hoisted_44 = ["onClick"];
+const _hoisted_45 = {
   key: 0,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_47 = {
+const _hoisted_46 = {
   key: 1,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_48 = {
+const _hoisted_47 = {
   key: 2,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_49 = { key: 1 };
-const _hoisted_50 = {
+const _hoisted_48 = { key: 1 };
+const _hoisted_49 = {
   key: 2,
   class: "text-primary fw-bold"
 };
+const _hoisted_50 = ["innerHTML"];
 const _hoisted_51 = ["innerHTML"];
 const _hoisted_52 = ["innerHTML"];
-const _hoisted_53 = ["innerHTML"];
-const _hoisted_54 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/vue.createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */));
-const _hoisted_55 = { key: 0 };
-const _hoisted_56 = ["title", "onClick"];
+const _hoisted_53 = /*#__PURE__*/vue.createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
+const _hoisted_54 = { key: 0 };
+const _hoisted_55 = ["title", "onClick"];
 
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = vue.resolveComponent("router-link");
@@ -3141,15 +3143,15 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
             ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_39, _hoisted_41))
             : ($data.loading === 'error')
               ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_42, [
-                  vue.createElementVNode("span", _hoisted_43, vue.toDisplayString($data.loading_error), 1 /* TEXT */)
+                  vue.createElementVNode("span", null, vue.toDisplayString($data.loading_error), 1 /* TEXT */)
                 ]))
               : ($data.loading === 'done')
-                ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_44, [
+                ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_43, [
                     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.records, (record, index) => {
                       return (vue.openBlock(), vue.createElementBlock(vue.Fragment, {
                         key: record.id
                       }, [
-                        vue.createElementVNode("h3", null, vue.toDisplayString($props.mobile_view), 1 /* TEXT */),
+                        vue.createElementVNode("h3", null, vue.toDisplayString(_ctx.mobile_view), 1 /* TEXT */),
                         vue.createElementVNode("div", {
                           class: "single-mobile-req bg-light p-3",
                           onClick: $event => ($options.rowSelected(record))
@@ -3159,10 +3161,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                               key: key[0]
                             }, [
                               (typeof key === 'string' )
-                                ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_46, vue.toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_45, vue.toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
                                 : (typeof key === 'function')
-                                  ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_47, vue.toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
-                                  : (vue.openBlock(), vue.createElementBlock("p", _hoisted_48, vue.toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
+                                  ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_46, vue.toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
+                                  : (vue.openBlock(), vue.createElementBlock("p", _hoisted_47, vue.toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
                               vue.createElementVNode("span", null, [
                                 (typeof key === 'string' && $props.links && $props.links[key])
                                   ? (vue.openBlock(), vue.createBlock(_component_router_link, {
@@ -3172,29 +3174,29 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                       innerHTML: record[key]
                                     }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
                                   : ($options.getFieldType(key) === 'numeric')
-                                    ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_49, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                    ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_48, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                     : ($options.getFieldType(key) === 'money')
-                                      ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_50, "KES " + vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_49, "KES " + vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : (typeof key    === 'string')
                                         ? (vue.openBlock(), vue.createElementBlock("span", {
                                             key: 3,
                                             innerHTML: record[key]
-                                          }, null, 8 /* PROPS */, _hoisted_51))
+                                          }, null, 8 /* PROPS */, _hoisted_50))
                                         : (typeof key === 'function')
                                           ? (vue.openBlock(), vue.createElementBlock("span", {
                                               key: 4,
                                               innerHTML: key(record, index )
-                                            }, null, 8 /* PROPS */, _hoisted_52))
+                                            }, null, 8 /* PROPS */, _hoisted_51))
                                           : (vue.openBlock(), vue.createElementBlock("span", {
                                               key: 5,
                                               innerHTML: record[key[0]]
-                                            }, null, 8 /* PROPS */, _hoisted_53))
+                                            }, null, 8 /* PROPS */, _hoisted_52))
                               ]),
-                              _hoisted_54
+                              _hoisted_53
                             ], 64 /* STABLE_FRAGMENT */))
                           }), 128 /* KEYED_FRAGMENT */)),
                           ($props.actions)
-                            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_55, [
+                            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_54, [
                                 (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.actions.actions, (act) => {
                                   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, {
                                     key: act.path
@@ -3209,7 +3211,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                       title: act.title,
                                                       class: vue.normalizeClass(act.class ? act.class:'btn btn-default'),
                                                       onClick: $event => ($options.doEmitAction(act.emits,record))
-                                                    }, vue.toDisplayString(act.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_56))
+                                                    }, vue.toDisplayString(act.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_55))
                                                   : vue.createCommentVNode("v-if", true),
                                                 (!act.emits)
                                                   ? (vue.openBlock(), vue.createBlock(_component_router_link, {
@@ -3232,7 +3234,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                 }), 128 /* KEYED_FRAGMENT */))
                               ]))
                             : vue.createCommentVNode("v-if", true)
-                        ], 8 /* PROPS */, _hoisted_45)
+                        ], 8 /* PROPS */, _hoisted_44)
                       ], 64 /* STABLE_FRAGMENT */))
                     }), 128 /* KEYED_FRAGMENT */))
                   ]))
@@ -3253,7 +3255,6 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$1.render = render$1;
-script$1.__scopeId = "data-v-a10546a2";
 script$1.__file = "src/views/ShTable.vue";
 
 var script = {
