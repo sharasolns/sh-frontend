@@ -1,4 +1,4 @@
-#Sh Modal
+# ShModal
 Bootstrap 5 Modal
 ### Basic Example
 

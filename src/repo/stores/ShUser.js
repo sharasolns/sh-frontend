@@ -63,9 +63,14 @@ export const useUserStore = defineStore('user-store', {
       this.user = null
     },
     logOut () {
-      shstorage.setItem('user',null)
-      shstorage.setItem('access_token',null)
-      this.user = null
+      this.signOut()
+    },
+    getUser () {
+      this.setUser()
+    },
+    setAccessToken (accessToken) {
+      shstorage.setItem('access_token', accessToken)
+      this.setUser()
     }
   },
   getters: {

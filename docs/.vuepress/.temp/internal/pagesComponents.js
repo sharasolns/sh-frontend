@@ -21,10 +21,12 @@ export const pagesComponents = {
   "v-21493bd9": defineAsyncComponent(() => import(/* webpackChunkName: "v-21493bd9" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shtabs.html.vue")),
   // path: /guide/helpers/
   "v-53551194": defineAsyncComponent(() => import(/* webpackChunkName: "v-53551194" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/index.html.vue")),
-  // path: /guide/state/
-  "v-3af6b4ac": defineAsyncComponent(() => import(/* webpackChunkName: "v-3af6b4ac" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/state/index.html.vue")),
-  // path: /guide/apis/
-  "v-58e3e44a": defineAsyncComponent(() => import(/* webpackChunkName: "v-58e3e44a" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/apis/index.html.vue")),
+  // path: /guide/helpers/shapi/
+  "v-0a554840": defineAsyncComponent(() => import(/* webpackChunkName: "v-0a554840" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shapi/index.html.vue")),
+  // path: /guide/helpers/shuser/
+  "v-60f14c99": defineAsyncComponent(() => import(/* webpackChunkName: "v-60f14c99" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shuser/index.html.vue")),
+  // path: /guide/helpers/shrepo/
+  "v-60c0d1d2": defineAsyncComponent(() => import(/* webpackChunkName: "v-60c0d1d2" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shrepo/index.html.vue")),
   // path: /404.html
   "v-3706649a": defineAsyncComponent(() => import(/* webpackChunkName: "v-3706649a" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/404.html.vue")),
 }

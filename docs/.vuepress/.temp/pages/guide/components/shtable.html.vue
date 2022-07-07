@@ -1,2 +1,48 @@
 <template><div><h1 id="sh-table" tabindex="-1"><a class="header-anchor" href="#sh-table" aria-hidden="true">#</a> Sh Table</h1>
+<h2 id="importing" tabindex="-1"><a class="header-anchor" href="#importing" aria-hidden="true">#</a> importing</h2>
+<div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>ShTable<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="example-usage" tabindex="-1"><a class="header-anchor" href="#example-usage" aria-hidden="true">#</a> Example Usage</h2>
+<div class="language-html ext-html line-numbers-mode"><pre v-pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sh-table</span>
+      <span class="token attr-name">:headers</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>[<span class="token punctuation">'</span>id<span class="token punctuation">'</span>,<span class="token punctuation">'</span>name<span class="token punctuation">'</span>,<span class="token punctuation">'</span>description<span class="token punctuation">'</span>]<span class="token punctuation">"</span></span>
+  <span class="token attr-name">end-point</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>tasks/list<span class="token punctuation">"</span></span>
+  <span class="token punctuation">/></span></span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="attributes" tabindex="-1"><a class="header-anchor" href="#attributes" aria-hidden="true">#</a> Attributes</h2>
+<h3 id="headers" tabindex="-1"><a class="header-anchor" href="#headers" aria-hidden="true">#</a> <code v-pre>headers</code></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>none</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>true</code></p>
+</li>
+<li>
+<p>Details</p>
+<p>These are table headers for the table that will be generated</p>
+</li>
+<li>
+<p>Example: <code v-pre>['id','name','description']</code></p>
+</li>
+</ul>
+<h3 id="end-point" tabindex="-1"><a class="header-anchor" href="#end-point" aria-hidden="true">#</a> <code v-pre>end-point</code></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>string</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>none</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>true</code></p>
+</li>
+<li>
+<p>Details</p>
+<p>It's the endpoint of table data, usually it's the backend api url</p>
+</li>
+<li>
+<p>Example: <code v-pre>tasks/list</code></p>
+</li>
+</ul>
 </div></template>

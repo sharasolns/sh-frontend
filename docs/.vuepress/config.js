@@ -30,38 +30,32 @@ module.exports = {
       '/guide/':[
         {
           text:'Introduction',
-          collapsible: false,
+          // collapsible: false,
           children: [
-            {
-              text: 'Installation',
-              link: '/guide/installation'
-            }
+            "/guide/",
+            "/guide/installation"
           ]
         },
         {
           text:'Components',
-          collapsible: true,
+          collapsible: false,
           children: [
-            {
-              text: 'Sh Form',
-              link: '/guide/components/shform.md',
-            },
-            {
-              text: 'Sh Tabs',
-              link: '/guide/components/shtabs.md',
-            },
-            {
-              text: 'Sh Modal',
-              link: '/guide/components/shmodal.md',
-            },
-            {
-              text: 'Sh Canvas',
-              link: '/guide/components/shcanvas.md',
-            },
-            {
-              text: 'Sh Table',
-              link: '/guide/components/shtable.md',
-            }
+              '/guide/components',
+              '/guide/components/shform',
+              '/guide/components/shtabs',
+              '/guide/components/shmodal',
+              '/guide/components/shcanvas',
+              '/guide/components/shtable'
+          ]
+        },
+        {
+          text: 'Helpers',
+          collapsible: false,
+          children: [
+              '/guide/helpers',
+              '/guide/helpers/shuser',
+              '/guide/helpers/shapi',
+              '/guide/helpers/shrepo'
           ]
         }
       ]

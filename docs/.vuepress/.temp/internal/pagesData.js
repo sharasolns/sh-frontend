@@ -19,10 +19,12 @@ export const pagesData = {
   "v-21493bd9": () => import(/* webpackChunkName: "v-21493bd9" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shtabs.html.js").then(({ data }) => data),
   // path: /guide/helpers/
   "v-53551194": () => import(/* webpackChunkName: "v-53551194" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/index.html.js").then(({ data }) => data),
-  // path: /guide/state/
-  "v-3af6b4ac": () => import(/* webpackChunkName: "v-3af6b4ac" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/state/index.html.js").then(({ data }) => data),
-  // path: /guide/apis/
-  "v-58e3e44a": () => import(/* webpackChunkName: "v-58e3e44a" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/apis/index.html.js").then(({ data }) => data),
+  // path: /guide/helpers/shapi/
+  "v-0a554840": () => import(/* webpackChunkName: "v-0a554840" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shapi/index.html.js").then(({ data }) => data),
+  // path: /guide/helpers/shuser/
+  "v-60f14c99": () => import(/* webpackChunkName: "v-60f14c99" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shuser/index.html.js").then(({ data }) => data),
+  // path: /guide/helpers/shrepo/
+  "v-60c0d1d2": () => import(/* webpackChunkName: "v-60c0d1d2" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shrepo/index.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
 }
