@@ -21,7 +21,39 @@
       </div>
     </div>
   </div>
-    <table class="table" v-if="windowWidth > 700">
+  <template v-if="hasDefaultSlot">
+    <div class="text-center" v-if="loading === 'loading'">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div v-else-if="loading === 'error'" class="alert alert-danger">
+      <span :colspan="2">
+        {{ loading_error }}
+      </span>
+    </div>
+    <template v-if="loading === 'done'">
+      <template v-for="record in records" :key="record.id">
+        <slot :record="record"></slot>
+      </template>
+    </template>
+  </template>
+  <template v-if="hasRecordsSlot">
+    <div class="text-center" v-if="loading === 'loading'">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div v-else-if="loading === 'error'" class="alert alert-danger">
+      <span :colspan="2">
+        {{ loading_error }}
+      </span>
+    </div>
+    <template v-if="loading === 'done'">
+      <slot name="records" :records="records"></slot>
+    </template>
+  </template>
+    <table class="table" v-else-if="windowWidth > 700">
       <thead>
       <tr>
         <th v-for="title in headers" :key="title[0]">
@@ -345,11 +377,14 @@ export default {
     windowWidth: function () {
       return window.innerWidth
     },
+    user () {
+      return null
+    },
     hasDefaultSlot () {
       return !!this.$slots.default
     },
-    user () {
-      return this.global.state.user
+    hasRecordsSlot () {
+      return !!this.$slots.records
     }
   }
 }

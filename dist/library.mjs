@@ -1644,7 +1644,7 @@ var script$5 = {
   components: {
     ShPhone: script$6
   },
-  props: ['action', 'classes', 'hasTerms', 'country_code', 'submit_btn_class', 'fields', 'columns', 'placeholders', 'field_permissions', 'retain_data_after_submission', 'current_data', 'action_label', 'fill_selects', 'phones', 'success_callback', 'failed_callback', 'labels'],
+  props: ['action', 'classes', 'hasTerms', 'country_code', 'submitBtnClass', 'fields', 'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission', 'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback', 'failed_callback', 'labels'],
   data: function () {
     return {
       form_elements: {},
@@ -1660,14 +1660,9 @@ var script$5 = {
       allLabels: {}
     }
   },
-  computed: {
-    currentData () {
-      return this.current_data
-    }
-  },
   methods: {
     getSubmitBtnClass: function () {
-      const btnClass = this.submit_btn_class;
+      const btnClass = this.submitBtnClass;
       if (!btnClass) {
         return 'btn btn-primary mt-2'
       } else {
@@ -1806,18 +1801,18 @@ var script$5 = {
         this.form_status = 2;
         Object.keys(this.form_elements).forEach(key => {
           this.form_errors[key] = null;
-          if (!this.retain_data_after_submission) {
+          if (!this.retainDataAfterSubmission) {
             this.form_elements[key] = '';
           }
         });
         Object.keys(this.form_files).forEach(key => {
           this.form_errors[key] = null;
         });
-        if (this.success_callback) {
-          if (typeof this.success_callback === 'function') {
-            this.success_callback(res.data);
+        if (this.successCallback) {
+          if (typeof this.successCallback === 'function') {
+            this.successCallback(res.data);
           } else {
-            this.$emit(this.success_callback, res.data);
+            this.$emit(this.successCallback, res.data);
           }
         }
         NProgress.done();
@@ -1875,14 +1870,14 @@ var script$5 = {
   },
   mounted: async function () {
     const selectData = {};
-    if (this.fill_selects) {
-      Object.keys(this.fill_selects).forEach(key => {
-        if (this.fill_selects[key].data) {
-          selectData[key] = this.fill_selects[key].data;
+    if (this.fillSelects) {
+      Object.keys(this.fillSelects).forEach(key => {
+        if (this.fillSelects[key].data) {
+          selectData[key] = this.fillSelects[key].data;
           this.selectData = selectData;
           console.log(this.selectData);
         } else {
-          apis.doGet(this.fill_selects[key].url, { all: 1 }).then(res => {
+          apis.doGet(this.fillSelects[key].url, { all: 1 }).then(res => {
             // selectData[key] = res.data
             // console.log(res)
             this.selectData[key] = res.data.data;
@@ -2131,7 +2126,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
       type: "button",
       onClick: _cache[1] || (_cache[1] = (...args) => ($options.submitForm && $options.submitForm(...args)))
     }, [
-      createTextVNode(toDisplayString($props.action_label ? $props.action_label:'Submit') + " ", 1 /* TEXT */),
+      createTextVNode(toDisplayString($props.actionLabel ? $props.actionLabel:'Submit') + " ", 1 /* TEXT */),
       (_ctx.form_status == 1)
         ? (openBlock(), createElementBlock("img", _hoisted_23$2))
         : createCommentVNode("v-if", true)
@@ -2813,11 +2808,14 @@ var script$1 = {
     windowWidth: function () {
       return window.innerWidth
     },
+    user () {
+      return null
+    },
     hasDefaultSlot () {
       return !!this.$slots.default
     },
-    user () {
-      return this.global.state.user
+    hasRecordsSlot () {
+      return !!this.$slots.records
     }
   }
 };
@@ -2847,69 +2845,58 @@ const _hoisted_12 = /*#__PURE__*/createElementVNode("span", { class: "sh-search-
   /*#__PURE__*/createElementVNode("i", { class: "bi bi-search mb-0" })
 ], -1 /* HOISTED */);
 const _hoisted_13 = {
-  key: 2,
-  class: "table"
-};
-const _hoisted_14 = ["onClick"];
-const _hoisted_15 = ["onClick"];
-const _hoisted_16 = ["onClick"];
-const _hoisted_17 = {
   key: 0,
-  class: "text-capitalize"
+  class: "text-center"
 };
+const _hoisted_14 = /*#__PURE__*/createElementVNode("div", {
+  class: "spinner-border",
+  role: "status"
+}, [
+  /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
+], -1 /* HOISTED */);
+const _hoisted_15 = [
+  _hoisted_14
+];
+const _hoisted_16 = {
+  key: 1,
+  class: "alert alert-danger"
+};
+const _hoisted_17 = { colspan: 2 };
 const _hoisted_18 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_19 = ["colspan"];
-const _hoisted_20 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
-  /*#__PURE__*/createElementVNode("div", {
-    class: "spinner-border",
-    role: "status"
-  }, [
-    /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
-  ])
+const _hoisted_19 = /*#__PURE__*/createElementVNode("div", {
+  class: "spinner-border",
+  role: "status"
+}, [
+  /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
 ], -1 /* HOISTED */);
-const _hoisted_21 = [
-  _hoisted_20
+const _hoisted_20 = [
+  _hoisted_19
 ];
-const _hoisted_22 = {
+const _hoisted_21 = {
   key: 1,
-  class: "text-center alert alert-danger"
+  class: "alert alert-danger"
 };
-const _hoisted_23 = ["colspan"];
-const _hoisted_24 = {
-  key: 2,
-  class: "text-center alert alert-info no_records"
+const _hoisted_22 = { colspan: 2 };
+const _hoisted_23 = {
+  key: 4,
+  class: "table"
 };
-const _hoisted_25 = ["colspan"];
-const _hoisted_26 = /*#__PURE__*/createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
-const _hoisted_27 = /*#__PURE__*/createTextVNode(" No records found ");
-const _hoisted_28 = [
-  _hoisted_26,
-  _hoisted_27
-];
-const _hoisted_29 = ["onClick"];
-const _hoisted_30 = { key: 1 };
-const _hoisted_31 = {
-  key: 2,
-  class: "text-success fw-bold"
-};
-const _hoisted_32 = { key: 3 };
-const _hoisted_33 = ["innerHTML"];
-const _hoisted_34 = ["innerHTML"];
-const _hoisted_35 = ["innerHTML"];
-const _hoisted_36 = {
+const _hoisted_24 = ["onClick"];
+const _hoisted_25 = ["onClick"];
+const _hoisted_26 = ["onClick"];
+const _hoisted_27 = {
   key: 0,
-  style: {"white-space":"nowrap"}
+  class: "text-capitalize"
 };
-const _hoisted_37 = ["title", "onClick"];
-const _hoisted_38 = { key: 3 };
-const _hoisted_39 = {
+const _hoisted_28 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_40 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
+const _hoisted_29 = ["colspan"];
+const _hoisted_30 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -2917,38 +2904,85 @@ const _hoisted_40 = /*#__PURE__*/createElementVNode("div", { class: "text-center
     /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_41 = [
-  _hoisted_40
+const _hoisted_31 = [
+  _hoisted_30
 ];
-const _hoisted_42 = { key: 1 };
-const _hoisted_43 = {
+const _hoisted_32 = {
+  key: 1,
+  class: "text-center alert alert-danger"
+};
+const _hoisted_33 = ["colspan"];
+const _hoisted_34 = {
+  key: 2,
+  class: "text-center alert alert-info no_records"
+};
+const _hoisted_35 = ["colspan"];
+const _hoisted_36 = /*#__PURE__*/createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
+const _hoisted_37 = /*#__PURE__*/createTextVNode(" No records found ");
+const _hoisted_38 = [
+  _hoisted_36,
+  _hoisted_37
+];
+const _hoisted_39 = ["onClick"];
+const _hoisted_40 = { key: 1 };
+const _hoisted_41 = {
+  key: 2,
+  class: "text-success fw-bold"
+};
+const _hoisted_42 = { key: 3 };
+const _hoisted_43 = ["innerHTML"];
+const _hoisted_44 = ["innerHTML"];
+const _hoisted_45 = ["innerHTML"];
+const _hoisted_46 = {
+  key: 0,
+  style: {"white-space":"nowrap"}
+};
+const _hoisted_47 = ["title", "onClick"];
+const _hoisted_48 = { key: 5 };
+const _hoisted_49 = {
+  key: 0,
+  class: "text-center"
+};
+const _hoisted_50 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
+  /*#__PURE__*/createElementVNode("div", {
+    class: "spinner-border",
+    role: "status"
+  }, [
+    /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
+  ])
+], -1 /* HOISTED */);
+const _hoisted_51 = [
+  _hoisted_50
+];
+const _hoisted_52 = { key: 1 };
+const _hoisted_53 = {
   key: 2,
   class: "mobile-list-items"
 };
-const _hoisted_44 = ["onClick"];
-const _hoisted_45 = {
+const _hoisted_54 = ["onClick"];
+const _hoisted_55 = {
   key: 0,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_46 = {
+const _hoisted_56 = {
   key: 1,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_47 = {
+const _hoisted_57 = {
   key: 2,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_48 = { key: 1 };
-const _hoisted_49 = {
+const _hoisted_58 = { key: 1 };
+const _hoisted_59 = {
   key: 2,
   class: "text-primary fw-bold"
 };
-const _hoisted_50 = ["innerHTML"];
-const _hoisted_51 = ["innerHTML"];
-const _hoisted_52 = ["innerHTML"];
-const _hoisted_53 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
-const _hoisted_54 = { key: 0 };
-const _hoisted_55 = ["title", "onClick"];
+const _hoisted_60 = ["innerHTML"];
+const _hoisted_61 = ["innerHTML"];
+const _hoisted_62 = ["innerHTML"];
+const _hoisted_63 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
+const _hoisted_64 = { key: 0 };
+const _hoisted_65 = ["title", "onClick"];
 
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = resolveComponent("router-link");
@@ -2992,169 +3026,103 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           ])
         ]))
       : createCommentVNode("v-if", true),
-    ($options.windowWidth > 700)
-      ? (openBlock(), createElementBlock("table", _hoisted_13, [
-          createElementVNode("thead", null, [
-            createElementVNode("tr", null, [
-              (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (title) => {
-                return (openBlock(), createElementBlock("th", {
-                  key: title[0]
-                }, [
-                  (typeof title === 'string')
-                    ? (openBlock(), createElementBlock("a", {
-                        key: 0,
-                        class: "text-capitalize",
-                        onClick: $event => ($options.changeKey('order_by',title))
-                      }, toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_14))
-                    : (typeof title === 'function')
+    ($options.hasDefaultSlot)
+      ? (openBlock(), createElementBlock(Fragment, { key: 2 }, [
+          ($data.loading === 'loading')
+            ? (openBlock(), createElementBlock("div", _hoisted_13, _hoisted_15))
+            : ($data.loading === 'error')
+              ? (openBlock(), createElementBlock("div", _hoisted_16, [
+                  createElementVNode("span", _hoisted_17, toDisplayString($data.loading_error), 1 /* TEXT */)
+                ]))
+              : createCommentVNode("v-if", true),
+          ($data.loading === 'done')
+            ? (openBlock(true), createElementBlock(Fragment, { key: 2 }, renderList($data.records, (record) => {
+                return renderSlot(_ctx.$slots, "default", {
+                  key: record.id,
+                  record: record
+                })
+              }), 128 /* KEYED_FRAGMENT */))
+            : createCommentVNode("v-if", true)
+        ], 64 /* STABLE_FRAGMENT */))
+      : createCommentVNode("v-if", true),
+    ($options.hasRecordsSlot)
+      ? (openBlock(), createElementBlock(Fragment, { key: 3 }, [
+          ($data.loading === 'loading')
+            ? (openBlock(), createElementBlock("div", _hoisted_18, _hoisted_20))
+            : ($data.loading === 'error')
+              ? (openBlock(), createElementBlock("div", _hoisted_21, [
+                  createElementVNode("span", _hoisted_22, toDisplayString($data.loading_error), 1 /* TEXT */)
+                ]))
+              : createCommentVNode("v-if", true),
+          ($data.loading === 'done')
+            ? renderSlot(_ctx.$slots, "records", {
+                key: 2,
+                records: $data.records
+              })
+            : createCommentVNode("v-if", true)
+        ], 64 /* STABLE_FRAGMENT */))
+      : ($options.windowWidth > 700)
+        ? (openBlock(), createElementBlock("table", _hoisted_23, [
+            createElementVNode("thead", null, [
+              createElementVNode("tr", null, [
+                (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (title) => {
+                  return (openBlock(), createElementBlock("th", {
+                    key: title[0]
+                  }, [
+                    (typeof title === 'string')
                       ? (openBlock(), createElementBlock("a", {
-                          key: 1,
+                          key: 0,
                           class: "text-capitalize",
                           onClick: $event => ($options.changeKey('order_by',title))
-                        }, toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_15))
-                      : (openBlock(), createElementBlock("a", {
-                          key: 2,
-                          class: "text-capitalize",
-                          onClick: $event => ($options.changeKey('order_by',title[0]))
-                        }, toDisplayString(title[1].replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_16))
-                ]))
-              }), 128 /* KEYED_FRAGMENT */)),
-              ($props.actions)
-                ? (openBlock(), createElementBlock("th", _hoisted_17, toDisplayString($props.actions.label), 1 /* TEXT */))
-                : createCommentVNode("v-if", true)
-            ])
-          ]),
-          createElementVNode("tbody", null, [
-            ($data.loading === 'loading')
-              ? (openBlock(), createElementBlock("tr", _hoisted_18, [
-                  createElementVNode("td", {
-                    colspan: $props.headers.length
-                  }, _hoisted_21, 8 /* PROPS */, _hoisted_19)
-                ]))
-              : ($data.loading === 'error')
-                ? (openBlock(), createElementBlock("tr", _hoisted_22, [
+                        }, toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
+                      : (typeof title === 'function')
+                        ? (openBlock(), createElementBlock("a", {
+                            key: 1,
+                            class: "text-capitalize",
+                            onClick: $event => ($options.changeKey('order_by',title))
+                          }, toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
+                        : (openBlock(), createElementBlock("a", {
+                            key: 2,
+                            class: "text-capitalize",
+                            onClick: $event => ($options.changeKey('order_by',title[0]))
+                          }, toDisplayString(title[1].replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_26))
+                  ]))
+                }), 128 /* KEYED_FRAGMENT */)),
+                ($props.actions)
+                  ? (openBlock(), createElementBlock("th", _hoisted_27, toDisplayString($props.actions.label), 1 /* TEXT */))
+                  : createCommentVNode("v-if", true)
+              ])
+            ]),
+            createElementVNode("tbody", null, [
+              ($data.loading === 'loading')
+                ? (openBlock(), createElementBlock("tr", _hoisted_28, [
                     createElementVNode("td", {
                       colspan: $props.headers.length
-                    }, toDisplayString($data.loading_error), 9 /* TEXT, PROPS */, _hoisted_23)
+                    }, _hoisted_31, 8 /* PROPS */, _hoisted_29)
                   ]))
-                : ($data.records.length === 0)
-                  ? (openBlock(), createElementBlock("tr", _hoisted_24, [
+                : ($data.loading === 'error')
+                  ? (openBlock(), createElementBlock("tr", _hoisted_32, [
                       createElementVNode("td", {
-                        colspan: $props.actions ? $props.headers.length + 1 : $props.headers.length
-                      }, _hoisted_28, 8 /* PROPS */, _hoisted_25)
+                        colspan: $props.headers.length
+                      }, toDisplayString($data.loading_error), 9 /* TEXT, PROPS */, _hoisted_33)
                     ]))
-                  : ($data.loading === 'done')
-                    ? (openBlock(true), createElementBlock(Fragment, { key: 3 }, renderList($data.records, (record, index) => {
-                        return (openBlock(), createElementBlock("tr", {
-                          key: record.id,
-                          class: normalizeClass(record.class),
-                          onClick: $event => ($options.rowSelected(record))
-                        }, [
-                          (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (key) => {
-                            return (openBlock(), createElementBlock("td", {
-                              key: key[0]
-                            }, [
-                              (typeof key === 'string' && $props.links && $props.links[key])
-                                ? (openBlock(), createBlock(_component_router_link, {
-                                    key: 0,
-                                    to: $options.replaceLinkUrl($props.links[key],record),
-                                    class: normalizeClass($options.getLinkClass($props.links[key])),
-                                    innerHTML: record[key]
-                                  }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
-                                : ($options.getFieldType(key) === 'numeric')
-                                  ? (openBlock(), createElementBlock("span", _hoisted_30, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
-                                  : ($options.getFieldType(key) === 'money')
-                                    ? (openBlock(), createElementBlock("span", _hoisted_31, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
-                                    : ($options.getFieldType(key) === 'date')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_32, toDisplayString($options.formatDate(record[key])), 1 /* TEXT */))
-                                      : (typeof key === 'string')
-                                        ? (openBlock(), createElementBlock("span", {
-                                            key: 4,
-                                            innerHTML: record[key]
-                                          }, null, 8 /* PROPS */, _hoisted_33))
-                                        : (typeof key === 'function')
-                                          ? (openBlock(), createElementBlock("span", {
-                                              key: 5,
-                                              innerHTML: key(record, index)
-                                            }, null, 8 /* PROPS */, _hoisted_34))
-                                          : (openBlock(), createElementBlock("span", {
-                                              key: 6,
-                                              innerHTML: record[key[0]]
-                                            }, null, 8 /* PROPS */, _hoisted_35))
-                            ]))
-                          }), 128 /* KEYED_FRAGMENT */)),
-                          ($props.actions)
-                            ? (openBlock(), createElementBlock("td", _hoisted_36, [
-                                (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
-                                  return (openBlock(), createElementBlock(Fragment, {
-                                    key: act.path
-                                  }, [
-                                    (!act.permission || $options.user.isAllowedTo(act.permission))
-                                      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                          (!act.validator || act.validator(record))
-                                            ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                                (act.emits)
-                                                  ? (openBlock(), createElementBlock("button", {
-                                                      key: 0,
-                                                      title: act.title,
-                                                      class: normalizeClass(act.class ? act.class:'btn btn-default'),
-                                                      onClick: $event => ($options.doEmitAction(act.emits,record))
-                                                    }, toDisplayString(act.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_37))
-                                                  : createCommentVNode("v-if", true),
-                                                (!act.emits)
-                                                  ? (openBlock(), createBlock(_component_router_link, {
-                                                      key: 1,
-                                                      title: act.title,
-                                                      to: $options.replaceActionUrl(act.path,record),
-                                                      class: normalizeClass(act.class)
-                                                    }, {
-                                                      default: withCtx(() => [
-                                                        createTextVNode(toDisplayString(act.label), 1 /* TEXT */)
-                                                      ]),
-                                                      _: 2 /* DYNAMIC */
-                                                    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
-                                                  : createCommentVNode("v-if", true)
-                                              ], 64 /* STABLE_FRAGMENT */))
-                                            : createCommentVNode("v-if", true)
-                                        ], 64 /* STABLE_FRAGMENT */))
-                                      : createCommentVNode("v-if", true)
-                                  ], 64 /* STABLE_FRAGMENT */))
-                                }), 128 /* KEYED_FRAGMENT */))
-                              ]))
-                            : createCommentVNode("v-if", true)
-                        ], 10 /* CLASS, PROPS */, _hoisted_29))
-                      }), 128 /* KEYED_FRAGMENT */))
-                    : createCommentVNode("v-if", true)
-          ])
-        ]))
-      : (openBlock(), createElementBlock("div", _hoisted_38, [
-          ($data.loading === 'loading')
-            ? (openBlock(), createElementBlock("div", _hoisted_39, _hoisted_41))
-            : ($data.loading === 'error')
-              ? (openBlock(), createElementBlock("div", _hoisted_42, [
-                  createElementVNode("span", null, toDisplayString($data.loading_error), 1 /* TEXT */)
-                ]))
-              : ($data.loading === 'done')
-                ? (openBlock(), createElementBlock("div", _hoisted_43, [
-                    (openBlock(true), createElementBlock(Fragment, null, renderList($data.records, (record, index) => {
-                      return (openBlock(), createElementBlock(Fragment, {
-                        key: record.id
-                      }, [
-                        createElementVNode("h3", null, toDisplayString(_ctx.mobile_view), 1 /* TEXT */),
-                        createElementVNode("div", {
-                          class: "single-mobile-req bg-light p-3",
-                          onClick: $event => ($options.rowSelected(record))
-                        }, [
-                          (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (key) => {
-                            return (openBlock(), createElementBlock(Fragment, {
-                              key: key[0]
-                            }, [
-                              (typeof key === 'string' )
-                                ? (openBlock(), createElementBlock("p", _hoisted_45, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
-                                : (typeof key === 'function')
-                                  ? (openBlock(), createElementBlock("p", _hoisted_46, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
-                                  : (openBlock(), createElementBlock("p", _hoisted_47, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
-                              createElementVNode("span", null, [
+                  : ($data.records.length === 0)
+                    ? (openBlock(), createElementBlock("tr", _hoisted_34, [
+                        createElementVNode("td", {
+                          colspan: $props.actions ? $props.headers.length + 1 : $props.headers.length
+                        }, _hoisted_38, 8 /* PROPS */, _hoisted_35)
+                      ]))
+                    : ($data.loading === 'done')
+                      ? (openBlock(true), createElementBlock(Fragment, { key: 3 }, renderList($data.records, (record, index) => {
+                          return (openBlock(), createElementBlock("tr", {
+                            key: record.id,
+                            class: normalizeClass(record.class),
+                            onClick: $event => ($options.rowSelected(record))
+                          }, [
+                            (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (key) => {
+                              return (openBlock(), createElementBlock("td", {
+                                key: key[0]
+                              }, [
                                 (typeof key === 'string' && $props.links && $props.links[key])
                                   ? (openBlock(), createBlock(_component_router_link, {
                                       key: 0,
@@ -3163,75 +3131,176 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                       innerHTML: record[key]
                                     }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
                                   : ($options.getFieldType(key) === 'numeric')
-                                    ? (openBlock(), createElementBlock("span", _hoisted_48, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                    ? (openBlock(), createElementBlock("span", _hoisted_40, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                     : ($options.getFieldType(key) === 'money')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_49, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
-                                      : (typeof key    === 'string')
-                                        ? (openBlock(), createElementBlock("span", {
-                                            key: 3,
-                                            innerHTML: record[key]
-                                          }, null, 8 /* PROPS */, _hoisted_50))
-                                        : (typeof key === 'function')
+                                      ? (openBlock(), createElementBlock("span", _hoisted_41, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      : ($options.getFieldType(key) === 'date')
+                                        ? (openBlock(), createElementBlock("span", _hoisted_42, toDisplayString($options.formatDate(record[key])), 1 /* TEXT */))
+                                        : (typeof key === 'string')
                                           ? (openBlock(), createElementBlock("span", {
                                               key: 4,
-                                              innerHTML: key(record, index )
-                                            }, null, 8 /* PROPS */, _hoisted_51))
-                                          : (openBlock(), createElementBlock("span", {
-                                              key: 5,
-                                              innerHTML: record[key[0]]
-                                            }, null, 8 /* PROPS */, _hoisted_52))
-                              ]),
-                              _hoisted_53
-                            ], 64 /* STABLE_FRAGMENT */))
-                          }), 128 /* KEYED_FRAGMENT */)),
-                          ($props.actions)
-                            ? (openBlock(), createElementBlock("div", _hoisted_54, [
-                                (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
-                                  return (openBlock(), createElementBlock(Fragment, {
-                                    key: act.path
-                                  }, [
-                                    (!act.permission || $options.user.isAllowedTo(act.permission))
-                                      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                          (!act.validator || act.validator(record))
-                                            ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                                (act.emits)
-                                                  ? (openBlock(), createElementBlock("button", {
-                                                      key: 0,
-                                                      title: act.title,
-                                                      class: normalizeClass(act.class ? act.class:'btn btn-default'),
-                                                      onClick: $event => ($options.doEmitAction(act.emits,record))
-                                                    }, toDisplayString(act.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_55))
-                                                  : createCommentVNode("v-if", true),
-                                                (!act.emits)
-                                                  ? (openBlock(), createBlock(_component_router_link, {
-                                                      key: 1,
-                                                      title: act.title,
-                                                      to: $options.replaceActionUrl(act.path,record),
-                                                      class: normalizeClass(act.class)
-                                                    }, {
-                                                      default: withCtx(() => [
-                                                        createTextVNode(toDisplayString(act.label), 1 /* TEXT */)
-                                                      ]),
-                                                      _: 2 /* DYNAMIC */
-                                                    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
-                                                  : createCommentVNode("v-if", true)
-                                              ], 64 /* STABLE_FRAGMENT */))
-                                            : createCommentVNode("v-if", true)
-                                        ], 64 /* STABLE_FRAGMENT */))
-                                      : createCommentVNode("v-if", true)
-                                  ], 64 /* STABLE_FRAGMENT */))
-                                }), 128 /* KEYED_FRAGMENT */))
+                                              innerHTML: record[key]
+                                            }, null, 8 /* PROPS */, _hoisted_43))
+                                          : (typeof key === 'function')
+                                            ? (openBlock(), createElementBlock("span", {
+                                                key: 5,
+                                                innerHTML: key(record, index)
+                                              }, null, 8 /* PROPS */, _hoisted_44))
+                                            : (openBlock(), createElementBlock("span", {
+                                                key: 6,
+                                                innerHTML: record[key[0]]
+                                              }, null, 8 /* PROPS */, _hoisted_45))
                               ]))
-                            : createCommentVNode("v-if", true)
-                        ], 8 /* PROPS */, _hoisted_44)
-                      ], 64 /* STABLE_FRAGMENT */))
-                    }), 128 /* KEYED_FRAGMENT */))
+                            }), 128 /* KEYED_FRAGMENT */)),
+                            ($props.actions)
+                              ? (openBlock(), createElementBlock("td", _hoisted_46, [
+                                  (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
+                                    return (openBlock(), createElementBlock(Fragment, {
+                                      key: act.path
+                                    }, [
+                                      (!act.permission || $options.user.isAllowedTo(act.permission))
+                                        ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+                                            (!act.validator || act.validator(record))
+                                              ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+                                                  (act.emits)
+                                                    ? (openBlock(), createElementBlock("button", {
+                                                        key: 0,
+                                                        title: act.title,
+                                                        class: normalizeClass(act.class ? act.class:'btn btn-default'),
+                                                        onClick: $event => ($options.doEmitAction(act.emits,record))
+                                                      }, toDisplayString(act.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_47))
+                                                    : createCommentVNode("v-if", true),
+                                                  (!act.emits)
+                                                    ? (openBlock(), createBlock(_component_router_link, {
+                                                        key: 1,
+                                                        title: act.title,
+                                                        to: $options.replaceActionUrl(act.path,record),
+                                                        class: normalizeClass(act.class)
+                                                      }, {
+                                                        default: withCtx(() => [
+                                                          createTextVNode(toDisplayString(act.label), 1 /* TEXT */)
+                                                        ]),
+                                                        _: 2 /* DYNAMIC */
+                                                      }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
+                                                    : createCommentVNode("v-if", true)
+                                                ], 64 /* STABLE_FRAGMENT */))
+                                              : createCommentVNode("v-if", true)
+                                          ], 64 /* STABLE_FRAGMENT */))
+                                        : createCommentVNode("v-if", true)
+                                    ], 64 /* STABLE_FRAGMENT */))
+                                  }), 128 /* KEYED_FRAGMENT */))
+                                ]))
+                              : createCommentVNode("v-if", true)
+                          ], 10 /* CLASS, PROPS */, _hoisted_39))
+                        }), 128 /* KEYED_FRAGMENT */))
+                      : createCommentVNode("v-if", true)
+            ])
+          ]))
+        : (openBlock(), createElementBlock("div", _hoisted_48, [
+            ($data.loading === 'loading')
+              ? (openBlock(), createElementBlock("div", _hoisted_49, _hoisted_51))
+              : ($data.loading === 'error')
+                ? (openBlock(), createElementBlock("div", _hoisted_52, [
+                    createElementVNode("span", null, toDisplayString($data.loading_error), 1 /* TEXT */)
                   ]))
-                : createCommentVNode("v-if", true)
-        ])),
+                : ($data.loading === 'done')
+                  ? (openBlock(), createElementBlock("div", _hoisted_53, [
+                      (openBlock(true), createElementBlock(Fragment, null, renderList($data.records, (record, index) => {
+                        return (openBlock(), createElementBlock(Fragment, {
+                          key: record.id
+                        }, [
+                          createElementVNode("h3", null, toDisplayString(_ctx.mobile_view), 1 /* TEXT */),
+                          createElementVNode("div", {
+                            class: "single-mobile-req bg-light p-3",
+                            onClick: $event => ($options.rowSelected(record))
+                          }, [
+                            (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (key) => {
+                              return (openBlock(), createElementBlock(Fragment, {
+                                key: key[0]
+                              }, [
+                                (typeof key === 'string' )
+                                  ? (openBlock(), createElementBlock("p", _hoisted_55, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                  : (typeof key === 'function')
+                                    ? (openBlock(), createElementBlock("p", _hoisted_56, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
+                                    : (openBlock(), createElementBlock("p", _hoisted_57, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
+                                createElementVNode("span", null, [
+                                  (typeof key === 'string' && $props.links && $props.links[key])
+                                    ? (openBlock(), createBlock(_component_router_link, {
+                                        key: 0,
+                                        to: $options.replaceLinkUrl($props.links[key],record),
+                                        class: normalizeClass($options.getLinkClass($props.links[key])),
+                                        innerHTML: record[key]
+                                      }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
+                                    : ($options.getFieldType(key) === 'numeric')
+                                      ? (openBlock(), createElementBlock("span", _hoisted_58, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      : ($options.getFieldType(key) === 'money')
+                                        ? (openBlock(), createElementBlock("span", _hoisted_59, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                        : (typeof key    === 'string')
+                                          ? (openBlock(), createElementBlock("span", {
+                                              key: 3,
+                                              innerHTML: record[key]
+                                            }, null, 8 /* PROPS */, _hoisted_60))
+                                          : (typeof key === 'function')
+                                            ? (openBlock(), createElementBlock("span", {
+                                                key: 4,
+                                                innerHTML: key(record, index )
+                                              }, null, 8 /* PROPS */, _hoisted_61))
+                                            : (openBlock(), createElementBlock("span", {
+                                                key: 5,
+                                                innerHTML: record[key[0]]
+                                              }, null, 8 /* PROPS */, _hoisted_62))
+                                ]),
+                                _hoisted_63
+                              ], 64 /* STABLE_FRAGMENT */))
+                            }), 128 /* KEYED_FRAGMENT */)),
+                            ($props.actions)
+                              ? (openBlock(), createElementBlock("div", _hoisted_64, [
+                                  (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
+                                    return (openBlock(), createElementBlock(Fragment, {
+                                      key: act.path
+                                    }, [
+                                      (!act.permission || $options.user.isAllowedTo(act.permission))
+                                        ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+                                            (!act.validator || act.validator(record))
+                                              ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+                                                  (act.emits)
+                                                    ? (openBlock(), createElementBlock("button", {
+                                                        key: 0,
+                                                        title: act.title,
+                                                        class: normalizeClass(act.class ? act.class:'btn btn-default'),
+                                                        onClick: $event => ($options.doEmitAction(act.emits,record))
+                                                      }, toDisplayString(act.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_65))
+                                                    : createCommentVNode("v-if", true),
+                                                  (!act.emits)
+                                                    ? (openBlock(), createBlock(_component_router_link, {
+                                                        key: 1,
+                                                        title: act.title,
+                                                        to: $options.replaceActionUrl(act.path,record),
+                                                        class: normalizeClass(act.class)
+                                                      }, {
+                                                        default: withCtx(() => [
+                                                          createTextVNode(toDisplayString(act.label), 1 /* TEXT */)
+                                                        ]),
+                                                        _: 2 /* DYNAMIC */
+                                                      }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
+                                                    : createCommentVNode("v-if", true)
+                                                ], 64 /* STABLE_FRAGMENT */))
+                                              : createCommentVNode("v-if", true)
+                                          ], 64 /* STABLE_FRAGMENT */))
+                                        : createCommentVNode("v-if", true)
+                                    ], 64 /* STABLE_FRAGMENT */))
+                                  }), 128 /* KEYED_FRAGMENT */))
+                                ]))
+                              : createCommentVNode("v-if", true)
+                          ], 8 /* PROPS */, _hoisted_54)
+                        ], 64 /* STABLE_FRAGMENT */))
+                      }), 128 /* KEYED_FRAGMENT */))
+                    ]))
+                  : createCommentVNode("v-if", true)
+          ])),
     ($data.pagination_data)
       ? (openBlock(), createBlock(_component_pagination, {
-          key: 4,
+          key: 6,
           onLoadMoreRecords: $options.loadMoreRecords,
           "hide-load-more": $props.hideLoadMore,
           "hide-count": $props.hideCount,

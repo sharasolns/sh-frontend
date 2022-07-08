@@ -35,3 +35,22 @@ import {ShTable} from '@iankibetsh/shframework'
 
     It's the endpoint of table data, usually it's the backend api url
 - Example: `tasks/list`
+
+### 'actions'
+- Type: `object`
+- Required: `false`,
+- Default: `none`
+- Details
+
+  This will be the buttons attached to the end colum of the table containing header label, actions and action callbacks
+- Example
+
+```javascript
+actions: [
+        {
+          label: 'edit',
+          class: 'btn btn-sm btn-info',
+          emits: editUrgency
+        }
+    ]
+```

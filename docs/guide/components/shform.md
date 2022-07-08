@@ -21,7 +21,7 @@ import { ShForm } from '@iankibetsh/shframework'
 <sh-form
 :fields="['name','email','password']"
 action="users/add"
-:success_callback="userRegistered"
+:successCallback="userRegistered"
 />
 ```
 
@@ -65,7 +65,7 @@ name: 'John Doe',
 email: 'john@example.com'
 }"
 ```
-#### success_callback
+#### successCallback
 - Type: ``function/method``
 - Default: ``none``
 - Details: 

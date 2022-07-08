@@ -30,7 +30,7 @@
       <p>By clicking submit, you agree to our <a target="_blank" href="/">terms and conditions</a> and that you have read our <a target="_blank" href="https://hauzisha.co.ke/privacy-policy">privacy policy</a></p>
     </div>
     <button data-cy="sh_form_submit" class="mb-2 form-submit-btn" :class="form_status == 1 ? getSubmitBtnClass() + ' disabled': getSubmitBtnClass()"  type="button" @click="submitForm">
-      {{ action_label ? action_label:'Submit'}}
+      {{ actionLabel ? actionLabel:'Submit'}}
       <img v-if="form_status == 1" style="height: 1rem" class="float-left" src="/assets/img/spinner.gif">
     </button>
   </form>
@@ -44,7 +44,7 @@ export default {
   components: {
     ShPhone
   },
-  props: ['action', 'classes', 'hasTerms', 'country_code', 'submit_btn_class', 'fields', 'columns', 'placeholders', 'field_permissions', 'retain_data_after_submission', 'current_data', 'action_label', 'fill_selects', 'phones', 'success_callback', 'failed_callback', 'labels'],
+  props: ['action', 'classes', 'hasTerms', 'country_code', 'submitBtnClass', 'fields', 'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission', 'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback', 'failed_callback', 'labels'],
   data: function () {
     return {
       form_elements: {},
@@ -60,14 +60,9 @@ export default {
       allLabels: {}
     }
   },
-  computed: {
-    currentData () {
-      return this.current_data
-    }
-  },
   methods: {
     getSubmitBtnClass: function () {
-      const btnClass = this.submit_btn_class
+      const btnClass = this.submitBtnClass
       if (!btnClass) {
         return 'btn btn-primary mt-2'
       } else {
@@ -206,18 +201,18 @@ export default {
         this.form_status = 2
         Object.keys(this.form_elements).forEach(key => {
           this.form_errors[key] = null
-          if (!this.retain_data_after_submission) {
+          if (!this.retainDataAfterSubmission) {
             this.form_elements[key] = ''
           }
         })
         Object.keys(this.form_files).forEach(key => {
           this.form_errors[key] = null
         })
-        if (this.success_callback) {
-          if (typeof this.success_callback === 'function') {
-            this.success_callback(res.data)
+        if (this.successCallback) {
+          if (typeof this.successCallback === 'function') {
+            this.successCallback(res.data)
           } else {
-            this.$emit(this.success_callback, res.data)
+            this.$emit(this.successCallback, res.data)
           }
         }
         NProgress.done()
@@ -275,14 +270,14 @@ export default {
   },
   mounted: async function () {
     const selectData = {}
-    if (this.fill_selects) {
-      Object.keys(this.fill_selects).forEach(key => {
-        if (this.fill_selects[key].data) {
-          selectData[key] = this.fill_selects[key].data
+    if (this.fillSelects) {
+      Object.keys(this.fillSelects).forEach(key => {
+        if (this.fillSelects[key].data) {
+          selectData[key] = this.fillSelects[key].data
           this.selectData = selectData
           console.log(this.selectData)
         } else {
-          apis.doGet(this.fill_selects[key].url, { all: 1 }).then(res => {
+          apis.doGet(this.fillSelects[key].url, { all: 1 }).then(res => {
             // selectData[key] = res.data
             // console.log(res)
             this.selectData[key] = res.data.data
