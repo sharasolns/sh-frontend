@@ -14,6 +14,7 @@
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'email'" type="email" required class="form-control">
          <input :data-cy="field" type="datetime-local" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'datepicker' && isDisabled(field) === false" class="form-control active">
          <ShPhone :country_code="country_code" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'phone'" required class="form-control"/>
+         <ShEditor :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'editor'" class="form-control"/>
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
          <textarea :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'textarea'" class="form-control"></textarea>
          <select :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'select' && selectData[field] != null" class="form-control">
@@ -39,12 +40,14 @@
 import apis from './../repo/helpers/ShApis.js'
 import NProgress from 'nprogress'
 import ShPhone from './ShPhone.vue'
+import ShEditor from './FormComponent/ShEditor.vue'
 export default {
   name: 'ShForm',
   components: {
+    ShEditor,
     ShPhone
   },
-  props: ['action', 'classes', 'hasTerms', 'country_code', 'submitBtnClass', 'fields', 'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission', 'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback', 'failed_callback', 'labels'],
+  props: ['action', 'classes', 'hasTerms', 'country_code', 'submitBtnClass', 'fields', 'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission', 'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback', 'failed_callback', 'labels', 'editors'],
   data: function () {
     return {
       form_elements: {},
@@ -86,7 +89,10 @@ export default {
       const selects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type']
       const numbers = ['age']
       const datePickers = ['free_tier_days', 'recurring_date', 'date', 'paid_at']
-      const editors = ['html_content', 'listing_description', 'mail']
+      let editors = ['html_content', 'listing_description', 'mail']
+      if(this.editors){
+        editors = editors.concat(this.editors)
+      }
       const mapLocations = ['building_location']
       const files = ['file', 'logo']
       const phones = ['phone']

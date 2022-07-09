@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx, createVNode } from 'vue';
+import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx } from 'vue';
+import Editor from '@tinymce/tinymce-vue';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { defineStore } from 'pinia';
@@ -1531,7 +1532,7 @@ const countries = [
   }
 ];
 
-var script$6 = {
+var script$7 = {
   name: 'ShPhone',
   props: ['modelValue', 'country_code'],
   data () {
@@ -1593,7 +1594,7 @@ var script$6 = {
   }
 };
 
-const _hoisted_1$6 = { class: "sh-phone mb-3" };
+const _hoisted_1$7 = { class: "sh-phone mb-3" };
 const _hoisted_2$6 = {
   key: 0,
   style: {"display":"contents"}
@@ -1601,8 +1602,8 @@ const _hoisted_2$6 = {
 const _hoisted_3$6 = ["src"];
 const _hoisted_4$5 = ["value"];
 
-function render$6(_ctx, _cache, $props, $setup, $data, $options) {
-  return (openBlock(), createElementBlock("div", _hoisted_1$6, [
+function render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  return (openBlock(), createElementBlock("div", _hoisted_1$7, [
     ($data.selectedCountry)
       ? (openBlock(), createElementBlock("div", _hoisted_2$6, [
           createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$6),
@@ -1636,15 +1637,93 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
+script$7.render = render$7;
+script$7.__file = "src/views/ShPhone.vue";
+
+var script$6 = {
+  name: 'ShEditor',
+  props: ['modelValue'],
+  components: {
+    editor: Editor
+  },
+  data () {
+    return {
+      editorData: this.modelValue
+    }
+  },
+  computed: {
+    value: {
+      get () {
+        return this.modelValue
+      },
+      set (value) {
+        this.$emit('update:modelValue', value);
+      }
+    }
+  },
+  created () {
+    document.addEventListener('focusin', function (e) {
+      const closest = e.target.closest('.tox-tinymce-aux, .tox-dialog, .moxman-window, .tam-assetmanager-root');
+      if (closest !== null && closest !== undefined) {
+        e.stopImmediatePropagation();
+      }
+    });
+  },
+  mounted () {
+    this.editorData = this.modelValue;
+  },
+  methods: {
+    updateValue: function () {
+      // alert('paste')
+    }
+  }
+};
+
+const _hoisted_1$6 = /*#__PURE__*/createElementVNode("textarea", {
+  id: "tiny",
+  style: {"display":"none"},
+  "data-cy": "tinymce_editor"
+}, null, -1 /* HOISTED */);
+
+function render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_editor = resolveComponent("editor");
+
+  return (openBlock(), createElementBlock(Fragment, null, [
+    _hoisted_1$6,
+    createElementVNode("div", {
+      onFocusin: _cache[1] || (_cache[1] = withModifiers(() => {}, ["stop"])),
+      class: "sh-editor w-100"
+    }, [
+      createVNode(_component_editor, {
+        class: "tinyEditor",
+        "api-key": "v5otxmculqf59xfg2bqr2ucw56cbqgbqo4x9gym2kwbv1rvi",
+        onInput: $options.updateValue,
+        onKeyup: $options.updateValue,
+        modelValue: $options.value,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (($options.value) = $event)),
+        init: {
+      selector: 'textarea#tiny',
+      valid_children : '+body[style],+body[script]',
+      extended_valid_elements : '*[*]',
+      contextmenu: false,
+      plugins: 'lists link image emoticons code autolink',
+      toolbar: 'styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image emoticons code'
+    }
+      }, null, 8 /* PROPS */, ["onInput", "onKeyup", "modelValue"])
+    ], 32 /* HYDRATE_EVENTS */)
+  ], 64 /* STABLE_FRAGMENT */))
+}
+
 script$6.render = render$6;
-script$6.__file = "src/views/ShPhone.vue";
+script$6.__file = "src/views/FormComponent/ShEditor.vue";
 
 var script$5 = {
   name: 'ShForm',
   components: {
-    ShPhone: script$6
+    ShEditor: script$6,
+    ShPhone: script$7
   },
-  props: ['action', 'classes', 'hasTerms', 'country_code', 'submitBtnClass', 'fields', 'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission', 'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback', 'failed_callback', 'labels'],
+  props: ['action', 'classes', 'hasTerms', 'country_code', 'submitBtnClass', 'fields', 'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission', 'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback', 'failed_callback', 'labels', 'editors'],
   data: function () {
     return {
       form_elements: {},
@@ -1686,7 +1765,10 @@ var script$5 = {
       const selects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type'];
       const numbers = ['age'];
       const datePickers = ['free_tier_days', 'recurring_date', 'date', 'paid_at'];
-      const editors = ['html_content', 'listing_description', 'mail'];
+      let editors = ['html_content', 'listing_description', 'mail'];
+      if(this.editors){
+        editors = editors.concat(this.editors);
+      }
       const mapLocations = ['building_location'];
       const files = ['file', 'logo'];
       const phones = ['phone'];
@@ -1930,7 +2012,7 @@ const _hoisted_15$2 = ["name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_16$2 = ["name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_17$2 = ["value"];
 const _hoisted_18$2 = {
-  key: 9,
+  key: 10,
   class: "invalid-feedback"
 };
 const _hoisted_19$2 = {
@@ -1963,6 +2045,7 @@ const _hoisted_23$2 = {
 
 function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShPhone = resolveComponent("ShPhone");
+  const _component_ShEditor = resolveComponent("ShEditor");
 
   return (openBlock(), createElementBlock("form", _hoisted_1$5, [
     createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
@@ -2067,9 +2150,20 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
                   required: ""
                 }, null, 8 /* PROPS */, ["country_code", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
               : createCommentVNode("v-if", true),
+            ($options.getFieldType(field) === 'editor')
+              ? (openBlock(), createBlock(_component_ShEditor, {
+                  key: 6,
+                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                  name: field,
+                  onFocus: $event => ($options.removeErrors(field)),
+                  class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                  modelValue: _ctx.form_elements[field],
+                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                }, null, 8 /* PROPS */, ["placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
+              : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'text')
               ? withDirectives((openBlock(), createElementBlock("input", {
-                  key: 6,
+                  key: 7,
                   disabled: $options.isDisabled(field),
                   placeholder: field === 'phone_number' ? 'e.g 0712 345 678':'',
                   name: field,
@@ -2083,7 +2177,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'textarea')
               ? withDirectives((openBlock(), createElementBlock("textarea", {
-                  key: 7,
+                  key: 8,
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
                   class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
@@ -2094,7 +2188,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'select' && _ctx.selectData[field] != null)
               ? withDirectives((openBlock(), createElementBlock("select", {
-                  key: 8,
+                  key: 9,
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
                   class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
@@ -3423,10 +3517,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ]),
     createElementVNode("div", _hoisted_3, [
       createVNode(_component_router_view, {
-        current_tab: $data.currentTab,
+        currentTab: $data.currentTab,
         sharedData: $props.sharedData,
         tabCounts: $props.tabCounts
-      }, null, 8 /* PROPS */, ["current_tab", "sharedData", "tabCounts"])
+      }, null, 8 /* PROPS */, ["currentTab", "sharedData", "tabCounts"])
     ])
   ]))
 }
@@ -3512,4 +3606,4 @@ const useUserStore = defineStore('user-store', {
   }
 });
 
-export { script$4 as ShCanvas, script$5 as ShForm, script$3 as ShModal, script$6 as ShPhone, script$1 as ShTable, script as ShTabs, apis as shApis, helpers as shRepo, shstorage as shStorage, useUserStore };
+export { script$4 as ShCanvas, script$5 as ShForm, script$3 as ShModal, script$7 as ShPhone, script$1 as ShTable, script as ShTabs, apis as shApis, helpers as shRepo, shstorage as shStorage, useUserStore };

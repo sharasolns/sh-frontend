@@ -6,7 +6,7 @@
       </li>
     </ul>
     <div class="tab-content">
-      <router-view :current_tab="currentTab" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
+      <router-view :currentTab="currentTab" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
     </div>
   </div>
 </template>

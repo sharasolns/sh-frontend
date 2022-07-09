@@ -30,3 +30,24 @@
   font-weight: 300;
   opacity: 0.5;
 }
+
+:root {
+  --ck-z-default: 10555 !important;
+  --ck-z-modal: calc(var(--ck-z-default) + 999) !important;
+}
+.mceToolbar td {
+  display:table-row;
+  float: left;
+}
+.mceToolbar td:nth-of-type(11){
+  clear: left;
+}
+
+@media screen and (max-width:600px) {
+  .sh-editor{
+    width: 100% !important;
+  }
+  table.mceLayout, textarea.tinyMCE {
+    width: 100% !important;
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@iankibetsh/shframework",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "description": "Vue library for handling laravel backend",
   "main": "dist/library.js",
   "module": "dist/library.mjs",
@@ -8,7 +8,7 @@
     "dist/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specifieds\" && exit 1",
     "build": "rollup -c",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
@@ -22,7 +22,8 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.0.13",
     "sweetalert2": "^11.4.14",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "@tinymce/tinymce-vue": "^4.0.7"
   },
   "devDependencies": {
     "rollup": "^2.75.7",
