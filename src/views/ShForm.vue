@@ -89,9 +89,9 @@ export default {
       const selects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type']
       const numbers = ['age']
       const datePickers = ['free_tier_days', 'recurring_date', 'date', 'paid_at']
-      let editors = ['html_content', 'listing_description', 'mail']
-      if(this.editors){
-        editors = editors.concat(this.editors)
+      let realEditors = ['html_content', 'listing_description', 'mail', 'comment']
+      if(this.editors && this.editors.include(field)){
+        return 'editor'
       }
       const mapLocations = ['building_location']
       const files = ['file', 'logo']
@@ -117,7 +117,7 @@ export default {
       if (mapLocations.includes(field)) {
         return 'location'
       }
-      if (editors.includes(field)) {
+      if (realEditors.includes(field)) {
         return 'editor'
       }
       if (numbers.includes(field)) {
