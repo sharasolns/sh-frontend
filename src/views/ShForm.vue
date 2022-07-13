@@ -47,7 +47,22 @@ export default {
     ShEditor,
     ShPhone
   },
-  props: ['action', 'classes', 'hasTerms', 'country_code', 'submitBtnClass', 'fields', 'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission', 'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback', 'failed_callback', 'labels', 'editors'],
+  props: [
+      'action',
+    'classes',
+    'hasTerms',
+    'country_code',
+    'submitBtnClass',
+    'fields',
+    'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
+    'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
+    'failedCallback', 'labels', 'editors',
+    'datePickers',
+      'textAreas',
+      'files',
+      'phones',
+      'numbers'
+  ],
   data: function () {
     return {
       form_elements: {},
@@ -85,14 +100,26 @@ export default {
       }
     },
     getFieldType: function (field) {
+      if(this.editors && this.editors.includes(field)){
+        return 'editor'
+      }
+      if(this.textAreas && this.textAreas.includes(field)){
+        return 'textarea'
+      }
+      if(this.datePickers && this.datePickers.includes(field)){
+        return 'datepicker'
+      }
+      if(this.numbers && this.numbers.includes(field)){
+        return 'numeric'
+      }
+      if(this.files && this.files.includes(field)){
+        return 'file'
+      }
       const textareas = ['message', 'meta_description', 'comment', 'call_response', 'comments', 'description']
       const selects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type']
       const numbers = ['age']
       const datePickers = ['free_tier_days', 'recurring_date', 'date', 'paid_at']
       let realEditors = ['html_content', 'listing_description', 'mail', 'comment']
-      if(this.editors && this.editors.include(field)){
-        return 'editor'
-      }
       const mapLocations = ['building_location']
       const files = ['file', 'logo']
       const phones = ['phone']
