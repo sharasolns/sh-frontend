@@ -123,7 +123,7 @@ export default {
       const mapLocations = ['building_location']
       const files = ['file', 'logo']
       const phones = ['phone']
-      if (field.includes('_id') || this.selectData[field]) {
+      if (this.selectData[field]) {
         return 'select'
       }
       if (field === 'email') {

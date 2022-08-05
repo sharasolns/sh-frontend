@@ -1,5 +1,5 @@
 <template>
-<div class="auto-table mt-2">
+<div class="auto-table">
   <div class="col-md-4 mb-2" v-if="hasDownload">
     <button :disabled="downloading" class="btn btn-warning btn-sm" @click="exportData()">
       <template v-if="!downloading">
@@ -14,10 +14,7 @@
   <div class="row" v-if="!hideSearch">
     <div class="col-12 mb-3">
       <div class="sh-search-bar">
-        <input type="text" v-on:change="reloadData(1)" v-model="filter_value" :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'" class="form-control sh-search-input">
-        <span class="sh-search-icon">
-          <i class="bi bi-search mb-0"></i>
-        </span>
+        <input type="search" v-on:change="reloadData(1)" v-model="filter_value" :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'" class="form-control sh-search-input">
       </div>
     </div>
   </div>
@@ -53,8 +50,8 @@
       <slot name="records" :records="records"></slot>
     </template>
   </template>
-    <table class="table" v-else-if="windowWidth > 700">
-      <thead>
+    <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700">
+      <thead class="sh-thead">
       <tr>
         <th v-for="title in headers" :key="title[0]">
           <a class="text-capitalize"  v-on:click="changeKey('order_by',title)" v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
@@ -66,7 +63,7 @@
         </th>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="sh-tbody">
       <tr class="text-center" v-if="loading === 'loading'">
         <td :colspan="headers.length">
           <div class="text-center">
@@ -172,7 +169,7 @@ import moment from 'moment'
 import helpers from './../repo/helpers/ShRepo.js'
 export default {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],
   inject: ['channel', 'global'],
   data () {
     return {

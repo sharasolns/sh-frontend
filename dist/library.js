@@ -1612,7 +1612,7 @@ const _hoisted_2$6 = {
   style: {"display":"contents"}
 };
 const _hoisted_3$6 = ["src"];
-const _hoisted_4$5 = ["value"];
+const _hoisted_4$6 = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$7, [
@@ -1631,7 +1631,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
         return (vue.openBlock(), vue.createElementBlock("option", {
           value: country,
           key: country.dialCode
-        }, vue.toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$5))
+        }, vue.toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$6))
       }), 128 /* KEYED_FRAGMENT */))
     ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
       [vue.vModelSelect, $data.selectedCountry]
@@ -1811,7 +1811,7 @@ var script$5 = {
       const mapLocations = ['building_location'];
       const files = ['file', 'logo'];
       const phones = ['phone'];
-      if (field.includes('_id') || this.selectData[field]) {
+      if (this.selectData[field]) {
         return 'select'
       }
       if (field === 'email') {
@@ -2033,10 +2033,10 @@ const _hoisted_2$5 = {
   class: "alert alert-danger"
 };
 const _hoisted_3$5 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-warning" }, null, -1 /* HOISTED */);
-const _hoisted_4$4 = /*#__PURE__*/vue.createTextVNode(" Error");
-const _hoisted_5$3 = [
+const _hoisted_4$5 = /*#__PURE__*/vue.createTextVNode(" Error");
+const _hoisted_5$4 = [
   _hoisted_3$5,
-  _hoisted_4$4
+  _hoisted_4$5
 ];
 const _hoisted_6$2 = { class: "row" };
 const _hoisted_7$2 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
@@ -2090,7 +2090,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
     vue.createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
     vue.createCommentVNode("    <div v-if=\"form_status == 2\" class=\"alert alert-success\">Success</div>"),
     (_ctx.form_status == 3)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$5, _hoisted_5$3))
+      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$5, _hoisted_5$4))
       : vue.createCommentVNode("v-if", true),
     vue.withDirectives(vue.createElementVNode("input", {
       type: "hidden",
@@ -2293,7 +2293,7 @@ const _hoisted_3$4 = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$3 = { class: "offcanvas-body" };
+const _hoisted_4$4 = { class: "offcanvas-body" };
 
 function render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", {
@@ -2314,7 +2314,7 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         "aria-label": "Close"
       }, null, 512 /* NEED_PATCH */)
     ]),
-    vue.createElementVNode("div", _hoisted_4$3, [
+    vue.createElementVNode("div", _hoisted_4$4, [
       vue.renderSlot(_ctx.$slots, "default")
     ])
   ], 10 /* CLASS, PROPS */, _hoisted_1$4))
@@ -2333,8 +2333,8 @@ var script$3 = {
 const _hoisted_1$3 = ["id"];
 const _hoisted_2$3 = { class: "modal-content" };
 const _hoisted_3$3 = { class: "modal-header" };
-const _hoisted_4$2 = { class: "modal-title" };
-const _hoisted_5$2 = /*#__PURE__*/vue.createElementVNode("button", {
+const _hoisted_4$3 = { class: "modal-title" };
+const _hoisted_5$3 = /*#__PURE__*/vue.createElementVNode("button", {
   class: "btn btn-danger btn-sm",
   "data-bs-dismiss": "modal",
   "data-dismiss": "modal"
@@ -2355,8 +2355,8 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     }, [
       vue.createElementVNode("div", _hoisted_2$3, [
         vue.createElementVNode("div", _hoisted_3$3, [
-          vue.createElementVNode("h3", _hoisted_4$2, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
-          _hoisted_5$2
+          vue.createElementVNode("h3", _hoisted_4$3, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
+          _hoisted_5$3
         ]),
         vue.createElementVNode("div", _hoisted_6$1, [
           vue.createElementVNode("div", _hoisted_7$1, [
@@ -2445,10 +2445,10 @@ var script$2 = {
 const _hoisted_1$2 = { key: 0 };
 const _hoisted_2$2 = { class: "record_count_body mb-3" };
 const _hoisted_3$2 = /*#__PURE__*/vue.createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
-const _hoisted_4$1 = /*#__PURE__*/vue.createTextVNode("  ");
-const _hoisted_5$1 = /*#__PURE__*/vue.createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
+const _hoisted_4$2 = /*#__PURE__*/vue.createTextVNode("  ");
+const _hoisted_5$2 = /*#__PURE__*/vue.createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
 const _hoisted_10$1 = [
-  _hoisted_5$1
+  _hoisted_5$2
 ];
 const _hoisted_11$1 = { class: "record_counts" };
 const _hoisted_12$1 = {
@@ -2492,7 +2492,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
     ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$2, [
         vue.createElementVNode("div", _hoisted_2$2, [
           _hoisted_3$2,
-          _hoisted_4$1,
+          _hoisted_4$2,
           vue.withDirectives(vue.createElementVNode("select", {
             class: "select_per_page",
             onChange: _cache[0] || (_cache[0] = (...args) => ($options.changePerPage && $options.changePerPage(...args))),
@@ -2738,7 +2738,7 @@ var helpers = {
 
 var script$1 = {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],
   inject: ['channel', 'global'],
   data () {
     return {
@@ -2953,14 +2953,14 @@ var script$1 = {
   }
 };
 
-const _hoisted_1$1 = { class: "auto-table mt-2" };
+const _hoisted_1$1 = { class: "auto-table" };
 const _hoisted_2$1 = {
   key: 0,
   class: "col-md-4 mb-2"
 };
 const _hoisted_3$1 = ["disabled"];
-const _hoisted_4 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
-const _hoisted_5 = /*#__PURE__*/vue.createTextVNode(" Export ");
+const _hoisted_4$1 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
+const _hoisted_5$1 = /*#__PURE__*/vue.createTextVNode(" Export ");
 const _hoisted_6 = /*#__PURE__*/vue.createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
@@ -2974,56 +2974,51 @@ const _hoisted_8 = {
 const _hoisted_9 = { class: "col-12 mb-3" };
 const _hoisted_10 = { class: "sh-search-bar" };
 const _hoisted_11 = ["placeholder"];
-const _hoisted_12 = /*#__PURE__*/vue.createElementVNode("span", { class: "sh-search-icon" }, [
-  /*#__PURE__*/vue.createElementVNode("i", { class: "bi bi-search mb-0" })
-], -1 /* HOISTED */);
-const _hoisted_13 = {
+const _hoisted_12 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_14 = /*#__PURE__*/vue.createElementVNode("div", {
+const _hoisted_13 = /*#__PURE__*/vue.createElementVNode("div", {
   class: "spinner-border",
   role: "status"
 }, [
   /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...")
 ], -1 /* HOISTED */);
-const _hoisted_15 = [
-  _hoisted_14
+const _hoisted_14 = [
+  _hoisted_13
 ];
-const _hoisted_16 = {
+const _hoisted_15 = {
   key: 1,
   class: "alert alert-danger"
 };
-const _hoisted_17 = { colspan: 2 };
-const _hoisted_18 = {
+const _hoisted_16 = { colspan: 2 };
+const _hoisted_17 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_19 = /*#__PURE__*/vue.createElementVNode("div", {
+const _hoisted_18 = /*#__PURE__*/vue.createElementVNode("div", {
   class: "spinner-border",
   role: "status"
 }, [
   /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...")
 ], -1 /* HOISTED */);
-const _hoisted_20 = [
-  _hoisted_19
+const _hoisted_19 = [
+  _hoisted_18
 ];
-const _hoisted_21 = {
+const _hoisted_20 = {
   key: 1,
   class: "alert alert-danger"
 };
-const _hoisted_22 = { colspan: 2 };
-const _hoisted_23 = {
-  key: 4,
-  class: "table"
-};
+const _hoisted_21 = { colspan: 2 };
+const _hoisted_22 = { class: "sh-thead" };
+const _hoisted_23 = ["onClick"];
 const _hoisted_24 = ["onClick"];
 const _hoisted_25 = ["onClick"];
-const _hoisted_26 = ["onClick"];
-const _hoisted_27 = {
+const _hoisted_26 = {
   key: 0,
   class: "text-capitalize"
 };
+const _hoisted_27 = { class: "sh-tbody" };
 const _hoisted_28 = {
   key: 0,
   class: "text-center"
@@ -3131,8 +3126,8 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           }, [
             (!$data.downloading)
               ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
-                  _hoisted_4,
-                  _hoisted_5
+                  _hoisted_4$1,
+                  _hoisted_5$1
                 ], 64 /* STABLE_FRAGMENT */))
               : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
                   _hoisted_6,
@@ -3146,15 +3141,14 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           vue.createElementVNode("div", _hoisted_9, [
             vue.createElementVNode("div", _hoisted_10, [
               vue.withDirectives(vue.createElementVNode("input", {
-                type: "text",
+                type: "search",
                 onChange: _cache[1] || (_cache[1] = $event => ($options.reloadData(1))),
                 "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => (($data.filter_value) = $event)),
                 placeholder: $props.searchPlaceholder ? $props.searchPlaceholder : 'Search',
                 class: "form-control sh-search-input"
               }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_11), [
                 [vue.vModelText, $data.filter_value]
-              ]),
-              _hoisted_12
+              ])
             ])
           ])
         ]))
@@ -3162,10 +3156,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
     ($options.hasDefaultSlot)
       ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 2 }, [
           ($data.loading === 'loading')
-            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_13, _hoisted_15))
+            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_12, _hoisted_14))
             : ($data.loading === 'error')
-              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_16, [
-                  vue.createElementVNode("span", _hoisted_17, vue.toDisplayString($data.loading_error), 1 /* TEXT */)
+              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_15, [
+                  vue.createElementVNode("span", _hoisted_16, vue.toDisplayString($data.loading_error), 1 /* TEXT */)
                 ]))
               : vue.createCommentVNode("v-if", true),
           ($data.loading === 'done')
@@ -3181,10 +3175,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
     ($options.hasRecordsSlot)
       ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 3 }, [
           ($data.loading === 'loading')
-            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_18, _hoisted_20))
+            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_17, _hoisted_19))
             : ($data.loading === 'error')
-              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_21, [
-                  vue.createElementVNode("span", _hoisted_22, vue.toDisplayString($data.loading_error), 1 /* TEXT */)
+              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_20, [
+                  vue.createElementVNode("span", _hoisted_21, vue.toDisplayString($data.loading_error), 1 /* TEXT */)
                 ]))
               : vue.createCommentVNode("v-if", true),
           ($data.loading === 'done')
@@ -3195,8 +3189,11 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
             : vue.createCommentVNode("v-if", true)
         ], 64 /* STABLE_FRAGMENT */))
       : ($options.windowWidth > 700)
-        ? (vue.openBlock(), vue.createElementBlock("table", _hoisted_23, [
-            vue.createElementVNode("thead", null, [
+        ? (vue.openBlock(), vue.createElementBlock("table", {
+            key: 4,
+            class: vue.normalizeClass(["table sh-table", $props.tableHover ? 'table-hover':''])
+          }, [
+            vue.createElementVNode("thead", _hoisted_22, [
               vue.createElementVNode("tr", null, [
                 (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.headers, (title) => {
                   return (vue.openBlock(), vue.createElementBlock("th", {
@@ -3207,26 +3204,26 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                           key: 0,
                           class: "text-capitalize",
                           onClick: $event => ($options.changeKey('order_by',title))
-                        }, vue.toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
+                        }, vue.toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_23))
                       : (typeof title === 'function')
                         ? (vue.openBlock(), vue.createElementBlock("a", {
                             key: 1,
                             class: "text-capitalize",
                             onClick: $event => ($options.changeKey('order_by',title))
-                          }, vue.toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
+                          }, vue.toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
                         : (vue.openBlock(), vue.createElementBlock("a", {
                             key: 2,
                             class: "text-capitalize",
                             onClick: $event => ($options.changeKey('order_by',title[0]))
-                          }, vue.toDisplayString(title[1].replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_26))
+                          }, vue.toDisplayString(title[1].replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
                   ]))
                 }), 128 /* KEYED_FRAGMENT */)),
                 ($props.actions)
-                  ? (vue.openBlock(), vue.createElementBlock("th", _hoisted_27, vue.toDisplayString($props.actions.label), 1 /* TEXT */))
+                  ? (vue.openBlock(), vue.createElementBlock("th", _hoisted_26, vue.toDisplayString($props.actions.label), 1 /* TEXT */))
                   : vue.createCommentVNode("v-if", true)
               ])
             ]),
-            vue.createElementVNode("tbody", null, [
+            vue.createElementVNode("tbody", _hoisted_27, [
               ($data.loading === 'loading')
                 ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_28, [
                     vue.createElementVNode("td", {
@@ -3328,7 +3325,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                         }), 128 /* KEYED_FRAGMENT */))
                       : vue.createCommentVNode("v-if", true)
             ])
-          ]))
+          ], 2 /* CLASS */))
         : (vue.openBlock(), vue.createElementBlock("div", _hoisted_48, [
             ($data.loading === 'loading')
               ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_49, _hoisted_51))
@@ -3450,10 +3447,12 @@ script$1.__file = "src/views/ShTable.vue";
 
 var script = {
   name: 'ShTabs',
-  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts'],
+  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive'],
   data () {
     return {
-      currentTab: ''
+      currentTab: '',
+      generatedId: null,
+      isResponsive: typeof this.responsive !== 'undefined'
     }
   },
   watch: {
@@ -3473,9 +3472,16 @@ var script = {
     }
   },
   mounted () {
+    this.generatedId =  'tab' + Math.random().toString(36).slice(2);
     this.resetTabCounts();
+    this.setTab(this.tabs[0]);
   },
   methods: {
+    setTab: function(tab){
+      if(tab){
+        this.currentTab = tab.replace(/_/g, ' ');
+      }
+    },
     setTabCounts: function (tabCounts) {
       if (typeof tabCounts === 'object') {
         this.setCounts(tabCounts);
@@ -3507,7 +3513,7 @@ var script = {
     },
     setCounts: function (res) {
       Object.keys(res).forEach(key => {
-        const elem = document.getElementById('sh_tab_' + key);
+        let elem = document.getElementsByClassName('sh_tab_' + key);
         if (elem) {
           let txt = elem.innerHTML;
           txt = txt.split('<i class="d-none"></i>')[0];
@@ -3520,48 +3526,75 @@ var script = {
   }
 };
 
-const _hoisted_1 = { class: "common_tabs" };
-const _hoisted_2 = {
-  class: "nav nav-tabs mb-2",
-  id: "myTab",
-  role: "tablist"
+const _hoisted_1 = {
+  key: 0,
+  class: "navbar navbar-expand-lg sh-horizontal-tabs"
 };
-const _hoisted_3 = { class: "tab-content" };
+const _hoisted_2 = ["data-bs-target"];
+const _hoisted_3 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-chevron-right float-end" }, null, -1 /* HOISTED */);
+const _hoisted_4 = ["id"];
+const _hoisted_5 = { class: "tab-content" };
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = vue.resolveComponent("router-link");
   const _component_router_view = vue.resolveComponent("router-view");
 
-  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1, [
-    vue.createElementVNode("ul", _hoisted_2, [
-      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.tabs, (tab) => {
-        return (vue.openBlock(), vue.createElementBlock("li", {
-          class: "nav-item",
-          key: tab
-        }, [
-          vue.createVNode(_component_router_link, {
-            "active-class": 'active',
-            class: "nav-link text-capitalize",
-            to: $props.baseUrl+'/tab/'+tab,
-            role: "tab",
-            id: 'sh_tab_' + tab
-          }, {
-            default: vue.withCtx(() => [
-              vue.createTextVNode(vue.toDisplayString(tab.replace(/_/g, ' ')), 1 /* TEXT */)
-            ]),
-            _: 2 /* DYNAMIC */
-          }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to", "id"])
+  return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+    ($data.generatedId)
+      ? (vue.openBlock(), vue.createElementBlock("nav", _hoisted_1, [
+          ($data.isResponsive)
+            ? (vue.openBlock(), vue.createElementBlock("a", {
+                key: 0,
+                href: "#",
+                class: "form-control navbar-toggler text-capitalize",
+                "data-bs-toggle": "collapse",
+                "data-bs-target": '#' + $data.generatedId,
+                "aria-controls": "navbarNav",
+                "aria-expanded": "false",
+                "aria-label": "Toggle navigation"
+              }, [
+                vue.createTextVNode(vue.toDisplayString($data.currentTab) + " ", 1 /* TEXT */),
+                _hoisted_3
+              ], 8 /* PROPS */, _hoisted_2))
+            : vue.createCommentVNode("v-if", true),
+          vue.createElementVNode("div", {
+            class: vue.normalizeClass($data.isResponsive ? 'collapse navbar-collapse':''),
+            id: $data.generatedId
+          }, [
+            vue.createElementVNode("ul", {
+              class: vue.normalizeClass($data.isResponsive ? 'navbar-nav nav':'nav')
+            }, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.tabs, (tab) => {
+                return (vue.openBlock(), vue.createElementBlock("li", {
+                  class: "nav-item",
+                  key: tab
+                }, [
+                  vue.createVNode(_component_router_link, {
+                    onClick: $event => ($options.setTab(tab)),
+                    "active-class": 'active',
+                    class: vue.normalizeClass(["nav-link text-capitalize", 'sh_tab_' + tab]),
+                    to: $props.baseUrl+'/tab/'+tab,
+                    role: "tab"
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.createTextVNode(vue.toDisplayString(tab.replace(/_/g, ' ')), 1 /* TEXT */)
+                    ]),
+                    _: 2 /* DYNAMIC */
+                  }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onClick", "to", "class"])
+                ]))
+              }), 128 /* KEYED_FRAGMENT */))
+            ], 2 /* CLASS */)
+          ], 10 /* CLASS, PROPS */, _hoisted_4)
         ]))
-      }), 128 /* KEYED_FRAGMENT */))
-    ]),
-    vue.createElementVNode("div", _hoisted_3, [
+      : vue.createCommentVNode("v-if", true),
+    vue.createElementVNode("div", _hoisted_5, [
       vue.createVNode(_component_router_view, {
         currentTab: $data.currentTab,
         sharedData: $props.sharedData,
         tabCounts: $props.tabCounts
       }, null, 8 /* PROPS */, ["currentTab", "sharedData", "tabCounts"])
     ])
-  ]))
+  ], 64 /* STABLE_FRAGMENT */))
 }
 
 script.render = render;

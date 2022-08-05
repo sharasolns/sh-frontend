@@ -1,13 +1,19 @@
 <template>
-  <div class="common_tabs">
-    <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-      <li class="nav-item" v-for="tab in tabs" :key="tab">
-        <router-link :active-class="'active'" class="nav-link text-capitalize"  :to="baseUrl+'/tab/'+tab" role="tab" :id="'sh_tab_' + tab">{{ tab.replace(/_/g, ' ') }}</router-link>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <router-view :currentTab="currentTab" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
+  <nav class="navbar navbar-expand-lg sh-horizontal-tabs" v-if="generatedId">
+    <a v-if="isResponsive" href="#" class="form-control navbar-toggler text-capitalize" data-bs-toggle="collapse" :data-bs-target="'#' + generatedId" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      {{ currentTab }}
+      <i class="bi-chevron-right float-end"></i>
+    </a>
+    <div :class="isResponsive ? 'collapse navbar-collapse':''" :id="generatedId">
+      <ul :class="isResponsive ? 'navbar-nav nav':'nav'">
+        <li class="nav-item" v-for="tab in tabs" :key="tab">
+          <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"  :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">{{ tab.replace(/_/g, ' ') }}</router-link>
+        </li>
+      </ul>
     </div>
+  </nav>
+  <div class="tab-content">
+    <router-view :currentTab="currentTab" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
   </div>
 </template>
 <script>
@@ -15,10 +21,12 @@ import apis from './../repo/helpers/ShApis.js'
 
 export default {
   name: 'ShTabs',
-  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts'],
+  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive'],
   data () {
     return {
-      currentTab: ''
+      currentTab: '',
+      generatedId: null,
+      isResponsive: typeof this.responsive !== 'undefined'
     }
   },
   watch: {
@@ -38,9 +46,16 @@ export default {
     }
   },
   mounted () {
+    this.generatedId =  'tab' + Math.random().toString(36).slice(2)
     this.resetTabCounts()
+    this.setTab(this.tabs[0])
   },
   methods: {
+    setTab: function(tab){
+      if(tab){
+        this.currentTab = tab.replace(/_/g, ' ')
+      }
+    },
     setTabCounts: function (tabCounts) {
       if (typeof tabCounts === 'object') {
         this.setCounts(tabCounts)
@@ -72,7 +87,7 @@ export default {
     },
     setCounts: function (res) {
       Object.keys(res).forEach(key => {
-        const elem = document.getElementById('sh_tab_' + key)
+        let elem = document.getElementsByClassName('sh_tab_' + key)
         if (elem) {
           let txt = elem.innerHTML
           txt = txt.split('<i class="d-none"></i>')[0]
