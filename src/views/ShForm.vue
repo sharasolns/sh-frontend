@@ -14,6 +14,7 @@
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'email'" type="email" required class="form-control">
          <input :data-cy="field" type="datetime-local" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'datepicker' && isDisabled(field) === false" class="form-control active">
          <ShPhone :country_code="country_code" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'phone'" required class="form-control"/>
+         <ShSuggest :select-data="selectData[field]" :fill-selects="fillSelects[field]" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'suggest'"/>
          <ShEditor :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'editor'" class="form-control"/>
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
          <textarea :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'textarea'" class="form-control"></textarea>
@@ -41,9 +42,11 @@ import apis from './../repo/helpers/ShApis.js'
 import NProgress from 'nprogress'
 import ShPhone from './ShPhone.vue'
 import ShEditor from './FormComponent/ShEditor.vue'
+import ShSuggest from './FormComponent/ShSuggest.vue'
 export default {
   name: 'ShForm',
   components: {
+    ShSuggest,
     ShEditor,
     ShPhone
   },
@@ -75,7 +78,8 @@ export default {
       users: [],
       allPlaceHolders: {},
       user: null,
-      allLabels: {}
+      allLabels: {},
+      suggests: []
     }
   },
   methods: {
@@ -100,6 +104,9 @@ export default {
       }
     },
     getFieldType: function (field) {
+      if(this.suggests && this.suggests.includes(field)){
+        return 'suggest'
+      }
       if(this.editors && this.editors.includes(field)){
         return 'editor'
       }
@@ -305,7 +312,12 @@ export default {
     const selectData = {}
     if (this.fillSelects) {
       Object.keys(this.fillSelects).forEach(key => {
-        if (this.fillSelects[key].data) {
+        if(this.fillSelects[key].suggest || this.fillSelects[key].suggests) {
+          if (!this.suggests) {
+            this.suggests = []
+          }
+          this.suggests.push(key)
+        } else if (this.fillSelects[key].data) {
           selectData[key] = this.fillSelects[key].data
           this.selectData = selectData
           console.log(this.selectData)

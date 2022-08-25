@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx } from 'vue';
+import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx } from 'vue';
 import Editor from '@tinymce/tinymce-vue';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -1532,7 +1532,7 @@ const countries = [
   }
 ];
 
-var script$7 = {
+var script$8 = {
   name: 'ShPhone',
   props: ['modelValue', 'country_code'],
   data () {
@@ -1594,19 +1594,19 @@ var script$7 = {
   }
 };
 
-const _hoisted_1$7 = { class: "sh-phone mb-3" };
-const _hoisted_2$6 = {
+const _hoisted_1$8 = { class: "sh-phone mb-3" };
+const _hoisted_2$7 = {
   key: 0,
   style: {"display":"contents"}
 };
-const _hoisted_3$6 = ["src"];
-const _hoisted_4$6 = ["value"];
+const _hoisted_3$7 = ["src"];
+const _hoisted_4$7 = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
-  return (openBlock(), createElementBlock("div", _hoisted_1$7, [
+  return (openBlock(), createElementBlock("div", _hoisted_1$8, [
     ($data.selectedCountry)
-      ? (openBlock(), createElementBlock("div", _hoisted_2$6, [
-          createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$6),
+      ? (openBlock(), createElementBlock("div", _hoisted_2$7, [
+          createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$7),
           createTextVNode(" " + toDisplayString($data.selectedCountry.dialCode), 1 /* TEXT */)
         ]))
       : createCommentVNode("v-if", true),
@@ -1619,7 +1619,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
         return (openBlock(), createElementBlock("option", {
           value: country,
           key: country.dialCode
-        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$6))
+        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$7))
       }), 128 /* KEYED_FRAGMENT */))
     ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
       [vModelSelect, $data.selectedCountry]
@@ -1637,10 +1637,10 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$7.render = render$7;
-script$7.__file = "src/views/ShPhone.vue";
+script$8.render = render$7;
+script$8.__file = "src/views/ShPhone.vue";
 
-var script$6 = {
+var script$7 = {
   name: 'ShEditor',
   props: ['modelValue'],
   components: {
@@ -1679,7 +1679,7 @@ var script$6 = {
   }
 };
 
-const _hoisted_1$6 = /*#__PURE__*/createElementVNode("textarea", {
+const _hoisted_1$7 = /*#__PURE__*/createElementVNode("textarea", {
   id: "tiny",
   style: {"display":"none"},
   "data-cy": "tinymce_editor"
@@ -1689,7 +1689,7 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_editor = resolveComponent("editor");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$6,
+    _hoisted_1$7,
     createElementVNode("div", {
       onFocusin: _cache[1] || (_cache[1] = withModifiers(() => {}, ["stop"])),
       class: "sh-editor w-100"
@@ -1714,14 +1714,174 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$6.render = render$6;
-script$6.__file = "src/views/FormComponent/ShEditor.vue";
+script$7.render = render$6;
+script$7.__file = "src/views/FormComponent/ShEditor.vue";
+
+const _hoisted_1$6 = {
+  key: 0,
+  class: "dropdown sh-suggest"
+};
+const _hoisted_2$6 = ["id"];
+const _hoisted_3$6 = { class: "badge bg-secondary m-1 sh-selected-item" };
+const _hoisted_4$6 = ["onClick"];
+const _hoisted_5$5 = ["id"];
+const _hoisted_6$3 = ["aria-labelledby"];
+const _hoisted_7$3 = { key: 0 };
+const _hoisted_8$2 = ["onClick"];
+const _hoisted_9$2 = {
+  key: 1,
+  class: "dropdown-item sh-suggest-no-results"
+};
+const _hoisted_10$3 = {
+  key: 2,
+  class: "dropdown-item sh-suggest-no-input"
+};
+
+
+var script$6 = {
+  __name: 'ShSuggest',
+  props: ['fillSelects','modelValue'],
+  emits: ['update:modelValue'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+
+let id = ref(null);
+ref(null);
+let suggestions = ref(null);
+let selectedSuggestions = ref([]);
+onMounted(() => {
+  id.value = 'sid' + (Math.random() + 1).toString(36).substring(7);
+  resetData();
+});
+function resetData(){
+  if(props.fillSelects.data) {
+    suggestions.value = props.fillSelects.data;
+  }
+}
+function addSuggestion(sgn){
+  let selected = selectedSuggestions.value;
+  if(selected.length > 0 && !props.fillSelects.allow_multiple){
+    selected = [];
+  }
+  if(!selected.includes(sgn)){
+    selected.push(sgn);
+    selectedSuggestions.value = selected;
+  }
+  updateModelValue();
+  document.getElementById('input_' + id.value).innerHTML = '';
+}
+function updateModelValue(){
+  let selectedItems = selectedSuggestions.value;
+  if(selectedItems.length === 0) {
+    emit('update:modelValue', null);
+  }  else if (!props.fillSelects.allow_multiple) {
+    emit('update:modelValue', selectedItems[0].id);
+  } else {
+    const ids = selectedItems.map(item => {
+      return item.id
+    });
+    emit('update:modelValue', ids);
+  }
+}
+function removeSuggestion(sgt){
+  selectedSuggestions.value  = selectedSuggestions.value.filter(selectedSgt=>{
+    if(selectedSgt.id !== sgt) {
+      return selectedSgt
+    }
+  });
+  updateModelValue();
+}
+let searchText = ref(null);
+function filterData(e){
+  let filterValue = e.target.innerText;
+  searchText.value = filterValue;
+  if(props.fillSelects.data) {
+    suggestions.value = props.fillSelects.data.filter(item=>{
+      if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
+        return item
+      }
+    });
+  } else {
+    apis.doGet(props.fillSelects.url, { all: 1,filter_value: filterValue }).then(res => {
+      suggestions.value = res.data.data;
+    }).catch(res => {
+      console.log(res);
+    });
+  }
+}
+
+return (_ctx, _cache) => {
+  return (unref(id))
+    ? (openBlock(), createElementBlock("div", _hoisted_1$6, [
+        createElementVNode("div", {
+          id: unref(id),
+          "data-bs-toggle": "dropdown",
+          class: "form-control p-0 d-flex sh-suggest-control dropdown-toggle",
+          "aria-expanded": "false"
+        }, [
+          createElementVNode("div", null, [
+            (openBlock(true), createElementBlock(Fragment, null, renderList(unref(selectedSuggestions), (sgt) => {
+              return (openBlock(), createElementBlock("h5", _hoisted_3$6, [
+                createTextVNode(toDisplayString(sgt.name) + " ", 1 /* TEXT */),
+                createElementVNode("button", {
+                  onClick: $event => (removeSuggestion(sgt.id)),
+                  type: "button",
+                  class: "btn-close border-start border-1 ms-1",
+                  "aria-label": "Close"
+                }, null, 8 /* PROPS */, _hoisted_4$6)
+              ]))
+            }), 256 /* UNKEYED_FRAGMENT */))
+          ]),
+          createElementVNode("div", {
+            id: 'input_' + unref(id),
+            contenteditable: "true",
+            onInput: filterData,
+            class: "flex-fill h-100 sh-suggestion-input"
+          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$5)
+        ], 8 /* PROPS */, _hoisted_2$6),
+        createElementVNode("ul", {
+          class: "dropdown-menu w-100",
+          "aria-labelledby": unref(id)
+        }, [
+          (unref(suggestions) && unref(suggestions).length > 0)
+            ? (openBlock(true), createElementBlock(Fragment, { key: 0 }, renderList(unref(suggestions), (suggestion) => {
+                return (openBlock(), createElementBlock(Fragment, {
+                  key: suggestion.id
+                }, [
+                  (suggestion.name)
+                    ? (openBlock(), createElementBlock("li", _hoisted_7$3, [
+                        createElementVNode("a", {
+                          onClick: $event => (addSuggestion(suggestion)),
+                          class: normalizeClass(["dropdown-item", unref(selectedSuggestions).includes(suggestion) ? 'active':'']),
+                          href: "#"
+                        }, toDisplayString(suggestion.name ?? suggestion.text), 11 /* TEXT, CLASS, PROPS */, _hoisted_8$2)
+                      ]))
+                    : createCommentVNode("v-if", true)
+                ], 64 /* STABLE_FRAGMENT */))
+              }), 128 /* KEYED_FRAGMENT */))
+            : (unref(searchText))
+              ? (openBlock(), createElementBlock("li", _hoisted_9$2, " No results found "))
+              : (openBlock(), createElementBlock("li", _hoisted_10$3, " Type to search... "))
+        ], 8 /* PROPS */, _hoisted_6$3)
+      ]))
+    : createCommentVNode("v-if", true)
+}
+}
+
+};
+
+script$6.__scopeId = "data-v-043a2b8f";
+script$6.__file = "src/views/FormComponent/ShSuggest.vue";
 
 var script$5 = {
   name: 'ShForm',
   components: {
-    ShEditor: script$6,
-    ShPhone: script$7
+    ShSuggest: script$6,
+    ShEditor: script$7,
+    ShPhone: script$8
   },
   props: [
       'action',
@@ -1751,7 +1911,8 @@ var script$5 = {
       users: [],
       allPlaceHolders: {},
       user: null,
-      allLabels: {}
+      allLabels: {},
+      suggests: []
     }
   },
   methods: {
@@ -1776,6 +1937,9 @@ var script$5 = {
       }
     },
     getFieldType: function (field) {
+      if(this.suggests && this.suggests.includes(field)){
+        return 'suggest'
+      }
       if(this.editors && this.editors.includes(field)){
         return 'editor'
       }
@@ -1981,7 +2145,12 @@ var script$5 = {
     const selectData = {};
     if (this.fillSelects) {
       Object.keys(this.fillSelects).forEach(key => {
-        if (this.fillSelects[key].data) {
+        if(this.fillSelects[key].suggest || this.fillSelects[key].suggests) {
+          if (!this.suggests) {
+            this.suggests = [];
+          }
+          this.suggests.push(key);
+        } else if (this.fillSelects[key].data) {
           selectData[key] = this.fillSelects[key].data;
           this.selectData = selectData;
           console.log(this.selectData);
@@ -2039,7 +2208,7 @@ const _hoisted_15$2 = ["name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_16$2 = ["name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_17$2 = ["value"];
 const _hoisted_18$2 = {
-  key: 10,
+  key: 11,
   class: "invalid-feedback"
 };
 const _hoisted_19$2 = {
@@ -2072,6 +2241,7 @@ const _hoisted_23$2 = {
 
 function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShPhone = resolveComponent("ShPhone");
+  const _component_ShSuggest = resolveComponent("ShSuggest");
   const _component_ShEditor = resolveComponent("ShEditor");
 
   return (openBlock(), createElementBlock("form", _hoisted_1$5, [
@@ -2177,9 +2347,19 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
                   required: ""
                 }, null, 8 /* PROPS */, ["country_code", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
               : createCommentVNode("v-if", true),
+            ($options.getFieldType(field) === 'suggest')
+              ? (openBlock(), createBlock(_component_ShSuggest, {
+                  key: 6,
+                  "select-data": _ctx.selectData[field],
+                  "fill-selects": $props.fillSelects[field],
+                  class: normalizeClass(_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field),
+                  modelValue: _ctx.form_elements[field],
+                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                }, null, 8 /* PROPS */, ["select-data", "fill-selects", "class", "modelValue", "onUpdate:modelValue"]))
+              : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'editor')
               ? (openBlock(), createBlock(_component_ShEditor, {
-                  key: 6,
+                  key: 7,
                   placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
@@ -2190,7 +2370,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'text')
               ? withDirectives((openBlock(), createElementBlock("input", {
-                  key: 7,
+                  key: 8,
                   disabled: $options.isDisabled(field),
                   placeholder: field === 'phone_number' ? 'e.g 0712 345 678':'',
                   name: field,
@@ -2204,7 +2384,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'textarea')
               ? withDirectives((openBlock(), createElementBlock("textarea", {
-                  key: 8,
+                  key: 9,
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
                   class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
@@ -2215,7 +2395,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'select' && _ctx.selectData[field] != null)
               ? withDirectives((openBlock(), createElementBlock("select", {
-                  key: 9,
+                  key: 10,
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
                   class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
@@ -3666,4 +3846,4 @@ const useUserStore = defineStore('user-store', {
   }
 });
 
-export { script$4 as ShCanvas, script$5 as ShForm, script$3 as ShModal, script$7 as ShPhone, script$1 as ShTable, script as ShTabs, apis as shApis, helpers as shRepo, shstorage as shStorage, useUserStore };
+export { script$4 as ShCanvas, script$5 as ShForm, script$3 as ShModal, script$8 as ShPhone, script$1 as ShTable, script as ShTabs, apis as shApis, helpers as shRepo, shstorage as shStorage, useUserStore };
