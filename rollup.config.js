@@ -1,4 +1,5 @@
 import vue from 'rollup-plugin-vue'
+import dotenv from 'rollup-plugin-dotenv'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import css from 'rollup-plugin-css-only'
 
@@ -18,7 +19,8 @@ export default [
     plugins: [
         css(),
       vue(),
-      peerDepsExternal()
+      peerDepsExternal(),
+        dotenv(),
     ]
   }
 ]

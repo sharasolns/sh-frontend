@@ -45,12 +45,16 @@ import {ShTable} from '@iankibetsh/shframework'
   This will be the buttons attached to the end colum of the table containing header label, actions and action callbacks
 - Example
 
-```javascript
-actions: [
-        {
-          label: 'edit',
-          class: 'btn btn-sm btn-info',
-          emits: editUrgency
-        }
-    ]
+```
+:actions="{
+label: 'Action',
+        actions: [
+  {
+    label: 'EDIT',
+    class: 'btn btn-info btn-sm',
+    type: 'emitter',
+    emits: 'editDocument'
+  }
+]
+}"
 ```

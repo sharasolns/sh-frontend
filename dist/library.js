@@ -38,9 +38,10 @@ var shstorage = {
   removeItem
 };
 
-let apiUrl = window.VITE_APP_API_URL;
+let apiUrl = undefined.VITE_APP_API_URL;
+// eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
-  apiUrl = window.VITE_APP_API_PRODUCTION_URL;
+  apiUrl = undefined.VITE_APP_API_PRODUCTION_URL;
 }
 const axios = Axios__default["default"].create({
   baseURL: apiUrl

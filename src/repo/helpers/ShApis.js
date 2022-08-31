@@ -1,8 +1,9 @@
 import Axios from 'axios'
 import shstorage from '../repositories/ShStorage.js'
-let apiUrl = window.VITE_APP_API_URL
+let apiUrl = import.meta.env.VITE_APP_API_URL
+// eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
-  apiUrl = window.VITE_APP_API_PRODUCTION_URL
+  apiUrl = import.meta.env.VITE_APP_API_PRODUCTION_URL
 }
 const axios = Axios.create({
   baseURL: apiUrl
