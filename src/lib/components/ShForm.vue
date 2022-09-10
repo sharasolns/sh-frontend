@@ -1,8 +1,14 @@
 <template>
-  <form ref="ShAutoForm">
+  <form ref="ShAutoForm" class="sh-form">
 <!--    <div v-if="form_status == 1" class="alert alert-info">Processing...</div>-->
 <!--    <div v-if="form_status == 2" class="alert alert-success">Success</div>-->
-    <div v-if="form_status == 3" class="alert alert-danger"><i class="fa fa-warning"></i> Error</div>
+    <div class="alert alert-danger alert-dismissible fade show  sh-form-submission-error" v-if="form_status == 3" role="alert">
+      <i class="bi-exclamation-triangle-fill me-1"></i>
+        <span v-if="errorText">{{ errorText }}</span>
+        <span v-else>Unexpected Error Occurred</span>
+      <button @click="hideError" type="button" class="btn-close" aria-label="Close"></button>
+
+    </div>
     <input type="hidden" v-model="form_elements['id']">
     <div class="row">
     <div class="form-group" v-for="field in fields" :class="'col-md-' + getColumns()" :key="field">
@@ -31,14 +37,17 @@
       <h5>Confirm and Submit</h5>
       <p>By clicking submit, you agree to our <a target="_blank" href="/">terms and conditions</a> and that you have read our <a target="_blank" href="https://hauzisha.co.ke/privacy-policy">privacy policy</a></p>
     </div>
-    <button data-cy="sh_form_submit" class="mb-2 form-submit-btn" :class="form_status == 1 ? getSubmitBtnClass() + ' disabled': getSubmitBtnClass()"  type="button" @click="submitForm">
+    <button class="btn btn-primary" v-if="form_status == 1" type="button" :class="getSubmitBtnClass()" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Processing...
+    </button>
+    <button v-else data-cy="sh_form_submit" class="mb-2 form-submit-btn" :class="getSubmitBtnClass()"  type="button" @click="submitForm">
       {{ actionLabel ? actionLabel:'Submit'}}
-      <img v-if="form_status == 1" style="height: 1rem" class="float-left" src="/assets/img/spinner.gif">
     </button>
   </form>
 </template>
 <script>
-import apis from './../repo/helpers/ShApis.js'
+import apis from '../repo/helpers/ShApis.js'
 import NProgress from 'nprogress'
 import ShPhone from './ShPhone.vue'
 import ShEditor from './FormComponent/ShEditor.vue'
@@ -69,6 +78,8 @@ export default {
   data: function () {
     return {
       form_elements: {},
+      errorStatusCode: 0,
+      errorText: null,
       form_errors: {},
       form_status: 0,
       error_res: null,
@@ -201,6 +212,9 @@ export default {
         }
       }
     },
+    hideError: function (){
+      this.form_status = 0
+    },
     closeModal: function () {
       document.body.style = ''
       setTimeout(() => {
@@ -220,6 +234,7 @@ export default {
       }, 1500)
     },
     submitForm: async function () {
+      this.errorText = null
       // return false;
       // if (!this.validateEssentials()) {
       //   return false
@@ -264,6 +279,7 @@ export default {
         this.form_status = 3
         if (typeof reason !== 'undefined') {
           if (typeof reason.response !== 'undefined') {
+            this.errorText = reason.message
             this.setErrors(reason.response)
           } else {
             console.log('catch error')
@@ -272,6 +288,10 @@ export default {
         } else {
           console.log(reason)
         }
+        const self = this
+        setTimeout(() => {
+          self.hideError()
+        }, 4000)
       })
       return false
     },

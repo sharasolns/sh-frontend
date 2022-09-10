@@ -45,4 +45,34 @@
 <p>Example: <code v-pre>tasks/list</code></p>
 </li>
 </ul>
-</div></template>
+<h3 id="actions" tabindex="-1"><a class="header-anchor" href="#actions" aria-hidden="true">#</a> 'actions'</h3>
+<ul>
+<li>
+<p>Type: <code v-pre>object</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code>,</p>
+</li>
+<li>
+<p>Default: <code v-pre>none</code></p>
+</li>
+<li>
+<p>Details</p>
+<p>This will be the buttons attached to the end colum of the table containing header label, actions and action callbacks</p>
+</li>
+<li>
+<p>Example</p>
+</li>
+</ul>
+<div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>:actions="{
+label: 'Action',
+        actions: [
+  {
+    label: 'EDIT',
+    class: 'btn btn-info btn-sm',
+    type: 'emitter',
+    emits: 'editDocument'
+  }
+]
+}"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>

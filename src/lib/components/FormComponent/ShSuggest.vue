@@ -19,7 +19,7 @@ function resetData(){
 }
 function addSuggestion(sgn){
   let selected = selectedSuggestions.value
-  if(selected.length > 0 && !props.fillSelects.allow_multiple){
+  if(selected.length > 0 && !props.fillSelects.allowMultiple){
     selected = []
   }
   if(!selected.includes(sgn)){
@@ -33,7 +33,7 @@ function updateModelValue(){
   let selectedItems = selectedSuggestions.value
   if(selectedItems.length === 0) {
     emit('update:modelValue', null)
-  }  else if (!props.fillSelects.allow_multiple) {
+  }  else if (!props.fillSelects.allowMultiple) {
     emit('update:modelValue', selectedItems[0].id)
   } else {
     const ids = selectedItems.map(item => {
@@ -52,6 +52,10 @@ function removeSuggestion(sgt){
 }
 let searchText = ref(null)
 function filterData(e){
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value)
+  if(!dropdownElem.classList.contains('show')){
+    dropdownElem.classList.add('show')
+  }
   let filterValue = e.target.innerText
   searchText.value = filterValue
   if(props.fillSelects.data) {
@@ -80,7 +84,7 @@ function filterData(e){
       </div>
       <div :id="'input_' + id" contenteditable="true" @input="filterData" class="flex-fill h-100 sh-suggestion-input"></div>
     </div>
-    <ul class="dropdown-menu w-100" :aria-labelledby="id">
+    <ul class="dropdown-menu w-100" :id="'dropwdown_section' + id" :aria-labelledby="id">
       <template v-if="suggestions && suggestions.length > 0" v-for="suggestion in suggestions" :key="suggestion.id">
         <li v-if="suggestion.name">
           <a @click="addSuggestion(suggestion)" class="dropdown-item" :class="selectedSuggestions.includes(suggestion) ? 'active':''" href="#">{{ suggestion.name ?? suggestion.text }}</a>

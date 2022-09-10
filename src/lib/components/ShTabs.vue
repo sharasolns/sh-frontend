@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import apis from './../repo/helpers/ShApis.js'
+import apis from '../repo/helpers/ShApis.js'
 
 export default {
   name: 'ShTabs',

@@ -163,10 +163,10 @@
 </div>
 </template>
 <script>
-import apis from './../repo/helpers/ShApis.js'
+import apis from '../repo/helpers/ShApis.js'
 import pagination from './list_templates/Pagination.vue'
 import moment from 'moment'
-import helpers from './../repo/helpers/ShRepo.js'
+import helpers from '../repo/helpers/ShRepo.js'
 export default {
   name: 'sh-table',
   props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],

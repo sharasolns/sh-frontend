@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import countries from './../repo/helpers/countries'
+import countries from '../repo/helpers/countries.js'
 export default {
   name: 'ShPhone',
   props: ['modelValue', 'country_code'],

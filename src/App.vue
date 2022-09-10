@@ -28,6 +28,9 @@
           <li>
             <router-link class="dropdown-item" to="/forms">Forms</router-link>
           </li>
+          <li>
+            <router-link class="dropdown-item" to="/profile">Profile</router-link>
+          </li>
         </ul>
       </div>
     </div>
@@ -38,5 +41,4 @@
 </template>
 
 <style scoped>
-
 </style>

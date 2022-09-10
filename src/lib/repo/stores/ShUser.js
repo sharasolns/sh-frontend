@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import shstorage from '../repositories/ShStorage.js'
 import apis from '../helpers/ShApis.js'
+import moment from 'moment'
 
 export const useUserStore = defineStore('user-store', {
   state: () => ({
@@ -29,8 +30,8 @@ export const useUserStore = defineStore('user-store', {
       }
       this.user = user
       apis.doGet('auth/user').then(res => {
-        shstorage.setItem('user',res.data)
         const user = res.data
+        shstorage.setItem('user',res.data)
         user.isAllowedTo = function (slug) {
           if (this.permissions) {
             let permissions = []
