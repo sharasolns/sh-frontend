@@ -3,19 +3,19 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var Axios = require('axios');
+var pinia = require('pinia');
+var moment = require('moment');
 var NProgress = require('nprogress');
 var vue = require('vue');
 var Editor = require('@tinymce/tinymce-vue');
-var moment = require('moment');
 var Swal = require('sweetalert2');
-var pinia = require('pinia');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var Axios__default = /*#__PURE__*/_interopDefaultLegacy(Axios);
+var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
 var NProgress__default = /*#__PURE__*/_interopDefaultLegacy(NProgress);
 var Editor__default = /*#__PURE__*/_interopDefaultLegacy(Editor);
-var moment__default = /*#__PURE__*/_interopDefaultLegacy(moment);
 var Swal__default = /*#__PURE__*/_interopDefaultLegacy(Swal);
 
 function setItem (key, value) {
@@ -38,6 +38,92 @@ var shstorage = {
   removeItem
 };
 
+const useUserStore = pinia.defineStore('user-store', {
+  state: () => ({
+    user: null,
+    role: null,
+    permissions: null,
+    menus: [],
+    loggedOut: false
+  }),
+  actions: {
+    setUser (){
+      const user = shstorage.getItem('user') ? JSON.parse(shstorage.getItem('user')) : null;
+      if (user) {
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+      }
+      this.user = user;
+      apis.doGet('auth/user').then(res => {
+        const user = res.data;
+        shstorage.setItem('user',res.data);
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+        this.user = user;
+      }).catch((reason) => {
+        if (reason.response && reason.response.status) {
+          this.loggedOut = true;
+        }
+      });
+      if (this.user) {
+        if (typeof this.user.permissions === 'string') {
+          this.permissions = JSON.parse(this.user.permissions);
+        } else {
+          this.permissions = this.user.permissions;
+        }
+      }
+    },
+    signOut () {
+      shstorage.setItem('user',null);
+      shstorage.setItem('access_token',null);
+      this.user = null;
+    },
+    logOut () {
+      this.signOut();
+    },
+    getUser () {
+      this.setUser();
+    },
+    setAccessToken (accessToken) {
+      shstorage.setItem('access_token', accessToken);
+      this.setUser();
+    }
+  },
+  getters: {
+    userId (state) {
+      return state.user === null ? null:state.user.id
+    }
+  }
+});
+
+const shSetSessionChecker = () => {
+
+};
+
+var shSession = {
+  shSetSessionChecker
+};
+
 let apiUrl = undefined.VITE_APP_API_URL;
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
@@ -47,6 +133,7 @@ const axios = Axios__default["default"].create({
   baseURL: apiUrl
 });
 function doGet (endPoint, data) {
+  shSession.shSetSessionChecker();
   return axios.get(endPoint, {
     params: data,
     crossOrigin: true,
@@ -57,6 +144,7 @@ function doGet (endPoint, data) {
   })
 }
 function doPost (endPoint, data) {
+  shSession.shSetSessionChecker();
   return axios.post(endPoint,
     data,
     {
@@ -1651,7 +1739,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$8.render = render$7;
-script$8.__file = "src/views/ShPhone.vue";
+script$8.__file = "src/lib/components/ShPhone.vue";
 
 var script$7 = {
   name: 'ShEditor',
@@ -1728,7 +1816,7 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$7.render = render$6;
-script$7.__file = "src/views/FormComponent/ShEditor.vue";
+script$7.__file = "src/lib/components/FormComponent/ShEditor.vue";
 
 const _hoisted_1$6 = {
   key: 0,
@@ -1738,7 +1826,7 @@ const _hoisted_2$6 = ["id"];
 const _hoisted_3$6 = { class: "badge bg-secondary m-1 sh-selected-item" };
 const _hoisted_4$6 = ["onClick"];
 const _hoisted_5$5 = ["id"];
-const _hoisted_6$3 = ["aria-labelledby"];
+const _hoisted_6$3 = ["id", "aria-labelledby"];
 const _hoisted_7$3 = { key: 0 };
 const _hoisted_8$2 = ["onClick"];
 const _hoisted_9$2 = {
@@ -1776,7 +1864,7 @@ function resetData(){
 }
 function addSuggestion(sgn){
   let selected = selectedSuggestions.value;
-  if(selected.length > 0 && !props.fillSelects.allow_multiple){
+  if(selected.length > 0 && !props.fillSelects.allowMultiple){
     selected = [];
   }
   if(!selected.includes(sgn)){
@@ -1790,7 +1878,7 @@ function updateModelValue(){
   let selectedItems = selectedSuggestions.value;
   if(selectedItems.length === 0) {
     emit('update:modelValue', null);
-  }  else if (!props.fillSelects.allow_multiple) {
+  }  else if (!props.fillSelects.allowMultiple) {
     emit('update:modelValue', selectedItems[0].id);
   } else {
     const ids = selectedItems.map(item => {
@@ -1809,6 +1897,10 @@ function removeSuggestion(sgt){
 }
 let searchText = vue.ref(null);
 function filterData(e){
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value);
+  if(!dropdownElem.classList.contains('show')){
+    dropdownElem.classList.add('show');
+  }
   let filterValue = e.target.innerText;
   searchText.value = filterValue;
   if(props.fillSelects.data) {
@@ -1857,6 +1949,7 @@ return (_ctx, _cache) => {
         ], 8 /* PROPS */, _hoisted_2$6),
         vue.createElementVNode("ul", {
           class: "dropdown-menu w-100",
+          id: 'dropwdown_section' + vue.unref(id),
           "aria-labelledby": vue.unref(id)
         }, [
           (vue.unref(suggestions) && vue.unref(suggestions).length > 0)
@@ -1886,8 +1979,8 @@ return (_ctx, _cache) => {
 
 };
 
-script$6.__scopeId = "data-v-043a2b8f";
-script$6.__file = "src/views/FormComponent/ShSuggest.vue";
+script$6.__scopeId = "data-v-5b767123";
+script$6.__file = "src/lib/components/FormComponent/ShSuggest.vue";
 
 var script$5 = {
   name: 'ShForm',
@@ -1915,6 +2008,8 @@ var script$5 = {
   data: function () {
     return {
       form_elements: {},
+      errorStatusCode: 0,
+      errorText: null,
       form_errors: {},
       form_status: 0,
       error_res: null,
@@ -2047,6 +2142,9 @@ var script$5 = {
         }
       }
     },
+    hideError: function (){
+      this.form_status = 0;
+    },
     closeModal: function () {
       document.body.style = '';
       setTimeout(() => {
@@ -2066,6 +2164,7 @@ var script$5 = {
       }, 1500);
     },
     submitForm: async function () {
+      this.errorText = null;
       // return false;
       // if (!this.validateEssentials()) {
       //   return false
@@ -2110,6 +2209,7 @@ var script$5 = {
         this.form_status = 3;
         if (typeof reason !== 'undefined') {
           if (typeof reason.response !== 'undefined') {
+            this.errorText = reason.message;
             this.setErrors(reason.response);
           } else {
             console.log('catch error');
@@ -2118,6 +2218,10 @@ var script$5 = {
         } else {
           console.log(reason);
         }
+        const self = this;
+        setTimeout(() => {
+          self.hideError();
+        }, 4000);
       });
       return false
     },
@@ -2197,17 +2301,18 @@ var script$5 = {
   }
 };
 
-const _hoisted_1$5 = { ref: "ShAutoForm" };
+const _hoisted_1$5 = {
+  ref: "ShAutoForm",
+  class: "sh-form"
+};
 const _hoisted_2$5 = {
   key: 0,
-  class: "alert alert-danger"
+  class: "alert alert-danger alert-dismissible fade show sh-form-submission-error",
+  role: "alert"
 };
-const _hoisted_3$5 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-warning" }, null, -1 /* HOISTED */);
-const _hoisted_4$5 = /*#__PURE__*/vue.createTextVNode(" Error");
-const _hoisted_5$4 = [
-  _hoisted_3$5,
-  _hoisted_4$5
-];
+const _hoisted_3$5 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
+const _hoisted_4$5 = { key: 0 };
+const _hoisted_5$4 = { key: 1 };
 const _hoisted_6$2 = { class: "row" };
 const _hoisted_7$2 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
 const _hoisted_8$1 = { class: "col-md-12" };
@@ -2245,12 +2350,16 @@ const _hoisted_22$2 = [
   _hoisted_20$2,
   _hoisted_21$2
 ];
-const _hoisted_23$2 = {
-  key: 0,
-  style: {"height":"1rem"},
-  class: "float-left",
-  src: "/assets/img/spinner.gif"
-};
+const _hoisted_23$2 = /*#__PURE__*/vue.createElementVNode("span", {
+  class: "spinner-border spinner-border-sm",
+  role: "status",
+  "aria-hidden": "true"
+}, null, -1 /* HOISTED */);
+const _hoisted_24$1 = /*#__PURE__*/vue.createTextVNode(" Processing... ");
+const _hoisted_25$1 = [
+  _hoisted_23$2,
+  _hoisted_24$1
+];
 
 function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShPhone = vue.resolveComponent("ShPhone");
@@ -2261,11 +2370,22 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
     vue.createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
     vue.createCommentVNode("    <div v-if=\"form_status == 2\" class=\"alert alert-success\">Success</div>"),
     (_ctx.form_status == 3)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$5, _hoisted_5$4))
+      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$5, [
+          _hoisted_3$5,
+          (_ctx.errorText)
+            ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_4$5, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
+            : (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$4, "Unexpected Error Occurred")),
+          vue.createElementVNode("button", {
+            onClick: _cache[0] || (_cache[0] = (...args) => ($options.hideError && $options.hideError(...args))),
+            type: "button",
+            class: "btn-close",
+            "aria-label": "Close"
+          })
+        ]))
       : vue.createCommentVNode("v-if", true),
     vue.withDirectives(vue.createElementVNode("input", {
       type: "hidden",
-      "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((_ctx.form_elements['id']) = $event))
+      "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ((_ctx.form_elements['id']) = $event))
     }, null, 512 /* NEED_PATCH */), [
       [vue.vModelText, _ctx.form_elements['id']]
     ]),
@@ -2434,22 +2554,25 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
     ($props.hasTerms)
       ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_19$2, _hoisted_22$2))
       : vue.createCommentVNode("v-if", true),
-    vue.createElementVNode("button", {
-      "data-cy": "sh_form_submit",
-      class: vue.normalizeClass(["mb-2 form-submit-btn", _ctx.form_status == 1 ? $options.getSubmitBtnClass() + ' disabled': $options.getSubmitBtnClass()]),
-      type: "button",
-      onClick: _cache[1] || (_cache[1] = (...args) => ($options.submitForm && $options.submitForm(...args)))
-    }, [
-      vue.createTextVNode(vue.toDisplayString($props.actionLabel ? $props.actionLabel:'Submit') + " ", 1 /* TEXT */),
-      (_ctx.form_status == 1)
-        ? (vue.openBlock(), vue.createElementBlock("img", _hoisted_23$2))
-        : vue.createCommentVNode("v-if", true)
-    ], 2 /* CLASS */)
+    (_ctx.form_status == 1)
+      ? (vue.openBlock(), vue.createElementBlock("button", {
+          key: 2,
+          class: vue.normalizeClass(["btn btn-primary", $options.getSubmitBtnClass()]),
+          type: "button",
+          disabled: ""
+        }, _hoisted_25$1, 2 /* CLASS */))
+      : (vue.openBlock(), vue.createElementBlock("button", {
+          key: 3,
+          "data-cy": "sh_form_submit",
+          class: vue.normalizeClass(["mb-2 form-submit-btn", $options.getSubmitBtnClass()]),
+          type: "button",
+          onClick: _cache[2] || (_cache[2] = (...args) => ($options.submitForm && $options.submitForm(...args)))
+        }, vue.toDisplayString($props.actionLabel ? $props.actionLabel:'Submit'), 3 /* TEXT, CLASS */))
   ], 512 /* NEED_PATCH */))
 }
 
 script$5.render = render$5;
-script$5.__file = "src/views/ShForm.vue";
+script$5.__file = "src/lib/components/ShForm.vue";
 
 var script$4 = {
   name: 'ShCanvas',
@@ -2502,7 +2625,7 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$4.render = render$4;
-script$4.__file = "src/views/ShCanvas.vue";
+script$4.__file = "src/lib/components/ShCanvas.vue";
 
 var script$3 = {
   name: 'ShModal',
@@ -2550,7 +2673,7 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$3.render = render$3;
-script$3.__file = "src/views/ShModal.vue";
+script$3.__file = "src/lib/components/ShModal.vue";
 
 var script$2 = {
   name: 'Pagination',
@@ -2743,7 +2866,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$2.render = render$2;
-script$2.__file = "src/views/list_templates/Pagination.vue";
+script$2.__file = "src/lib/components/list_templates/Pagination.vue";
 
 function swalSuccess (message) {
   Swal__default["default"].fire('Success!', message, 'success');
@@ -3624,7 +3747,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script$1.render = render$1;
-script$1.__file = "src/views/ShTable.vue";
+script$1.__file = "src/lib/components/ShTable.vue";
 
 var script = {
   name: 'ShTabs',
@@ -3779,85 +3902,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 }
 
 script.render = render;
-script.__file = "src/views/ShTabs.vue";
-
-const useUserStore = pinia.defineStore('user-store', {
-  state: () => ({
-    user: null,
-    role: null,
-    permissions: null,
-    menus: [],
-    loggedOut: false
-  }),
-  actions: {
-    setUser (){
-      const user = shstorage.getItem('user') ? JSON.parse(shstorage.getItem('user')) : null;
-      if (user) {
-        user.isAllowedTo = function (slug) {
-          if (this.permissions) {
-            let permissions = [];
-            if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions);
-            } else {
-              permissions = this.permissions;
-            }
-            return permissions.includes(slug)
-          }
-          return false
-        };
-      }
-      this.user = user;
-      apis.doGet('auth/user').then(res => {
-        shstorage.setItem('user',res.data);
-        const user = res.data;
-        user.isAllowedTo = function (slug) {
-          if (this.permissions) {
-            let permissions = [];
-            if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions);
-            } else {
-              permissions = this.permissions;
-            }
-            return permissions.includes(slug)
-          }
-          return false
-        };
-        this.user = user;
-      }).catch((reason) => {
-        if (reason.response && reason.response.status) {
-          this.loggedOut = true;
-        }
-      });
-      if (this.user) {
-        if (typeof this.user.permissions === 'string') {
-          this.permissions = JSON.parse(this.user.permissions);
-        } else {
-          this.permissions = this.user.permissions;
-        }
-      }
-    },
-    signOut () {
-      shstorage.setItem('user',null);
-      shstorage.setItem('access_token',null);
-      this.user = null;
-    },
-    logOut () {
-      this.signOut();
-    },
-    getUser () {
-      this.setUser();
-    },
-    setAccessToken (accessToken) {
-      shstorage.setItem('access_token', accessToken);
-      this.setUser();
-    }
-  },
-  getters: {
-    userId (state) {
-      return state.user === null ? null:state.user.id
-    }
-  }
-});
+script.__file = "src/lib/components/ShTabs.vue";
 
 exports.ShCanvas = script$4;
 exports.ShForm = script$5;
