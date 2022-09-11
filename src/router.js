@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from './views/home.vue'
 import Forms from './views/Forms.vue'
 import Profile from './views/Profile.vue'
+import DynamicTabs from './views/DynamicTabs.vue'
 const routes = [
   {
     path: '/',
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/forms',
     component: Forms
+  },
+  {
+    path: '/dynamic-tabs',
+    component: DynamicTabs
   },
   {
     path: '/profile',

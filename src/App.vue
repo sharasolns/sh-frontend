@@ -29,6 +29,9 @@
             <router-link class="dropdown-item" to="/forms">Forms</router-link>
           </li>
           <li>
+            <router-link class="dropdown-item" to="/dynamic-tabs">Sh Dynamic Tabs</router-link>
+          </li>
+          <li>
             <router-link class="dropdown-item" to="/profile">Profile</router-link>
           </li>
         </ul>

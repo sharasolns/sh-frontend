@@ -31,21 +31,6 @@
   opacity: 0.5;
 }
 
-.sh-selected-item{
-  line-height: unset!important;
-}
-.sh-suggestion-input{
-  padding: 0.375rem 0.75rem;
-}
-.sh-suggest{
-  margin-bottom: 1rem;
-}
-.sh-suggest-control::after{
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-right: 0.255em;
-}
-
 :root {
   --ck-z-default: 10555 !important;
   --ck-z-modal: calc(var(--ck-z-default) + 999) !important;
@@ -65,4 +50,19 @@
   table.mceLayout, textarea.tinyMCE {
     width: 100% !important;
   }
+}
+
+.sh-selected-item{
+  line-height: unset!important;
+}
+.sh-suggestion-input{
+  padding: 0.375rem 0.75rem;
+}
+.sh-suggest{
+  margin-bottom: 1rem;
+}
+.sh-suggest-control::after{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 0.255em;
 }

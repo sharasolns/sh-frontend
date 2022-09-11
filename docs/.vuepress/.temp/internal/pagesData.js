@@ -21,10 +21,10 @@ export const pagesData = {
   "v-53551194": () => import(/* webpackChunkName: "v-53551194" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/index.html.js").then(({ data }) => data),
   // path: /guide/helpers/shapi/
   "v-0a554840": () => import(/* webpackChunkName: "v-0a554840" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shapi/index.html.js").then(({ data }) => data),
-  // path: /guide/helpers/shrepo/
-  "v-60c0d1d2": () => import(/* webpackChunkName: "v-60c0d1d2" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shrepo/index.html.js").then(({ data }) => data),
   // path: /guide/helpers/shuser/
   "v-60f14c99": () => import(/* webpackChunkName: "v-60f14c99" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shuser/index.html.js").then(({ data }) => data),
+  // path: /guide/helpers/shrepo/
+  "v-60c0d1d2": () => import(/* webpackChunkName: "v-60c0d1d2" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shrepo/index.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"/private/var/www/vue/libraries/sh-frontend/docs/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
 }

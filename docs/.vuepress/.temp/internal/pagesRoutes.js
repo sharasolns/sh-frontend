@@ -10,7 +10,7 @@ export const pagesRoutes = [
   ["v-21493bd9","/guide/components/shtabs.html",{"title":"Sh Tabs"},["/guide/components/shtabs","/guide/components/shtabs.md"]],
   ["v-53551194","/guide/helpers/",{"title":"Helpers"},["/guide/helpers/index.html","/guide/helpers/README.md"]],
   ["v-0a554840","/guide/helpers/shapi/",{"title":"shApi"},["/guide/helpers/shapi/index.html","/guide/helpers/shapi/README.md"]],
-  ["v-60c0d1d2","/guide/helpers/shrepo/",{"title":"shRepo"},["/guide/helpers/shrepo/index.html","/guide/helpers/shrepo/README.md"]],
   ["v-60f14c99","/guide/helpers/shuser/",{"title":"shUser"},["/guide/helpers/shuser/index.html","/guide/helpers/shuser/README.md"]],
+  ["v-60c0d1d2","/guide/helpers/shrepo/",{"title":"shRepo"},["/guide/helpers/shrepo/index.html","/guide/helpers/shrepo/README.md"]],
   ["v-3706649a","/404.html",{"title":""},["/404"]],
 ]
