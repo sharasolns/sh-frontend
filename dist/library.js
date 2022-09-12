@@ -47,10 +47,12 @@ const checkSession = function (isCheking) {
   const started = moment__default["default"](sessionStart);
   if(!sessionStart){
     ShStorage.removeItem('access_token');
+    ShStorage.removeItem('user');
     return false
   }
   const pastMinutes = moment__default["default"]().diff(started, 'minutes');
   if(pastMinutes >= timeout) {
+    ShStorage.removeItem('user');
     ShStorage.removeItem('access_token');
     return false
   }

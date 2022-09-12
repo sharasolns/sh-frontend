@@ -13,10 +13,12 @@ const checkSession = function (isCheking) {
   const started = moment(sessionStart)
   if(!sessionStart){
     ShStorage.removeItem('access_token')
+    ShStorage.removeItem('user')
     return false
   }
   const pastMinutes = moment().diff(started, 'minutes')
   if(pastMinutes >= timeout) {
+    ShStorage.removeItem('user')
     ShStorage.removeItem('access_token')
     return false
   }
