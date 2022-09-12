@@ -1,5 +1,6 @@
 <script setup>
-
+import {inject} from 'vue'
+const timeOut = inject('sessionTimeout')
 </script>
 <template>
   <nav class="navbar navbar-expand-lg bg-light">
@@ -38,6 +39,7 @@
       </div>
     </div>
     <div class="col-md-9 col-12">
+      <h5>Timeout: {{ timeOut }}</h5>
       <router-view/>
     </div>
   </div>

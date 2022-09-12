@@ -9,6 +9,7 @@ import { useUserStore } from './lib/repo/stores/ShUser.js'
 import shApis from './lib/repo/helpers/ShApis.js'
 import shRepo from './lib/repo/helpers/ShRepo.js'
 import shStorage from './lib/repo/repositories/ShStorage.js'
+import ShFrontend from './lib/plugins/ShFrontend.js'
 
 export {
   ShForm,
@@ -21,5 +22,6 @@ export {
   useUserStore,
     shRepo,
     shApis,
-    shStorage
+    shStorage,
+    ShFrontend
 }

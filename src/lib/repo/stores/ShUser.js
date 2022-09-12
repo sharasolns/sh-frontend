@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import shstorage from '../repositories/ShStorage.js'
 import apis from '../helpers/ShApis.js'
 import moment from 'moment'
+import ShStorage from '../repositories/ShStorage.js'
 
 export const useUserStore = defineStore('user-store', {
   state: () => ({
@@ -57,6 +58,8 @@ export const useUserStore = defineStore('user-store', {
           this.permissions = this.user.permissions
         }
       }
+      const timeNow = moment().toISOString()
+      ShStorage.setItem('session_start',timeNow)
     },
     signOut () {
       shstorage.setItem('user',null)

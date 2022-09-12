@@ -3,12 +3,12 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var Axios = require('axios');
-var pinia = require('pinia');
 var moment = require('moment');
-var NProgress = require('nprogress');
 var vue = require('vue');
+var NProgress = require('nprogress');
 var Editor = require('@tinymce/tinymce-vue');
 var Swal = require('sweetalert2');
+var pinia = require('pinia');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -32,96 +32,34 @@ function getItem (key) {
 function removeItem (key) {
   return localStorage.removeItem(key)
 }
-var shstorage = {
+var ShStorage = {
   setItem,
   getItem,
   removeItem
 };
 
-const useUserStore = pinia.defineStore('user-store', {
-  state: () => ({
-    user: null,
-    role: null,
-    permissions: null,
-    menus: [],
-    loggedOut: false
-  }),
-  actions: {
-    setUser (){
-      const user = shstorage.getItem('user') ? JSON.parse(shstorage.getItem('user')) : null;
-      if (user) {
-        user.isAllowedTo = function (slug) {
-          if (this.permissions) {
-            let permissions = [];
-            if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions);
-            } else {
-              permissions = this.permissions;
-            }
-            return permissions.includes(slug)
-          }
-          return false
-        };
-      }
-      this.user = user;
-      apis.doGet('auth/user').then(res => {
-        const user = res.data;
-        shstorage.setItem('user',res.data);
-        user.isAllowedTo = function (slug) {
-          if (this.permissions) {
-            let permissions = [];
-            if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions);
-            } else {
-              permissions = this.permissions;
-            }
-            return permissions.includes(slug)
-          }
-          return false
-        };
-        this.user = user;
-      }).catch((reason) => {
-        if (reason.response && reason.response.status) {
-          this.loggedOut = true;
-        }
-      });
-      if (this.user) {
-        if (typeof this.user.permissions === 'string') {
-          this.permissions = JSON.parse(this.user.permissions);
-        } else {
-          this.permissions = this.user.permissions;
-        }
-      }
-    },
-    signOut () {
-      shstorage.setItem('user',null);
-      shstorage.setItem('access_token',null);
-      this.user = null;
-    },
-    logOut () {
-      this.signOut();
-    },
-    getUser () {
-      this.setUser();
-    },
-    setAccessToken (accessToken) {
-      shstorage.setItem('access_token', accessToken);
-      this.setUser();
-    }
-  },
-  getters: {
-    userId (state) {
-      return state.user === null ? null:state.user.id
-    }
+const checkSession = function (isCheking) {
+  let timeout = vue.inject('sessionTimeout');
+  if(!timeout){
+    timeout = 30;
   }
-});
-
-const shSetSessionChecker = () => {
-
-};
-
-var shSession = {
-  shSetSessionChecker
+  const sessionStart = ShStorage.getItem('session_start');
+  const started = moment__default["default"](sessionStart);
+  if(!sessionStart){
+    ShStorage.removeItem('access_token');
+    return false
+  }
+  const pastMinutes = moment__default["default"]().diff(started, 'minutes');
+  if(pastMinutes >= timeout) {
+    ShStorage.removeItem('access_token');
+    return false
+  }
+  if (isCheking) {
+    return true
+  }
+  const timeNow = moment__default["default"]().toISOString();
+  ShStorage.setItem('session_start', timeNow);
+  return true
 };
 
 let apiUrl = undefined.VITE_APP_API_URL;
@@ -133,23 +71,27 @@ const axios = Axios__default["default"].create({
   baseURL: apiUrl
 });
 function doGet (endPoint, data) {
-  shSession.shSetSessionChecker();
+  if(!checkSession()){
+    window.location.reload();
+  }
   return axios.get(endPoint, {
     params: data,
     crossOrigin: true,
     headers: {
-      Authorization: 'Bearer ' + shstorage.getItem('access_token')
+      Authorization: 'Bearer ' + ShStorage.getItem('access_token')
       // 'X-CSRF-TOKEN': 'INVALID'
     }
   })
 }
 function doPost (endPoint, data) {
-  shSession.shSetSessionChecker();
+  if(!checkSession()){
+    window.location.reload();
+  }
   return axios.post(endPoint,
     data,
     {
       headers: {
-        Authorization: 'Bearer ' + shstorage.getItem('access_token')
+        Authorization: 'Bearer ' + ShStorage.getItem('access_token')
       }
     }
   )
@@ -3963,14 +3905,104 @@ return (_ctx, _cache) => {
 
 script.__file = "src/lib/components/ShDynamicTabs.vue";
 
+const useUserStore = pinia.defineStore('user-store', {
+  state: () => ({
+    user: null,
+    role: null,
+    permissions: null,
+    menus: [],
+    loggedOut: false
+  }),
+  actions: {
+    setUser (){
+      const user = ShStorage.getItem('user') ? JSON.parse(ShStorage.getItem('user')) : null;
+      if (user) {
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+      }
+      this.user = user;
+      apis.doGet('auth/user').then(res => {
+        const user = res.data;
+        ShStorage.setItem('user',res.data);
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+        this.user = user;
+      }).catch((reason) => {
+        if (reason.response && reason.response.status) {
+          this.loggedOut = true;
+        }
+      });
+      if (this.user) {
+        if (typeof this.user.permissions === 'string') {
+          this.permissions = JSON.parse(this.user.permissions);
+        } else {
+          this.permissions = this.user.permissions;
+        }
+      }
+      const timeNow = moment__default["default"]().toISOString();
+      ShStorage.setItem('session_start',timeNow);
+    },
+    signOut () {
+      ShStorage.setItem('user',null);
+      ShStorage.setItem('access_token',null);
+      this.user = null;
+    },
+    logOut () {
+      this.signOut();
+    },
+    getUser () {
+      this.setUser();
+    },
+    setAccessToken (accessToken) {
+      ShStorage.setItem('access_token', accessToken);
+      this.setUser();
+    }
+  },
+  getters: {
+    userId (state) {
+      return state.user === null ? null:state.user.id
+    }
+  }
+});
+
+var ShFrontend = {
+  install: (app, options) => {
+    if(options.sessionTimeout){
+      app.provide('sessionTimeout',options.sessionTimeout);
+      ShStorage.setItem('sessionTimeout',options.sessionTimeout);
+    }
+  }
+};
+
 exports.ShCanvas = script$5;
 exports.ShDynamicTabs = script;
 exports.ShForm = script$6;
+exports.ShFrontend = ShFrontend;
 exports.ShModal = script$4;
 exports.ShPhone = script$9;
 exports.ShTable = script$2;
 exports.ShTabs = script$1;
 exports.shApis = apis;
 exports.shRepo = helpers;
-exports.shStorage = shstorage;
+exports.shStorage = ShStorage;
 exports.useUserStore = useUserStore;

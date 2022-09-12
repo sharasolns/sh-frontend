@@ -43,6 +43,7 @@ module.exports = {
               '/guide/components',
               '/guide/components/shform',
               '/guide/components/shtabs',
+              '/guide/components/shdynamictabs',
               '/guide/components/shmodal',
               '/guide/components/shcanvas',
               '/guide/components/shtable'

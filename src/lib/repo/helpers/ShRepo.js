@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'
 import apis from './ShApis.js'
 import moment from 'moment'
+import {inject} from 'vue'
 function swalSuccess (message) {
   Swal.fire('Success!', message, 'success')
 }

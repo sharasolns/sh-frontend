@@ -1,7 +1,7 @@
 import Axios from 'axios'
-import ShSession from '../repositories/ShSession.js'
 import shstorage from '../repositories/ShStorage.js'
-import shSession from '../repositories/ShSession.js'
+import ShSession from './ShSession.js'
+
 let apiUrl = import.meta.env.VITE_APP_API_URL
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
@@ -11,7 +11,9 @@ const axios = Axios.create({
   baseURL: apiUrl
 })
 function doGet (endPoint, data) {
-  shSession.shSetSessionChecker()
+  if(!ShSession()){
+    window.location.reload()
+  }
   return axios.get(endPoint, {
     params: data,
     crossOrigin: true,
@@ -22,7 +24,9 @@ function doGet (endPoint, data) {
   })
 }
 function doPost (endPoint, data) {
-  shSession.shSetSessionChecker()
+  if(!ShSession()){
+    window.location.reload()
+  }
   const freeEndpoints = [
     'auth/register/client',
     'auth/login'

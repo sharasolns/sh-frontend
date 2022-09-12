@@ -1,10 +1,10 @@
 import Axios from 'axios';
-import { defineStore } from 'pinia';
 import moment from 'moment';
+import { inject, openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx, shallowRef, resolveDynamicComponent } from 'vue';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx, shallowRef, resolveDynamicComponent } from 'vue';
 import Editor from '@tinymce/tinymce-vue';
 import Swal from 'sweetalert2';
+import { defineStore } from 'pinia';
 
 function setItem (key, value) {
   let toStore = value;
@@ -20,96 +20,34 @@ function getItem (key) {
 function removeItem (key) {
   return localStorage.removeItem(key)
 }
-var shstorage = {
+var ShStorage = {
   setItem,
   getItem,
   removeItem
 };
 
-const useUserStore = defineStore('user-store', {
-  state: () => ({
-    user: null,
-    role: null,
-    permissions: null,
-    menus: [],
-    loggedOut: false
-  }),
-  actions: {
-    setUser (){
-      const user = shstorage.getItem('user') ? JSON.parse(shstorage.getItem('user')) : null;
-      if (user) {
-        user.isAllowedTo = function (slug) {
-          if (this.permissions) {
-            let permissions = [];
-            if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions);
-            } else {
-              permissions = this.permissions;
-            }
-            return permissions.includes(slug)
-          }
-          return false
-        };
-      }
-      this.user = user;
-      apis.doGet('auth/user').then(res => {
-        const user = res.data;
-        shstorage.setItem('user',res.data);
-        user.isAllowedTo = function (slug) {
-          if (this.permissions) {
-            let permissions = [];
-            if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions);
-            } else {
-              permissions = this.permissions;
-            }
-            return permissions.includes(slug)
-          }
-          return false
-        };
-        this.user = user;
-      }).catch((reason) => {
-        if (reason.response && reason.response.status) {
-          this.loggedOut = true;
-        }
-      });
-      if (this.user) {
-        if (typeof this.user.permissions === 'string') {
-          this.permissions = JSON.parse(this.user.permissions);
-        } else {
-          this.permissions = this.user.permissions;
-        }
-      }
-    },
-    signOut () {
-      shstorage.setItem('user',null);
-      shstorage.setItem('access_token',null);
-      this.user = null;
-    },
-    logOut () {
-      this.signOut();
-    },
-    getUser () {
-      this.setUser();
-    },
-    setAccessToken (accessToken) {
-      shstorage.setItem('access_token', accessToken);
-      this.setUser();
-    }
-  },
-  getters: {
-    userId (state) {
-      return state.user === null ? null:state.user.id
-    }
+const checkSession = function (isCheking) {
+  let timeout = inject('sessionTimeout');
+  if(!timeout){
+    timeout = 30;
   }
-});
-
-const shSetSessionChecker = () => {
-
-};
-
-var shSession = {
-  shSetSessionChecker
+  const sessionStart = ShStorage.getItem('session_start');
+  const started = moment(sessionStart);
+  if(!sessionStart){
+    ShStorage.removeItem('access_token');
+    return false
+  }
+  const pastMinutes = moment().diff(started, 'minutes');
+  if(pastMinutes >= timeout) {
+    ShStorage.removeItem('access_token');
+    return false
+  }
+  if (isCheking) {
+    return true
+  }
+  const timeNow = moment().toISOString();
+  ShStorage.setItem('session_start', timeNow);
+  return true
 };
 
 let apiUrl = import.meta.env.VITE_APP_API_URL;
@@ -121,23 +59,27 @@ const axios = Axios.create({
   baseURL: apiUrl
 });
 function doGet (endPoint, data) {
-  shSession.shSetSessionChecker();
+  if(!checkSession()){
+    window.location.reload();
+  }
   return axios.get(endPoint, {
     params: data,
     crossOrigin: true,
     headers: {
-      Authorization: 'Bearer ' + shstorage.getItem('access_token')
+      Authorization: 'Bearer ' + ShStorage.getItem('access_token')
       // 'X-CSRF-TOKEN': 'INVALID'
     }
   })
 }
 function doPost (endPoint, data) {
-  shSession.shSetSessionChecker();
+  if(!checkSession()){
+    window.location.reload();
+  }
   return axios.post(endPoint,
     data,
     {
       headers: {
-        Authorization: 'Bearer ' + shstorage.getItem('access_token')
+        Authorization: 'Bearer ' + ShStorage.getItem('access_token')
       }
     }
   )
@@ -3951,4 +3893,93 @@ return (_ctx, _cache) => {
 
 script.__file = "src/lib/components/ShDynamicTabs.vue";
 
-export { script$5 as ShCanvas, script as ShDynamicTabs, script$6 as ShForm, script$4 as ShModal, script$9 as ShPhone, script$2 as ShTable, script$1 as ShTabs, apis as shApis, helpers as shRepo, shstorage as shStorage, useUserStore };
+const useUserStore = defineStore('user-store', {
+  state: () => ({
+    user: null,
+    role: null,
+    permissions: null,
+    menus: [],
+    loggedOut: false
+  }),
+  actions: {
+    setUser (){
+      const user = ShStorage.getItem('user') ? JSON.parse(ShStorage.getItem('user')) : null;
+      if (user) {
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+      }
+      this.user = user;
+      apis.doGet('auth/user').then(res => {
+        const user = res.data;
+        ShStorage.setItem('user',res.data);
+        user.isAllowedTo = function (slug) {
+          if (this.permissions) {
+            let permissions = [];
+            if (typeof this.permissions === 'string') {
+              permissions = JSON.parse(this.permissions);
+            } else {
+              permissions = this.permissions;
+            }
+            return permissions.includes(slug)
+          }
+          return false
+        };
+        this.user = user;
+      }).catch((reason) => {
+        if (reason.response && reason.response.status) {
+          this.loggedOut = true;
+        }
+      });
+      if (this.user) {
+        if (typeof this.user.permissions === 'string') {
+          this.permissions = JSON.parse(this.user.permissions);
+        } else {
+          this.permissions = this.user.permissions;
+        }
+      }
+      const timeNow = moment().toISOString();
+      ShStorage.setItem('session_start',timeNow);
+    },
+    signOut () {
+      ShStorage.setItem('user',null);
+      ShStorage.setItem('access_token',null);
+      this.user = null;
+    },
+    logOut () {
+      this.signOut();
+    },
+    getUser () {
+      this.setUser();
+    },
+    setAccessToken (accessToken) {
+      ShStorage.setItem('access_token', accessToken);
+      this.setUser();
+    }
+  },
+  getters: {
+    userId (state) {
+      return state.user === null ? null:state.user.id
+    }
+  }
+});
+
+var ShFrontend = {
+  install: (app, options) => {
+    if(options.sessionTimeout){
+      app.provide('sessionTimeout',options.sessionTimeout);
+      ShStorage.setItem('sessionTimeout',options.sessionTimeout);
+    }
+  }
+};
+
+export { script$5 as ShCanvas, script as ShDynamicTabs, script$6 as ShForm, ShFrontend, script$4 as ShModal, script$9 as ShPhone, script$2 as ShTable, script$1 as ShTabs, apis as shApis, helpers as shRepo, ShStorage as shStorage, useUserStore };
