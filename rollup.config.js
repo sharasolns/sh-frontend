@@ -16,6 +16,7 @@ export default [
         file: 'dist/library.js'
       }
     ],
+    external: ['vue-router'],
     plugins: [
         css(),
       vue(),

@@ -82,7 +82,7 @@ function filterData(e){
           <button @click="removeSuggestion(sgt.id)" type="button" class="btn-close border-start border-1 ms-1" aria-label="Close"></button>
         </h5>
       </div>
-      <div :id="'input_' + id" contenteditable="true" @input="filterData" class="flex-fill h-100 sh-suggestion-input"></div>
+      <div :id="'input_' + id" contenteditable="true" @click="filterData" @input="filterData" class="flex-fill h-100 sh-suggestion-input"></div>
     </div>
     <ul class="dropdown-menu w-100" :id="'dropwdown_section' + id" :aria-labelledby="id">
       <template v-if="suggestions && suggestions.length > 0" v-for="suggestion in suggestions" :key="suggestion.id">

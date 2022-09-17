@@ -12,9 +12,6 @@ export default defineConfig({
     }
   },
   server: {
-    proxy: {
-      // string shorthand
-      '/api': 'http://localhost/sacco/public/'
-    }
+    port:3000
   }
 })

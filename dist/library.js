@@ -9,6 +9,7 @@ var NProgress = require('nprogress');
 var Editor = require('@tinymce/tinymce-vue');
 var Swal = require('sweetalert2');
 var pinia = require('pinia');
+var vueRouter = require('vue-router');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -99,7 +100,7 @@ function doPost (endPoint, data) {
   )
 }
 
-var apis = {
+var shApis = {
   doGet,
   doPost
 };
@@ -1577,7 +1578,7 @@ const countries = [
   }
 ];
 
-var script$9 = {
+var script$b = {
   name: 'ShPhone',
   props: ['modelValue', 'country_code'],
   data () {
@@ -1639,19 +1640,19 @@ var script$9 = {
   }
 };
 
-const _hoisted_1$9 = { class: "sh-phone mb-3" };
-const _hoisted_2$8 = {
+const _hoisted_1$b = { class: "sh-phone mb-3" };
+const _hoisted_2$a = {
   key: 0,
   style: {"display":"contents"}
 };
-const _hoisted_3$8 = ["src"];
-const _hoisted_4$8 = ["value"];
+const _hoisted_3$a = ["src"];
+const _hoisted_4$a = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
-  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$9, [
+  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$b, [
     ($data.selectedCountry)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$8, [
-          vue.createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$8),
+      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$a, [
+          vue.createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$a),
           vue.createTextVNode(" " + vue.toDisplayString($data.selectedCountry.dialCode), 1 /* TEXT */)
         ]))
       : vue.createCommentVNode("v-if", true),
@@ -1664,7 +1665,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
         return (vue.openBlock(), vue.createElementBlock("option", {
           value: country,
           key: country.dialCode
-        }, vue.toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$8))
+        }, vue.toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$a))
       }), 128 /* KEYED_FRAGMENT */))
     ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
       [vue.vModelSelect, $data.selectedCountry]
@@ -1682,10 +1683,10 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$9.render = render$7;
-script$9.__file = "src/lib/components/ShPhone.vue";
+script$b.render = render$7;
+script$b.__file = "src/lib/components/ShPhone.vue";
 
-var script$8 = {
+var script$a = {
   name: 'ShEditor',
   props: ['modelValue'],
   components: {
@@ -1724,7 +1725,7 @@ var script$8 = {
   }
 };
 
-const _hoisted_1$8 = /*#__PURE__*/vue.createElementVNode("textarea", {
+const _hoisted_1$a = /*#__PURE__*/vue.createElementVNode("textarea", {
   id: "tiny",
   style: {"display":"none"},
   "data-cy": "tinymce_editor"
@@ -1734,7 +1735,7 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_editor = vue.resolveComponent("editor");
 
   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
-    _hoisted_1$8,
+    _hoisted_1$a,
     vue.createElementVNode("div", {
       onFocusin: _cache[1] || (_cache[1] = vue.withModifiers(() => {}, ["stop"])),
       class: "sh-editor w-100"
@@ -1759,18 +1760,18 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$8.render = render$6;
-script$8.__file = "src/lib/components/FormComponent/ShEditor.vue";
+script$a.render = render$6;
+script$a.__file = "src/lib/components/FormComponent/ShEditor.vue";
 
-const _hoisted_1$7 = {
+const _hoisted_1$9 = {
   key: 0,
   class: "dropdown sh-suggest"
 };
-const _hoisted_2$7 = ["id"];
-const _hoisted_3$7 = { class: "badge bg-secondary m-1 sh-selected-item" };
-const _hoisted_4$7 = ["onClick"];
-const _hoisted_5$5 = ["id"];
-const _hoisted_6$3 = ["id", "aria-labelledby"];
+const _hoisted_2$9 = ["id"];
+const _hoisted_3$9 = { class: "badge bg-secondary m-1 sh-selected-item" };
+const _hoisted_4$9 = ["onClick"];
+const _hoisted_5$7 = ["id"];
+const _hoisted_6$4 = ["id", "aria-labelledby"];
 const _hoisted_7$3 = { key: 0 };
 const _hoisted_8$2 = ["onClick"];
 const _hoisted_9$2 = {
@@ -1783,7 +1784,7 @@ const _hoisted_10$3 = {
 };
 
 
-var script$7 = {
+var script$9 = {
   __name: 'ShSuggest',
   props: ['fillSelects','modelValue'],
   emits: ['update:modelValue'],
@@ -1854,7 +1855,7 @@ function filterData(e){
       }
     });
   } else {
-    apis.doGet(props.fillSelects.url, { all: 1,filter_value: filterValue }).then(res => {
+    shApis.doGet(props.fillSelects.url, { all: 1,filter_value: filterValue }).then(res => {
       suggestions.value = res.data.data;
     }).catch(res => {
       console.log(res);
@@ -1864,7 +1865,7 @@ function filterData(e){
 
 return (_ctx, _cache) => {
   return (vue.unref(id))
-    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$7, [
+    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$9, [
         vue.createElementVNode("div", {
           id: vue.unref(id),
           "data-bs-toggle": "dropdown",
@@ -1873,24 +1874,25 @@ return (_ctx, _cache) => {
         }, [
           vue.createElementVNode("div", null, [
             (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(selectedSuggestions), (sgt) => {
-              return (vue.openBlock(), vue.createElementBlock("h5", _hoisted_3$7, [
+              return (vue.openBlock(), vue.createElementBlock("h5", _hoisted_3$9, [
                 vue.createTextVNode(vue.toDisplayString(sgt.name) + " ", 1 /* TEXT */),
                 vue.createElementVNode("button", {
                   onClick: $event => (removeSuggestion(sgt.id)),
                   type: "button",
                   class: "btn-close border-start border-1 ms-1",
                   "aria-label": "Close"
-                }, null, 8 /* PROPS */, _hoisted_4$7)
+                }, null, 8 /* PROPS */, _hoisted_4$9)
               ]))
             }), 256 /* UNKEYED_FRAGMENT */))
           ]),
           vue.createElementVNode("div", {
             id: 'input_' + vue.unref(id),
             contenteditable: "true",
+            onClick: filterData,
             onInput: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$5)
-        ], 8 /* PROPS */, _hoisted_2$7),
+          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$7)
+        ], 8 /* PROPS */, _hoisted_2$9),
         vue.createElementVNode("ul", {
           class: "dropdown-menu w-100",
           id: 'dropwdown_section' + vue.unref(id),
@@ -1915,7 +1917,7 @@ return (_ctx, _cache) => {
             : (vue.unref(searchText))
               ? (vue.openBlock(), vue.createElementBlock("li", _hoisted_9$2, " No results found "))
               : (vue.openBlock(), vue.createElementBlock("li", _hoisted_10$3, " Type to search... "))
-        ], 8 /* PROPS */, _hoisted_6$3)
+        ], 8 /* PROPS */, _hoisted_6$4)
       ]))
     : vue.createCommentVNode("v-if", true)
 }
@@ -1923,15 +1925,15 @@ return (_ctx, _cache) => {
 
 };
 
-script$7.__scopeId = "data-v-5b767123";
-script$7.__file = "src/lib/components/FormComponent/ShSuggest.vue";
+script$9.__scopeId = "data-v-5b767123";
+script$9.__file = "src/lib/components/FormComponent/ShSuggest.vue";
 
-var script$6 = {
+var script$8 = {
   name: 'ShForm',
   components: {
-    ShSuggest: script$7,
-    ShEditor: script$8,
-    ShPhone: script$9
+    ShSuggest: script$9,
+    ShEditor: script$a,
+    ShPhone: script$b
   },
   props: [
       'action',
@@ -2013,7 +2015,6 @@ var script$6 = {
       const datePickers = ['free_tier_days', 'recurring_date', 'date', 'paid_at'];
       let realEditors = ['html_content', 'listing_description', 'mail', 'comment'];
       const mapLocations = ['building_location'];
-      const files = ['file', 'logo'];
       const phones = ['phone'];
       if (this.selectData[field]) {
         return 'select'
@@ -2023,9 +2024,6 @@ var script$6 = {
       }
       if (field.includes('password')) {
         return 'password'
-      }
-      if (field.includes('file')) {
-        return 'file'
       }
       if (textareas.includes(field)) {
         return 'textarea'
@@ -2049,7 +2047,7 @@ var script$6 = {
       if (selects.includes(field)) {
         return 'select'
       }
-      if (files.includes(field)) {
+      if (typeof this.files === 'array' && this.files.includes(field)) {
         return 'file'
       }
       return 'text'
@@ -2125,7 +2123,7 @@ var script$6 = {
       Object.keys(this.form_files).forEach(key => {
         data.append(key, this.form_files[key].value);
       });
-      apis.doPost(this.action, data).then(res => {
+      shApis.doPost(this.action, data).then(res => {
         // console.log(res)
         this.form_status = 2;
         Object.keys(this.form_elements).forEach(key => {
@@ -2153,8 +2151,7 @@ var script$6 = {
         this.form_status = 3;
         if (typeof reason !== 'undefined') {
           if (typeof reason.response !== 'undefined') {
-            this.errorText = reason.message;
-            this.setErrors(reason.response);
+            this.setErrors(reason.response, reason.message);
           } else {
             console.log('catch error');
             console.log(reason);
@@ -2162,10 +2159,6 @@ var script$6 = {
         } else {
           console.log(reason);
         }
-        const self = this;
-        setTimeout(() => {
-          self.hideError();
-        }, 4000);
       });
       return false
     },
@@ -2173,10 +2166,12 @@ var script$6 = {
       this.form_errors[field] = null;
       this.form_status = 0;
     },
-    setErrors: function (reason) {
-      console.log(reason);
+    setErrors: function (reason, message) {
+      console.log(reason,message);
       if (reason.status === 422) { // change this to 422 validation error response as received from laravel
         this.form_errors = reason.data.errors;
+      } else {
+        this.errorText = message;
       }
     },
     handleFileUpload: function (key) {
@@ -2216,7 +2211,7 @@ var script$6 = {
           this.selectData = selectData;
           console.log(this.selectData);
         } else {
-          apis.doGet(this.fillSelects[key].url, { all: 1 }).then(res => {
+          shApis.doGet(this.fillSelects[key].url, { all: 1 }).then(res => {
             // selectData[key] = res.data
             // console.log(res)
             this.selectData[key] = res.data.data;
@@ -2245,19 +2240,19 @@ var script$6 = {
   }
 };
 
-const _hoisted_1$6 = {
+const _hoisted_1$8 = {
   ref: "ShAutoForm",
   class: "sh-form"
 };
-const _hoisted_2$6 = {
+const _hoisted_2$8 = {
   key: 0,
   class: "alert alert-danger alert-dismissible fade show sh-form-submission-error",
   role: "alert"
 };
-const _hoisted_3$6 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
-const _hoisted_4$6 = { key: 0 };
-const _hoisted_5$4 = { key: 1 };
-const _hoisted_6$2 = { class: "row" };
+const _hoisted_3$8 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
+const _hoisted_4$8 = { key: 0 };
+const _hoisted_5$6 = { key: 1 };
+const _hoisted_6$3 = { class: "row" };
 const _hoisted_7$2 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
 const _hoisted_8$1 = { class: "col-md-12" };
 const _hoisted_9$1 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
@@ -2310,15 +2305,15 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShSuggest = vue.resolveComponent("ShSuggest");
   const _component_ShEditor = vue.resolveComponent("ShEditor");
 
-  return (vue.openBlock(), vue.createElementBlock("form", _hoisted_1$6, [
+  return (vue.openBlock(), vue.createElementBlock("form", _hoisted_1$8, [
     vue.createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
     vue.createCommentVNode("    <div v-if=\"form_status == 2\" class=\"alert alert-success\">Success</div>"),
     (_ctx.form_status == 3)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$6, [
-          _hoisted_3$6,
+      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$8, [
+          _hoisted_3$8,
           (_ctx.errorText)
-            ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_4$6, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
-            : (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$4, "Unexpected Error Occurred")),
+            ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_4$8, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
+            : (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$6, "Unexpected Error Occurred")),
           vue.createElementVNode("button", {
             onClick: _cache[0] || (_cache[0] = (...args) => ($options.hideError && $options.hideError(...args))),
             type: "button",
@@ -2333,7 +2328,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 512 /* NEED_PATCH */), [
       [vue.vModelText, _ctx.form_elements['id']]
     ]),
-    vue.createElementVNode("div", _hoisted_6$2, [
+    vue.createElementVNode("div", _hoisted_6$3, [
       (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.fields, (field) => {
         return (vue.openBlock(), vue.createElementBlock("div", {
           class: vue.normalizeClass(["form-group", 'col-md-' + $options.getColumns()]),
@@ -2515,10 +2510,10 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   ], 512 /* NEED_PATCH */))
 }
 
-script$6.render = render$5;
-script$6.__file = "src/lib/components/ShForm.vue";
+script$8.render = render$5;
+script$8.__file = "src/lib/components/ShForm.vue";
 
-var script$5 = {
+var script$7 = {
   name: 'ShCanvas',
   props: ['canvasTitle', 'canvasId', 'position'],
   components: {
@@ -2535,13 +2530,13 @@ var script$5 = {
   }
 };
 
-const _hoisted_1$5 = ["id"];
-const _hoisted_2$5 = { class: "offcanvas-header" };
-const _hoisted_3$5 = {
+const _hoisted_1$7 = ["id"];
+const _hoisted_2$7 = { class: "offcanvas-header" };
+const _hoisted_3$7 = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$5 = { class: "offcanvas-body" };
+const _hoisted_4$7 = { class: "offcanvas-body" };
 
 function render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", {
@@ -2551,8 +2546,8 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
     id: $props.canvasId,
     "aria-labelledby": "offcanvasScrollingLabel"
   }, [
-    vue.createElementVNode("div", _hoisted_2$5, [
-      vue.createElementVNode("h5", _hoisted_3$5, vue.toDisplayString($props.canvasTitle), 1 /* TEXT */),
+    vue.createElementVNode("div", _hoisted_2$7, [
+      vue.createElementVNode("h5", _hoisted_3$7, vue.toDisplayString($props.canvasTitle), 1 /* TEXT */),
       vue.createElementVNode("button", {
         type: "button",
         ref: "closecanvas",
@@ -2562,32 +2557,32 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         "aria-label": "Close"
       }, null, 512 /* NEED_PATCH */)
     ]),
-    vue.createElementVNode("div", _hoisted_4$5, [
+    vue.createElementVNode("div", _hoisted_4$7, [
       vue.renderSlot(_ctx.$slots, "default")
     ])
-  ], 10 /* CLASS, PROPS */, _hoisted_1$5))
+  ], 10 /* CLASS, PROPS */, _hoisted_1$7))
 }
 
-script$5.render = render$4;
-script$5.__file = "src/lib/components/ShCanvas.vue";
+script$7.render = render$4;
+script$7.__file = "src/lib/components/ShCanvas.vue";
 
-var script$4 = {
+var script$6 = {
   name: 'ShModal',
   props: ['modalTitle', 'modalId', 'modalSize'],
   components: {
   }
 };
 
-const _hoisted_1$4 = ["id"];
-const _hoisted_2$4 = { class: "modal-content" };
-const _hoisted_3$4 = { class: "modal-header" };
-const _hoisted_4$4 = { class: "modal-title" };
-const _hoisted_5$3 = /*#__PURE__*/vue.createElementVNode("button", {
+const _hoisted_1$6 = ["id"];
+const _hoisted_2$6 = { class: "modal-content" };
+const _hoisted_3$6 = { class: "modal-header" };
+const _hoisted_4$6 = { class: "modal-title" };
+const _hoisted_5$5 = /*#__PURE__*/vue.createElementVNode("button", {
   class: "btn btn-danger btn-sm",
   "data-bs-dismiss": "modal",
   "data-dismiss": "modal"
 }, "×", -1 /* HOISTED */);
-const _hoisted_6$1 = { class: "modal-body" };
+const _hoisted_6$2 = { class: "modal-body" };
 const _hoisted_7$1 = { class: "section" };
 
 function render$3(_ctx, _cache, $props, $setup, $data, $options) {
@@ -2601,25 +2596,25 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     vue.createElementVNode("div", {
       class: vue.normalizeClass(["modal-dialog", `modal-${$props.modalSize}`])
     }, [
-      vue.createElementVNode("div", _hoisted_2$4, [
-        vue.createElementVNode("div", _hoisted_3$4, [
-          vue.createElementVNode("h3", _hoisted_4$4, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
-          _hoisted_5$3
+      vue.createElementVNode("div", _hoisted_2$6, [
+        vue.createElementVNode("div", _hoisted_3$6, [
+          vue.createElementVNode("h3", _hoisted_4$6, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
+          _hoisted_5$5
         ]),
-        vue.createElementVNode("div", _hoisted_6$1, [
+        vue.createElementVNode("div", _hoisted_6$2, [
           vue.createElementVNode("div", _hoisted_7$1, [
             vue.renderSlot(_ctx.$slots, "default")
           ])
         ])
       ])
     ], 2 /* CLASS */)
-  ], 8 /* PROPS */, _hoisted_1$4))
+  ], 8 /* PROPS */, _hoisted_1$6))
 }
 
-script$4.render = render$3;
-script$4.__file = "src/lib/components/ShModal.vue";
+script$6.render = render$3;
+script$6.__file = "src/lib/components/ShModal.vue";
 
-var script$3 = {
+var script$5 = {
   name: 'Pagination',
   props: ['pagination_data', 'loadMore', 'hideCount', 'hideLoadMore'],
   data () {
@@ -2690,13 +2685,13 @@ var script$3 = {
   }
 };
 
-const _hoisted_1$3 = { key: 0 };
-const _hoisted_2$3 = { class: "record_count_body mb-3" };
-const _hoisted_3$3 = /*#__PURE__*/vue.createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
-const _hoisted_4$3 = /*#__PURE__*/vue.createTextVNode("  ");
-const _hoisted_5$2 = /*#__PURE__*/vue.createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
+const _hoisted_1$5 = { key: 0 };
+const _hoisted_2$5 = { class: "record_count_body mb-3" };
+const _hoisted_3$5 = /*#__PURE__*/vue.createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
+const _hoisted_4$5 = /*#__PURE__*/vue.createTextVNode("  ");
+const _hoisted_5$4 = /*#__PURE__*/vue.createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
 const _hoisted_10$1 = [
-  _hoisted_5$2
+  _hoisted_5$4
 ];
 const _hoisted_11$1 = { class: "record_counts" };
 const _hoisted_12$1 = {
@@ -2737,10 +2732,10 @@ const _hoisted_23$1 = {
 
 function render$2(_ctx, _cache, $props, $setup, $data, $options) {
   return (!$props.loadMore)
-    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$3, [
-        vue.createElementVNode("div", _hoisted_2$3, [
-          _hoisted_3$3,
-          _hoisted_4$3,
+    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$5, [
+        vue.createElementVNode("div", _hoisted_2$5, [
+          _hoisted_3$5,
+          _hoisted_4$5,
           vue.withDirectives(vue.createElementVNode("select", {
             class: "select_per_page",
             onChange: _cache[0] || (_cache[0] = (...args) => ($options.changePerPage && $options.changePerPage(...args))),
@@ -2809,8 +2804,8 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
       ]))
 }
 
-script$3.render = render$2;
-script$3.__file = "src/lib/components/list_templates/Pagination.vue";
+script$5.render = render$2;
+script$5.__file = "src/lib/components/list_templates/Pagination.vue";
 
 function swalSuccess (message) {
   Swal__default["default"].fire('Success!', message, 'success');
@@ -2848,11 +2843,11 @@ function swalHttpError (reason) {
 }
 
 function runSilentRequest (url) {
-  return apis.doPost(url)
+  return shApis.doPost(url)
 }
 
 function setTabCounts (url) {
-  apis.doGet(url).then(res => {
+  shApis.doGet(url).then(res => {
     Object.keys(res.data).forEach(key => {
       const elem = document.getElementById(key);
       if (elem === null) {
@@ -2899,7 +2894,7 @@ function formatHttpCatchError (reason) {
   return error
 }
 function getMenuCount (url) {
-  apis.doGet(url).then(res => {
+  shApis.doGet(url).then(res => {
     console.log(res);
   });
 }
@@ -2942,7 +2937,7 @@ async function runPlainRequest (url, message, title, data) {
     reverseButtons: true,
     showLoaderOnConfirm: true,
     preConfirm: () => {
-      return apis.doPost(url, data).then(function (response) {
+      return shApis.doPost(url, data).then(function (response) {
         Swal__default["default"].fire('Success!', 'Action completed successfully', 'success');
         return {
           response: response.data,
@@ -2971,7 +2966,7 @@ function formatDate(date, format) {
   return moment__default["default"](date).format(format)
 }
 
-var helpers = {
+var shRepo = {
   swalSuccess,
   swalError,
   runPlainRequest,
@@ -2984,7 +2979,7 @@ var helpers = {
   formatDate
 };
 
-var script$2 = {
+var script$4 = {
   name: 'sh-table',
   props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],
   inject: ['channel', 'global'],
@@ -3110,7 +3105,7 @@ var script$2 = {
         titles: headers,
         export: 1
       };
-      apis.doPost(this.endPoint, data).then(res => {
+      shApis.doPost(this.endPoint, data).then(res => {
         this.downloading = false;
         if (res.data.file) {
           const url = this.appUrl + 'external-download?file=' + res.data.file + '&name=' + res.data.name;
@@ -3122,7 +3117,7 @@ var script$2 = {
         console.log(reason);
         this.downloading = false;
         const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText}`;
-        helpers.swalError('Error', error);
+        shRepo.swalError('Error', error);
       });
     },
     reloadData: function (page, append) {
@@ -3140,7 +3135,7 @@ var script$2 = {
       if (this.pagination_data) {
         this.pagination_data.loading = 1;
       }
-      apis.doGet(this.endPoint, data).then(req => {
+      shApis.doGet(this.endPoint, data).then(req => {
         this.loading = 'done';
         const response = req.data.data;
         this.pagination_data = {
@@ -3183,7 +3178,7 @@ var script$2 = {
     this.reloadData();
   },
   components: {
-    pagination: script$3
+    pagination: script$5
   },
   computed: {
     windowWidth: function () {
@@ -3201,15 +3196,15 @@ var script$2 = {
   }
 };
 
-const _hoisted_1$2 = { class: "auto-table" };
-const _hoisted_2$2 = {
+const _hoisted_1$4 = { class: "auto-table mt-2" };
+const _hoisted_2$4 = {
   key: 0,
   class: "col-md-4 mb-2"
 };
-const _hoisted_3$2 = ["disabled"];
-const _hoisted_4$2 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
-const _hoisted_5$1 = /*#__PURE__*/vue.createTextVNode(" Export ");
-const _hoisted_6 = /*#__PURE__*/vue.createElementVNode("span", {
+const _hoisted_3$4 = ["disabled"];
+const _hoisted_4$4 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
+const _hoisted_5$3 = /*#__PURE__*/vue.createTextVNode(" Export ");
+const _hoisted_6$1 = /*#__PURE__*/vue.createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
@@ -3364,9 +3359,9 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = vue.resolveComponent("router-link");
   const _component_pagination = vue.resolveComponent("pagination");
 
-  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$2, [
+  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$4, [
     ($props.hasDownload)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$2, [
+      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$4, [
           vue.createElementVNode("button", {
             disabled: $data.downloading,
             class: "btn btn-warning btn-sm",
@@ -3374,14 +3369,14 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           }, [
             (!$data.downloading)
               ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
-                  _hoisted_4$2,
-                  _hoisted_5$1
+                  _hoisted_4$4,
+                  _hoisted_5$3
                 ], 64 /* STABLE_FRAGMENT */))
               : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
-                  _hoisted_6,
+                  _hoisted_6$1,
                   _hoisted_7
                 ], 64 /* STABLE_FRAGMENT */))
-          ], 8 /* PROPS */, _hoisted_3$2)
+          ], 8 /* PROPS */, _hoisted_3$4)
         ]))
       : vue.createCommentVNode("v-if", true),
     (!$props.hideSearch)
@@ -3690,10 +3685,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$2.render = render$1;
-script$2.__file = "src/lib/components/ShTable.vue";
+script$4.render = render$1;
+script$4.__file = "src/lib/components/ShTable.vue";
 
-var script$1 = {
+var script$3 = {
   name: 'ShTabs',
   props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive'],
   data () {
@@ -3734,7 +3729,7 @@ var script$1 = {
       if (typeof tabCounts === 'object') {
         this.setCounts(tabCounts);
       } else {
-        apis.doGet(tabCounts).then(res => {
+        shApis.doGet(tabCounts).then(res => {
           this.setCounts(res.data);
         });
       }
@@ -3774,14 +3769,14 @@ var script$1 = {
   }
 };
 
-const _hoisted_1$1 = {
+const _hoisted_1$3 = {
   key: 0,
   class: "navbar navbar-expand-lg sh-horizontal-tabs"
 };
-const _hoisted_2$1 = ["data-bs-target"];
-const _hoisted_3$1 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-chevron-right float-end" }, null, -1 /* HOISTED */);
-const _hoisted_4$1 = ["id"];
-const _hoisted_5 = { class: "tab-content" };
+const _hoisted_2$3 = ["data-bs-target"];
+const _hoisted_3$3 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-chevron-right float-end" }, null, -1 /* HOISTED */);
+const _hoisted_4$3 = ["id"];
+const _hoisted_5$2 = { class: "tab-content" };
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = vue.resolveComponent("router-link");
@@ -3789,7 +3784,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
     ($data.generatedId)
-      ? (vue.openBlock(), vue.createElementBlock("nav", _hoisted_1$1, [
+      ? (vue.openBlock(), vue.createElementBlock("nav", _hoisted_1$3, [
           ($data.isResponsive)
             ? (vue.openBlock(), vue.createElementBlock("a", {
                 key: 0,
@@ -3802,8 +3797,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "aria-label": "Toggle navigation"
               }, [
                 vue.createTextVNode(vue.toDisplayString($data.currentTab) + " ", 1 /* TEXT */),
-                _hoisted_3$1
-              ], 8 /* PROPS */, _hoisted_2$1))
+                _hoisted_3$3
+              ], 8 /* PROPS */, _hoisted_2$3))
             : vue.createCommentVNode("v-if", true),
           vue.createElementVNode("div", {
             class: vue.normalizeClass($data.isResponsive ? 'collapse navbar-collapse':''),
@@ -3832,10 +3827,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 ]))
               }), 128 /* KEYED_FRAGMENT */))
             ], 2 /* CLASS */)
-          ], 10 /* CLASS, PROPS */, _hoisted_4$1)
+          ], 10 /* CLASS, PROPS */, _hoisted_4$3)
         ]))
       : vue.createCommentVNode("v-if", true),
-    vue.createElementVNode("div", _hoisted_5, [
+    vue.createElementVNode("div", _hoisted_5$2, [
       vue.createVNode(_component_router_view, {
         currentTab: $data.currentTab,
         sharedData: $props.sharedData,
@@ -3845,21 +3840,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$1.render = render;
-script$1.__file = "src/lib/components/ShTabs.vue";
+script$3.render = render;
+script$3.__file = "src/lib/components/ShTabs.vue";
 
-const _hoisted_1 = {
+const _hoisted_1$2 = {
   class: "nav nav-tabs",
   role: "tablist"
 };
-const _hoisted_2 = {
+const _hoisted_2$2 = {
   class: "nav-item",
   role: "presentation"
 };
-const _hoisted_3 = ["onClick"];
-const _hoisted_4 = { class: "tab-content" };
+const _hoisted_3$2 = ["onClick"];
+const _hoisted_4$2 = { class: "tab-content" };
 
-var script = {
+var script$2 = {
   __name: 'ShDynamicTabs',
   props: ['tabs'],
   setup(__props) {
@@ -3884,17 +3879,17 @@ function setTab(tab){
 
 return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
-    vue.createElementVNode("ul", _hoisted_1, [
+    vue.createElementVNode("ul", _hoisted_1$2, [
       (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(tabs), (tab) => {
-        return (vue.openBlock(), vue.createElementBlock("li", _hoisted_2, [
+        return (vue.openBlock(), vue.createElementBlock("li", _hoisted_2$2, [
           vue.createElementVNode("button", {
             onClick: $event => (setTab(tab)),
             class: vue.normalizeClass(["nav-link", vue.unref(currentTab) === tab ? 'active':''])
-          }, vue.toDisplayString(tab.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_3)
+          }, vue.toDisplayString(tab.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_3$2)
         ]))
       }), 256 /* UNKEYED_FRAGMENT */))
     ]),
-    vue.createElementVNode("div", _hoisted_4, [
+    vue.createElementVNode("div", _hoisted_4$2, [
       (vue.unref(currentTab))
         ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(currentTab).component), { key: 0 }))
         : vue.createCommentVNode("v-if", true)
@@ -3905,7 +3900,7 @@ return (_ctx, _cache) => {
 
 };
 
-script.__file = "src/lib/components/ShDynamicTabs.vue";
+script$2.__file = "src/lib/components/ShDynamicTabs.vue";
 
 const useUserStore = pinia.defineStore('user-store', {
   state: () => ({
@@ -3933,7 +3928,7 @@ const useUserStore = pinia.defineStore('user-store', {
         };
       }
       this.user = user;
-      apis.doGet('auth/user').then(res => {
+      shApis.doGet('auth/user').then(res => {
         const user = res.data;
         ShStorage.setItem('user',res.data);
         user.isAllowedTo = function (slug) {
@@ -3987,24 +3982,316 @@ const useUserStore = pinia.defineStore('user-store', {
   }
 });
 
-var ShFrontend = {
+const _hoisted_1$1 = /*#__PURE__*/vue.createElementVNode("h5", null, "Departments (updated)", -1 /* HOISTED */);
+const _hoisted_2$1 = {
+  "data-bs-toggle": "modal",
+  ref: "addDeptBtn",
+  href: "#department_modal",
+  class: "btn btn-info btn-sm"
+};
+const _hoisted_3$1 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
+const _hoisted_4$1 = /*#__PURE__*/vue.createTextVNode(" ADD DEPARTMENT");
+const _hoisted_5$1 = [
+  _hoisted_3$1,
+  _hoisted_4$1
+];
+
+
+var script$1 = {
+  __name: 'Departments',
+  setup(__props) {
+
+vue.ref(null);
+let allPermissions = vue.ref([]);
+vue.ref([]);
+let reload = vue.ref(0);
+vue.ref(null);
+
+vue.onMounted(() => {
+  shApis.doGet('admin/departments/all-permissions').then(res => {
+    allPermissions.value = res.data;
+  });
+});
+
+function departmentAdded (response) {
+  this.reload += 1;
+}
+
+return (_ctx, _cache) => {
+  return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+    _hoisted_1$1,
+    vue.createElementVNode("a", _hoisted_2$1, _hoisted_5$1, 512 /* NEED_PATCH */),
+    vue.createVNode(script$4, {
+      reload: vue.unref(reload),
+      onRowSelected: _ctx.rowSelected,
+      headers: ['id','name','description', 'created_at'],
+      "end-point": "admin/departments/list",
+      actions: {
+      label: 'Action',
+      actions: [
+        {
+          label: 'Permissions',
+          path: '/sh-departments/permissions/{id}',
+          class: 'btn btn-info bi-lock btn-sm'
+        }
+      ]
+    }
+    }, null, 8 /* PROPS */, ["reload", "onRowSelected"]),
+    vue.createVNode(script$6, {
+      "modal-id": "department_modal",
+      "modal-title": "Department Form"
+    }, {
+      default: vue.withCtx(() => [
+        vue.createVNode(script$8, {
+          "success-callback": "departmentAdded",
+          onDepartmentAdded: departmentAdded,
+          action: "admin/departments/store",
+          fields: ['name','description']
+        })
+      ]),
+      _: 1 /* STABLE */
+    })
+  ], 64 /* STABLE_FRAGMENT */))
+}
+}
+
+};
+
+script$1.__file = "src/lib/components/core/Departments/Departments.vue";
+
+const _hoisted_1 = /*#__PURE__*/vue.createElementVNode("a", {
+  href: "#addModule",
+  class: "btn btn-info btn-sm",
+  "data-bs-toggle": "modal"
+}, [
+  /*#__PURE__*/vue.createElementVNode("i", { class: "bi-plus" }),
+  /*#__PURE__*/vue.createTextVNode(" ADD Module")
+], -1 /* HOISTED */);
+const _hoisted_2 = { class: "text-primary text-capitalize" };
+const _hoisted_3 = ["value"];
+const _hoisted_4 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-save" }, null, -1 /* HOISTED */);
+const _hoisted_5 = /*#__PURE__*/vue.createTextVNode(" Submit");
+const _hoisted_6 = [
+  _hoisted_4,
+  _hoisted_5
+];
+
+var script = {
+  __name: 'Department',
+  setup(__props) {
+
+const route = vueRouter.useRoute();
+const id = vue.ref(route.params.id);
+let department = vue.ref(null);
+let permissionCanvasBtn = vue.ref(null);
+let reload = vue.ref(1);
+let module = vue.ref(null);
+let modulePermissions = vue.ref(null);
+let selectedPermissions = vue.ref([]);
+const userStore = useUserStore();
+
+pinia.storeToRefs(userStore);
+
+vue.onMounted(() => {
+getDepartment();
+});
+
+let getModule = vue.computed(()=>{
+  return module.value
+});
+
+
+
+function moduleAdded () {
+  shRepo.showToast('module added successfully', 'success');
+  reload.value++;
+}
+function showModule (module) {
+  if (module) {
+    return '<span class="text-capitalize">' + module.module.replace('_', ' ') + '</span>'
+  }
+  return 'Module'
+}
+function deletePermission (module) {
+  shRepo.runPlainRequest('admin/departments/department/delete-department/' + module.id).then((res) => {
+    if (res.isConfirmed) {
+      reload.value++;
+      // shRepo.showToast('module removed successfully', 'success')
+    }
+  });
+}
+function viewPermissions(rModule) {
+  module.value = null;
+  permissionCanvasBtn.value.click();
+  modulePermissions.value = null;
+  selectedPermissions.value = [];
+  shApis.doGet('admin/departments/department/get-module-permissions/' + rModule.module).then(res => {
+    modulePermissions.value = res.data.permissions;
+    module.value = rModule;
+    if (rModule.permissions) {
+      selectedPermissions.value = JSON.parse(rModule.permissions);
+    }
+    console.log(module.value);
+  }).catch(ex => {
+    console.log(ex);
+    // helpers.showToast('An error occurred while fetching permissions')
+  });
+}
+function getDepartment() {
+  shApis.doGet('admin/departments/department/' + id.value).then(res => {
+    department.value = res.data.department;
+  }).catch(ex => {
+    console.log(ex);
+  });
+}
+function getPermissionLeft (menu) {
+  const len = menu.split('.').length * 2;
+  if (len > 5) {
+    return 5
+  }
+  return len
+}
+function getPermissionLabel(menu) {
+  const arr = menu.split('.');
+  return arr[arr.length - 1].replace(/_/g, ' ')
+}
+function submitPermissions() {
+  const data = {
+    permissions: selectedPermissions.value
+  };
+  shApis.doPost('admin/departments/department/permissions/' + getModule.value.id, data)
+      .then(res => {
+        reload.value++;
+        shRepo.showToast('Permissions updated', 'success');
+      });
+}
+
+return (_ctx, _cache) => {
+  return (vue.unref(department))
+    ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
+        _hoisted_1,
+        vue.createElementVNode("h5", null, "Department #" + vue.toDisplayString(vue.unref(department).id) + " - " + vue.toDisplayString(vue.unref(department).name) + " Allowed Modules", 1 /* TEXT */),
+        vue.createVNode(script$4, {
+          actions: {
+      label: 'Actions',
+      actions: [
+        {
+          label: 'Permissions',
+          emits: viewPermissions,
+          class: 'btn btn-success btn-sm'
+        },
+        {
+          label: 'Delete',
+          emits: deletePermission,
+          class: 'btn btn-danger mx-2 btn-sm'
+        }
+      ]
+    },
+          reload: vue.unref(reload),
+          headers: ['id',showModule,'created_at'],
+          "end-point": 'admin/departments/department/list-modules/' + id.value
+        }, null, 8 /* PROPS */, ["actions", "reload", "headers", "end-point"]),
+        vue.createVNode(script$6, {
+          "modal-id": "addModule",
+          "modal-title": "Add Module Department"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(script$8, {
+              "reload-select-items": vue.unref(reload),
+              "success-callback": moduleAdded,
+              "fill-selects": {
+        permission_module: {
+          url: 'admin/departments/department/list-pending-modules/' + id.value,
+          suggests: true
+        }
+      },
+              fields: ['permission_module'],
+              action: 'admin/departments/department/add-module/' + id.value
+            }, null, 8 /* PROPS */, ["reload-select-items", "fill-selects", "action"])
+          ]),
+          _: 1 /* STABLE */
+        }),
+        vue.createElementVNode("a", {
+          href: "#permissionsCanvas",
+          class: "d-none",
+          ref_key: "permissionCanvasBtn",
+          ref: permissionCanvasBtn,
+          "data-bs-toggle": "offcanvas"
+        }, null, 512 /* NEED_PATCH */),
+        vue.createVNode(script$7, {
+          "canvas-id": "permissionsCanvas",
+          position: "end enlarged",
+          "canvas-title": "Module Permissions"
+        }, {
+          default: vue.withCtx(() => [
+            (vue.unref(getModule))
+              ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
+                  vue.createElementVNode("h5", _hoisted_2, "Permissions for " + vue.toDisplayString(vue.unref(getModule).module), 1 /* TEXT */),
+                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(modulePermissions), (permission) => {
+                    return (vue.openBlock(), vue.createElementBlock("div", {
+                      key: permission,
+                      class: "list-group p-0"
+                    }, [
+                      vue.createElementVNode("label", {
+                        class: vue.normalizeClass(["list-group-item pb-0 text-capitalize", 'ms-' + getPermissionLeft(permission)])
+                      }, [
+                        vue.withDirectives(vue.createElementVNode("input", {
+                          type: "checkbox",
+                          "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(selectedPermissions) ? (selectedPermissions).value = $event : selectedPermissions = $event)),
+                          value: permission
+                        }, null, 8 /* PROPS */, _hoisted_3), [
+                          [vue.vModelCheckbox, vue.unref(selectedPermissions)]
+                        ]),
+                        vue.createTextVNode(" " + vue.toDisplayString(getPermissionLabel(permission)), 1 /* TEXT */)
+                      ], 2 /* CLASS */)
+                    ]))
+                  }), 128 /* KEYED_FRAGMENT */)),
+                  vue.createElementVNode("button", {
+                    onClick: submitPermissions,
+                    class: "btn btn-info"
+                  }, _hoisted_6)
+                ], 64 /* STABLE_FRAGMENT */))
+              : vue.createCommentVNode("v-if", true)
+          ]),
+          _: 1 /* STABLE */
+        })
+      ], 64 /* STABLE_FRAGMENT */))
+    : vue.createCommentVNode("v-if", true)
+}
+}
+
+};
+
+script.__file = "src/lib/components/core/Departments/department/Department.vue";
+
+const ShFrontend = {
   install: (app, options) => {
     if(options.sessionTimeout){
       app.provide('sessionTimeout',options.sessionTimeout);
       ShStorage.setItem('sessionTimeout',options.sessionTimeout);
     }
+    if(options.router) {
+      options.router.addRoute({
+        path: '/sh-departments',
+        component: script$1
+      });
+      options.router.addRoute({
+        path: '/sh-departments/permissions/:id',
+        component: script
+      });
+    }
   }
 };
 
-exports.ShCanvas = script$5;
-exports.ShDynamicTabs = script;
-exports.ShForm = script$6;
+exports.ShCanvas = script$7;
+exports.ShDynamicTabs = script$2;
+exports.ShForm = script$8;
 exports.ShFrontend = ShFrontend;
-exports.ShModal = script$4;
-exports.ShPhone = script$9;
-exports.ShTable = script$2;
-exports.ShTabs = script$1;
-exports.shApis = apis;
-exports.shRepo = helpers;
+exports.ShModal = script$6;
+exports.ShPhone = script$b;
+exports.ShTable = script$4;
+exports.ShTabs = script$3;
+exports.shApis = shApis;
+exports.shRepo = shRepo;
 exports.shStorage = ShStorage;
 exports.useUserStore = useUserStore;

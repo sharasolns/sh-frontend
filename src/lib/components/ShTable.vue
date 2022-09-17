@@ -1,5 +1,5 @@
 <template>
-<div class="auto-table">
+<div class="auto-table mt-2">
   <div class="col-md-4 mb-2" v-if="hasDownload">
     <button :disabled="downloading" class="btn btn-warning btn-sm" @click="exportData()">
       <template v-if="!downloading">

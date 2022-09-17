@@ -150,9 +150,6 @@ export default {
       if (field.includes('password')) {
         return 'password'
       }
-      if (field.includes('file')) {
-        return 'file'
-      }
       if (textareas.includes(field)) {
         return 'textarea'
       }
@@ -175,7 +172,7 @@ export default {
       if (selects.includes(field)) {
         return 'select'
       }
-      if (files.includes(field)) {
+      if (typeof this.files === 'array' && this.files.includes(field)) {
         return 'file'
       }
       return 'text'
@@ -279,8 +276,7 @@ export default {
         this.form_status = 3
         if (typeof reason !== 'undefined') {
           if (typeof reason.response !== 'undefined') {
-            this.errorText = reason.message
-            this.setErrors(reason.response)
+            this.setErrors(reason.response, reason.message)
           } else {
             console.log('catch error')
             console.log(reason)
@@ -288,10 +284,6 @@ export default {
         } else {
           console.log(reason)
         }
-        const self = this
-        setTimeout(() => {
-          self.hideError()
-        }, 4000)
       })
       return false
     },
@@ -299,10 +291,12 @@ export default {
       this.form_errors[field] = null
       this.form_status = 0
     },
-    setErrors: function (reason) {
-      console.log(reason)
+    setErrors: function (reason, message) {
+      console.log(reason,message)
       if (reason.status === 422) { // change this to 422 validation error response as received from laravel
         this.form_errors = reason.data.errors
+      } else {
+        this.errorText = message
       }
     },
     handleFileUpload: function (key) {

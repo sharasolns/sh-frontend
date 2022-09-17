@@ -10,7 +10,9 @@ import router from './router.js'
 const app = createApp(App)
 app.use(createPinia())
 app.use(ShFrontend,{
-  sessionTimeout: 400
+  sessionTimeout: 400,
+  router: router
 })
 app.use(router)
+
 app.mount('#main_vx_app')
