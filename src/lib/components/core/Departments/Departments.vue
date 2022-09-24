@@ -19,15 +19,14 @@ onMounted(() => {
 })
 
 function departmentAdded (response) {
-  shRepo
-  this.reload += 1
+  shRepo.showToast('Department added')
+  reload.value += 1
 }
 </script>
 <template>
-
-        <h5>Departments (updated)</h5>
-        <a data-bs-toggle="modal" ref="addDeptBtn" href="#department_modal" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> ADD DEPARTMENT</a>
-        <sh-table :reload="reload" v-on:rowSelected="rowSelected" :headers="['id','name','description', 'created_at']" end-point="admin/departments/list" :actions="{
+        <h5>Departments</h5>
+        <a data-bs-toggle="modal" ref="addDeptBtn" href="#sh-department_modal" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> ADD DEPARTMENT</a>
+        <sh-table :headers="['id','name','description', 'created_at']" end-point="admin/departments/list" :actions="{
       label: 'Action',
       actions: [
         {
@@ -37,7 +36,7 @@ function departmentAdded (response) {
         }
       ]
     }"></sh-table>
-    <sh-modal modal-id="department_modal" modal-title="Department Form">
+    <sh-modal modal-id="sh-department_modal" modal-title="Department Form">
       <sh-form success-callback="departmentAdded" @departmentAdded="departmentAdded" action="admin/departments/store" :fields="['name','description']"></sh-form>
     </sh-modal>
 </template>

@@ -1,7 +1,6 @@
 import Swal from 'sweetalert2'
 import apis from './ShApis.js'
 import moment from 'moment'
-import {inject} from 'vue'
 function swalSuccess (message) {
   Swal.fire('Success!', message, 'success')
 }
@@ -93,6 +92,7 @@ function getMenuCount (url) {
     console.log(res)
   })
 }
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -108,10 +108,16 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 })
-function showToast (message, toastType) {
+function showToast (message, toastType, position) {
   if (!toastType) {
     toastType = 'success'
   }
+  if(!position){
+    position = window.swalPosition
+  }
+  Toast.mixin({
+    position: position
+  })
   Toast.fire({
     icon: toastType,
     title: message

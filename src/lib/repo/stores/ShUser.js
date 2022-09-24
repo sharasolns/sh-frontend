@@ -48,6 +48,10 @@ export const useUserStore = defineStore('user-store', {
         this.user = user
       }).catch((reason) => {
         if (reason.response && reason.response.status) {
+          if(reason.response.status === 401) {
+            shstorage.setItem('user',null)
+            this.user = null
+          }
           this.loggedOut = true
         }
       })

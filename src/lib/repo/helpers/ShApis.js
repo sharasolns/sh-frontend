@@ -12,7 +12,7 @@ const axios = Axios.create({
 })
 function doGet (endPoint, data) {
   if(!ShSession()){
-    window.location.reload()
+    // window.location.reload()
   }
   return axios.get(endPoint, {
     params: data,
@@ -25,7 +25,7 @@ function doGet (endPoint, data) {
 }
 function doPost (endPoint, data) {
   if(!ShSession()){
-    window.location.reload()
+    // window.location.reload()
   }
   const freeEndpoints = [
     'auth/register/client',

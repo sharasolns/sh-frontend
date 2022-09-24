@@ -97,10 +97,16 @@
           <template v-for="act in actions.actions" :key="act.path">
             <template v-if="!act.permission || user.isAllowedTo(act.permission)">
               <template v-if="!act.validator || act.validator(record)">
-                <button :title="act.title"  :class="act.class ? act.class:'btn btn-default'" v-if="act.emits" @click="doEmitAction(act.emits,record)">
+                <a v-if="act.canvasId" :href="'#' + act.canvasId" data-bs-toggle="offcanvas" :class="act.class">
+                  <span v-if="act.icon" :class="act.icon"></span>
+                  {{ act.label }}
+                </a>
+                <button :title="act.title"  :class="act.class ? act.class:'btn btn-default'" v-else-if="act.emits" @click="doEmitAction(act.emits,record)">
+                  <span v-if="act.icon" :class="act.icon"></span>
                   {{ act.label }}
                 </button>
-                <router-link v-if="!act.emits" :title="act.title"  :to="replaceActionUrl(act.path,record)" :class="act.class">
+                <router-link v-else-if="!act.emits" :title="act.title"  :to="replaceActionUrl(act.path,record)" :class="act.class">
+                  <span v-if="act.icon" :class="act.icon"></span>
                   {{ act.label }}
                 </router-link>
               </template>
@@ -145,10 +151,16 @@
               <template v-for="act in actions.actions" :key="act.path">
                 <template v-if="!act.permission || user.isAllowedTo(act.permission)">
                   <template v-if="!act.validator || act.validator(record)">
-                    <button :title="act.title"  :class="act.class ? act.class:'btn btn-default'" v-if="act.emits" @click="doEmitAction(act.emits,record)">
+                    <a v-if="act.canvasId" :href="'#' + act.canvasId" data-bs-toggle="offcanvas" :class="act.class">
+                      <span v-if="act.icon" :class="act.icon"></span>
+                      {{ act.label }}
+                    </a>
+                    <button :title="act.title"  :class="act.class ? act.class:'btn btn-default'" v-else-if="act.emits" @click="doEmitAction(act.emits,record)">
+                      <span v-if="act.icon" :class="act.icon"></span>
                       {{ act.label }}
                     </button>
-                    <router-link v-if="!act.emits" :title="act.title"  :to="replaceActionUrl(act.path,record)" :class="act.class">
+                    <router-link v-else-if="!act.emits" :title="act.title"  :to="replaceActionUrl(act.path,record)" :class="act.class">
+                      <span v-if="act.icon" :class="act.icon"></span>
                       {{ act.label }}
                     </router-link>
                   </template>
@@ -160,6 +172,13 @@
       </div>
     </div>
 <pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore" :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey" load-more="1"></pagination>
+<template v-if="actions">
+<template v-for="action in actions.actions" :key="action.label">
+  <sh-canvas v-if="action.canvasId" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId" @offcanvasClosed="rowSelected(null)">
+    <component v-if="selectedRecord" :record="selectedRecord" :is="action.canvasComponent"/>
+  </sh-canvas>
+</template>
+</template>
 </div>
 </template>
 <script>
@@ -167,10 +186,11 @@ import apis from '../repo/helpers/ShApis.js'
 import pagination from './list_templates/Pagination.vue'
 import moment from 'moment'
 import helpers from '../repo/helpers/ShRepo.js'
+import ShCanvas from './ShCanvas.vue'
 export default {
   name: 'sh-table',
   props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],
-  inject: ['channel', 'global'],
+  inject: ['channel'],
   data () {
     return {
       order_by: '',
@@ -186,12 +206,21 @@ export default {
       moreDetailsId: null,
       moreDetailsModel: null,
       downloading: false,
-      appUrl: window.VITE_APP_API_URL
+      appUrl: window.VITE_APP_API_URL,
+      hasCanvas: 0,
+      selectedRecord: null
     }
   },
   mounted () {
     if (this.event) {
       // this.channel.listen(this.event, this.newRecordAdded)
+    }
+    if(this.actions && this.actions.actions){
+      this.actions.actions.forEach(action => {
+        if(action.canvasComponent){
+          this.hasCanvas = true
+        }
+      })
     }
   },
   methods: {
@@ -204,6 +233,7 @@ export default {
       console.log(event, record)
     },
     rowSelected: function (row) {
+      this.selectedRecord = row
       this.$emit('rowSelected', row)
     },
     changeKey: function (key, value) {
@@ -368,6 +398,7 @@ export default {
     this.reloadData()
   },
   components: {
+    ShCanvas,
     pagination
   },
   computed: {
@@ -386,3 +417,36 @@ export default {
   }
 }
 </script>
+<style>
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}
+</style>
