@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" tabindex="-1" v-bind:id="modalId" data-focus="false" aria-hidden="true">
+  <div class="modal fade" :id="modalId" aria-hidden="true">
     <div class="modal-dialog" :class="`modal-${modalSize}`">
       <div class="modal-content">
         <div class="modal-header">

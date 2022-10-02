@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import moment from 'moment';
-import { inject, openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, renderSlot, createStaticVNode, withCtx, resolveDynamicComponent, shallowRef, computed, isRef, vModelCheckbox, watch, pushScopeId, popScopeId } from 'vue';
+import { inject, openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, resolveDynamicComponent, renderSlot, createStaticVNode, withCtx, shallowRef, computed, isRef, vModelCheckbox, watch, pushScopeId, popScopeId } from 'vue';
 import NProgress from 'nprogress';
 import Editor from '@tinymce/tinymce-vue';
 import Swal from 'sweetalert2';
@@ -1630,7 +1630,7 @@ const _hoisted_2$b = {
   style: {"display":"contents"}
 };
 const _hoisted_3$b = ["src"];
-const _hoisted_4$b = ["value"];
+const _hoisted_4$a = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", _hoisted_1$c, [
@@ -1649,7 +1649,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
         return (openBlock(), createElementBlock("option", {
           value: country,
           key: country.dialCode
-        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$b))
+        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$a))
       }), 128 /* KEYED_FRAGMENT */))
     ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
       [vModelSelect, $data.selectedCountry]
@@ -1753,16 +1753,16 @@ const _hoisted_1$a = {
 };
 const _hoisted_2$a = ["id"];
 const _hoisted_3$a = { class: "badge bg-secondary m-1 sh-selected-item" };
-const _hoisted_4$a = ["onClick"];
-const _hoisted_5$8 = ["id"];
-const _hoisted_6$5 = ["id", "aria-labelledby"];
+const _hoisted_4$9 = ["onClick"];
+const _hoisted_5$5 = ["id"];
+const _hoisted_6$4 = ["id", "aria-labelledby"];
 const _hoisted_7$4 = { key: 0 };
 const _hoisted_8$3 = ["onClick"];
-const _hoisted_9$3 = {
+const _hoisted_9$4 = {
   key: 1,
   class: "dropdown-item sh-suggest-no-results"
 };
-const _hoisted_10$4 = {
+const _hoisted_10$3 = {
   key: 2,
   class: "dropdown-item sh-suggest-no-input"
 };
@@ -1865,7 +1865,7 @@ return (_ctx, _cache) => {
                   type: "button",
                   class: "btn-close border-start border-1 ms-1",
                   "aria-label": "Close"
-                }, null, 8 /* PROPS */, _hoisted_4$a)
+                }, null, 8 /* PROPS */, _hoisted_4$9)
               ]))
             }), 256 /* UNKEYED_FRAGMENT */))
           ]),
@@ -1875,7 +1875,7 @@ return (_ctx, _cache) => {
             onClick: filterData,
             onInput: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$8)
+          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$5)
         ], 8 /* PROPS */, _hoisted_2$a),
         createElementVNode("ul", {
           class: "dropdown-menu w-100",
@@ -1899,9 +1899,9 @@ return (_ctx, _cache) => {
                 ], 64 /* STABLE_FRAGMENT */))
               }), 128 /* KEYED_FRAGMENT */))
             : (unref(searchText))
-              ? (openBlock(), createElementBlock("li", _hoisted_9$3, " No results found "))
-              : (openBlock(), createElementBlock("li", _hoisted_10$4, " Type to search... "))
-        ], 8 /* PROPS */, _hoisted_6$5)
+              ? (openBlock(), createElementBlock("li", _hoisted_9$4, " No results found "))
+              : (openBlock(), createElementBlock("li", _hoisted_10$3, " Type to search... "))
+        ], 8 /* PROPS */, _hoisted_6$4)
       ]))
     : createCommentVNode("v-if", true)
 }
@@ -1933,7 +1933,8 @@ var script$9 = {
       'textAreas',
       'files',
       'phones',
-      'numbers'
+      'numbers',
+      'customComponent'
   ],
   data: function () {
     return {
@@ -1975,6 +1976,9 @@ var script$9 = {
       }
     },
     getFieldType: function (field) {
+      if(this.customComponent && this.customComponent[field]){
+        return 'component'
+      }
       if(this.suggests && this.suggests.includes(field)){
         return 'suggest'
       }
@@ -2234,13 +2238,13 @@ const _hoisted_2$9 = {
   role: "alert"
 };
 const _hoisted_3$9 = /*#__PURE__*/createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
-const _hoisted_4$9 = { key: 0 };
-const _hoisted_5$7 = { key: 1 };
-const _hoisted_6$4 = { class: "row" };
+const _hoisted_4$8 = { key: 0 };
+const _hoisted_5$4 = { key: 1 };
+const _hoisted_6$3 = { class: "row" };
 const _hoisted_7$3 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
 const _hoisted_8$2 = { class: "col-md-12" };
-const _hoisted_9$2 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
-const _hoisted_10$3 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
+const _hoisted_9$3 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
+const _hoisted_10$2 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_11$2 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_12$2 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_13$2 = ["data-cy", "name", "onFocus", "onUpdate:modelValue"];
@@ -2249,7 +2253,7 @@ const _hoisted_15$2 = ["name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_16$2 = ["name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_17$2 = ["value"];
 const _hoisted_18$2 = {
-  key: 11,
+  key: 12,
   class: "invalid-feedback"
 };
 const _hoisted_19$2 = {
@@ -2273,16 +2277,11 @@ const _hoisted_22$2 = [
   _hoisted_20$2,
   _hoisted_21$2
 ];
-const _hoisted_23$2 = /*#__PURE__*/createElementVNode("span", {
+const _hoisted_23$1 = /*#__PURE__*/createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
 }, null, -1 /* HOISTED */);
-const _hoisted_24$1 = /*#__PURE__*/createTextVNode(" Processing... ");
-const _hoisted_25$1 = [
-  _hoisted_23$2,
-  _hoisted_24$1
-];
 
 function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShPhone = resolveComponent("ShPhone");
@@ -2296,23 +2295,18 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
       ? (openBlock(), createElementBlock("div", _hoisted_2$9, [
           _hoisted_3$9,
           (_ctx.errorText)
-            ? (openBlock(), createElementBlock("span", _hoisted_4$9, toDisplayString(_ctx.errorText), 1 /* TEXT */))
-            : (openBlock(), createElementBlock("span", _hoisted_5$7, "Unexpected Error Occurred")),
-          createElementVNode("button", {
-            onClick: _cache[0] || (_cache[0] = (...args) => ($options.hideError && $options.hideError(...args))),
-            type: "button",
-            class: "btn-close",
-            "aria-label": "Close"
-          })
+            ? (openBlock(), createElementBlock("span", _hoisted_4$8, toDisplayString(_ctx.errorText), 1 /* TEXT */))
+            : (openBlock(), createElementBlock("span", _hoisted_5$4, "Unexpected Error Occurred")),
+          createCommentVNode("      <button @click=\"hideError\" type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>")
         ]))
       : createCommentVNode("v-if", true),
     withDirectives(createElementVNode("input", {
       type: "hidden",
-      "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ((_ctx.form_elements['id']) = $event))
+      "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((_ctx.form_elements['id']) = $event))
     }, null, 512 /* NEED_PATCH */), [
       [vModelText, _ctx.form_elements['id']]
     ]),
-    createElementVNode("div", _hoisted_6$4, [
+    createElementVNode("div", _hoisted_6$3, [
       (openBlock(true), createElementBlock(Fragment, null, renderList($props.fields, (field) => {
         return (openBlock(), createElementBlock("div", {
           class: normalizeClass(["form-group", 'col-md-' + $options.getColumns()]),
@@ -2320,9 +2314,21 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
         }, [
           createElementVNode("label", _hoisted_7$3, toDisplayString($options.getLabel(field)), 1 /* TEXT */),
           createElementVNode("div", _hoisted_8$2, [
+            ($options.getFieldType(field) === 'component')
+              ? (openBlock(), createBlock(resolveDynamicComponent($props.customComponent[field]), {
+                  key: 0,
+                  "data-cy": field,
+                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                  name: field,
+                  onFocus: $event => ($options.removeErrors(field)),
+                  class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                  modelValue: _ctx.form_elements[field],
+                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                }, null, 40 /* PROPS, HYDRATE_EVENTS */, ["data-cy", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
+              : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'file')
               ? (openBlock(), createElementBlock("input", {
-                  key: 0,
+                  key: 1,
                   "data-cy": field,
                   placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
                   name: field,
@@ -2332,11 +2338,11 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
                   ref: 'file_'+field,
                   onChange: $event => ($options.handleFileUpload(field)),
                   type: "file"
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_9$2))
+                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_9$3))
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'numeric')
               ? withDirectives((openBlock(), createElementBlock("input", {
-                  key: 1,
+                  key: 2,
                   "data-cy": field,
                   placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
                   name: field,
@@ -2344,13 +2350,13 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
                   class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                   "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                   type: "number"
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_10$3)), [
+                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_10$2)), [
                   [vModelText, _ctx.form_elements[field]]
                 ])
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'password')
               ? withDirectives((openBlock(), createElementBlock("input", {
-                  key: 2,
+                  key: 3,
                   "data-cy": field,
                   placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
                   name: field,
@@ -2364,7 +2370,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'email')
               ? withDirectives((openBlock(), createElementBlock("input", {
-                  key: 3,
+                  key: 4,
                   "data-cy": field,
                   placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
                   name: field,
@@ -2379,7 +2385,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'datepicker' && $options.isDisabled(field) === false)
               ? withDirectives((openBlock(), createElementBlock("input", {
-                  key: 4,
+                  key: 5,
                   "data-cy": field,
                   type: "datetime-local",
                   name: field,
@@ -2392,7 +2398,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'phone')
               ? (openBlock(), createBlock(_component_ShPhone, {
-                  key: 5,
+                  key: 6,
                   country_code: $props.country_code,
                   placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
                   name: field,
@@ -2405,7 +2411,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'suggest')
               ? (openBlock(), createBlock(_component_ShSuggest, {
-                  key: 6,
+                  key: 7,
                   "select-data": _ctx.selectData[field],
                   "fill-selects": $props.fillSelects[field],
                   class: normalizeClass(_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field),
@@ -2415,7 +2421,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'editor')
               ? (openBlock(), createBlock(_component_ShEditor, {
-                  key: 7,
+                  key: 8,
                   placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
@@ -2426,7 +2432,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'text')
               ? withDirectives((openBlock(), createElementBlock("input", {
-                  key: 8,
+                  key: 9,
                   disabled: $options.isDisabled(field),
                   placeholder: field === 'phone_number' ? 'e.g 0712 345 678':'',
                   name: field,
@@ -2440,7 +2446,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'textarea')
               ? withDirectives((openBlock(), createElementBlock("textarea", {
-                  key: 9,
+                  key: 10,
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
                   class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
@@ -2451,7 +2457,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
               : createCommentVNode("v-if", true),
             ($options.getFieldType(field) === 'select' && _ctx.selectData[field] != null)
               ? withDirectives((openBlock(), createElementBlock("select", {
-                  key: 10,
+                  key: 11,
                   name: field,
                   onFocus: $event => ($options.removeErrors(field)),
                   class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
@@ -2483,13 +2489,16 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
           class: normalizeClass(["btn btn-primary", $options.getSubmitBtnClass()]),
           type: "button",
           disabled: ""
-        }, _hoisted_25$1, 2 /* CLASS */))
+        }, [
+          _hoisted_23$1,
+          createTextVNode(" Processing... ")
+        ], 2 /* CLASS */))
       : (openBlock(), createElementBlock("button", {
           key: 3,
           "data-cy": "sh_form_submit",
           class: normalizeClass(["mb-2 form-submit-btn", $options.getSubmitBtnClass()]),
           type: "button",
-          onClick: _cache[2] || (_cache[2] = (...args) => ($options.submitForm && $options.submitForm(...args)))
+          onClick: _cache[1] || (_cache[1] = (...args) => ($options.submitForm && $options.submitForm(...args)))
         }, toDisplayString($props.actionLabel ? $props.actionLabel:'Submit'), 3 /* TEXT, CLASS */))
   ], 512 /* NEED_PATCH */))
 }
@@ -2499,7 +2508,7 @@ script$9.__file = "src/lib/components/ShForm.vue";
 
 var script$8 = {
   name: 'ShCanvas',
-  props: ['canvasTitle', 'canvasId', 'position'],
+  props: ['canvasTitle', 'canvasId', 'position','canvasSize'],
   components: {
   },
   data () {
@@ -2520,11 +2529,11 @@ const _hoisted_3$8 = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$8 = { class: "offcanvas-body" };
+const _hoisted_4$7 = { class: "offcanvas-body" };
 
 function render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", {
-    class: normalizeClass(["offcanvas", $data.side]),
+    class: normalizeClass(["offcanvas", $data.side +' '+ $props.canvasSize + '']),
     "data-bs-scroll": "true",
     tabindex: "-1",
     id: $props.canvasId,
@@ -2541,7 +2550,7 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         "aria-label": "Close"
       }, null, 512 /* NEED_PATCH */)
     ]),
-    createElementVNode("div", _hoisted_4$8, [
+    createElementVNode("div", _hoisted_4$7, [
       renderSlot(_ctx.$slots, "default")
     ])
   ], 10 /* CLASS, PROPS */, _hoisted_1$8))
@@ -2560,21 +2569,19 @@ var script$7 = {
 const _hoisted_1$7 = ["id"];
 const _hoisted_2$7 = { class: "modal-content" };
 const _hoisted_3$7 = { class: "modal-header" };
-const _hoisted_4$7 = { class: "modal-title" };
-const _hoisted_5$6 = /*#__PURE__*/createElementVNode("button", {
+const _hoisted_4$6 = { class: "modal-title" };
+const _hoisted_5$3 = /*#__PURE__*/createElementVNode("button", {
   class: "btn btn-danger btn-sm",
   "data-bs-dismiss": "modal",
   "data-dismiss": "modal"
 }, "×", -1 /* HOISTED */);
-const _hoisted_6$3 = { class: "modal-body" };
+const _hoisted_6$2 = { class: "modal-body" };
 const _hoisted_7$2 = { class: "section" };
 
 function render$3(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", {
     class: "modal fade",
-    tabindex: "-1",
     id: $props.modalId,
-    "data-focus": "false",
     "aria-hidden": "true"
   }, [
     createElementVNode("div", {
@@ -2582,10 +2589,10 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     }, [
       createElementVNode("div", _hoisted_2$7, [
         createElementVNode("div", _hoisted_3$7, [
-          createElementVNode("h3", _hoisted_4$7, toDisplayString($props.modalTitle), 1 /* TEXT */),
-          _hoisted_5$6
+          createElementVNode("h3", _hoisted_4$6, toDisplayString($props.modalTitle), 1 /* TEXT */),
+          _hoisted_5$3
         ]),
-        createElementVNode("div", _hoisted_6$3, [
+        createElementVNode("div", _hoisted_6$2, [
           createElementVNode("div", _hoisted_7$2, [
             renderSlot(_ctx.$slots, "default")
           ])
@@ -2672,44 +2679,43 @@ var script$6 = {
 const _hoisted_1$6 = { key: 0 };
 const _hoisted_2$6 = { class: "record_count_body mb-3" };
 const _hoisted_3$6 = /*#__PURE__*/createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
-const _hoisted_4$6 = /*#__PURE__*/createTextVNode("  ");
-const _hoisted_5$5 = /*#__PURE__*/createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
-const _hoisted_10$2 = [
-  _hoisted_5$5
+const _hoisted_4$5 = /*#__PURE__*/createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
+const _hoisted_9$2 = [
+  _hoisted_4$5
 ];
-const _hoisted_11$1 = { class: "record_counts" };
-const _hoisted_12$1 = {
+const _hoisted_10$1 = { class: "record_counts" };
+const _hoisted_11$1 = {
   key: 0,
   "aria-label": "Page navigation"
 };
-const _hoisted_13$1 = { class: "pagination" };
-const _hoisted_14$1 = {
+const _hoisted_12$1 = { class: "pagination" };
+const _hoisted_13$1 = {
   key: 0,
   class: "page-link"
 };
-const _hoisted_15$1 = {
+const _hoisted_14$1 = {
   key: 1,
   class: "page-link"
 };
-const _hoisted_16$1 = ["onClick"];
-const _hoisted_17$1 = { key: 1 };
-const _hoisted_18$1 = {
+const _hoisted_15$1 = ["onClick"];
+const _hoisted_16$1 = { key: 1 };
+const _hoisted_17$1 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_19$1 = /*#__PURE__*/createElementVNode("div", {
+const _hoisted_18$1 = /*#__PURE__*/createElementVNode("div", {
   class: "spinner-border",
   role: "status"
 }, null, -1 /* HOISTED */);
-const _hoisted_20$1 = [
-  _hoisted_19$1
+const _hoisted_19$1 = [
+  _hoisted_18$1
 ];
-const _hoisted_21$1 = {
+const _hoisted_20$1 = {
   key: 1,
   class: "text-center"
 };
-const _hoisted_22$1 = { class: "per_page_show" };
-const _hoisted_23$1 = {
+const _hoisted_21$1 = { class: "per_page_show" };
+const _hoisted_22$1 = {
   key: 2,
   class: "text-center"
 };
@@ -2719,19 +2725,19 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
     ? (openBlock(), createElementBlock("div", _hoisted_1$6, [
         createElementVNode("div", _hoisted_2$6, [
           _hoisted_3$6,
-          _hoisted_4$6,
+          createTextVNode("  "),
           withDirectives(createElementVNode("select", {
             class: "select_per_page",
             onChange: _cache[0] || (_cache[0] = (...args) => ($options.changePerPage && $options.changePerPage(...args))),
             "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => (($data.per_page) = $event))
-          }, _hoisted_10$2, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+          }, _hoisted_9$2, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
             [vModelSelect, $data.per_page]
           ]),
-          createElementVNode("span", _hoisted_11$1, " of " + toDisplayString($props.pagination_data.record_count) + " items", 1 /* TEXT */)
+          createElementVNode("span", _hoisted_10$1, " of " + toDisplayString($props.pagination_data.record_count) + " items", 1 /* TEXT */)
         ]),
         ($props.pagination_data != null)
-          ? (openBlock(), createElementBlock("nav", _hoisted_12$1, [
-              createElementVNode("ul", _hoisted_13$1, [
+          ? (openBlock(), createElementBlock("nav", _hoisted_11$1, [
+              createElementVNode("ul", _hoisted_12$1, [
                 createElementVNode("li", {
                   class: normalizeClass([$options.getActivePage === 1 ? 'disabled' : '' , "page-item"])
                 }, [
@@ -2746,14 +2752,14 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     key: page
                   }, [
                     ($options.getActivePage === page)
-                      ? (openBlock(), createElementBlock("a", _hoisted_14$1, toDisplayString(page), 1 /* TEXT */))
+                      ? (openBlock(), createElementBlock("a", _hoisted_13$1, toDisplayString(page), 1 /* TEXT */))
                       : (['..','...'].includes(page))
-                        ? (openBlock(), createElementBlock("a", _hoisted_15$1, toDisplayString(page), 1 /* TEXT */))
+                        ? (openBlock(), createElementBlock("a", _hoisted_14$1, toDisplayString(page), 1 /* TEXT */))
                         : (openBlock(), createElementBlock("a", {
                             key: 2,
                             onClick: $event => ($options.changeTableKey('page',page)),
                             class: "page-link"
-                          }, toDisplayString(page), 9 /* TEXT, PROPS */, _hoisted_16$1))
+                          }, toDisplayString(page), 9 /* TEXT, PROPS */, _hoisted_15$1))
                   ], 2 /* CLASS */))
                 }), 128 /* KEYED_FRAGMENT */)),
                 createElementVNode("li", {
@@ -2768,17 +2774,17 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
             ]))
           : createCommentVNode("v-if", true)
       ]))
-    : (openBlock(), createElementBlock("div", _hoisted_17$1, [
+    : (openBlock(), createElementBlock("div", _hoisted_16$1, [
         (this.pagination_data.loading === 1)
-          ? (openBlock(), createElementBlock("div", _hoisted_18$1, _hoisted_20$1))
+          ? (openBlock(), createElementBlock("div", _hoisted_17$1, _hoisted_19$1))
           : createCommentVNode("v-if", true),
         (!$props.hideCount)
-          ? (openBlock(), createElementBlock("div", _hoisted_21$1, [
-              createElementVNode("span", _hoisted_22$1, "Showing " + toDisplayString($props.pagination_data.displayCount) + " of " + toDisplayString($props.pagination_data.record_count) + " items", 1 /* TEXT */)
+          ? (openBlock(), createElementBlock("div", _hoisted_20$1, [
+              createElementVNode("span", _hoisted_21$1, "Showing " + toDisplayString($props.pagination_data.displayCount) + " of " + toDisplayString($props.pagination_data.record_count) + " items", 1 /* TEXT */)
             ]))
           : createCommentVNode("v-if", true),
         (this.pagination_data.loading !== 1 && $props.pagination_data.displayCount < $props.pagination_data.record_count && !$props.hideLoadMore)
-          ? (openBlock(), createElementBlock("div", _hoisted_23$1, [
+          ? (openBlock(), createElementBlock("div", _hoisted_22$1, [
               createElementVNode("button", {
                 class: "btn btn-sm btn-primary mt-1",
                 onClick: _cache[4] || (_cache[4] = (...args) => ($options.loadMoreRecords && $options.loadMoreRecords(...args)))
@@ -3204,72 +3210,71 @@ const _hoisted_2$5 = {
   class: "col-md-4 mb-2"
 };
 const _hoisted_3$5 = ["disabled"];
-const _hoisted_4$5 = /*#__PURE__*/createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
-const _hoisted_5$4 = /*#__PURE__*/createTextVNode(" Export ");
-const _hoisted_6$2 = /*#__PURE__*/createElementVNode("span", {
+const _hoisted_4$4 = /*#__PURE__*/createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
+const _hoisted_5$2 = /*#__PURE__*/createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
 }, null, -1 /* HOISTED */);
-const _hoisted_7$1 = /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */);
-const _hoisted_8$1 = {
+const _hoisted_6$1 = /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */);
+const _hoisted_7$1 = {
   key: 1,
   class: "row"
 };
-const _hoisted_9$1 = { class: "col-12 mb-3" };
-const _hoisted_10$1 = { class: "sh-search-bar" };
-const _hoisted_11 = ["placeholder"];
-const _hoisted_12 = {
+const _hoisted_8$1 = { class: "col-12 mb-3" };
+const _hoisted_9$1 = { class: "sh-search-bar" };
+const _hoisted_10 = ["placeholder"];
+const _hoisted_11 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_13 = /*#__PURE__*/createElementVNode("div", {
+const _hoisted_12 = /*#__PURE__*/createElementVNode("div", {
   class: "spinner-border",
   role: "status"
 }, [
   /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
 ], -1 /* HOISTED */);
-const _hoisted_14 = [
-  _hoisted_13
+const _hoisted_13 = [
+  _hoisted_12
 ];
-const _hoisted_15 = {
+const _hoisted_14 = {
   key: 1,
   class: "alert alert-danger"
 };
-const _hoisted_16 = { colspan: 2 };
-const _hoisted_17 = {
+const _hoisted_15 = { colspan: 2 };
+const _hoisted_16 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_18 = /*#__PURE__*/createElementVNode("div", {
+const _hoisted_17 = /*#__PURE__*/createElementVNode("div", {
   class: "spinner-border",
   role: "status"
 }, [
   /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
 ], -1 /* HOISTED */);
-const _hoisted_19 = [
-  _hoisted_18
+const _hoisted_18 = [
+  _hoisted_17
 ];
-const _hoisted_20 = {
+const _hoisted_19 = {
   key: 1,
   class: "alert alert-danger"
 };
-const _hoisted_21 = { colspan: 2 };
-const _hoisted_22 = { class: "sh-thead" };
+const _hoisted_20 = { colspan: 2 };
+const _hoisted_21 = { class: "sh-thead" };
+const _hoisted_22 = ["onClick"];
 const _hoisted_23 = ["onClick"];
 const _hoisted_24 = ["onClick"];
-const _hoisted_25 = ["onClick"];
-const _hoisted_26 = {
+const _hoisted_25 = {
   key: 0,
   class: "text-capitalize"
 };
-const _hoisted_27 = { class: "sh-tbody" };
-const _hoisted_28 = {
+const _hoisted_26 = { class: "sh-tbody" };
+const _hoisted_27 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_29 = ["colspan"];
-const _hoisted_30 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
+const _hoisted_28 = ["colspan"];
+const _hoisted_29 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -3277,47 +3282,42 @@ const _hoisted_30 = /*#__PURE__*/createElementVNode("div", { class: "text-center
     /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_31 = [
-  _hoisted_30
+const _hoisted_30 = [
+  _hoisted_29
 ];
-const _hoisted_32 = {
+const _hoisted_31 = {
   key: 1,
   class: "text-center alert alert-danger"
 };
-const _hoisted_33 = ["colspan"];
-const _hoisted_34 = {
+const _hoisted_32 = ["colspan"];
+const _hoisted_33 = {
   key: 2,
   class: "text-center alert alert-info no_records"
 };
-const _hoisted_35 = ["colspan"];
-const _hoisted_36 = /*#__PURE__*/createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
-const _hoisted_37 = /*#__PURE__*/createTextVNode(" No records found ");
-const _hoisted_38 = [
-  _hoisted_36,
-  _hoisted_37
-];
-const _hoisted_39 = ["onClick"];
-const _hoisted_40 = { key: 1 };
-const _hoisted_41 = {
+const _hoisted_34 = ["colspan"];
+const _hoisted_35 = /*#__PURE__*/createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
+const _hoisted_36 = ["onClick"];
+const _hoisted_37 = { key: 1 };
+const _hoisted_38 = {
   key: 2,
   class: "text-success fw-bold"
 };
-const _hoisted_42 = { key: 3 };
-const _hoisted_43 = ["innerHTML"];
-const _hoisted_44 = ["innerHTML"];
-const _hoisted_45 = ["innerHTML"];
-const _hoisted_46 = {
+const _hoisted_39 = { key: 3 };
+const _hoisted_40 = ["innerHTML"];
+const _hoisted_41 = ["innerHTML"];
+const _hoisted_42 = ["innerHTML"];
+const _hoisted_43 = {
   key: 0,
   style: {"white-space":"nowrap"}
 };
-const _hoisted_47 = ["href"];
-const _hoisted_48 = ["title", "onClick"];
-const _hoisted_49 = { key: 5 };
-const _hoisted_50 = {
+const _hoisted_44 = ["href"];
+const _hoisted_45 = ["title", "onClick"];
+const _hoisted_46 = { key: 5 };
+const _hoisted_47 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_51 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
+const _hoisted_48 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -3325,39 +3325,39 @@ const _hoisted_51 = /*#__PURE__*/createElementVNode("div", { class: "text-center
     /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_52 = [
-  _hoisted_51
+const _hoisted_49 = [
+  _hoisted_48
 ];
-const _hoisted_53 = { key: 1 };
-const _hoisted_54 = {
+const _hoisted_50 = { key: 1 };
+const _hoisted_51 = {
   key: 2,
   class: "mobile-list-items"
 };
-const _hoisted_55 = ["onClick"];
-const _hoisted_56 = {
+const _hoisted_52 = ["onClick"];
+const _hoisted_53 = {
   key: 0,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_57 = {
+const _hoisted_54 = {
   key: 1,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_58 = {
+const _hoisted_55 = {
   key: 2,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_59 = { key: 1 };
-const _hoisted_60 = {
+const _hoisted_56 = { key: 1 };
+const _hoisted_57 = {
   key: 2,
   class: "text-primary fw-bold"
 };
-const _hoisted_61 = ["innerHTML"];
-const _hoisted_62 = ["innerHTML"];
-const _hoisted_63 = ["innerHTML"];
-const _hoisted_64 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
-const _hoisted_65 = { key: 0 };
-const _hoisted_66 = ["href"];
-const _hoisted_67 = ["title", "onClick"];
+const _hoisted_58 = ["innerHTML"];
+const _hoisted_59 = ["innerHTML"];
+const _hoisted_60 = ["innerHTML"];
+const _hoisted_61 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
+const _hoisted_62 = { key: 0 };
+const _hoisted_63 = ["href"];
+const _hoisted_64 = ["title", "onClick"];
 
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = resolveComponent("router-link");
@@ -3374,27 +3374,27 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           }, [
             (!$data.downloading)
               ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                  _hoisted_4$5,
-                  _hoisted_5$4
+                  _hoisted_4$4,
+                  createTextVNode(" Export ")
                 ], 64 /* STABLE_FRAGMENT */))
               : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
-                  _hoisted_6$2,
-                  _hoisted_7$1
+                  _hoisted_5$2,
+                  _hoisted_6$1
                 ], 64 /* STABLE_FRAGMENT */))
           ], 8 /* PROPS */, _hoisted_3$5)
         ]))
       : createCommentVNode("v-if", true),
     (!$props.hideSearch)
-      ? (openBlock(), createElementBlock("div", _hoisted_8$1, [
-          createElementVNode("div", _hoisted_9$1, [
-            createElementVNode("div", _hoisted_10$1, [
+      ? (openBlock(), createElementBlock("div", _hoisted_7$1, [
+          createElementVNode("div", _hoisted_8$1, [
+            createElementVNode("div", _hoisted_9$1, [
               withDirectives(createElementVNode("input", {
                 type: "search",
                 onChange: _cache[1] || (_cache[1] = $event => ($options.reloadData(1))),
                 "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => (($data.filter_value) = $event)),
                 placeholder: $props.searchPlaceholder ? $props.searchPlaceholder : 'Search',
                 class: "form-control sh-search-input"
-              }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_11), [
+              }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_10), [
                 [vModelText, $data.filter_value]
               ])
             ])
@@ -3404,10 +3404,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
     ($options.hasDefaultSlot)
       ? (openBlock(), createElementBlock(Fragment, { key: 2 }, [
           ($data.loading === 'loading')
-            ? (openBlock(), createElementBlock("div", _hoisted_12, _hoisted_14))
+            ? (openBlock(), createElementBlock("div", _hoisted_11, _hoisted_13))
             : ($data.loading === 'error')
-              ? (openBlock(), createElementBlock("div", _hoisted_15, [
-                  createElementVNode("span", _hoisted_16, toDisplayString($data.loading_error), 1 /* TEXT */)
+              ? (openBlock(), createElementBlock("div", _hoisted_14, [
+                  createElementVNode("span", _hoisted_15, toDisplayString($data.loading_error), 1 /* TEXT */)
                 ]))
               : createCommentVNode("v-if", true),
           ($data.loading === 'done')
@@ -3423,10 +3423,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
     ($options.hasRecordsSlot)
       ? (openBlock(), createElementBlock(Fragment, { key: 3 }, [
           ($data.loading === 'loading')
-            ? (openBlock(), createElementBlock("div", _hoisted_17, _hoisted_19))
+            ? (openBlock(), createElementBlock("div", _hoisted_16, _hoisted_18))
             : ($data.loading === 'error')
-              ? (openBlock(), createElementBlock("div", _hoisted_20, [
-                  createElementVNode("span", _hoisted_21, toDisplayString($data.loading_error), 1 /* TEXT */)
+              ? (openBlock(), createElementBlock("div", _hoisted_19, [
+                  createElementVNode("span", _hoisted_20, toDisplayString($data.loading_error), 1 /* TEXT */)
                 ]))
               : createCommentVNode("v-if", true),
           ($data.loading === 'done')
@@ -3441,7 +3441,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
             key: 4,
             class: normalizeClass(["table sh-table", $props.tableHover ? 'table-hover':''])
           }, [
-            createElementVNode("thead", _hoisted_22, [
+            createElementVNode("thead", _hoisted_21, [
               createElementVNode("tr", null, [
                 (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (title) => {
                   return (openBlock(), createElementBlock("th", {
@@ -3452,43 +3452,46 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                           key: 0,
                           class: "text-capitalize",
                           onClick: $event => ($options.changeKey('order_by',title))
-                        }, toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_23))
+                        }, toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_22))
                       : (typeof title === 'function')
                         ? (openBlock(), createElementBlock("a", {
                             key: 1,
                             class: "text-capitalize",
                             onClick: $event => ($options.changeKey('order_by',title))
-                          }, toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
+                          }, toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_23))
                         : (openBlock(), createElementBlock("a", {
                             key: 2,
                             class: "text-capitalize",
                             onClick: $event => ($options.changeKey('order_by',title[0]))
-                          }, toDisplayString(title[1].replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
+                          }, toDisplayString(title[1].replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
                   ]))
                 }), 128 /* KEYED_FRAGMENT */)),
                 ($props.actions)
-                  ? (openBlock(), createElementBlock("th", _hoisted_26, toDisplayString($props.actions.label), 1 /* TEXT */))
+                  ? (openBlock(), createElementBlock("th", _hoisted_25, toDisplayString($props.actions.label), 1 /* TEXT */))
                   : createCommentVNode("v-if", true)
               ])
             ]),
-            createElementVNode("tbody", _hoisted_27, [
+            createElementVNode("tbody", _hoisted_26, [
               ($data.loading === 'loading')
-                ? (openBlock(), createElementBlock("tr", _hoisted_28, [
+                ? (openBlock(), createElementBlock("tr", _hoisted_27, [
                     createElementVNode("td", {
                       colspan: $props.headers.length
-                    }, _hoisted_31, 8 /* PROPS */, _hoisted_29)
+                    }, _hoisted_30, 8 /* PROPS */, _hoisted_28)
                   ]))
                 : ($data.loading === 'error')
-                  ? (openBlock(), createElementBlock("tr", _hoisted_32, [
+                  ? (openBlock(), createElementBlock("tr", _hoisted_31, [
                       createElementVNode("td", {
                         colspan: $props.headers.length
-                      }, toDisplayString($data.loading_error), 9 /* TEXT, PROPS */, _hoisted_33)
+                      }, toDisplayString($data.loading_error), 9 /* TEXT, PROPS */, _hoisted_32)
                     ]))
                   : ($data.records.length === 0)
-                    ? (openBlock(), createElementBlock("tr", _hoisted_34, [
+                    ? (openBlock(), createElementBlock("tr", _hoisted_33, [
                         createElementVNode("td", {
                           colspan: $props.actions ? $props.headers.length + 1 : $props.headers.length
-                        }, _hoisted_38, 8 /* PROPS */, _hoisted_35)
+                        }, [
+                          _hoisted_35,
+                          createTextVNode(" No records found ")
+                        ], 8 /* PROPS */, _hoisted_34)
                       ]))
                     : ($data.loading === 'done')
                       ? (openBlock(true), createElementBlock(Fragment, { key: 3 }, renderList($data.records, (record, index) => {
@@ -3509,29 +3512,29 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                       innerHTML: record[key]
                                     }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
                                   : ($options.getFieldType(key) === 'numeric')
-                                    ? (openBlock(), createElementBlock("span", _hoisted_40, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                    ? (openBlock(), createElementBlock("span", _hoisted_37, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                     : ($options.getFieldType(key) === 'money')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_41, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (openBlock(), createElementBlock("span", _hoisted_38, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : ($options.getFieldType(key) === 'date')
-                                        ? (openBlock(), createElementBlock("span", _hoisted_42, toDisplayString($options.formatDate(record[key])), 1 /* TEXT */))
+                                        ? (openBlock(), createElementBlock("span", _hoisted_39, toDisplayString($options.formatDate(record[key])), 1 /* TEXT */))
                                         : (typeof key === 'string')
                                           ? (openBlock(), createElementBlock("span", {
                                               key: 4,
                                               innerHTML: record[key]
-                                            }, null, 8 /* PROPS */, _hoisted_43))
+                                            }, null, 8 /* PROPS */, _hoisted_40))
                                           : (typeof key === 'function')
                                             ? (openBlock(), createElementBlock("span", {
                                                 key: 5,
                                                 innerHTML: key(record, index)
-                                              }, null, 8 /* PROPS */, _hoisted_44))
+                                              }, null, 8 /* PROPS */, _hoisted_41))
                                             : (openBlock(), createElementBlock("span", {
                                                 key: 6,
                                                 innerHTML: record[key[0]]
-                                              }, null, 8 /* PROPS */, _hoisted_45))
+                                              }, null, 8 /* PROPS */, _hoisted_42))
                               ]))
                             }), 128 /* KEYED_FRAGMENT */)),
                             ($props.actions)
-                              ? (openBlock(), createElementBlock("td", _hoisted_46, [
+                              ? (openBlock(), createElementBlock("td", _hoisted_43, [
                                   (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
                                     return (openBlock(), createElementBlock(Fragment, {
                                       key: act.path
@@ -3554,7 +3557,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                             }, null, 2 /* CLASS */))
                                                           : createCommentVNode("v-if", true),
                                                         createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                      ], 10 /* CLASS, PROPS */, _hoisted_47))
+                                                      ], 10 /* CLASS, PROPS */, _hoisted_44))
                                                     : (act.emits)
                                                       ? (openBlock(), createElementBlock("button", {
                                                           key: 1,
@@ -3569,7 +3572,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                               }, null, 2 /* CLASS */))
                                                             : createCommentVNode("v-if", true),
                                                           createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                        ], 10 /* CLASS, PROPS */, _hoisted_48))
+                                                        ], 10 /* CLASS, PROPS */, _hoisted_45))
                                                       : (!act.emits)
                                                         ? (openBlock(), createBlock(_component_router_link, {
                                                             key: 2,
@@ -3597,20 +3600,20 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                   }), 128 /* KEYED_FRAGMENT */))
                                 ]))
                               : createCommentVNode("v-if", true)
-                          ], 10 /* CLASS, PROPS */, _hoisted_39))
+                          ], 10 /* CLASS, PROPS */, _hoisted_36))
                         }), 128 /* KEYED_FRAGMENT */))
                       : createCommentVNode("v-if", true)
             ])
           ], 2 /* CLASS */))
-        : (openBlock(), createElementBlock("div", _hoisted_49, [
+        : (openBlock(), createElementBlock("div", _hoisted_46, [
             ($data.loading === 'loading')
-              ? (openBlock(), createElementBlock("div", _hoisted_50, _hoisted_52))
+              ? (openBlock(), createElementBlock("div", _hoisted_47, _hoisted_49))
               : ($data.loading === 'error')
-                ? (openBlock(), createElementBlock("div", _hoisted_53, [
+                ? (openBlock(), createElementBlock("div", _hoisted_50, [
                     createElementVNode("span", null, toDisplayString($data.loading_error), 1 /* TEXT */)
                   ]))
                 : ($data.loading === 'done')
-                  ? (openBlock(), createElementBlock("div", _hoisted_54, [
+                  ? (openBlock(), createElementBlock("div", _hoisted_51, [
                       (openBlock(true), createElementBlock(Fragment, null, renderList($data.records, (record, index) => {
                         return (openBlock(), createElementBlock(Fragment, {
                           key: record.id
@@ -3625,10 +3628,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                 key: key[0]
                               }, [
                                 (typeof key === 'string' )
-                                  ? (openBlock(), createElementBlock("p", _hoisted_56, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                  ? (openBlock(), createElementBlock("p", _hoisted_53, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
                                   : (typeof key === 'function')
-                                    ? (openBlock(), createElementBlock("p", _hoisted_57, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
-                                    : (openBlock(), createElementBlock("p", _hoisted_58, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
+                                    ? (openBlock(), createElementBlock("p", _hoisted_54, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
+                                    : (openBlock(), createElementBlock("p", _hoisted_55, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
                                 createElementVNode("span", null, [
                                   (typeof key === 'string' && $props.links && $props.links[key])
                                     ? (openBlock(), createBlock(_component_router_link, {
@@ -3638,29 +3641,29 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                         innerHTML: record[key]
                                       }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
                                     : ($options.getFieldType(key) === 'numeric')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_59, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (openBlock(), createElementBlock("span", _hoisted_56, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : ($options.getFieldType(key) === 'money')
-                                        ? (openBlock(), createElementBlock("span", _hoisted_60, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                        ? (openBlock(), createElementBlock("span", _hoisted_57, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                         : (typeof key    === 'string')
                                           ? (openBlock(), createElementBlock("span", {
                                               key: 3,
                                               innerHTML: record[key]
-                                            }, null, 8 /* PROPS */, _hoisted_61))
+                                            }, null, 8 /* PROPS */, _hoisted_58))
                                           : (typeof key === 'function')
                                             ? (openBlock(), createElementBlock("span", {
                                                 key: 4,
                                                 innerHTML: key(record, index )
-                                              }, null, 8 /* PROPS */, _hoisted_62))
+                                              }, null, 8 /* PROPS */, _hoisted_59))
                                             : (openBlock(), createElementBlock("span", {
                                                 key: 5,
                                                 innerHTML: record[key[0]]
-                                              }, null, 8 /* PROPS */, _hoisted_63))
+                                              }, null, 8 /* PROPS */, _hoisted_60))
                                 ]),
-                                _hoisted_64
+                                _hoisted_61
                               ], 64 /* STABLE_FRAGMENT */))
                             }), 128 /* KEYED_FRAGMENT */)),
                             ($props.actions)
-                              ? (openBlock(), createElementBlock("div", _hoisted_65, [
+                              ? (openBlock(), createElementBlock("div", _hoisted_62, [
                                   (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
                                     return (openBlock(), createElementBlock(Fragment, {
                                       key: act.path
@@ -3683,7 +3686,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                             }, null, 2 /* CLASS */))
                                                           : createCommentVNode("v-if", true),
                                                         createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                      ], 10 /* CLASS, PROPS */, _hoisted_66))
+                                                      ], 10 /* CLASS, PROPS */, _hoisted_63))
                                                     : (act.emits)
                                                       ? (openBlock(), createElementBlock("button", {
                                                           key: 1,
@@ -3698,7 +3701,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                               }, null, 2 /* CLASS */))
                                                             : createCommentVNode("v-if", true),
                                                           createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                        ], 10 /* CLASS, PROPS */, _hoisted_67))
+                                                        ], 10 /* CLASS, PROPS */, _hoisted_64))
                                                       : (!act.emits)
                                                         ? (openBlock(), createBlock(_component_router_link, {
                                                             key: 2,
@@ -3726,7 +3729,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                   }), 128 /* KEYED_FRAGMENT */))
                                 ]))
                               : createCommentVNode("v-if", true)
-                          ], 8 /* PROPS */, _hoisted_55)
+                          ], 8 /* PROPS */, _hoisted_52)
                         ], 64 /* STABLE_FRAGMENT */))
                       }), 128 /* KEYED_FRAGMENT */))
                     ]))
@@ -3751,6 +3754,8 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
             (action.canvasId)
               ? (openBlock(), createBlock(_component_sh_canvas, {
                   key: 0,
+                  position: action.canvasPosition,
+                  "canvas-size": action.canvasSize,
                   "canvas-title": action.canvasTitle,
                   "canvas-id": action.canvasId,
                   onOffcanvasClosed: _cache[3] || (_cache[3] = $event => ($options.rowSelected(null)))
@@ -3764,7 +3769,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                       : createCommentVNode("v-if", true)
                   ]),
                   _: 2 /* DYNAMIC */
-                }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["canvas-title", "canvas-id"]))
+                }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["position", "canvas-size", "canvas-title", "canvas-id"]))
               : createCommentVNode("v-if", true)
           ], 64 /* STABLE_FRAGMENT */))
         }), 128 /* KEYED_FRAGMENT */))
@@ -3862,8 +3867,8 @@ const _hoisted_1$4 = {
 };
 const _hoisted_2$4 = ["data-bs-target"];
 const _hoisted_3$4 = /*#__PURE__*/createElementVNode("i", { class: "bi-chevron-right float-end" }, null, -1 /* HOISTED */);
-const _hoisted_4$4 = ["id"];
-const _hoisted_5$3 = { class: "tab-content" };
+const _hoisted_4$3 = ["id"];
+const _hoisted_5$1 = { class: "tab-content" };
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = resolveComponent("router-link");
@@ -3914,10 +3919,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 ]))
               }), 128 /* KEYED_FRAGMENT */))
             ], 2 /* CLASS */)
-          ], 10 /* CLASS, PROPS */, _hoisted_4$4)
+          ], 10 /* CLASS, PROPS */, _hoisted_4$3)
         ]))
       : createCommentVNode("v-if", true),
-    createElementVNode("div", _hoisted_5$3, [
+    createElementVNode("div", _hoisted_5$1, [
       createVNode(_component_router_view, {
         currentTab: $data.currentTab,
         sharedData: $props.sharedData,
@@ -3939,7 +3944,7 @@ const _hoisted_2$3 = {
   role: "presentation"
 };
 const _hoisted_3$3 = ["onClick"];
-const _hoisted_4$3 = { class: "tab-content" };
+const _hoisted_4$2 = { class: "tab-content" };
 
 var script$3 = {
   __name: 'ShDynamicTabs',
@@ -3976,7 +3981,7 @@ return (_ctx, _cache) => {
         ]))
       }), 256 /* UNKEYED_FRAGMENT */))
     ]),
-    createElementVNode("div", _hoisted_4$3, [
+    createElementVNode("div", _hoisted_4$2, [
       (unref(currentTab))
         ? (openBlock(), createBlock(resolveDynamicComponent(unref(currentTab).component), { key: 0 }))
         : createCommentVNode("v-if", true)
@@ -4081,11 +4086,6 @@ const _hoisted_2$2 = {
   class: "btn btn-info btn-sm"
 };
 const _hoisted_3$2 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
-const _hoisted_4$2 = /*#__PURE__*/createTextVNode(" ADD DEPARTMENT");
-const _hoisted_5$2 = [
-  _hoisted_3$2,
-  _hoisted_4$2
-];
 
 
 var script$2 = {
@@ -4112,7 +4112,10 @@ function departmentAdded (response) {
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
     _hoisted_1$2,
-    createElementVNode("a", _hoisted_2$2, _hoisted_5$2, 512 /* NEED_PATCH */),
+    createElementVNode("a", _hoisted_2$2, [
+      _hoisted_3$2,
+      createTextVNode(" ADD DEPARTMENT")
+    ], 512 /* NEED_PATCH */),
     createVNode(script$5, {
       headers: ['id','name','description', 'created_at'],
       "end-point": "admin/departments/list",
@@ -4160,11 +4163,6 @@ const _hoisted_1$1 = /*#__PURE__*/createElementVNode("a", {
 const _hoisted_2$1 = { class: "text-primary text-capitalize" };
 const _hoisted_3$1 = ["value"];
 const _hoisted_4$1 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-save" }, null, -1 /* HOISTED */);
-const _hoisted_5$1 = /*#__PURE__*/createTextVNode(" Submit");
-const _hoisted_6$1 = [
-  _hoisted_4$1,
-  _hoisted_5$1
-];
 
 var script$1 = {
   __name: 'Department',
@@ -4339,7 +4337,10 @@ return (_ctx, _cache) => {
                   createElementVNode("button", {
                     onClick: submitPermissions,
                     class: "btn btn-info"
-                  }, _hoisted_6$1)
+                  }, [
+                    _hoisted_4$1,
+                    createTextVNode(" Submit")
+                  ])
                 ], 64 /* STABLE_FRAGMENT */))
               : createCommentVNode("v-if", true)
           ]),
@@ -4359,27 +4360,26 @@ const _hoisted_1 = {
   key: 0,
   class: "alert alert-info"
 };
-const _hoisted_2 = /*#__PURE__*/createTextVNode("You are signed is as ");
-const _hoisted_3 = {
+const _hoisted_2 = {
   key: 0,
   class: "sh-login-section"
 };
-const _hoisted_4 = { class: "sh-auth-footer" };
-const _hoisted_5 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("strong", { class: "sh-forgot-link text-primary" }, "Forgotten password?", -1 /* HOISTED */));
-const _hoisted_6 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("strong", { class: "bi-dot" }, null, -1 /* HOISTED */));
-const _hoisted_7 = {
+const _hoisted_3 = { class: "sh-auth-footer" };
+const _hoisted_4 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("strong", { class: "sh-forgot-link text-primary" }, "Forgotten password?", -1 /* HOISTED */));
+const _hoisted_5 = /*#__PURE__*/ _withScopeId(() => /*#__PURE__*/createElementVNode("strong", { class: "bi-dot" }, null, -1 /* HOISTED */));
+const _hoisted_6 = {
   key: 1,
   class: "sh-register-section"
 };
-const _hoisted_8 = {
+const _hoisted_7 = {
   key: 0,
   class: "sh-register-title"
 };
-const _hoisted_9 = {
+const _hoisted_8 = {
   key: 1,
   class: "sh-register-link"
 };
-const _hoisted_10 = { class: "sh-auth-footer" };
+const _hoisted_9 = { class: "sh-auth-footer" };
 
 var script = {
   __name: 'ShAuth',
@@ -4414,12 +4414,12 @@ function loginSuccessful(res){
 return (_ctx, _cache) => {
   return (unref(user))
     ? (openBlock(), createElementBlock("div", _hoisted_1, [
-        _hoisted_2,
+        createTextVNode("You are signed is as "),
         createElementVNode("strong", null, toDisplayString(unref(user).name), 1 /* TEXT */)
       ]))
     : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
         (section.value === 'login')
-          ? (openBlock(), createElementBlock("div", _hoisted_3, [
+          ? (openBlock(), createElementBlock("div", _hoisted_2, [
               createVNode(script$9, {
                 class: "sh-login-form",
                 fields: ['email','password'],
@@ -4427,9 +4427,9 @@ return (_ctx, _cache) => {
                 action: unref(loginEndpoint),
                 "success-callback": loginSuccessful
               }, null, 8 /* PROPS */, ["action"]),
-              createElementVNode("div", _hoisted_4, [
+              createElementVNode("div", _hoisted_3, [
+                _hoisted_4,
                 _hoisted_5,
-                _hoisted_6,
                 createElementVNode("strong", {
                   onClick: _cache[0] || (_cache[0] = $event => (goToSection('register'))),
                   class: "sh-register-link text-primary"
@@ -4438,12 +4438,12 @@ return (_ctx, _cache) => {
             ]))
           : createCommentVNode("v-if", true),
         (section.value === 'register')
-          ? (openBlock(), createElementBlock("div", _hoisted_7, [
+          ? (openBlock(), createElementBlock("div", _hoisted_6, [
               (unref(registerTitle))
-                ? (openBlock(), createElementBlock("h3", _hoisted_8, toDisplayString(unref(registerTitle)), 1 /* TEXT */))
+                ? (openBlock(), createElementBlock("h3", _hoisted_7, toDisplayString(unref(registerTitle)), 1 /* TEXT */))
                 : createCommentVNode("v-if", true),
               (unref(registerSubTitle))
-                ? (openBlock(), createElementBlock("span", _hoisted_9, toDisplayString(unref(registerSubTitle)), 1 /* TEXT */))
+                ? (openBlock(), createElementBlock("span", _hoisted_8, toDisplayString(unref(registerSubTitle)), 1 /* TEXT */))
                 : createCommentVNode("v-if", true),
               createVNode(script$9, {
                 class: "sh-login-form",
@@ -4452,7 +4452,7 @@ return (_ctx, _cache) => {
                 action: unref(registerEndpoint),
                 "success-callback": loginSuccessful
               }, null, 8 /* PROPS */, ["fields", "action"]),
-              createElementVNode("div", _hoisted_10, [
+              createElementVNode("div", _hoisted_9, [
                 createElementVNode("strong", {
                   onClick: _cache[1] || (_cache[1] = $event => (goToSection('login'))),
                   class: "sh-register-link text-primary"

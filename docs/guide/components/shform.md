@@ -128,3 +128,29 @@ Form component will automatically set password field to be input type password
       url: 'admin/users/list?all=1'
   }"
 ```
+
+### customComponent
+This will help you add custom component as a form element instead
+of using prebuilt
+
+e.g
+
+Import First
+```javascript
+import CkEditor from '@/lib/components/FormComponent/CkEditor.vue'
+```
+
+Use it this way in your sh-form, key is the name of 
+
+```html
+<sh-form
+        :fields="['mail','name']"
+        :custom-component="{
+    mail: CkEditor
+      }"
+        :current-data="{
+        email: 'jack@gmail.com'
+      }"
+        action="auth/register"
+/>
+```

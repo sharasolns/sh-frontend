@@ -1,11 +1,23 @@
 <script setup>
 import ShForm from '../lib/components/ShForm.vue'
 import ShModal from '../lib/components/ShModal.vue'
+import CkEditor from '@/lib/components/FormComponent/CkEditor.vue'
 
 </script>
 <template>
   <h5>Forms</h5>
   <a href="#modalForm" class="btn btn-info btn-sm" data-bs-toggle="modal">Modal Form</a>
+  <sh-form
+      :fields="['mail','name']"
+      :custom-component="{
+    mail: CkEditor
+      }"
+      :current-data="{
+        name: 'Jackson',
+        email: 'jack@gmail.com'
+      }"
+      action="auth/register"
+  />
   <sh-modal modal-id="modalForm" modal-title="Modal Form">
     <sh-form
     :fields="['name','email']"

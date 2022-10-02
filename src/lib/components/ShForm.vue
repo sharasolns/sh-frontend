@@ -6,14 +6,14 @@
       <i class="bi-exclamation-triangle-fill me-1"></i>
         <span v-if="errorText">{{ errorText }}</span>
         <span v-else>Unexpected Error Occurred</span>
-      <button @click="hideError" type="button" class="btn-close" aria-label="Close"></button>
-
+<!--      <button @click="hideError" type="button" class="btn-close" aria-label="Close"></button>-->
     </div>
     <input type="hidden" v-model="form_elements['id']">
     <div class="row">
     <div class="form-group" v-for="field in fields" :class="'col-md-' + getColumns()" :key="field">
       <label class="fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2">{{ getLabel(field) }}</label>
        <div class="col-md-12">
+         <component :is="customComponent[field]" :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'component'" class="form-control"/>
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" :ref="'file_'+field" v-on:change="handleFileUpload(field)" v-if="getFieldType(field) === 'file'" type="file" class="form-control">
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'numeric'" type="number" class="form-control">
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'password'" type="password" class="form-control">
@@ -73,7 +73,8 @@ export default {
       'textAreas',
       'files',
       'phones',
-      'numbers'
+      'numbers',
+      'customComponent'
   ],
   data: function () {
     return {
@@ -115,6 +116,9 @@ export default {
       }
     },
     getFieldType: function (field) {
+      if(this.customComponent && this.customComponent[field]){
+        return 'component'
+      }
       if(this.suggests && this.suggests.includes(field)){
         return 'suggest'
       }

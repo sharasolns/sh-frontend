@@ -174,7 +174,7 @@
 <pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore" :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey" load-more="1"></pagination>
 <template v-if="actions">
 <template v-for="action in actions.actions" :key="action.label">
-  <sh-canvas v-if="action.canvasId" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId" @offcanvasClosed="rowSelected(null)">
+  <sh-canvas v-if="action.canvasId" :position="action.canvasPosition" :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId" @offcanvasClosed="rowSelected(null)">
     <component v-if="selectedRecord" :record="selectedRecord" :is="action.canvasComponent"/>
   </sh-canvas>
 </template>
