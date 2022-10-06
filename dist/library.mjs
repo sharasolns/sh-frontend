@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import moment from 'moment';
-import { inject, openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, resolveDynamicComponent, renderSlot, createStaticVNode, withCtx, shallowRef, computed, isRef, vModelCheckbox, watch, pushScopeId, popScopeId } from 'vue';
+import { inject, openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, resolveDynamicComponent, renderSlot, createStaticVNode, withCtx, shallowRef, Teleport, computed, isRef, vModelCheckbox, watch, pushScopeId, popScopeId } from 'vue';
 import NProgress from 'nprogress';
 import Editor from '@tinymce/tinymce-vue';
 import Swal from 'sweetalert2';
@@ -1630,7 +1630,7 @@ const _hoisted_2$b = {
   style: {"display":"contents"}
 };
 const _hoisted_3$b = ["src"];
-const _hoisted_4$a = ["value"];
+const _hoisted_4$b = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", _hoisted_1$c, [
@@ -1649,7 +1649,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
         return (openBlock(), createElementBlock("option", {
           value: country,
           key: country.dialCode
-        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$a))
+        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$b))
       }), 128 /* KEYED_FRAGMENT */))
     ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
       [vModelSelect, $data.selectedCountry]
@@ -1753,9 +1753,9 @@ const _hoisted_1$a = {
 };
 const _hoisted_2$a = ["id"];
 const _hoisted_3$a = { class: "badge bg-secondary m-1 sh-selected-item" };
-const _hoisted_4$9 = ["onClick"];
-const _hoisted_5$5 = ["id"];
-const _hoisted_6$4 = ["id", "aria-labelledby"];
+const _hoisted_4$a = ["onClick"];
+const _hoisted_5$6 = ["id"];
+const _hoisted_6$5 = ["id", "aria-labelledby"];
 const _hoisted_7$4 = { key: 0 };
 const _hoisted_8$3 = ["onClick"];
 const _hoisted_9$4 = {
@@ -1865,7 +1865,7 @@ return (_ctx, _cache) => {
                   type: "button",
                   class: "btn-close border-start border-1 ms-1",
                   "aria-label": "Close"
-                }, null, 8 /* PROPS */, _hoisted_4$9)
+                }, null, 8 /* PROPS */, _hoisted_4$a)
               ]))
             }), 256 /* UNKEYED_FRAGMENT */))
           ]),
@@ -1875,7 +1875,7 @@ return (_ctx, _cache) => {
             onClick: filterData,
             onInput: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$5)
+          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$6)
         ], 8 /* PROPS */, _hoisted_2$a),
         createElementVNode("ul", {
           class: "dropdown-menu w-100",
@@ -1901,7 +1901,7 @@ return (_ctx, _cache) => {
             : (unref(searchText))
               ? (openBlock(), createElementBlock("li", _hoisted_9$4, " No results found "))
               : (openBlock(), createElementBlock("li", _hoisted_10$3, " Type to search... "))
-        ], 8 /* PROPS */, _hoisted_6$4)
+        ], 8 /* PROPS */, _hoisted_6$5)
       ]))
     : createCommentVNode("v-if", true)
 }
@@ -2238,9 +2238,9 @@ const _hoisted_2$9 = {
   role: "alert"
 };
 const _hoisted_3$9 = /*#__PURE__*/createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
-const _hoisted_4$8 = { key: 0 };
-const _hoisted_5$4 = { key: 1 };
-const _hoisted_6$3 = { class: "row" };
+const _hoisted_4$9 = { key: 0 };
+const _hoisted_5$5 = { key: 1 };
+const _hoisted_6$4 = { class: "row" };
 const _hoisted_7$3 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
 const _hoisted_8$2 = { class: "col-md-12" };
 const _hoisted_9$3 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
@@ -2295,8 +2295,8 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
       ? (openBlock(), createElementBlock("div", _hoisted_2$9, [
           _hoisted_3$9,
           (_ctx.errorText)
-            ? (openBlock(), createElementBlock("span", _hoisted_4$8, toDisplayString(_ctx.errorText), 1 /* TEXT */))
-            : (openBlock(), createElementBlock("span", _hoisted_5$4, "Unexpected Error Occurred")),
+            ? (openBlock(), createElementBlock("span", _hoisted_4$9, toDisplayString(_ctx.errorText), 1 /* TEXT */))
+            : (openBlock(), createElementBlock("span", _hoisted_5$5, "Unexpected Error Occurred")),
           createCommentVNode("      <button @click=\"hideError\" type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>")
         ]))
       : createCommentVNode("v-if", true),
@@ -2306,7 +2306,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 512 /* NEED_PATCH */), [
       [vModelText, _ctx.form_elements['id']]
     ]),
-    createElementVNode("div", _hoisted_6$3, [
+    createElementVNode("div", _hoisted_6$4, [
       (openBlock(true), createElementBlock(Fragment, null, renderList($props.fields, (field) => {
         return (openBlock(), createElementBlock("div", {
           class: normalizeClass(["form-group", 'col-md-' + $options.getColumns()]),
@@ -2529,7 +2529,7 @@ const _hoisted_3$8 = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$7 = { class: "offcanvas-body" };
+const _hoisted_4$8 = { class: "offcanvas-body" };
 
 function render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", {
@@ -2550,7 +2550,7 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         "aria-label": "Close"
       }, null, 512 /* NEED_PATCH */)
     ]),
-    createElementVNode("div", _hoisted_4$7, [
+    createElementVNode("div", _hoisted_4$8, [
       renderSlot(_ctx.$slots, "default")
     ])
   ], 10 /* CLASS, PROPS */, _hoisted_1$8))
@@ -2569,13 +2569,13 @@ var script$7 = {
 const _hoisted_1$7 = ["id"];
 const _hoisted_2$7 = { class: "modal-content" };
 const _hoisted_3$7 = { class: "modal-header" };
-const _hoisted_4$6 = { class: "modal-title" };
-const _hoisted_5$3 = /*#__PURE__*/createElementVNode("button", {
+const _hoisted_4$7 = { class: "modal-title" };
+const _hoisted_5$4 = /*#__PURE__*/createElementVNode("button", {
   class: "btn btn-danger btn-sm",
   "data-bs-dismiss": "modal",
   "data-dismiss": "modal"
 }, "×", -1 /* HOISTED */);
-const _hoisted_6$2 = { class: "modal-body" };
+const _hoisted_6$3 = { class: "modal-body" };
 const _hoisted_7$2 = { class: "section" };
 
 function render$3(_ctx, _cache, $props, $setup, $data, $options) {
@@ -2589,10 +2589,10 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     }, [
       createElementVNode("div", _hoisted_2$7, [
         createElementVNode("div", _hoisted_3$7, [
-          createElementVNode("h3", _hoisted_4$6, toDisplayString($props.modalTitle), 1 /* TEXT */),
-          _hoisted_5$3
+          createElementVNode("h3", _hoisted_4$7, toDisplayString($props.modalTitle), 1 /* TEXT */),
+          _hoisted_5$4
         ]),
-        createElementVNode("div", _hoisted_6$2, [
+        createElementVNode("div", _hoisted_6$3, [
           createElementVNode("div", _hoisted_7$2, [
             renderSlot(_ctx.$slots, "default")
           ])
@@ -2679,9 +2679,9 @@ var script$6 = {
 const _hoisted_1$6 = { key: 0 };
 const _hoisted_2$6 = { class: "record_count_body mb-3" };
 const _hoisted_3$6 = /*#__PURE__*/createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
-const _hoisted_4$5 = /*#__PURE__*/createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
+const _hoisted_4$6 = /*#__PURE__*/createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
 const _hoisted_9$2 = [
-  _hoisted_4$5
+  _hoisted_4$6
 ];
 const _hoisted_10$1 = { class: "record_counts" };
 const _hoisted_11$1 = {
@@ -3210,13 +3210,13 @@ const _hoisted_2$5 = {
   class: "col-md-4 mb-2"
 };
 const _hoisted_3$5 = ["disabled"];
-const _hoisted_4$4 = /*#__PURE__*/createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
-const _hoisted_5$2 = /*#__PURE__*/createElementVNode("span", {
+const _hoisted_4$5 = /*#__PURE__*/createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
+const _hoisted_5$3 = /*#__PURE__*/createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
 }, null, -1 /* HOISTED */);
-const _hoisted_6$1 = /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */);
+const _hoisted_6$2 = /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */);
 const _hoisted_7$1 = {
   key: 1,
   class: "row"
@@ -3374,12 +3374,12 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           }, [
             (!$data.downloading)
               ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                  _hoisted_4$4,
+                  _hoisted_4$5,
                   createTextVNode(" Export ")
                 ], 64 /* STABLE_FRAGMENT */))
               : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
-                  _hoisted_5$2,
-                  _hoisted_6$1
+                  _hoisted_5$3,
+                  _hoisted_6$2
                 ], 64 /* STABLE_FRAGMENT */))
           ], 8 /* PROPS */, _hoisted_3$5)
         ]))
@@ -3867,8 +3867,8 @@ const _hoisted_1$4 = {
 };
 const _hoisted_2$4 = ["data-bs-target"];
 const _hoisted_3$4 = /*#__PURE__*/createElementVNode("i", { class: "bi-chevron-right float-end" }, null, -1 /* HOISTED */);
-const _hoisted_4$3 = ["id"];
-const _hoisted_5$1 = { class: "tab-content" };
+const _hoisted_4$4 = ["id"];
+const _hoisted_5$2 = { class: "tab-content" };
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = resolveComponent("router-link");
@@ -3919,10 +3919,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 ]))
               }), 128 /* KEYED_FRAGMENT */))
             ], 2 /* CLASS */)
-          ], 10 /* CLASS, PROPS */, _hoisted_4$3)
+          ], 10 /* CLASS, PROPS */, _hoisted_4$4)
         ]))
       : createCommentVNode("v-if", true),
-    createElementVNode("div", _hoisted_5$1, [
+    createElementVNode("div", _hoisted_5$2, [
       createVNode(_component_router_view, {
         currentTab: $data.currentTab,
         sharedData: $props.sharedData,
@@ -3944,7 +3944,7 @@ const _hoisted_2$3 = {
   role: "presentation"
 };
 const _hoisted_3$3 = ["onClick"];
-const _hoisted_4$2 = { class: "tab-content" };
+const _hoisted_4$3 = { class: "tab-content" };
 
 var script$3 = {
   __name: 'ShDynamicTabs',
@@ -3981,7 +3981,7 @@ return (_ctx, _cache) => {
         ]))
       }), 256 /* UNKEYED_FRAGMENT */))
     ]),
-    createElementVNode("div", _hoisted_4$2, [
+    createElementVNode("div", _hoisted_4$3, [
       (unref(currentTab))
         ? (openBlock(), createBlock(resolveDynamicComponent(unref(currentTab).component), { key: 0 }))
         : createCommentVNode("v-if", true)
@@ -4078,14 +4078,15 @@ const useUserStore = defineStore('user-store', {
   }
 });
 
-const _hoisted_1$2 = /*#__PURE__*/createElementVNode("h5", null, "Departments", -1 /* HOISTED */);
-const _hoisted_2$2 = {
+const _hoisted_1$2 = { class: "card sh-departments-card shadow" };
+const _hoisted_2$2 = { class: "card-body" };
+const _hoisted_3$2 = {
   "data-bs-toggle": "modal",
   ref: "addDeptBtn",
   href: "#sh-department_modal",
   class: "btn btn-info btn-sm"
 };
-const _hoisted_3$2 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
+const _hoisted_4$2 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
 
 
 var script$2 = {
@@ -4111,15 +4112,19 @@ function departmentAdded (response) {
 
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$2,
-    createElementVNode("a", _hoisted_2$2, [
-      _hoisted_3$2,
-      createTextVNode(" ADD DEPARTMENT")
-    ], 512 /* NEED_PATCH */),
-    createVNode(script$5, {
-      headers: ['id','name','description', 'created_at'],
-      "end-point": "admin/departments/list",
-      actions: {
+    (openBlock(), createBlock(Teleport, { to: ".system-title" }, [
+      createTextVNode("Departments")
+    ])),
+    createElementVNode("div", _hoisted_1$2, [
+      createElementVNode("div", _hoisted_2$2, [
+        createElementVNode("a", _hoisted_3$2, [
+          _hoisted_4$2,
+          createTextVNode(" ADD DEPARTMENT")
+        ], 512 /* NEED_PATCH */),
+        createVNode(script$5, {
+          headers: ['id','name','description', 'created_at'],
+          "end-point": "admin/departments/list",
+          actions: {
       label: 'Action',
       actions: [
         {
@@ -4129,21 +4134,23 @@ return (_ctx, _cache) => {
         }
       ]
     }
-    }),
-    createVNode(script$7, {
-      "modal-id": "sh-department_modal",
-      "modal-title": "Department Form"
-    }, {
-      default: withCtx(() => [
-        createVNode(script$9, {
-          "success-callback": "departmentAdded",
-          onDepartmentAdded: departmentAdded,
-          action: "admin/departments/store",
-          fields: ['name','description']
+        }),
+        createVNode(script$7, {
+          "modal-id": "sh-department_modal",
+          "modal-title": "Department Form"
+        }, {
+          default: withCtx(() => [
+            createVNode(script$9, {
+              "success-callback": "departmentAdded",
+              onDepartmentAdded: departmentAdded,
+              action: "admin/departments/store",
+              fields: ['name','description']
+            })
+          ]),
+          _: 1 /* STABLE */
         })
-      ]),
-      _: 1 /* STABLE */
-    })
+      ])
+    ])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -4152,7 +4159,12 @@ return (_ctx, _cache) => {
 
 script$2.__file = "src/lib/components/core/Departments/Departments.vue";
 
-const _hoisted_1$1 = /*#__PURE__*/createElementVNode("a", {
+const _hoisted_1$1 = {
+  key: 0,
+  class: "card sh-department-view shadow"
+};
+const _hoisted_2$1 = { class: "card-body" };
+const _hoisted_3$1 = /*#__PURE__*/createElementVNode("a", {
   href: "#addModule",
   class: "btn btn-info btn-sm",
   "data-bs-toggle": "modal"
@@ -4160,9 +4172,9 @@ const _hoisted_1$1 = /*#__PURE__*/createElementVNode("a", {
   /*#__PURE__*/createElementVNode("i", { class: "bi-plus" }),
   /*#__PURE__*/createTextVNode(" ADD Module")
 ], -1 /* HOISTED */);
-const _hoisted_2$1 = { class: "text-primary text-capitalize" };
-const _hoisted_3$1 = ["value"];
-const _hoisted_4$1 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-save" }, null, -1 /* HOISTED */);
+const _hoisted_4$1 = { class: "text-primary text-capitalize" };
+const _hoisted_5$1 = ["value"];
+const _hoisted_6$1 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-save" }, null, -1 /* HOISTED */);
 
 var script$1 = {
   __name: 'Department',
@@ -4256,11 +4268,14 @@ function submitPermissions() {
 
 return (_ctx, _cache) => {
   return (unref(department))
-    ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-        _hoisted_1$1,
-        createElementVNode("h5", null, "Department #" + toDisplayString(unref(department).id) + " - " + toDisplayString(unref(department).name) + " Allowed Modules", 1 /* TEXT */),
-        createVNode(script$5, {
-          actions: {
+    ? (openBlock(), createElementBlock("div", _hoisted_1$1, [
+        createElementVNode("div", _hoisted_2$1, [
+          _hoisted_3$1,
+          (openBlock(), createBlock(Teleport, { to: ".system-title" }, [
+            createTextVNode("Department #" + toDisplayString(unref(department).id) + " - " + toDisplayString(unref(department).name) + " Allowed Modules", 1 /* TEXT */)
+          ])),
+          createVNode(script$5, {
+            actions: {
       label: 'Actions',
       actions: [
         {
@@ -4275,78 +4290,79 @@ return (_ctx, _cache) => {
         }
       ]
     },
-          reload: unref(reload),
-          headers: ['id',showModule,'created_at'],
-          "end-point": 'admin/departments/department/list-modules/' + id.value
-        }, null, 8 /* PROPS */, ["actions", "reload", "headers", "end-point"]),
-        createVNode(script$7, {
-          "modal-id": "addModule",
-          "modal-title": "Add Module Department"
-        }, {
-          default: withCtx(() => [
-            createVNode(script$9, {
-              "reload-select-items": unref(reload),
-              "success-callback": moduleAdded,
-              "fill-selects": {
+            reload: unref(reload),
+            headers: ['id',showModule,'created_at'],
+            "end-point": 'admin/departments/department/list-modules/' + id.value
+          }, null, 8 /* PROPS */, ["actions", "reload", "headers", "end-point"]),
+          createVNode(script$7, {
+            "modal-id": "addModule",
+            "modal-title": "Add Module Department"
+          }, {
+            default: withCtx(() => [
+              createVNode(script$9, {
+                "reload-select-items": unref(reload),
+                "success-callback": moduleAdded,
+                "fill-selects": {
         permission_module: {
           url: 'admin/departments/department/list-pending-modules/' + id.value,
           suggests: true
         }
       },
-              fields: ['permission_module'],
-              action: 'admin/departments/department/add-module/' + id.value
-            }, null, 8 /* PROPS */, ["reload-select-items", "fill-selects", "action"])
-          ]),
-          _: 1 /* STABLE */
-        }),
-        createElementVNode("a", {
-          href: "#permissionsCanvas",
-          class: "d-none",
-          ref_key: "permissionCanvasBtn",
-          ref: permissionCanvasBtn,
-          "data-bs-toggle": "offcanvas"
-        }, null, 512 /* NEED_PATCH */),
-        createVNode(script$8, {
-          "canvas-id": "permissionsCanvas",
-          position: "end enlarged",
-          "canvas-title": "Module Permissions"
-        }, {
-          default: withCtx(() => [
-            (unref(getModule))
-              ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                  createElementVNode("h5", _hoisted_2$1, "Permissions for " + toDisplayString(unref(getModule).module), 1 /* TEXT */),
-                  (openBlock(true), createElementBlock(Fragment, null, renderList(unref(modulePermissions), (permission) => {
-                    return (openBlock(), createElementBlock("div", {
-                      key: permission,
-                      class: "list-group p-0"
-                    }, [
-                      createElementVNode("label", {
-                        class: normalizeClass(["list-group-item pb-0 text-capitalize", 'ms-' + getPermissionLeft(permission)])
+                fields: ['permission_module'],
+                action: 'admin/departments/department/add-module/' + id.value
+              }, null, 8 /* PROPS */, ["reload-select-items", "fill-selects", "action"])
+            ]),
+            _: 1 /* STABLE */
+          }),
+          createElementVNode("a", {
+            href: "#permissionsCanvas",
+            class: "d-none",
+            ref_key: "permissionCanvasBtn",
+            ref: permissionCanvasBtn,
+            "data-bs-toggle": "offcanvas"
+          }, null, 512 /* NEED_PATCH */),
+          createVNode(script$8, {
+            "canvas-id": "permissionsCanvas",
+            position: "end enlarged",
+            "canvas-title": "Module Permissions"
+          }, {
+            default: withCtx(() => [
+              (unref(getModule))
+                ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+                    createElementVNode("h5", _hoisted_4$1, "Permissions for " + toDisplayString(unref(getModule).module), 1 /* TEXT */),
+                    (openBlock(true), createElementBlock(Fragment, null, renderList(unref(modulePermissions), (permission) => {
+                      return (openBlock(), createElementBlock("div", {
+                        key: permission,
+                        class: "list-group p-0"
                       }, [
-                        withDirectives(createElementVNode("input", {
-                          type: "checkbox",
-                          "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (isRef(selectedPermissions) ? (selectedPermissions).value = $event : selectedPermissions = $event)),
-                          value: permission
-                        }, null, 8 /* PROPS */, _hoisted_3$1), [
-                          [vModelCheckbox, unref(selectedPermissions)]
-                        ]),
-                        createTextVNode(" " + toDisplayString(getPermissionLabel(permission)), 1 /* TEXT */)
-                      ], 2 /* CLASS */)
-                    ]))
-                  }), 128 /* KEYED_FRAGMENT */)),
-                  createElementVNode("button", {
-                    onClick: submitPermissions,
-                    class: "btn btn-info"
-                  }, [
-                    _hoisted_4$1,
-                    createTextVNode(" Submit")
-                  ])
-                ], 64 /* STABLE_FRAGMENT */))
-              : createCommentVNode("v-if", true)
-          ]),
-          _: 1 /* STABLE */
-        })
-      ], 64 /* STABLE_FRAGMENT */))
+                        createElementVNode("label", {
+                          class: normalizeClass(["list-group-item pb-0 text-capitalize", 'ms-' + getPermissionLeft(permission)])
+                        }, [
+                          withDirectives(createElementVNode("input", {
+                            type: "checkbox",
+                            "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (isRef(selectedPermissions) ? (selectedPermissions).value = $event : selectedPermissions = $event)),
+                            value: permission
+                          }, null, 8 /* PROPS */, _hoisted_5$1), [
+                            [vModelCheckbox, unref(selectedPermissions)]
+                          ]),
+                          createTextVNode(" " + toDisplayString(getPermissionLabel(permission)), 1 /* TEXT */)
+                        ], 2 /* CLASS */)
+                      ]))
+                    }), 128 /* KEYED_FRAGMENT */)),
+                    createElementVNode("button", {
+                      onClick: submitPermissions,
+                      class: "btn btn-info"
+                    }, [
+                      _hoisted_6$1,
+                      createTextVNode(" Submit")
+                    ])
+                  ], 64 /* STABLE_FRAGMENT */))
+                : createCommentVNode("v-if", true)
+            ]),
+            _: 1 /* STABLE */
+          })
+        ])
+      ]))
     : createCommentVNode("v-if", true)
 }
 }

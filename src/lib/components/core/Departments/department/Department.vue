@@ -97,9 +97,11 @@ function submitPermissions() {
 </script>
 <template>
   <template v-if="department">
-    <a href="#addModule" class="btn btn-info btn-sm" data-bs-toggle="modal"><i class="bi-plus"></i> ADD Module</a>
-    <h5>Department #{{department.id}} - {{ department.name }} Allowed Modules</h5>
-    <sh-table :actions="{
+    <div class="card sh-department-view shadow">
+      <div class="card-body">
+        <a href="#addModule" class="btn btn-info btn-sm" data-bs-toggle="modal"><i class="bi-plus"></i> ADD Module</a>
+        <teleport to=".system-title">Department #{{department.id}} - {{ department.name }} Allowed Modules</teleport>
+        <sh-table :actions="{
       label: 'Actions',
       actions: [
         {
@@ -114,29 +116,31 @@ function submitPermissions() {
         }
       ]
     }" :reload="reload" :headers="['id',showModule,'created_at']" :end-point="'admin/departments/department/list-modules/' + id"></sh-table>
-    <sh-modal modal-id="addModule" modal-title="Add Module Department">
-      <sh-form :reload-select-items="reload" :success-callback="moduleAdded" :fill-selects="{
+        <sh-modal modal-id="addModule" modal-title="Add Module Department">
+          <sh-form :reload-select-items="reload" :success-callback="moduleAdded" :fill-selects="{
         permission_module: {
           url: 'admin/departments/department/list-pending-modules/' + id,
           suggests: true
         }
       }" :fields="['permission_module']" :action="'admin/departments/department/add-module/' + id"></sh-form>
-    </sh-modal>
-    <a href="#permissionsCanvas" class="d-none" ref="permissionCanvasBtn" data-bs-toggle="offcanvas"></a>
-    <sh-canvas canvas-id="permissionsCanvas" position="end enlarged" canvas-title="Module Permissions">
-      <template v-if="getModule">
-        <h5 class="text-primary text-capitalize">Permissions for {{ getModule.module }}</h5>
-        <template v-for="permission in modulePermissions" :key="permission">
-          <div class="list-group p-0">
-            <label class="list-group-item pb-0 text-capitalize" :class="'ms-' + getPermissionLeft(permission)">
-              <input type="checkbox" v-model="selectedPermissions" :value="permission">
-              {{ getPermissionLabel(permission) }}
-            </label>
-          </div>
-        </template>
-        <button @click="submitPermissions" class="btn btn-info"><i class="fa fa-save"></i> Submit</button>
-      </template>
-    </sh-canvas>
+        </sh-modal>
+        <a href="#permissionsCanvas" class="d-none" ref="permissionCanvasBtn" data-bs-toggle="offcanvas"></a>
+        <sh-canvas canvas-id="permissionsCanvas" position="end enlarged" canvas-title="Module Permissions">
+          <template v-if="getModule">
+            <h5 class="text-primary text-capitalize">Permissions for {{ getModule.module }}</h5>
+            <template v-for="permission in modulePermissions" :key="permission">
+              <div class="list-group p-0">
+                <label class="list-group-item pb-0 text-capitalize" :class="'ms-' + getPermissionLeft(permission)">
+                  <input type="checkbox" v-model="selectedPermissions" :value="permission">
+                  {{ getPermissionLabel(permission) }}
+                </label>
+              </div>
+            </template>
+            <button @click="submitPermissions" class="btn btn-info"><i class="fa fa-save"></i> Submit</button>
+          </template>
+        </sh-canvas>
+      </div>
+    </div>
   </template>
 </template>
 

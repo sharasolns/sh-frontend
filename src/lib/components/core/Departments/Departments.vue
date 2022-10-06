@@ -24,9 +24,11 @@ function departmentAdded (response) {
 }
 </script>
 <template>
-        <h5>Departments</h5>
-        <a data-bs-toggle="modal" ref="addDeptBtn" href="#sh-department_modal" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> ADD DEPARTMENT</a>
-        <sh-table :headers="['id','name','description', 'created_at']" end-point="admin/departments/list" :actions="{
+  <teleport to=".system-title">Departments</teleport>
+        <div class="card sh-departments-card shadow">
+          <div class="card-body">
+            <a data-bs-toggle="modal" ref="addDeptBtn" href="#sh-department_modal" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> ADD DEPARTMENT</a>
+            <sh-table :headers="['id','name','description', 'created_at']" end-point="admin/departments/list" :actions="{
       label: 'Action',
       actions: [
         {
@@ -36,7 +38,9 @@ function departmentAdded (response) {
         }
       ]
     }"></sh-table>
-    <sh-modal modal-id="sh-department_modal" modal-title="Department Form">
-      <sh-form success-callback="departmentAdded" @departmentAdded="departmentAdded" action="admin/departments/store" :fields="['name','description']"></sh-form>
-    </sh-modal>
+            <sh-modal modal-id="sh-department_modal" modal-title="Department Form">
+              <sh-form success-callback="departmentAdded" @departmentAdded="departmentAdded" action="admin/departments/store" :fields="['name','description']"></sh-form>
+            </sh-modal>
+          </div>
+        </div>
 </template>

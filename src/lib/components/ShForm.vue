@@ -1,4 +1,5 @@
 <template>
+  <h5 class="d-none"></h5>
   <form ref="ShAutoForm" class="sh-form">
 <!--    <div v-if="form_status == 1" class="alert alert-info">Processing...</div>-->
 <!--    <div v-if="form_status == 2" class="alert alert-success">Success</div>-->
@@ -299,6 +300,7 @@ export default {
       console.log(reason,message)
       if (reason.status === 422) { // change this to 422 validation error response as received from laravel
         this.form_errors = reason.data.errors
+        this.errorText = 'Fill all the details correctly'
       } else {
         this.errorText = message
       }

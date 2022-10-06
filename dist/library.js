@@ -1642,7 +1642,7 @@ const _hoisted_2$b = {
   style: {"display":"contents"}
 };
 const _hoisted_3$b = ["src"];
-const _hoisted_4$a = ["value"];
+const _hoisted_4$b = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$c, [
@@ -1661,7 +1661,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
         return (vue.openBlock(), vue.createElementBlock("option", {
           value: country,
           key: country.dialCode
-        }, vue.toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$a))
+        }, vue.toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$b))
       }), 128 /* KEYED_FRAGMENT */))
     ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
       [vue.vModelSelect, $data.selectedCountry]
@@ -1765,9 +1765,9 @@ const _hoisted_1$a = {
 };
 const _hoisted_2$a = ["id"];
 const _hoisted_3$a = { class: "badge bg-secondary m-1 sh-selected-item" };
-const _hoisted_4$9 = ["onClick"];
-const _hoisted_5$5 = ["id"];
-const _hoisted_6$4 = ["id", "aria-labelledby"];
+const _hoisted_4$a = ["onClick"];
+const _hoisted_5$6 = ["id"];
+const _hoisted_6$5 = ["id", "aria-labelledby"];
 const _hoisted_7$4 = { key: 0 };
 const _hoisted_8$3 = ["onClick"];
 const _hoisted_9$4 = {
@@ -1877,7 +1877,7 @@ return (_ctx, _cache) => {
                   type: "button",
                   class: "btn-close border-start border-1 ms-1",
                   "aria-label": "Close"
-                }, null, 8 /* PROPS */, _hoisted_4$9)
+                }, null, 8 /* PROPS */, _hoisted_4$a)
               ]))
             }), 256 /* UNKEYED_FRAGMENT */))
           ]),
@@ -1887,7 +1887,7 @@ return (_ctx, _cache) => {
             onClick: filterData,
             onInput: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$5)
+          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$6)
         ], 8 /* PROPS */, _hoisted_2$a),
         vue.createElementVNode("ul", {
           class: "dropdown-menu w-100",
@@ -1913,7 +1913,7 @@ return (_ctx, _cache) => {
             : (vue.unref(searchText))
               ? (vue.openBlock(), vue.createElementBlock("li", _hoisted_9$4, " No results found "))
               : (vue.openBlock(), vue.createElementBlock("li", _hoisted_10$3, " Type to search... "))
-        ], 8 /* PROPS */, _hoisted_6$4)
+        ], 8 /* PROPS */, _hoisted_6$5)
       ]))
     : vue.createCommentVNode("v-if", true)
 }
@@ -2250,9 +2250,9 @@ const _hoisted_2$9 = {
   role: "alert"
 };
 const _hoisted_3$9 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
-const _hoisted_4$8 = { key: 0 };
-const _hoisted_5$4 = { key: 1 };
-const _hoisted_6$3 = { class: "row" };
+const _hoisted_4$9 = { key: 0 };
+const _hoisted_5$5 = { key: 1 };
+const _hoisted_6$4 = { class: "row" };
 const _hoisted_7$3 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
 const _hoisted_8$2 = { class: "col-md-12" };
 const _hoisted_9$3 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
@@ -2307,8 +2307,8 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
       ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$9, [
           _hoisted_3$9,
           (_ctx.errorText)
-            ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_4$8, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
-            : (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$4, "Unexpected Error Occurred")),
+            ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_4$9, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
+            : (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$5, "Unexpected Error Occurred")),
           vue.createCommentVNode("      <button @click=\"hideError\" type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>")
         ]))
       : vue.createCommentVNode("v-if", true),
@@ -2318,7 +2318,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 512 /* NEED_PATCH */), [
       [vue.vModelText, _ctx.form_elements['id']]
     ]),
-    vue.createElementVNode("div", _hoisted_6$3, [
+    vue.createElementVNode("div", _hoisted_6$4, [
       (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.fields, (field) => {
         return (vue.openBlock(), vue.createElementBlock("div", {
           class: vue.normalizeClass(["form-group", 'col-md-' + $options.getColumns()]),
@@ -2541,7 +2541,7 @@ const _hoisted_3$8 = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$7 = { class: "offcanvas-body" };
+const _hoisted_4$8 = { class: "offcanvas-body" };
 
 function render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", {
@@ -2562,7 +2562,7 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         "aria-label": "Close"
       }, null, 512 /* NEED_PATCH */)
     ]),
-    vue.createElementVNode("div", _hoisted_4$7, [
+    vue.createElementVNode("div", _hoisted_4$8, [
       vue.renderSlot(_ctx.$slots, "default")
     ])
   ], 10 /* CLASS, PROPS */, _hoisted_1$8))
@@ -2581,13 +2581,13 @@ var script$7 = {
 const _hoisted_1$7 = ["id"];
 const _hoisted_2$7 = { class: "modal-content" };
 const _hoisted_3$7 = { class: "modal-header" };
-const _hoisted_4$6 = { class: "modal-title" };
-const _hoisted_5$3 = /*#__PURE__*/vue.createElementVNode("button", {
+const _hoisted_4$7 = { class: "modal-title" };
+const _hoisted_5$4 = /*#__PURE__*/vue.createElementVNode("button", {
   class: "btn btn-danger btn-sm",
   "data-bs-dismiss": "modal",
   "data-dismiss": "modal"
 }, "×", -1 /* HOISTED */);
-const _hoisted_6$2 = { class: "modal-body" };
+const _hoisted_6$3 = { class: "modal-body" };
 const _hoisted_7$2 = { class: "section" };
 
 function render$3(_ctx, _cache, $props, $setup, $data, $options) {
@@ -2601,10 +2601,10 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     }, [
       vue.createElementVNode("div", _hoisted_2$7, [
         vue.createElementVNode("div", _hoisted_3$7, [
-          vue.createElementVNode("h3", _hoisted_4$6, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
-          _hoisted_5$3
+          vue.createElementVNode("h3", _hoisted_4$7, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
+          _hoisted_5$4
         ]),
-        vue.createElementVNode("div", _hoisted_6$2, [
+        vue.createElementVNode("div", _hoisted_6$3, [
           vue.createElementVNode("div", _hoisted_7$2, [
             vue.renderSlot(_ctx.$slots, "default")
           ])
@@ -2691,9 +2691,9 @@ var script$6 = {
 const _hoisted_1$6 = { key: 0 };
 const _hoisted_2$6 = { class: "record_count_body mb-3" };
 const _hoisted_3$6 = /*#__PURE__*/vue.createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
-const _hoisted_4$5 = /*#__PURE__*/vue.createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
+const _hoisted_4$6 = /*#__PURE__*/vue.createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
 const _hoisted_9$2 = [
-  _hoisted_4$5
+  _hoisted_4$6
 ];
 const _hoisted_10$1 = { class: "record_counts" };
 const _hoisted_11$1 = {
@@ -3222,13 +3222,13 @@ const _hoisted_2$5 = {
   class: "col-md-4 mb-2"
 };
 const _hoisted_3$5 = ["disabled"];
-const _hoisted_4$4 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
-const _hoisted_5$2 = /*#__PURE__*/vue.createElementVNode("span", {
+const _hoisted_4$5 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
+const _hoisted_5$3 = /*#__PURE__*/vue.createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
 }, null, -1 /* HOISTED */);
-const _hoisted_6$1 = /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */);
+const _hoisted_6$2 = /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...", -1 /* HOISTED */);
 const _hoisted_7$1 = {
   key: 1,
   class: "row"
@@ -3386,12 +3386,12 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           }, [
             (!$data.downloading)
               ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
-                  _hoisted_4$4,
+                  _hoisted_4$5,
                   vue.createTextVNode(" Export ")
                 ], 64 /* STABLE_FRAGMENT */))
               : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
-                  _hoisted_5$2,
-                  _hoisted_6$1
+                  _hoisted_5$3,
+                  _hoisted_6$2
                 ], 64 /* STABLE_FRAGMENT */))
           ], 8 /* PROPS */, _hoisted_3$5)
         ]))
@@ -3879,8 +3879,8 @@ const _hoisted_1$4 = {
 };
 const _hoisted_2$4 = ["data-bs-target"];
 const _hoisted_3$4 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-chevron-right float-end" }, null, -1 /* HOISTED */);
-const _hoisted_4$3 = ["id"];
-const _hoisted_5$1 = { class: "tab-content" };
+const _hoisted_4$4 = ["id"];
+const _hoisted_5$2 = { class: "tab-content" };
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = vue.resolveComponent("router-link");
@@ -3931,10 +3931,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 ]))
               }), 128 /* KEYED_FRAGMENT */))
             ], 2 /* CLASS */)
-          ], 10 /* CLASS, PROPS */, _hoisted_4$3)
+          ], 10 /* CLASS, PROPS */, _hoisted_4$4)
         ]))
       : vue.createCommentVNode("v-if", true),
-    vue.createElementVNode("div", _hoisted_5$1, [
+    vue.createElementVNode("div", _hoisted_5$2, [
       vue.createVNode(_component_router_view, {
         currentTab: $data.currentTab,
         sharedData: $props.sharedData,
@@ -3956,7 +3956,7 @@ const _hoisted_2$3 = {
   role: "presentation"
 };
 const _hoisted_3$3 = ["onClick"];
-const _hoisted_4$2 = { class: "tab-content" };
+const _hoisted_4$3 = { class: "tab-content" };
 
 var script$3 = {
   __name: 'ShDynamicTabs',
@@ -3993,7 +3993,7 @@ return (_ctx, _cache) => {
         ]))
       }), 256 /* UNKEYED_FRAGMENT */))
     ]),
-    vue.createElementVNode("div", _hoisted_4$2, [
+    vue.createElementVNode("div", _hoisted_4$3, [
       (vue.unref(currentTab))
         ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(currentTab).component), { key: 0 }))
         : vue.createCommentVNode("v-if", true)
@@ -4090,14 +4090,15 @@ const useUserStore = pinia.defineStore('user-store', {
   }
 });
 
-const _hoisted_1$2 = /*#__PURE__*/vue.createElementVNode("h5", null, "Departments", -1 /* HOISTED */);
-const _hoisted_2$2 = {
+const _hoisted_1$2 = { class: "card sh-departments-card shadow" };
+const _hoisted_2$2 = { class: "card-body" };
+const _hoisted_3$2 = {
   "data-bs-toggle": "modal",
   ref: "addDeptBtn",
   href: "#sh-department_modal",
   class: "btn btn-info btn-sm"
 };
-const _hoisted_3$2 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
+const _hoisted_4$2 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
 
 
 var script$2 = {
@@ -4123,15 +4124,19 @@ function departmentAdded (response) {
 
 return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
-    _hoisted_1$2,
-    vue.createElementVNode("a", _hoisted_2$2, [
-      _hoisted_3$2,
-      vue.createTextVNode(" ADD DEPARTMENT")
-    ], 512 /* NEED_PATCH */),
-    vue.createVNode(script$5, {
-      headers: ['id','name','description', 'created_at'],
-      "end-point": "admin/departments/list",
-      actions: {
+    (vue.openBlock(), vue.createBlock(vue.Teleport, { to: ".system-title" }, [
+      vue.createTextVNode("Departments")
+    ])),
+    vue.createElementVNode("div", _hoisted_1$2, [
+      vue.createElementVNode("div", _hoisted_2$2, [
+        vue.createElementVNode("a", _hoisted_3$2, [
+          _hoisted_4$2,
+          vue.createTextVNode(" ADD DEPARTMENT")
+        ], 512 /* NEED_PATCH */),
+        vue.createVNode(script$5, {
+          headers: ['id','name','description', 'created_at'],
+          "end-point": "admin/departments/list",
+          actions: {
       label: 'Action',
       actions: [
         {
@@ -4141,21 +4146,23 @@ return (_ctx, _cache) => {
         }
       ]
     }
-    }),
-    vue.createVNode(script$7, {
-      "modal-id": "sh-department_modal",
-      "modal-title": "Department Form"
-    }, {
-      default: vue.withCtx(() => [
-        vue.createVNode(script$9, {
-          "success-callback": "departmentAdded",
-          onDepartmentAdded: departmentAdded,
-          action: "admin/departments/store",
-          fields: ['name','description']
+        }),
+        vue.createVNode(script$7, {
+          "modal-id": "sh-department_modal",
+          "modal-title": "Department Form"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createVNode(script$9, {
+              "success-callback": "departmentAdded",
+              onDepartmentAdded: departmentAdded,
+              action: "admin/departments/store",
+              fields: ['name','description']
+            })
+          ]),
+          _: 1 /* STABLE */
         })
-      ]),
-      _: 1 /* STABLE */
-    })
+      ])
+    ])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -4164,7 +4171,12 @@ return (_ctx, _cache) => {
 
 script$2.__file = "src/lib/components/core/Departments/Departments.vue";
 
-const _hoisted_1$1 = /*#__PURE__*/vue.createElementVNode("a", {
+const _hoisted_1$1 = {
+  key: 0,
+  class: "card sh-department-view shadow"
+};
+const _hoisted_2$1 = { class: "card-body" };
+const _hoisted_3$1 = /*#__PURE__*/vue.createElementVNode("a", {
   href: "#addModule",
   class: "btn btn-info btn-sm",
   "data-bs-toggle": "modal"
@@ -4172,9 +4184,9 @@ const _hoisted_1$1 = /*#__PURE__*/vue.createElementVNode("a", {
   /*#__PURE__*/vue.createElementVNode("i", { class: "bi-plus" }),
   /*#__PURE__*/vue.createTextVNode(" ADD Module")
 ], -1 /* HOISTED */);
-const _hoisted_2$1 = { class: "text-primary text-capitalize" };
-const _hoisted_3$1 = ["value"];
-const _hoisted_4$1 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-save" }, null, -1 /* HOISTED */);
+const _hoisted_4$1 = { class: "text-primary text-capitalize" };
+const _hoisted_5$1 = ["value"];
+const _hoisted_6$1 = /*#__PURE__*/vue.createElementVNode("i", { class: "fa fa-save" }, null, -1 /* HOISTED */);
 
 var script$1 = {
   __name: 'Department',
@@ -4268,11 +4280,14 @@ function submitPermissions() {
 
 return (_ctx, _cache) => {
   return (vue.unref(department))
-    ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
-        _hoisted_1$1,
-        vue.createElementVNode("h5", null, "Department #" + vue.toDisplayString(vue.unref(department).id) + " - " + vue.toDisplayString(vue.unref(department).name) + " Allowed Modules", 1 /* TEXT */),
-        vue.createVNode(script$5, {
-          actions: {
+    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$1, [
+        vue.createElementVNode("div", _hoisted_2$1, [
+          _hoisted_3$1,
+          (vue.openBlock(), vue.createBlock(vue.Teleport, { to: ".system-title" }, [
+            vue.createTextVNode("Department #" + vue.toDisplayString(vue.unref(department).id) + " - " + vue.toDisplayString(vue.unref(department).name) + " Allowed Modules", 1 /* TEXT */)
+          ])),
+          vue.createVNode(script$5, {
+            actions: {
       label: 'Actions',
       actions: [
         {
@@ -4287,78 +4302,79 @@ return (_ctx, _cache) => {
         }
       ]
     },
-          reload: vue.unref(reload),
-          headers: ['id',showModule,'created_at'],
-          "end-point": 'admin/departments/department/list-modules/' + id.value
-        }, null, 8 /* PROPS */, ["actions", "reload", "headers", "end-point"]),
-        vue.createVNode(script$7, {
-          "modal-id": "addModule",
-          "modal-title": "Add Module Department"
-        }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(script$9, {
-              "reload-select-items": vue.unref(reload),
-              "success-callback": moduleAdded,
-              "fill-selects": {
+            reload: vue.unref(reload),
+            headers: ['id',showModule,'created_at'],
+            "end-point": 'admin/departments/department/list-modules/' + id.value
+          }, null, 8 /* PROPS */, ["actions", "reload", "headers", "end-point"]),
+          vue.createVNode(script$7, {
+            "modal-id": "addModule",
+            "modal-title": "Add Module Department"
+          }, {
+            default: vue.withCtx(() => [
+              vue.createVNode(script$9, {
+                "reload-select-items": vue.unref(reload),
+                "success-callback": moduleAdded,
+                "fill-selects": {
         permission_module: {
           url: 'admin/departments/department/list-pending-modules/' + id.value,
           suggests: true
         }
       },
-              fields: ['permission_module'],
-              action: 'admin/departments/department/add-module/' + id.value
-            }, null, 8 /* PROPS */, ["reload-select-items", "fill-selects", "action"])
-          ]),
-          _: 1 /* STABLE */
-        }),
-        vue.createElementVNode("a", {
-          href: "#permissionsCanvas",
-          class: "d-none",
-          ref_key: "permissionCanvasBtn",
-          ref: permissionCanvasBtn,
-          "data-bs-toggle": "offcanvas"
-        }, null, 512 /* NEED_PATCH */),
-        vue.createVNode(script$8, {
-          "canvas-id": "permissionsCanvas",
-          position: "end enlarged",
-          "canvas-title": "Module Permissions"
-        }, {
-          default: vue.withCtx(() => [
-            (vue.unref(getModule))
-              ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
-                  vue.createElementVNode("h5", _hoisted_2$1, "Permissions for " + vue.toDisplayString(vue.unref(getModule).module), 1 /* TEXT */),
-                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(modulePermissions), (permission) => {
-                    return (vue.openBlock(), vue.createElementBlock("div", {
-                      key: permission,
-                      class: "list-group p-0"
-                    }, [
-                      vue.createElementVNode("label", {
-                        class: vue.normalizeClass(["list-group-item pb-0 text-capitalize", 'ms-' + getPermissionLeft(permission)])
+                fields: ['permission_module'],
+                action: 'admin/departments/department/add-module/' + id.value
+              }, null, 8 /* PROPS */, ["reload-select-items", "fill-selects", "action"])
+            ]),
+            _: 1 /* STABLE */
+          }),
+          vue.createElementVNode("a", {
+            href: "#permissionsCanvas",
+            class: "d-none",
+            ref_key: "permissionCanvasBtn",
+            ref: permissionCanvasBtn,
+            "data-bs-toggle": "offcanvas"
+          }, null, 512 /* NEED_PATCH */),
+          vue.createVNode(script$8, {
+            "canvas-id": "permissionsCanvas",
+            position: "end enlarged",
+            "canvas-title": "Module Permissions"
+          }, {
+            default: vue.withCtx(() => [
+              (vue.unref(getModule))
+                ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
+                    vue.createElementVNode("h5", _hoisted_4$1, "Permissions for " + vue.toDisplayString(vue.unref(getModule).module), 1 /* TEXT */),
+                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(modulePermissions), (permission) => {
+                      return (vue.openBlock(), vue.createElementBlock("div", {
+                        key: permission,
+                        class: "list-group p-0"
                       }, [
-                        vue.withDirectives(vue.createElementVNode("input", {
-                          type: "checkbox",
-                          "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(selectedPermissions) ? (selectedPermissions).value = $event : selectedPermissions = $event)),
-                          value: permission
-                        }, null, 8 /* PROPS */, _hoisted_3$1), [
-                          [vue.vModelCheckbox, vue.unref(selectedPermissions)]
-                        ]),
-                        vue.createTextVNode(" " + vue.toDisplayString(getPermissionLabel(permission)), 1 /* TEXT */)
-                      ], 2 /* CLASS */)
-                    ]))
-                  }), 128 /* KEYED_FRAGMENT */)),
-                  vue.createElementVNode("button", {
-                    onClick: submitPermissions,
-                    class: "btn btn-info"
-                  }, [
-                    _hoisted_4$1,
-                    vue.createTextVNode(" Submit")
-                  ])
-                ], 64 /* STABLE_FRAGMENT */))
-              : vue.createCommentVNode("v-if", true)
-          ]),
-          _: 1 /* STABLE */
-        })
-      ], 64 /* STABLE_FRAGMENT */))
+                        vue.createElementVNode("label", {
+                          class: vue.normalizeClass(["list-group-item pb-0 text-capitalize", 'ms-' + getPermissionLeft(permission)])
+                        }, [
+                          vue.withDirectives(vue.createElementVNode("input", {
+                            type: "checkbox",
+                            "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (vue.isRef(selectedPermissions) ? (selectedPermissions).value = $event : selectedPermissions = $event)),
+                            value: permission
+                          }, null, 8 /* PROPS */, _hoisted_5$1), [
+                            [vue.vModelCheckbox, vue.unref(selectedPermissions)]
+                          ]),
+                          vue.createTextVNode(" " + vue.toDisplayString(getPermissionLabel(permission)), 1 /* TEXT */)
+                        ], 2 /* CLASS */)
+                      ]))
+                    }), 128 /* KEYED_FRAGMENT */)),
+                    vue.createElementVNode("button", {
+                      onClick: submitPermissions,
+                      class: "btn btn-info"
+                    }, [
+                      _hoisted_6$1,
+                      vue.createTextVNode(" Submit")
+                    ])
+                  ], 64 /* STABLE_FRAGMENT */))
+                : vue.createCommentVNode("v-if", true)
+            ]),
+            _: 1 /* STABLE */
+          })
+        ])
+      ]))
     : vue.createCommentVNode("v-if", true)
 }
 }
