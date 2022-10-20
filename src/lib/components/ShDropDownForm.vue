@@ -1,7 +1,6 @@
 <script setup>
 import {onMounted, ref} from 'vue'
-import ShModal from '@/lib/components/ShModal.vue'
-import ShForm from '@/lib/components/ShForm.vue'
+import ShForm from './ShForm.vue'
 const props = defineProps(['action',
   'classes',
   'hasTerms',

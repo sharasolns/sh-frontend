@@ -100,7 +100,7 @@ function submitPermissions() {
     <div class="card sh-department-view shadow">
       <div class="card-body">
         <a href="#addModule" class="btn btn-info btn-sm" data-bs-toggle="modal"><i class="bi-plus"></i> ADD Module</a>
-        <teleport to=".system-title">Department #{{department.id}} - {{ department.name }} Allowed Modules</teleport>
+        <h5>Department #{{department.id}} - {{ department.name }} Allowed Modules</h5>
         <sh-table :actions="{
       label: 'Actions',
       actions: [

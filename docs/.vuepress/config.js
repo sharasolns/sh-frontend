@@ -27,7 +27,7 @@ module.exports = {
       }
     ],
     sidebar: {
-      '/guide/':[
+      '/guide':[
         {
           text:'Introduction',
           // collapsible: false,

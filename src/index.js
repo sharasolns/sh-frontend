@@ -1,4 +1,6 @@
 import ShForm from './lib/components/ShForm.vue'
+import ShDropDownForm from './lib/components/ShDropDownForm.vue'
+import ShModalForm from './lib/components/ShModalForm.vue'
 import ShCanvas from './lib/components/ShCanvas.vue'
 import ShModal from './lib/components/ShModal.vue'
 import ShPhone from './lib/components/ShPhone.vue'
@@ -23,5 +25,7 @@ export {
     shRepo,
     shApis,
     shStorage,
-    ShFrontend
+    ShFrontend,
+  ShDropDownForm,
+  ShModalForm
 }

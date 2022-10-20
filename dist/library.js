@@ -1574,7 +1574,7 @@ const countries = [
   }
 ];
 
-var script$c = {
+var script$e = {
   name: 'ShPhone',
   props: ['modelValue', 'country_code'],
   data () {
@@ -1636,8 +1636,8 @@ var script$c = {
   }
 };
 
-const _hoisted_1$c = { class: "sh-phone mb-3" };
-const _hoisted_2$b = {
+const _hoisted_1$e = { class: "sh-phone mb-3" };
+const _hoisted_2$c = {
   key: 0,
   style: {"display":"contents"}
 };
@@ -1645,9 +1645,9 @@ const _hoisted_3$b = ["src"];
 const _hoisted_4$b = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
-  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$c, [
+  return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$e, [
     ($data.selectedCountry)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$b, [
+      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$c, [
           vue.createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$b),
           vue.createTextVNode(" " + vue.toDisplayString($data.selectedCountry.dialCode), 1 /* TEXT */)
         ]))
@@ -1679,10 +1679,10 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$c.render = render$7;
-script$c.__file = "src/lib/components/ShPhone.vue";
+script$e.render = render$7;
+script$e.__file = "src/lib/components/ShPhone.vue";
 
-var script$b = {
+var script$d = {
   name: 'ShEditor',
   props: ['modelValue'],
   components: {
@@ -1721,7 +1721,7 @@ var script$b = {
   }
 };
 
-const _hoisted_1$b = /*#__PURE__*/vue.createElementVNode("textarea", {
+const _hoisted_1$d = /*#__PURE__*/vue.createElementVNode("textarea", {
   id: "tiny",
   style: {"display":"none"},
   "data-cy": "tinymce_editor"
@@ -1731,7 +1731,7 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_editor = vue.resolveComponent("editor");
 
   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
-    _hoisted_1$b,
+    _hoisted_1$d,
     vue.createElementVNode("div", {
       onFocusin: _cache[1] || (_cache[1] = vue.withModifiers(() => {}, ["stop"])),
       class: "sh-editor w-100"
@@ -1756,14 +1756,14 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$b.render = render$6;
-script$b.__file = "src/lib/components/FormComponent/ShEditor.vue";
+script$d.render = render$6;
+script$d.__file = "src/lib/components/FormComponent/ShEditor.vue";
 
-const _hoisted_1$a = {
+const _hoisted_1$c = {
   key: 0,
   class: "dropdown sh-suggest"
 };
-const _hoisted_2$a = ["id"];
+const _hoisted_2$b = ["id"];
 const _hoisted_3$a = { class: "badge bg-secondary m-1 sh-selected-item" };
 const _hoisted_4$a = ["onClick"];
 const _hoisted_5$6 = ["id"];
@@ -1780,7 +1780,7 @@ const _hoisted_10$3 = {
 };
 
 
-var script$a = {
+var script$c = {
   __name: 'ShSuggest',
   props: ['fillSelects','modelValue'],
   emits: ['update:modelValue'],
@@ -1861,7 +1861,7 @@ function filterData(e){
 
 return (_ctx, _cache) => {
   return (vue.unref(id))
-    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$a, [
+    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$c, [
         vue.createElementVNode("div", {
           id: vue.unref(id),
           "data-bs-toggle": "dropdown",
@@ -1888,7 +1888,7 @@ return (_ctx, _cache) => {
             onInput: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
           }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$6)
-        ], 8 /* PROPS */, _hoisted_2$a),
+        ], 8 /* PROPS */, _hoisted_2$b),
         vue.createElementVNode("ul", {
           class: "dropdown-menu w-100",
           id: 'dropwdown_section' + vue.unref(id),
@@ -1921,15 +1921,15 @@ return (_ctx, _cache) => {
 
 };
 
-script$a.__scopeId = "data-v-5b767123";
-script$a.__file = "src/lib/components/FormComponent/ShSuggest.vue";
+script$c.__scopeId = "data-v-5b767123";
+script$c.__file = "src/lib/components/FormComponent/ShSuggest.vue";
 
-var script$9 = {
+var script$b = {
   name: 'ShForm',
   components: {
-    ShSuggest: script$a,
-    ShEditor: script$b,
-    ShPhone: script$c
+    ShSuggest: script$c,
+    ShEditor: script$d,
+    ShPhone: script$e
   },
   props: [
       'action',
@@ -2170,6 +2170,7 @@ var script$9 = {
       console.log(reason,message);
       if (reason.status === 422) { // change this to 422 validation error response as received from laravel
         this.form_errors = reason.data.errors;
+        this.errorText = 'Fill all the details correctly';
       } else {
         this.errorText = message;
       }
@@ -2240,40 +2241,41 @@ var script$9 = {
   }
 };
 
-const _hoisted_1$9 = {
+const _hoisted_1$b = /*#__PURE__*/vue.createElementVNode("h5", { class: "d-none" }, null, -1 /* HOISTED */);
+const _hoisted_2$a = {
   ref: "ShAutoForm",
   class: "sh-form"
 };
-const _hoisted_2$9 = {
+const _hoisted_3$9 = {
   key: 0,
   class: "alert alert-danger alert-dismissible fade show sh-form-submission-error",
   role: "alert"
 };
-const _hoisted_3$9 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
-const _hoisted_4$9 = { key: 0 };
-const _hoisted_5$5 = { key: 1 };
-const _hoisted_6$4 = { class: "row" };
-const _hoisted_7$3 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
-const _hoisted_8$2 = { class: "col-md-12" };
-const _hoisted_9$3 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
-const _hoisted_10$2 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
+const _hoisted_4$9 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
+const _hoisted_5$5 = { key: 0 };
+const _hoisted_6$4 = { key: 1 };
+const _hoisted_7$3 = { class: "row" };
+const _hoisted_8$2 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
+const _hoisted_9$3 = { class: "col-md-12" };
+const _hoisted_10$2 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
 const _hoisted_11$2 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_12$2 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
-const _hoisted_13$2 = ["data-cy", "name", "onFocus", "onUpdate:modelValue"];
-const _hoisted_14$2 = ["disabled", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
-const _hoisted_15$2 = ["name", "onFocus", "onUpdate:modelValue"];
+const _hoisted_13$2 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
+const _hoisted_14$2 = ["data-cy", "name", "onFocus", "onUpdate:modelValue"];
+const _hoisted_15$2 = ["disabled", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_16$2 = ["name", "onFocus", "onUpdate:modelValue"];
-const _hoisted_17$2 = ["value"];
-const _hoisted_18$2 = {
+const _hoisted_17$2 = ["name", "onFocus", "onUpdate:modelValue"];
+const _hoisted_18$2 = ["value"];
+const _hoisted_19$2 = {
   key: 12,
   class: "invalid-feedback"
 };
-const _hoisted_19$2 = {
+const _hoisted_20$2 = {
   key: 1,
   class: "row"
 };
-const _hoisted_20$2 = /*#__PURE__*/vue.createElementVNode("h5", null, "Confirm and Submit", -1 /* HOISTED */);
-const _hoisted_21$2 = /*#__PURE__*/vue.createElementVNode("p", null, [
+const _hoisted_21$2 = /*#__PURE__*/vue.createElementVNode("h5", null, "Confirm and Submit", -1 /* HOISTED */);
+const _hoisted_22$2 = /*#__PURE__*/vue.createElementVNode("p", null, [
   /*#__PURE__*/vue.createTextVNode("By clicking submit, you agree to our "),
   /*#__PURE__*/vue.createElementVNode("a", {
     target: "_blank",
@@ -2285,11 +2287,11 @@ const _hoisted_21$2 = /*#__PURE__*/vue.createElementVNode("p", null, [
     href: "https://hauzisha.co.ke/privacy-policy"
   }, "privacy policy")
 ], -1 /* HOISTED */);
-const _hoisted_22$2 = [
-  _hoisted_20$2,
-  _hoisted_21$2
+const _hoisted_23$1 = [
+  _hoisted_21$2,
+  _hoisted_22$2
 ];
-const _hoisted_23$1 = /*#__PURE__*/vue.createElementVNode("span", {
+const _hoisted_24$1 = /*#__PURE__*/vue.createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
@@ -2300,225 +2302,391 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShSuggest = vue.resolveComponent("ShSuggest");
   const _component_ShEditor = vue.resolveComponent("ShEditor");
 
-  return (vue.openBlock(), vue.createElementBlock("form", _hoisted_1$9, [
-    vue.createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
-    vue.createCommentVNode("    <div v-if=\"form_status == 2\" class=\"alert alert-success\">Success</div>"),
-    (_ctx.form_status == 3)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$9, [
-          _hoisted_3$9,
-          (_ctx.errorText)
-            ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_4$9, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
-            : (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$5, "Unexpected Error Occurred")),
-          vue.createCommentVNode("      <button @click=\"hideError\" type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>")
-        ]))
-      : vue.createCommentVNode("v-if", true),
-    vue.withDirectives(vue.createElementVNode("input", {
-      type: "hidden",
-      "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((_ctx.form_elements['id']) = $event))
-    }, null, 512 /* NEED_PATCH */), [
-      [vue.vModelText, _ctx.form_elements['id']]
-    ]),
-    vue.createElementVNode("div", _hoisted_6$4, [
-      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.fields, (field) => {
-        return (vue.openBlock(), vue.createElementBlock("div", {
-          class: vue.normalizeClass(["form-group", 'col-md-' + $options.getColumns()]),
-          key: field
-        }, [
-          vue.createElementVNode("label", _hoisted_7$3, vue.toDisplayString($options.getLabel(field)), 1 /* TEXT */),
-          vue.createElementVNode("div", _hoisted_8$2, [
-            ($options.getFieldType(field) === 'component')
-              ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent($props.customComponent[field]), {
-                  key: 0,
-                  "data-cy": field,
-                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  modelValue: _ctx.form_elements[field],
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                }, null, 40 /* PROPS, HYDRATE_EVENTS */, ["data-cy", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'file')
-              ? (vue.openBlock(), vue.createElementBlock("input", {
-                  key: 1,
-                  "data-cy": field,
-                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  ref_for: true,
-                  ref: 'file_'+field,
-                  onChange: $event => ($options.handleFileUpload(field)),
-                  type: "file"
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_9$3))
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'numeric')
-              ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
-                  key: 2,
-                  "data-cy": field,
-                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
-                  type: "number"
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_10$2)), [
-                  [vue.vModelText, _ctx.form_elements[field]]
-                ])
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'password')
-              ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
-                  key: 3,
-                  "data-cy": field,
-                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
-                  type: "password"
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_11$2)), [
-                  [vue.vModelText, _ctx.form_elements[field]]
-                ])
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'email')
-              ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
-                  key: 4,
-                  "data-cy": field,
-                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
-                  type: "email",
-                  required: ""
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_12$2)), [
-                  [vue.vModelText, _ctx.form_elements[field]]
-                ])
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'datepicker' && $options.isDisabled(field) === false)
-              ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
-                  key: 5,
-                  "data-cy": field,
-                  type: "datetime-local",
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control active"]),
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_13$2)), [
-                  [vue.vModelText, _ctx.form_elements[field]]
-                ])
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'phone')
-              ? (vue.openBlock(), vue.createBlock(_component_ShPhone, {
-                  key: 6,
-                  country_code: $props.country_code,
-                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  modelValue: _ctx.form_elements[field],
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
-                  required: ""
-                }, null, 8 /* PROPS */, ["country_code", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'suggest')
-              ? (vue.openBlock(), vue.createBlock(_component_ShSuggest, {
-                  key: 7,
-                  "select-data": _ctx.selectData[field],
-                  "fill-selects": $props.fillSelects[field],
-                  class: vue.normalizeClass(_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field),
-                  modelValue: _ctx.form_elements[field],
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                }, null, 8 /* PROPS */, ["select-data", "fill-selects", "class", "modelValue", "onUpdate:modelValue"]))
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'editor')
-              ? (vue.openBlock(), vue.createBlock(_component_ShEditor, {
-                  key: 8,
-                  placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  modelValue: _ctx.form_elements[field],
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                }, null, 8 /* PROPS */, ["placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'text')
-              ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
-                  key: 9,
-                  disabled: $options.isDisabled(field),
-                  placeholder: field === 'phone_number' ? 'e.g 0712 345 678':'',
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
-                  type: "text"
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_14$2)), [
-                  [vue.vModelText, _ctx.form_elements[field]]
-                ])
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'textarea')
-              ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("textarea", {
-                  key: 10,
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_15$2)), [
-                  [vue.vModelText, _ctx.form_elements[field]]
-                ])
-              : vue.createCommentVNode("v-if", true),
-            ($options.getFieldType(field) === 'select' && _ctx.selectData[field] != null)
-              ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("select", {
-                  key: 11,
-                  name: field,
-                  onFocus: $event => ($options.removeErrors(field)),
-                  class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
-                  "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                }, [
-                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.selectData[field], (item) => {
-                    return (vue.openBlock(), vue.createElementBlock("option", {
-                      key: item.id,
-                      value: item.id
-                    }, vue.toDisplayString(item.name), 9 /* TEXT, PROPS */, _hoisted_17$2))
-                  }), 128 /* KEYED_FRAGMENT */))
-                ], 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_16$2)), [
-                  [vue.vModelSelect, _ctx.form_elements[field]]
-                ])
-              : vue.createCommentVNode("v-if", true),
-            (_ctx.form_errors[field] != null )
-              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_18$2, vue.toDisplayString(_ctx.form_errors[field][0]), 1 /* TEXT */))
-              : vue.createCommentVNode("v-if", true)
-          ])
-        ], 2 /* CLASS */))
-      }), 128 /* KEYED_FRAGMENT */))
-    ]),
-    ($props.hasTerms)
-      ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_19$2, _hoisted_22$2))
-      : vue.createCommentVNode("v-if", true),
-    (_ctx.form_status == 1)
-      ? (vue.openBlock(), vue.createElementBlock("button", {
-          key: 2,
-          class: vue.normalizeClass(["btn btn-primary", $options.getSubmitBtnClass()]),
-          type: "button",
-          disabled: ""
-        }, [
-          _hoisted_23$1,
-          vue.createTextVNode(" Processing... ")
-        ], 2 /* CLASS */))
-      : (vue.openBlock(), vue.createElementBlock("button", {
-          key: 3,
-          "data-cy": "sh_form_submit",
-          class: vue.normalizeClass(["mb-2 form-submit-btn", $options.getSubmitBtnClass()]),
-          type: "button",
-          onClick: _cache[1] || (_cache[1] = (...args) => ($options.submitForm && $options.submitForm(...args)))
-        }, vue.toDisplayString($props.actionLabel ? $props.actionLabel:'Submit'), 3 /* TEXT, CLASS */))
-  ], 512 /* NEED_PATCH */))
+  return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+    _hoisted_1$b,
+    vue.createElementVNode("form", _hoisted_2$a, [
+      vue.createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
+      vue.createCommentVNode("    <div v-if=\"form_status == 2\" class=\"alert alert-success\">Success</div>"),
+      (_ctx.form_status == 3)
+        ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$9, [
+            _hoisted_4$9,
+            (_ctx.errorText)
+              ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$5, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
+              : (vue.openBlock(), vue.createElementBlock("span", _hoisted_6$4, "Unexpected Error Occurred")),
+            vue.createCommentVNode("      <button @click=\"hideError\" type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>")
+          ]))
+        : vue.createCommentVNode("v-if", true),
+      vue.withDirectives(vue.createElementVNode("input", {
+        type: "hidden",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((_ctx.form_elements['id']) = $event))
+      }, null, 512 /* NEED_PATCH */), [
+        [vue.vModelText, _ctx.form_elements['id']]
+      ]),
+      vue.createElementVNode("div", _hoisted_7$3, [
+        (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.fields, (field) => {
+          return (vue.openBlock(), vue.createElementBlock("div", {
+            class: vue.normalizeClass(["form-group", 'col-md-' + $options.getColumns()]),
+            key: field
+          }, [
+            vue.createElementVNode("label", _hoisted_8$2, vue.toDisplayString($options.getLabel(field)), 1 /* TEXT */),
+            vue.createElementVNode("div", _hoisted_9$3, [
+              ($options.getFieldType(field) === 'component')
+                ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent($props.customComponent[field]), {
+                    key: 0,
+                    "data-cy": field,
+                    placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    modelValue: _ctx.form_elements[field],
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                  }, null, 40 /* PROPS, HYDRATE_EVENTS */, ["data-cy", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'file')
+                ? (vue.openBlock(), vue.createElementBlock("input", {
+                    key: 1,
+                    "data-cy": field,
+                    placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    ref_for: true,
+                    ref: 'file_'+field,
+                    onChange: $event => ($options.handleFileUpload(field)),
+                    type: "file"
+                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_10$2))
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'numeric')
+                ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
+                    key: 2,
+                    "data-cy": field,
+                    placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
+                    type: "number"
+                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_11$2)), [
+                    [vue.vModelText, _ctx.form_elements[field]]
+                  ])
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'password')
+                ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
+                    key: 3,
+                    "data-cy": field,
+                    placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
+                    type: "password"
+                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_12$2)), [
+                    [vue.vModelText, _ctx.form_elements[field]]
+                  ])
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'email')
+                ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
+                    key: 4,
+                    "data-cy": field,
+                    placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
+                    type: "email",
+                    required: ""
+                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_13$2)), [
+                    [vue.vModelText, _ctx.form_elements[field]]
+                  ])
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'datepicker' && $options.isDisabled(field) === false)
+                ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
+                    key: 5,
+                    "data-cy": field,
+                    type: "datetime-local",
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control active"]),
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_14$2)), [
+                    [vue.vModelText, _ctx.form_elements[field]]
+                  ])
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'phone')
+                ? (vue.openBlock(), vue.createBlock(_component_ShPhone, {
+                    key: 6,
+                    country_code: $props.country_code,
+                    placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    modelValue: _ctx.form_elements[field],
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
+                    required: ""
+                  }, null, 8 /* PROPS */, ["country_code", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'suggest')
+                ? (vue.openBlock(), vue.createBlock(_component_ShSuggest, {
+                    key: 7,
+                    "select-data": _ctx.selectData[field],
+                    "fill-selects": $props.fillSelects[field],
+                    class: vue.normalizeClass(_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field),
+                    modelValue: _ctx.form_elements[field],
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                  }, null, 8 /* PROPS */, ["select-data", "fill-selects", "class", "modelValue", "onUpdate:modelValue"]))
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'editor')
+                ? (vue.openBlock(), vue.createBlock(_component_ShEditor, {
+                    key: 8,
+                    placeholder: _ctx.allPlaceHolders[field] ? _ctx.allPlaceHolders[field] : '',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    modelValue: _ctx.form_elements[field],
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                  }, null, 8 /* PROPS */, ["placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'text')
+                ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
+                    key: 9,
+                    disabled: $options.isDisabled(field),
+                    placeholder: field === 'phone_number' ? 'e.g 0712 345 678':'',
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
+                    type: "text"
+                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_15$2)), [
+                    [vue.vModelText, _ctx.form_elements[field]]
+                  ])
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'textarea')
+                ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("textarea", {
+                    key: 10,
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_16$2)), [
+                    [vue.vModelText, _ctx.form_elements[field]]
+                  ])
+                : vue.createCommentVNode("v-if", true),
+              ($options.getFieldType(field) === 'select' && _ctx.selectData[field] != null)
+                ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("select", {
+                    key: 11,
+                    name: field,
+                    onFocus: $event => ($options.removeErrors(field)),
+                    class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
+                    "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
+                  }, [
+                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.selectData[field], (item) => {
+                      return (vue.openBlock(), vue.createElementBlock("option", {
+                        key: item.id,
+                        value: item.id
+                      }, vue.toDisplayString(item.name), 9 /* TEXT, PROPS */, _hoisted_18$2))
+                    }), 128 /* KEYED_FRAGMENT */))
+                  ], 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_17$2)), [
+                    [vue.vModelSelect, _ctx.form_elements[field]]
+                  ])
+                : vue.createCommentVNode("v-if", true),
+              (_ctx.form_errors[field] != null )
+                ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_19$2, vue.toDisplayString(_ctx.form_errors[field][0]), 1 /* TEXT */))
+                : vue.createCommentVNode("v-if", true)
+            ])
+          ], 2 /* CLASS */))
+        }), 128 /* KEYED_FRAGMENT */))
+      ]),
+      ($props.hasTerms)
+        ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_20$2, _hoisted_23$1))
+        : vue.createCommentVNode("v-if", true),
+      (_ctx.form_status == 1)
+        ? (vue.openBlock(), vue.createElementBlock("button", {
+            key: 2,
+            class: vue.normalizeClass(["btn btn-primary", $options.getSubmitBtnClass()]),
+            type: "button",
+            disabled: ""
+          }, [
+            _hoisted_24$1,
+            vue.createTextVNode(" Processing... ")
+          ], 2 /* CLASS */))
+        : (vue.openBlock(), vue.createElementBlock("button", {
+            key: 3,
+            "data-cy": "sh_form_submit",
+            class: vue.normalizeClass(["mb-2 form-submit-btn", $options.getSubmitBtnClass()]),
+            type: "button",
+            onClick: _cache[1] || (_cache[1] = (...args) => ($options.submitForm && $options.submitForm(...args)))
+          }, vue.toDisplayString($props.actionLabel ? $props.actionLabel:'Submit'), 3 /* TEXT, CLASS */))
+    ], 512 /* NEED_PATCH */)
+  ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$9.render = render$5;
-script$9.__file = "src/lib/components/ShForm.vue";
+script$b.render = render$5;
+script$b.__file = "src/lib/components/ShForm.vue";
+
+const _hoisted_1$a = /*#__PURE__*/vue.createElementVNode("h5", { class: "d-none" }, "To prevent default class", -1 /* HOISTED */);
+const _hoisted_2$9 = { class: "dropdown" };
+
+var script$a = {
+  __name: 'ShDropDownForm',
+  props: ['action',
+  'classes',
+  'hasTerms',
+  'country_code',
+  'submitBtnClass',
+  'fields',
+  'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
+  'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
+  'failedCallback', 'labels', 'editors',
+  'datePickers',
+  'textAreas',
+  'files',
+  'phones',
+  'numbers',
+  'customComponent','modalTitle','class'],
+  setup(__props) {
+
+const props = __props;
+
+
+
+vue.ref(props);
+let btnClass=props.class;
+const dropdownId = 'rand' + (Math.random() + 1).toString(36).substring(2);
+
+
+return (_ctx, _cache) => {
+  return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+    _hoisted_1$a,
+    vue.createElementVNode("div", _hoisted_2$9, [
+      vue.createElementVNode("a", {
+        class: vue.normalizeClass(vue.unref(btnClass)),
+        href: "#",
+        role: "button",
+        id: dropdownId,
+        "data-bs-toggle": "dropdown",
+        "data-bs-auto-close": "outside",
+        "aria-expanded": "false"
+      }, [
+        vue.renderSlot(_ctx.$slots, "default")
+      ], 2 /* CLASS */),
+      vue.createElementVNode("div", {
+        class: "dropdown-menu px-2 py-1",
+        "aria-labelledby": dropdownId
+      }, [
+        vue.createVNode(script$b, vue.normalizeProps(vue.guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
+      ])
+    ])
+  ], 64 /* STABLE_FRAGMENT */))
+}
+}
+
+};
+
+script$a.__file = "src/lib/components/ShDropDownForm.vue";
+
+var script$9 = {
+  name: 'ShModal',
+  props: ['modalTitle', 'modalId', 'modalSize'],
+  components: {
+  }
+};
+
+const _hoisted_1$9 = ["id"];
+const _hoisted_2$8 = { class: "modal-content" };
+const _hoisted_3$8 = { class: "modal-header" };
+const _hoisted_4$8 = { class: "modal-title" };
+const _hoisted_5$4 = /*#__PURE__*/vue.createElementVNode("button", {
+  class: "btn btn-danger btn-sm",
+  "data-bs-dismiss": "modal",
+  "data-dismiss": "modal"
+}, "×", -1 /* HOISTED */);
+const _hoisted_6$3 = { class: "modal-body" };
+const _hoisted_7$2 = { class: "section" };
+
+function render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  return (vue.openBlock(), vue.createElementBlock("div", {
+    class: "modal fade",
+    id: $props.modalId,
+    "aria-hidden": "true"
+  }, [
+    vue.createElementVNode("div", {
+      class: vue.normalizeClass(["modal-dialog", `modal-${$props.modalSize}`])
+    }, [
+      vue.createElementVNode("div", _hoisted_2$8, [
+        vue.createElementVNode("div", _hoisted_3$8, [
+          vue.createElementVNode("h3", _hoisted_4$8, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
+          _hoisted_5$4
+        ]),
+        vue.createElementVNode("div", _hoisted_6$3, [
+          vue.createElementVNode("div", _hoisted_7$2, [
+            vue.renderSlot(_ctx.$slots, "default")
+          ])
+        ])
+      ])
+    ], 2 /* CLASS */)
+  ], 8 /* PROPS */, _hoisted_1$9))
+}
+
+script$9.render = render$4;
+script$9.__file = "src/lib/components/ShModal.vue";
+
+const _hoisted_1$8 = ["href"];
 
 var script$8 = {
+  __name: 'ShModalForm',
+  props: ['action',
+  'classes',
+  'hasTerms',
+  'country_code',
+  'submitBtnClass',
+  'fields',
+  'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
+  'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
+  'failedCallback', 'labels', 'editors',
+  'datePickers',
+  'textAreas',
+  'files',
+  'phones',
+  'numbers',
+  'customComponent','modalTitle','class'],
+  setup(__props) {
+
+const props = __props;
+
+
+
+vue.ref(props);
+let btnClass=props.class;
+const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2);
+
+
+return (_ctx, _cache) => {
+  return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
+    vue.createElementVNode("a", {
+      class: vue.normalizeClass(vue.unref(btnClass)),
+      href: '#' + modalId,
+      "data-bs-toggle": "modal"
+    }, [
+      vue.renderSlot(_ctx.$slots, "default")
+    ], 10 /* CLASS, PROPS */, _hoisted_1$8),
+    vue.createVNode(script$9, {
+      "modal-id": modalId,
+      "modal-title": __props.modalTitle
+    }, {
+      default: vue.withCtx(() => [
+        vue.createVNode(script$b, vue.normalizeProps(vue.guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
+      ]),
+      _: 1 /* STABLE */
+    }, 8 /* PROPS */, ["modal-title"])
+  ], 64 /* STABLE_FRAGMENT */))
+}
+}
+
+};
+
+script$8.__file = "src/lib/components/ShModalForm.vue";
+
+var script$7 = {
   name: 'ShCanvas',
   props: ['canvasTitle', 'canvasId', 'position','canvasSize'],
   components: {
@@ -2535,15 +2703,15 @@ var script$8 = {
   }
 };
 
-const _hoisted_1$8 = ["id"];
-const _hoisted_2$8 = { class: "offcanvas-header" };
-const _hoisted_3$8 = {
+const _hoisted_1$7 = ["id"];
+const _hoisted_2$7 = { class: "offcanvas-header" };
+const _hoisted_3$7 = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$8 = { class: "offcanvas-body" };
+const _hoisted_4$7 = { class: "offcanvas-body" };
 
-function render$4(_ctx, _cache, $props, $setup, $data, $options) {
+function render$3(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", {
     class: vue.normalizeClass(["offcanvas", $data.side +' '+ $props.canvasSize + '']),
     "data-bs-scroll": "true",
@@ -2551,8 +2719,8 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
     id: $props.canvasId,
     "aria-labelledby": "offcanvasScrollingLabel"
   }, [
-    vue.createElementVNode("div", _hoisted_2$8, [
-      vue.createElementVNode("h5", _hoisted_3$8, vue.toDisplayString($props.canvasTitle), 1 /* TEXT */),
+    vue.createElementVNode("div", _hoisted_2$7, [
+      vue.createElementVNode("h5", _hoisted_3$7, vue.toDisplayString($props.canvasTitle), 1 /* TEXT */),
       vue.createElementVNode("button", {
         type: "button",
         ref: "closecanvas",
@@ -2562,60 +2730,14 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         "aria-label": "Close"
       }, null, 512 /* NEED_PATCH */)
     ]),
-    vue.createElementVNode("div", _hoisted_4$8, [
+    vue.createElementVNode("div", _hoisted_4$7, [
       vue.renderSlot(_ctx.$slots, "default")
     ])
-  ], 10 /* CLASS, PROPS */, _hoisted_1$8))
-}
-
-script$8.render = render$4;
-script$8.__file = "src/lib/components/ShCanvas.vue";
-
-var script$7 = {
-  name: 'ShModal',
-  props: ['modalTitle', 'modalId', 'modalSize'],
-  components: {
-  }
-};
-
-const _hoisted_1$7 = ["id"];
-const _hoisted_2$7 = { class: "modal-content" };
-const _hoisted_3$7 = { class: "modal-header" };
-const _hoisted_4$7 = { class: "modal-title" };
-const _hoisted_5$4 = /*#__PURE__*/vue.createElementVNode("button", {
-  class: "btn btn-danger btn-sm",
-  "data-bs-dismiss": "modal",
-  "data-dismiss": "modal"
-}, "×", -1 /* HOISTED */);
-const _hoisted_6$3 = { class: "modal-body" };
-const _hoisted_7$2 = { class: "section" };
-
-function render$3(_ctx, _cache, $props, $setup, $data, $options) {
-  return (vue.openBlock(), vue.createElementBlock("div", {
-    class: "modal fade",
-    id: $props.modalId,
-    "aria-hidden": "true"
-  }, [
-    vue.createElementVNode("div", {
-      class: vue.normalizeClass(["modal-dialog", `modal-${$props.modalSize}`])
-    }, [
-      vue.createElementVNode("div", _hoisted_2$7, [
-        vue.createElementVNode("div", _hoisted_3$7, [
-          vue.createElementVNode("h3", _hoisted_4$7, vue.toDisplayString($props.modalTitle), 1 /* TEXT */),
-          _hoisted_5$4
-        ]),
-        vue.createElementVNode("div", _hoisted_6$3, [
-          vue.createElementVNode("div", _hoisted_7$2, [
-            vue.renderSlot(_ctx.$slots, "default")
-          ])
-        ])
-      ])
-    ], 2 /* CLASS */)
-  ], 8 /* PROPS */, _hoisted_1$7))
+  ], 10 /* CLASS, PROPS */, _hoisted_1$7))
 }
 
 script$7.render = render$3;
-script$7.__file = "src/lib/components/ShModal.vue";
+script$7.__file = "src/lib/components/ShCanvas.vue";
 
 var script$6 = {
   name: 'Pagination',
@@ -3029,11 +3151,16 @@ var script$5 = {
         record.user = record.user.name;
       }
       this.records.unshift(record);
-      console.log(event, record);
+    },
+    canvasClosed: function(){
+      this.selectedRecord = null;
     },
     rowSelected: function (row) {
-      this.selectedRecord = row;
-      this.$emit('rowSelected', row);
+      this.selectedRecord = null;
+      setTimeout(()=>{
+        this.selectedRecord = row;
+        this.$emit('rowSelected', row);
+      },100);
     },
     changeKey: function (key, value) {
       this[key] = value;
@@ -3197,7 +3324,7 @@ var script$5 = {
     this.reloadData();
   },
   components: {
-    ShCanvas: script$8,
+    ShCanvas: script$7,
     pagination: script$6
   },
   computed: {
@@ -3766,11 +3893,11 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
             (action.canvasId)
               ? (vue.openBlock(), vue.createBlock(_component_sh_canvas, {
                   key: 0,
+                  onOffcanvasClosed: $options.canvasClosed,
                   position: action.canvasPosition,
                   "canvas-size": action.canvasSize,
                   "canvas-title": action.canvasTitle,
-                  "canvas-id": action.canvasId,
-                  onOffcanvasClosed: _cache[3] || (_cache[3] = $event => ($options.rowSelected(null)))
+                  "canvas-id": action.canvasId
                 }, {
                   default: vue.withCtx(() => [
                     ($data.selectedRecord)
@@ -3781,7 +3908,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                       : vue.createCommentVNode("v-if", true)
                   ]),
                   _: 2 /* DYNAMIC */
-                }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["position", "canvas-size", "canvas-title", "canvas-id"]))
+                }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onOffcanvasClosed", "position", "canvas-size", "canvas-title", "canvas-id"]))
               : vue.createCommentVNode("v-if", true)
           ], 64 /* STABLE_FRAGMENT */))
         }), 128 /* KEYED_FRAGMENT */))
@@ -3960,7 +4087,7 @@ const _hoisted_4$3 = { class: "tab-content" };
 
 var script$3 = {
   __name: 'ShDynamicTabs',
-  props: ['tabs'],
+  props: ['tabs','data'],
   setup(__props) {
 
 const props = __props;
@@ -3995,7 +4122,7 @@ return (_ctx, _cache) => {
     ]),
     vue.createElementVNode("div", _hoisted_4$3, [
       (vue.unref(currentTab))
-        ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(currentTab).component), { key: 0 }))
+        ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(currentTab).component), vue.normalizeProps(vue.mergeProps({ key: 0 }, vue.unref(currentTab))), null, 16 /* FULL_PROPS */))
         : vue.createCommentVNode("v-if", true)
     ])
   ], 64 /* STABLE_FRAGMENT */))
@@ -4033,8 +4160,8 @@ const useUserStore = pinia.defineStore('user-store', {
       }
       this.user = user;
       shApis.doGet('auth/user').then(res => {
-        const user = res.data;
-        ShStorage.setItem('user',res.data);
+        const user = res.data.user;
+        ShStorage.setItem('user',res.data.user);
         user.isAllowedTo = function (slug) {
           if (this.permissions) {
             let permissions = [];
@@ -4147,12 +4274,12 @@ return (_ctx, _cache) => {
       ]
     }
         }),
-        vue.createVNode(script$7, {
+        vue.createVNode(script$9, {
           "modal-id": "sh-department_modal",
           "modal-title": "Department Form"
         }, {
           default: vue.withCtx(() => [
-            vue.createVNode(script$9, {
+            vue.createVNode(script$b, {
               "success-callback": "departmentAdded",
               onDepartmentAdded: departmentAdded,
               action: "admin/departments/store",
@@ -4306,12 +4433,12 @@ return (_ctx, _cache) => {
             headers: ['id',showModule,'created_at'],
             "end-point": 'admin/departments/department/list-modules/' + id.value
           }, null, 8 /* PROPS */, ["actions", "reload", "headers", "end-point"]),
-          vue.createVNode(script$7, {
+          vue.createVNode(script$9, {
             "modal-id": "addModule",
             "modal-title": "Add Module Department"
           }, {
             default: vue.withCtx(() => [
-              vue.createVNode(script$9, {
+              vue.createVNode(script$b, {
                 "reload-select-items": vue.unref(reload),
                 "success-callback": moduleAdded,
                 "fill-selects": {
@@ -4333,7 +4460,7 @@ return (_ctx, _cache) => {
             ref: permissionCanvasBtn,
             "data-bs-toggle": "offcanvas"
           }, null, 512 /* NEED_PATCH */),
-          vue.createVNode(script$8, {
+          vue.createVNode(script$7, {
             "canvas-id": "permissionsCanvas",
             position: "end enlarged",
             "canvas-title": "Module Permissions"
@@ -4448,7 +4575,7 @@ return (_ctx, _cache) => {
     : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
         (section.value === 'login')
           ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2, [
-              vue.createVNode(script$9, {
+              vue.createVNode(script$b, {
                 class: "sh-login-form",
                 fields: ['email','password'],
                 "action-label": "Login",
@@ -4473,7 +4600,7 @@ return (_ctx, _cache) => {
               (vue.unref(registerSubTitle))
                 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_8, vue.toDisplayString(vue.unref(registerSubTitle)), 1 /* TEXT */))
                 : vue.createCommentVNode("v-if", true),
-              vue.createVNode(script$9, {
+              vue.createVNode(script$b, {
                 class: "sh-login-form",
                 fields: vue.unref(registrationFields),
                 "action-label": "Sign Up",
@@ -4537,12 +4664,14 @@ const ShFrontend = {
   }
 };
 
-exports.ShCanvas = script$8;
+exports.ShCanvas = script$7;
+exports.ShDropDownForm = script$a;
 exports.ShDynamicTabs = script$3;
-exports.ShForm = script$9;
+exports.ShForm = script$b;
 exports.ShFrontend = ShFrontend;
-exports.ShModal = script$7;
-exports.ShPhone = script$c;
+exports.ShModal = script$9;
+exports.ShModalForm = script$8;
+exports.ShPhone = script$e;
 exports.ShTable = script$5;
 exports.ShTabs = script$4;
 exports.shApis = shApis;

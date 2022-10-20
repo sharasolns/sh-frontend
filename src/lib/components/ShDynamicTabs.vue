@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted,ref,shallowRef} from 'vue'
-const props = defineProps(['tabs'])
+const props = defineProps(['tabs','data'])
 const tabs = props.tabs
 let currentTab = shallowRef(null)
 const generatedId = ref(null)
@@ -26,7 +26,7 @@ function setTab(tab){
   </ul>
   <div class="tab-content">
     <template v-if="currentTab">
-      <component :is="currentTab.component" />
+      <component v-bind="currentTab" :is="currentTab.component" />
     </template>
   </div>
 </template>

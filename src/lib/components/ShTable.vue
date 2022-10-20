@@ -174,7 +174,7 @@
 <pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore" :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey" load-more="1"></pagination>
 <template v-if="actions">
 <template v-for="action in actions.actions" :key="action.label">
-  <sh-canvas v-if="action.canvasId" :position="action.canvasPosition" :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId" @offcanvasClosed="rowSelected(null)">
+  <sh-canvas @offcanvasClosed="canvasClosed" v-if="action.canvasId" :position="action.canvasPosition" :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId">
     <component v-if="selectedRecord" :record="selectedRecord" :is="action.canvasComponent"/>
   </sh-canvas>
 </template>
@@ -230,11 +230,17 @@ export default {
         record.user = record.user.name
       }
       this.records.unshift(record)
-      console.log(event, record)
+    },
+    canvasClosed: function(){
+      this.selectedRecord = null
     },
     rowSelected: function (row) {
-      this.selectedRecord = row
-      this.$emit('rowSelected', row)
+      this.selectedRecord = null
+      const self = this
+      setTimeout(()=>{
+        this.selectedRecord = row
+        this.$emit('rowSelected', row)
+      },100)
     },
     changeKey: function (key, value) {
       this[key] = value

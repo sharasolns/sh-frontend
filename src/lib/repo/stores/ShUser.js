@@ -31,8 +31,8 @@ export const useUserStore = defineStore('user-store', {
       }
       this.user = user
       apis.doGet('auth/user').then(res => {
-        const user = res.data
-        shstorage.setItem('user',res.data)
+        const user = res.data.user
+        shstorage.setItem('user',res.data.user)
         user.isAllowedTo = function (slug) {
           if (this.permissions) {
             let permissions = []
