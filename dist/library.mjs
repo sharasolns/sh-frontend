@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import moment from 'moment';
-import { inject, openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, resolveDynamicComponent, renderSlot, normalizeProps, guardReactiveProps, withCtx, createStaticVNode, shallowRef, mergeProps, Teleport, computed, isRef, vModelCheckbox, watch, pushScopeId, popScopeId } from 'vue';
+import { inject, openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, resolveComponent, withModifiers, createVNode, ref, onMounted, unref, normalizeClass, createBlock, resolveDynamicComponent, renderSlot, normalizeProps, guardReactiveProps, withCtx, createStaticVNode, mergeProps, shallowRef, computed, isRef, vModelCheckbox, watch, pushScopeId, popScopeId } from 'vue';
 import NProgress from 'nprogress';
 import Editor from '@tinymce/tinymce-vue';
 import Swal from 'sweetalert2';
@@ -1624,19 +1624,19 @@ var script$e = {
   }
 };
 
-const _hoisted_1$e = { class: "sh-phone mb-3" };
-const _hoisted_2$c = {
+const _hoisted_1$d = { class: "sh-phone mb-3" };
+const _hoisted_2$b = {
   key: 0,
   style: {"display":"contents"}
 };
-const _hoisted_3$b = ["src"];
-const _hoisted_4$b = ["value"];
+const _hoisted_3$a = ["src"];
+const _hoisted_4$a = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
-  return (openBlock(), createElementBlock("div", _hoisted_1$e, [
+  return (openBlock(), createElementBlock("div", _hoisted_1$d, [
     ($data.selectedCountry)
-      ? (openBlock(), createElementBlock("div", _hoisted_2$c, [
-          createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$b),
+      ? (openBlock(), createElementBlock("div", _hoisted_2$b, [
+          createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$a),
           createTextVNode(" " + toDisplayString($data.selectedCountry.dialCode), 1 /* TEXT */)
         ]))
       : createCommentVNode("v-if", true),
@@ -1649,7 +1649,7 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
         return (openBlock(), createElementBlock("option", {
           value: country,
           key: country.dialCode
-        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$b))
+        }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$a))
       }), 128 /* KEYED_FRAGMENT */))
     ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
       [vModelSelect, $data.selectedCountry]
@@ -1709,7 +1709,7 @@ var script$d = {
   }
 };
 
-const _hoisted_1$d = /*#__PURE__*/createElementVNode("textarea", {
+const _hoisted_1$c = /*#__PURE__*/createElementVNode("textarea", {
   id: "tiny",
   style: {"display":"none"},
   "data-cy": "tinymce_editor"
@@ -1719,7 +1719,7 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_editor = resolveComponent("editor");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$d,
+    _hoisted_1$c,
     createElementVNode("div", {
       onFocusin: _cache[1] || (_cache[1] = withModifiers(() => {}, ["stop"])),
       class: "sh-editor w-100"
@@ -1747,13 +1747,13 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
 script$d.render = render$6;
 script$d.__file = "src/lib/components/FormComponent/ShEditor.vue";
 
-const _hoisted_1$c = {
+const _hoisted_1$b = {
   key: 0,
   class: "dropdown sh-suggest"
 };
-const _hoisted_2$b = ["id"];
-const _hoisted_3$a = { class: "badge bg-secondary m-1 sh-selected-item" };
-const _hoisted_4$a = ["onClick"];
+const _hoisted_2$a = ["id"];
+const _hoisted_3$9 = { class: "badge bg-secondary m-1 sh-selected-item" };
+const _hoisted_4$9 = ["onClick"];
 const _hoisted_5$6 = ["id"];
 const _hoisted_6$5 = ["id", "aria-labelledby"];
 const _hoisted_7$4 = { key: 0 };
@@ -1849,7 +1849,7 @@ function filterData(e){
 
 return (_ctx, _cache) => {
   return (unref(id))
-    ? (openBlock(), createElementBlock("div", _hoisted_1$c, [
+    ? (openBlock(), createElementBlock("div", _hoisted_1$b, [
         createElementVNode("div", {
           id: unref(id),
           "data-bs-toggle": "dropdown",
@@ -1858,14 +1858,14 @@ return (_ctx, _cache) => {
         }, [
           createElementVNode("div", null, [
             (openBlock(true), createElementBlock(Fragment, null, renderList(unref(selectedSuggestions), (sgt) => {
-              return (openBlock(), createElementBlock("h5", _hoisted_3$a, [
+              return (openBlock(), createElementBlock("h5", _hoisted_3$9, [
                 createTextVNode(toDisplayString(sgt.name) + " ", 1 /* TEXT */),
                 createElementVNode("button", {
                   onClick: $event => (removeSuggestion(sgt.id)),
                   type: "button",
                   class: "btn-close border-start border-1 ms-1",
                   "aria-label": "Close"
-                }, null, 8 /* PROPS */, _hoisted_4$a)
+                }, null, 8 /* PROPS */, _hoisted_4$9)
               ]))
             }), 256 /* UNKEYED_FRAGMENT */))
           ]),
@@ -1876,7 +1876,7 @@ return (_ctx, _cache) => {
             onInput: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
           }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$6)
-        ], 8 /* PROPS */, _hoisted_2$b),
+        ], 8 /* PROPS */, _hoisted_2$a),
         createElementVNode("ul", {
           class: "dropdown-menu w-100",
           id: 'dropwdown_section' + unref(id),
@@ -2229,17 +2229,17 @@ var script$b = {
   }
 };
 
-const _hoisted_1$b = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, null, -1 /* HOISTED */);
-const _hoisted_2$a = {
+const _hoisted_1$a = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, null, -1 /* HOISTED */);
+const _hoisted_2$9 = {
   ref: "ShAutoForm",
   class: "sh-form"
 };
-const _hoisted_3$9 = {
+const _hoisted_3$8 = {
   key: 0,
   class: "alert alert-danger alert-dismissible fade show sh-form-submission-error",
   role: "alert"
 };
-const _hoisted_4$9 = /*#__PURE__*/createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
+const _hoisted_4$8 = /*#__PURE__*/createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
 const _hoisted_5$5 = { key: 0 };
 const _hoisted_6$4 = { key: 1 };
 const _hoisted_7$3 = { class: "row" };
@@ -2291,13 +2291,13 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShEditor = resolveComponent("ShEditor");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$b,
-    createElementVNode("form", _hoisted_2$a, [
+    _hoisted_1$a,
+    createElementVNode("form", _hoisted_2$9, [
       createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
       createCommentVNode("    <div v-if=\"form_status == 2\" class=\"alert alert-success\">Success</div>"),
       (_ctx.form_status == 3)
-        ? (openBlock(), createElementBlock("div", _hoisted_3$9, [
-            _hoisted_4$9,
+        ? (openBlock(), createElementBlock("div", _hoisted_3$8, [
+            _hoisted_4$8,
             (_ctx.errorText)
               ? (openBlock(), createElementBlock("span", _hoisted_5$5, toDisplayString(_ctx.errorText), 1 /* TEXT */))
               : (openBlock(), createElementBlock("span", _hoisted_6$4, "Unexpected Error Occurred")),
@@ -2511,8 +2511,8 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
 script$b.render = render$5;
 script$b.__file = "src/lib/components/ShForm.vue";
 
-const _hoisted_1$a = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, "To prevent default class", -1 /* HOISTED */);
-const _hoisted_2$9 = { class: "dropdown" };
+const _hoisted_1$9 = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, "To prevent default class", -1 /* HOISTED */);
+const _hoisted_2$8 = { class: "dropdown" };
 
 var script$a = {
   __name: 'ShDropDownForm',
@@ -2544,8 +2544,8 @@ const dropdownId = 'rand' + (Math.random() + 1).toString(36).substring(2);
 
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$a,
-    createElementVNode("div", _hoisted_2$9, [
+    _hoisted_1$9,
+    createElementVNode("div", _hoisted_2$8, [
       createElementVNode("a", {
         class: normalizeClass(unref(btnClass)),
         href: "#",
@@ -2579,10 +2579,10 @@ var script$9 = {
   }
 };
 
-const _hoisted_1$9 = ["id"];
-const _hoisted_2$8 = { class: "modal-content" };
-const _hoisted_3$8 = { class: "modal-header" };
-const _hoisted_4$8 = { class: "modal-title" };
+const _hoisted_1$8 = ["id"];
+const _hoisted_2$7 = { class: "modal-content" };
+const _hoisted_3$7 = { class: "modal-header" };
+const _hoisted_4$7 = { class: "modal-title" };
 const _hoisted_5$4 = /*#__PURE__*/createElementVNode("button", {
   class: "btn btn-danger btn-sm",
   "data-bs-dismiss": "modal",
@@ -2600,9 +2600,9 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
     createElementVNode("div", {
       class: normalizeClass(["modal-dialog", `modal-${$props.modalSize}`])
     }, [
-      createElementVNode("div", _hoisted_2$8, [
-        createElementVNode("div", _hoisted_3$8, [
-          createElementVNode("h3", _hoisted_4$8, toDisplayString($props.modalTitle), 1 /* TEXT */),
+      createElementVNode("div", _hoisted_2$7, [
+        createElementVNode("div", _hoisted_3$7, [
+          createElementVNode("h3", _hoisted_4$7, toDisplayString($props.modalTitle), 1 /* TEXT */),
           _hoisted_5$4
         ]),
         createElementVNode("div", _hoisted_6$3, [
@@ -2612,13 +2612,13 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         ])
       ])
     ], 2 /* CLASS */)
-  ], 8 /* PROPS */, _hoisted_1$9))
+  ], 8 /* PROPS */, _hoisted_1$8))
 }
 
 script$9.render = render$4;
 script$9.__file = "src/lib/components/ShModal.vue";
 
-const _hoisted_1$8 = ["href"];
+const _hoisted_1$7 = ["href"];
 
 var script$8 = {
   __name: 'ShModalForm',
@@ -2656,7 +2656,7 @@ return (_ctx, _cache) => {
       "data-bs-toggle": "modal"
     }, [
       renderSlot(_ctx.$slots, "default")
-    ], 10 /* CLASS, PROPS */, _hoisted_1$8),
+    ], 10 /* CLASS, PROPS */, _hoisted_1$7),
     createVNode(script$9, {
       "modal-id": modalId,
       "modal-title": __props.modalTitle
@@ -2691,13 +2691,13 @@ var script$7 = {
   }
 };
 
-const _hoisted_1$7 = ["id"];
-const _hoisted_2$7 = { class: "offcanvas-header" };
-const _hoisted_3$7 = {
+const _hoisted_1$6 = ["id"];
+const _hoisted_2$6 = { class: "offcanvas-header" };
+const _hoisted_3$6 = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$7 = { class: "offcanvas-body" };
+const _hoisted_4$6 = { class: "offcanvas-body" };
 
 function render$3(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", {
@@ -2707,8 +2707,8 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     id: $props.canvasId,
     "aria-labelledby": "offcanvasScrollingLabel"
   }, [
-    createElementVNode("div", _hoisted_2$7, [
-      createElementVNode("h5", _hoisted_3$7, toDisplayString($props.canvasTitle), 1 /* TEXT */),
+    createElementVNode("div", _hoisted_2$6, [
+      createElementVNode("h5", _hoisted_3$6, toDisplayString($props.canvasTitle), 1 /* TEXT */),
       createElementVNode("button", {
         type: "button",
         ref: "closecanvas",
@@ -2718,10 +2718,10 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
         "aria-label": "Close"
       }, null, 512 /* NEED_PATCH */)
     ]),
-    createElementVNode("div", _hoisted_4$7, [
+    createElementVNode("div", _hoisted_4$6, [
       renderSlot(_ctx.$slots, "default")
     ])
-  ], 10 /* CLASS, PROPS */, _hoisted_1$7))
+  ], 10 /* CLASS, PROPS */, _hoisted_1$6))
 }
 
 script$7.render = render$3;
@@ -2798,12 +2798,12 @@ var script$6 = {
   }
 };
 
-const _hoisted_1$6 = { key: 0 };
-const _hoisted_2$6 = { class: "record_count_body mb-3" };
-const _hoisted_3$6 = /*#__PURE__*/createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
-const _hoisted_4$6 = /*#__PURE__*/createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
+const _hoisted_1$5 = { key: 0 };
+const _hoisted_2$5 = { class: "record_count_body mb-3" };
+const _hoisted_3$5 = /*#__PURE__*/createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
+const _hoisted_4$5 = /*#__PURE__*/createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
 const _hoisted_9$2 = [
-  _hoisted_4$6
+  _hoisted_4$5
 ];
 const _hoisted_10$1 = { class: "record_counts" };
 const _hoisted_11$1 = {
@@ -2844,9 +2844,9 @@ const _hoisted_22$1 = {
 
 function render$2(_ctx, _cache, $props, $setup, $data, $options) {
   return (!$props.loadMore)
-    ? (openBlock(), createElementBlock("div", _hoisted_1$6, [
-        createElementVNode("div", _hoisted_2$6, [
-          _hoisted_3$6,
+    ? (openBlock(), createElementBlock("div", _hoisted_1$5, [
+        createElementVNode("div", _hoisted_2$5, [
+          _hoisted_3$5,
           createTextVNode("  "),
           withDirectives(createElementVNode("select", {
             class: "select_per_page",
@@ -2897,7 +2897,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
           : createCommentVNode("v-if", true)
       ]))
     : (openBlock(), createElementBlock("div", _hoisted_16$1, [
-        (this.pagination_data.loading === 1)
+        (this.pagination_data.loading === 1 && $props.loadMore)
           ? (openBlock(), createElementBlock("div", _hoisted_17$1, _hoisted_19$1))
           : createCommentVNode("v-if", true),
         (!$props.hideCount)
@@ -3331,13 +3331,13 @@ var script$5 = {
   }
 };
 
-const _hoisted_1$5 = { class: "auto-table mt-2" };
-const _hoisted_2$5 = {
+const _hoisted_1$4 = { class: "auto-table mt-2" };
+const _hoisted_2$4 = {
   key: 0,
   class: "col-md-4 mb-2"
 };
-const _hoisted_3$5 = ["disabled"];
-const _hoisted_4$5 = /*#__PURE__*/createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
+const _hoisted_3$4 = ["disabled"];
+const _hoisted_4$4 = /*#__PURE__*/createElementVNode("i", { class: "bi-download" }, null, -1 /* HOISTED */);
 const _hoisted_5$3 = /*#__PURE__*/createElementVNode("span", {
   class: "spinner-border spinner-border-sm",
   role: "status",
@@ -3491,9 +3491,9 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_pagination = resolveComponent("pagination");
   const _component_sh_canvas = resolveComponent("sh-canvas");
 
-  return (openBlock(), createElementBlock("div", _hoisted_1$5, [
+  return (openBlock(), createElementBlock("div", _hoisted_1$4, [
     ($props.hasDownload)
-      ? (openBlock(), createElementBlock("div", _hoisted_2$5, [
+      ? (openBlock(), createElementBlock("div", _hoisted_2$4, [
           createElementVNode("button", {
             disabled: $data.downloading,
             class: "btn btn-warning btn-sm",
@@ -3501,14 +3501,14 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
           }, [
             (!$data.downloading)
               ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                  _hoisted_4$5,
+                  _hoisted_4$4,
                   createTextVNode(" Export ")
                 ], 64 /* STABLE_FRAGMENT */))
               : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
                   _hoisted_5$3,
                   _hoisted_6$2
                 ], 64 /* STABLE_FRAGMENT */))
-          ], 8 /* PROPS */, _hoisted_3$5)
+          ], 8 /* PROPS */, _hoisted_3$4)
         ]))
       : createCommentVNode("v-if", true),
     (!$props.hideSearch)
@@ -3889,10 +3889,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                 }, {
                   default: withCtx(() => [
                     ($data.selectedRecord)
-                      ? (openBlock(), createBlock(resolveDynamicComponent(action.canvasComponent), {
-                          key: 0,
-                          record: $data.selectedRecord
-                        }, null, 8 /* PROPS */, ["record"]))
+                      ? (openBlock(), createBlock(resolveDynamicComponent(action.canvasComponent), mergeProps({ key: 0 }, action, { record: $data.selectedRecord }), null, 16 /* FULL_PROPS */, ["record"]))
                       : createCommentVNode("v-if", true)
                   ]),
                   _: 2 /* DYNAMIC */
@@ -3909,7 +3906,7 @@ script$5.__file = "src/lib/components/ShTable.vue";
 
 var script$4 = {
   name: 'ShTabs',
-  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive'],
+  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive','classOne','classTwo','classes'],
   data () {
     return {
       currentTab: '',
@@ -3934,13 +3931,13 @@ var script$4 = {
     }
   },
   mounted () {
-    this.generatedId =  'tab' + Math.random().toString(36).slice(2);
+    this.generatedId = 'tab' + Math.random().toString(36).slice(2);
     this.resetTabCounts();
     this.setTab(this.tabs[0]);
   },
   methods: {
-    setTab: function(tab){
-      if(tab){
+    setTab: function (tab) {
+      if (tab) {
         this.currentTab = tab.replace(/_/g, ' ');
       }
     },
@@ -3988,74 +3985,43 @@ var script$4 = {
   }
 };
 
-const _hoisted_1$4 = {
-  key: 0,
-  class: "navbar navbar-expand-lg sh-horizontal-tabs"
-};
-const _hoisted_2$4 = ["data-bs-target"];
-const _hoisted_3$4 = /*#__PURE__*/createElementVNode("i", { class: "bi-chevron-right float-end" }, null, -1 /* HOISTED */);
-const _hoisted_4$4 = ["id"];
-const _hoisted_5$2 = { class: "tab-content" };
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = resolveComponent("router-link");
   const _component_router_view = resolveComponent("router-view");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    ($data.generatedId)
-      ? (openBlock(), createElementBlock("nav", _hoisted_1$4, [
-          ($data.isResponsive)
-            ? (openBlock(), createElementBlock("a", {
-                key: 0,
-                href: "#",
-                class: "form-control navbar-toggler text-capitalize",
-                "data-bs-toggle": "collapse",
-                "data-bs-target": '#' + $data.generatedId,
-                "aria-controls": "navbarNav",
-                "aria-expanded": "false",
-                "aria-label": "Toggle navigation"
-              }, [
-                createTextVNode(toDisplayString($data.currentTab) + " ", 1 /* TEXT */),
-                _hoisted_3$4
-              ], 8 /* PROPS */, _hoisted_2$4))
-            : createCommentVNode("v-if", true),
-          createElementVNode("div", {
-            class: normalizeClass($data.isResponsive ? 'collapse navbar-collapse':''),
-            id: $data.generatedId
-          }, [
-            createElementVNode("ul", {
-              class: normalizeClass($data.isResponsive ? 'navbar-nav nav':'nav')
-            }, [
-              (openBlock(true), createElementBlock(Fragment, null, renderList($props.tabs, (tab) => {
-                return (openBlock(), createElementBlock("li", {
-                  class: "nav-item",
-                  key: tab
-                }, [
-                  createVNode(_component_router_link, {
-                    onClick: $event => ($options.setTab(tab)),
-                    "active-class": 'active',
-                    class: normalizeClass(["nav-link text-capitalize", 'sh_tab_' + tab]),
-                    to: $props.baseUrl+'/tab/'+tab,
-                    role: "tab"
-                  }, {
-                    default: withCtx(() => [
-                      createTextVNode(toDisplayString(tab.replace(/_/g, ' ')), 1 /* TEXT */)
-                    ]),
-                    _: 2 /* DYNAMIC */
-                  }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onClick", "to", "class"])
-                ]))
-              }), 128 /* KEYED_FRAGMENT */))
-            ], 2 /* CLASS */)
-          ], 10 /* CLASS, PROPS */, _hoisted_4$4)
+    createElementVNode("ul", {
+      class: normalizeClass(["nav nav-tabs sh-tabs", $props.classes])
+    }, [
+      (openBlock(true), createElementBlock(Fragment, null, renderList($props.tabs, (tab) => {
+        return (openBlock(), createElementBlock("li", {
+          class: "nav-item",
+          key: tab
+        }, [
+          createVNode(_component_router_link, {
+            onClick: $event => ($options.setTab(tab)),
+            "active-class": 'active',
+            class: normalizeClass(["nav-link text-capitalize", 'sh_tab_' + tab]),
+            to: $props.baseUrl+'/tab/'+tab,
+            role: "tab"
+          }, {
+            default: withCtx(() => [
+              createTextVNode(toDisplayString(tab.replace(/_/g, ' ')), 1 /* TEXT */)
+            ]),
+            _: 2 /* DYNAMIC */
+          }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onClick", "to", "class"])
         ]))
-      : createCommentVNode("v-if", true),
-    createElementVNode("div", _hoisted_5$2, [
+      }), 128 /* KEYED_FRAGMENT */))
+    ], 2 /* CLASS */),
+    createElementVNode("div", {
+      class: normalizeClass(["tab-content", $props.classTwo])
+    }, [
       createVNode(_component_router_view, {
         currentTab: $data.currentTab,
         sharedData: $props.sharedData,
         tabCounts: $props.tabCounts
       }, null, 8 /* PROPS */, ["currentTab", "sharedData", "tabCounts"])
-    ])
+    ], 2 /* CLASS */)
   ], 64 /* STABLE_FRAGMENT */))
 }
 
@@ -4205,15 +4171,16 @@ const useUserStore = defineStore('user-store', {
   }
 });
 
-const _hoisted_1$2 = { class: "card sh-departments-card shadow" };
-const _hoisted_2$2 = { class: "card-body" };
-const _hoisted_3$2 = {
+const _hoisted_1$2 = /*#__PURE__*/createElementVNode("h5", null, "Departments", -1 /* HOISTED */);
+const _hoisted_2$2 = { class: "card sh-departments-card shadow" };
+const _hoisted_3$2 = { class: "card-body" };
+const _hoisted_4$2 = {
   "data-bs-toggle": "modal",
   ref: "addDeptBtn",
   href: "#sh-department_modal",
   class: "btn btn-info btn-sm"
 };
-const _hoisted_4$2 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
+const _hoisted_5$2 = /*#__PURE__*/createElementVNode("i", { class: "fa fa-plus" }, null, -1 /* HOISTED */);
 
 
 var script$2 = {
@@ -4239,13 +4206,11 @@ function departmentAdded (response) {
 
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
-    (openBlock(), createBlock(Teleport, { to: ".system-title" }, [
-      createTextVNode("Departments")
-    ])),
-    createElementVNode("div", _hoisted_1$2, [
-      createElementVNode("div", _hoisted_2$2, [
-        createElementVNode("a", _hoisted_3$2, [
-          _hoisted_4$2,
+    _hoisted_1$2,
+    createElementVNode("div", _hoisted_2$2, [
+      createElementVNode("div", _hoisted_3$2, [
+        createElementVNode("a", _hoisted_4$2, [
+          _hoisted_5$2,
           createTextVNode(" ADD DEPARTMENT")
         ], 512 /* NEED_PATCH */),
         createVNode(script$5, {
@@ -4398,9 +4363,7 @@ return (_ctx, _cache) => {
     ? (openBlock(), createElementBlock("div", _hoisted_1$1, [
         createElementVNode("div", _hoisted_2$1, [
           _hoisted_3$1,
-          (openBlock(), createBlock(Teleport, { to: ".system-title" }, [
-            createTextVNode("Department #" + toDisplayString(unref(department).id) + " - " + toDisplayString(unref(department).name) + " Allowed Modules", 1 /* TEXT */)
-          ])),
+          createElementVNode("h5", null, "Department #" + toDisplayString(unref(department).id) + " - " + toDisplayString(unref(department).name) + " Allowed Modules", 1 /* TEXT */),
           createVNode(script$5, {
             actions: {
       label: 'Actions',

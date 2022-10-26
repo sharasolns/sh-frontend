@@ -1,18 +1,12 @@
 <template>
-  <nav class="navbar navbar-expand-lg sh-horizontal-tabs" v-if="generatedId">
-    <a v-if="isResponsive" href="#" class="form-control navbar-toggler text-capitalize" data-bs-toggle="collapse" :data-bs-target="'#' + generatedId" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      {{ currentTab }}
-      <i class="bi-chevron-right float-end"></i>
-    </a>
-    <div :class="isResponsive ? 'collapse navbar-collapse':''" :id="generatedId">
-      <ul :class="isResponsive ? 'navbar-nav nav':'nav'">
-        <li class="nav-item" v-for="tab in tabs" :key="tab">
-          <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"  :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">{{ tab.replace(/_/g, ' ') }}</router-link>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="tab-content">
+  <ul class="nav nav-tabs sh-tabs" :class="classes">
+    <li class="nav-item" v-for="tab in tabs" :key="tab">
+      <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
+                   :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">{{ tab.replace(/_/g, ' ') }}
+      </router-link>
+    </li>
+  </ul>
+  <div class="tab-content" :class="classTwo">
     <router-view :currentTab="currentTab" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
   </div>
 </template>
@@ -21,7 +15,7 @@ import apis from '../repo/helpers/ShApis.js'
 
 export default {
   name: 'ShTabs',
-  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive'],
+  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive','classOne','classTwo','classes'],
   data () {
     return {
       currentTab: '',
@@ -46,13 +40,13 @@ export default {
     }
   },
   mounted () {
-    this.generatedId =  'tab' + Math.random().toString(36).slice(2)
+    this.generatedId = 'tab' + Math.random().toString(36).slice(2)
     this.resetTabCounts()
     this.setTab(this.tabs[0])
   },
   methods: {
-    setTab: function(tab){
-      if(tab){
+    setTab: function (tab) {
+      if (tab) {
         this.currentTab = tab.replace(/_/g, ' ')
       }
     },

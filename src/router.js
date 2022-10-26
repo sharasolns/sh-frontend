@@ -4,6 +4,7 @@ import Forms from './views/Forms.vue'
 import Tables from './views/Tables.vue'
 import Profile from './views/Profile.vue'
 import DynamicTabs from './views/DynamicTabs.vue'
+import Actions from './views/Actions.vue'
 const routes = [
   {
     path: '/',
@@ -20,6 +21,10 @@ const routes = [
   {
     path: '/dynamic-tabs',
     component: DynamicTabs
+  },
+  {
+    path: '/actions',
+    component: Actions
   },
   {
     path: '/profile',

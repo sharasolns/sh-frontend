@@ -139,20 +139,15 @@ async function runPlainRequest (url, message, title, data) {
     showLoaderOnConfirm: true,
     preConfirm: () => {
       return apis.doPost(url, data).then(function (response) {
-        Swal.fire('Success!', 'Action completed successfully', 'success')
         return {
           response: response.data,
           success: true
         }
       })
-        .catch(reason => {
-          if (typeof reason.response === 'undefined') {
-            Swal.fire('Error!', `Connection to ${url} lost`, 'error')
-          } else {
-            Swal.fire(`Error ${reason.response.status}`, reason.response.statusText, 'error')
-          }
+        .catch(error => {
           return {
-            success: false
+            success: false,
+            error: error
           }
         })
     },

@@ -24,7 +24,7 @@
     </nav>
   </div>
   <div v-else>
-    <div class="text-center" v-if="this.pagination_data.loading === 1">
+    <div class="text-center" v-if="this.pagination_data.loading === 1 && loadMore">
       <div class="spinner-border" role="status">
       </div>
     </div>

@@ -175,7 +175,7 @@
 <template v-if="actions">
 <template v-for="action in actions.actions" :key="action.label">
   <sh-canvas @offcanvasClosed="canvasClosed" v-if="action.canvasId" :position="action.canvasPosition" :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId">
-    <component v-if="selectedRecord" :record="selectedRecord" :is="action.canvasComponent"/>
+    <component v-if="selectedRecord" v-bind="action" :record="selectedRecord" :is="action.canvasComponent"/>
   </sh-canvas>
 </template>
 </template>

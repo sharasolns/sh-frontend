@@ -9,13 +9,13 @@ const timeOut = inject('sessionTimeout')
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mx-md-auto mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Github</a>
-          </li>
-        </ul>
-      </div>
+<!--      <div class="collapse navbar-collapse" id="navbarText">-->
+<!--        <ul class="navbar-nav me-auto mb-2 mx-md-auto mb-lg-0">-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link active" aria-current="page" href="#">Github</a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
     </div>
   </nav>
   <div class="row">
@@ -36,13 +36,15 @@ const timeOut = inject('sessionTimeout')
             <router-link class="dropdown-item" to="/dynamic-tabs">Sh Dynamic Tabs</router-link>
           </li>
           <li>
+            <router-link class="dropdown-item" to="/actions">Actions</router-link>
+          </li>
+          <li>
             <router-link class="dropdown-item" to="/profile">Profile</router-link>
           </li>
         </ul>
       </div>
     </div>
     <div class="col-md-9 col-12">
-      <h5>Timeout: {{ timeOut }}</h5>
       <router-view/>
     </div>
   </div>
