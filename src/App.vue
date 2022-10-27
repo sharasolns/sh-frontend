@@ -41,6 +41,9 @@ const timeOut = inject('sessionTimeout')
           <li>
             <router-link class="dropdown-item" to="/profile">Profile</router-link>
           </li>
+          <li>
+            <router-link class="dropdown-item" to="/summary">Summary</router-link>
+          </li>
         </ul>
       </div>
     </div>

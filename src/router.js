@@ -5,6 +5,7 @@ import Tables from './views/Tables.vue'
 import Profile from './views/Profile.vue'
 import DynamicTabs from './views/DynamicTabs.vue'
 import Actions from './views/Actions.vue'
+import Summary from './views/Summary.vue'
 const routes = [
   {
     path: '/',
@@ -29,6 +30,10 @@ const routes = [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/summary',
+    component: Summary
   }
 ]
 const router = createRouter({

@@ -1562,7 +1562,7 @@ const countries = [
   }
 ];
 
-var script$e = {
+var script$g = {
   name: 'ShPhone',
   props: ['modelValue', 'country_code'],
   data () {
@@ -1624,7 +1624,7 @@ var script$e = {
   }
 };
 
-const _hoisted_1$d = { class: "sh-phone mb-3" };
+const _hoisted_1$f = { class: "sh-phone mb-3" };
 const _hoisted_2$b = {
   key: 0,
   style: {"display":"contents"}
@@ -1633,7 +1633,7 @@ const _hoisted_3$a = ["src"];
 const _hoisted_4$a = ["value"];
 
 function render$7(_ctx, _cache, $props, $setup, $data, $options) {
-  return (openBlock(), createElementBlock("div", _hoisted_1$d, [
+  return (openBlock(), createElementBlock("div", _hoisted_1$f, [
     ($data.selectedCountry)
       ? (openBlock(), createElementBlock("div", _hoisted_2$b, [
           createElementVNode("img", { src: $data.flag }, null, 8 /* PROPS */, _hoisted_3$a),
@@ -1667,10 +1667,10 @@ function render$7(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$e.render = render$7;
-script$e.__file = "src/lib/components/ShPhone.vue";
+script$g.render = render$7;
+script$g.__file = "src/lib/components/ShPhone.vue";
 
-var script$d = {
+var script$f = {
   name: 'ShEditor',
   props: ['modelValue'],
   components: {
@@ -1709,7 +1709,7 @@ var script$d = {
   }
 };
 
-const _hoisted_1$c = /*#__PURE__*/createElementVNode("textarea", {
+const _hoisted_1$e = /*#__PURE__*/createElementVNode("textarea", {
   id: "tiny",
   style: {"display":"none"},
   "data-cy": "tinymce_editor"
@@ -1719,7 +1719,7 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_editor = resolveComponent("editor");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$c,
+    _hoisted_1$e,
     createElementVNode("div", {
       onFocusin: _cache[1] || (_cache[1] = withModifiers(() => {}, ["stop"])),
       class: "sh-editor w-100"
@@ -1744,10 +1744,10 @@ function render$6(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$d.render = render$6;
-script$d.__file = "src/lib/components/FormComponent/ShEditor.vue";
+script$f.render = render$6;
+script$f.__file = "src/lib/components/FormComponent/ShEditor.vue";
 
-const _hoisted_1$b = {
+const _hoisted_1$d = {
   key: 0,
   class: "dropdown sh-suggest"
 };
@@ -1768,7 +1768,7 @@ const _hoisted_10$3 = {
 };
 
 
-var script$c = {
+var script$e = {
   __name: 'ShSuggest',
   props: ['fillSelects','modelValue'],
   emits: ['update:modelValue'],
@@ -1849,7 +1849,7 @@ function filterData(e){
 
 return (_ctx, _cache) => {
   return (unref(id))
-    ? (openBlock(), createElementBlock("div", _hoisted_1$b, [
+    ? (openBlock(), createElementBlock("div", _hoisted_1$d, [
         createElementVNode("div", {
           id: unref(id),
           "data-bs-toggle": "dropdown",
@@ -1909,15 +1909,15 @@ return (_ctx, _cache) => {
 
 };
 
-script$c.__scopeId = "data-v-5b767123";
-script$c.__file = "src/lib/components/FormComponent/ShSuggest.vue";
+script$e.__scopeId = "data-v-5b767123";
+script$e.__file = "src/lib/components/FormComponent/ShSuggest.vue";
 
-var script$b = {
+var script$d = {
   name: 'ShForm',
   components: {
-    ShSuggest: script$c,
-    ShEditor: script$d,
-    ShPhone: script$e
+    ShSuggest: script$e,
+    ShEditor: script$f,
+    ShPhone: script$g
   },
   props: [
       'action',
@@ -2229,7 +2229,7 @@ var script$b = {
   }
 };
 
-const _hoisted_1$a = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, null, -1 /* HOISTED */);
+const _hoisted_1$c = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, null, -1 /* HOISTED */);
 const _hoisted_2$9 = {
   ref: "ShAutoForm",
   class: "sh-form"
@@ -2291,7 +2291,7 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ShEditor = resolveComponent("ShEditor");
 
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$a,
+    _hoisted_1$c,
     createElementVNode("form", _hoisted_2$9, [
       createCommentVNode("    <div v-if=\"form_status == 1\" class=\"alert alert-info\">Processing...</div>"),
       createCommentVNode("    <div v-if=\"form_status == 2\" class=\"alert alert-success\">Success</div>"),
@@ -2508,13 +2508,13 @@ function render$5(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$b.render = render$5;
-script$b.__file = "src/lib/components/ShForm.vue";
+script$d.render = render$5;
+script$d.__file = "src/lib/components/ShForm.vue";
 
-const _hoisted_1$9 = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, "To prevent default class", -1 /* HOISTED */);
+const _hoisted_1$b = /*#__PURE__*/createElementVNode("h5", { class: "d-none" }, "To prevent default class", -1 /* HOISTED */);
 const _hoisted_2$8 = { class: "dropdown" };
 
-var script$a = {
+var script$c = {
   __name: 'ShDropDownForm',
   props: ['action',
   'classes',
@@ -2544,7 +2544,7 @@ const dropdownId = 'rand' + (Math.random() + 1).toString(36).substring(2);
 
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$9,
+    _hoisted_1$b,
     createElementVNode("div", _hoisted_2$8, [
       createElementVNode("a", {
         class: normalizeClass(unref(btnClass)),
@@ -2561,7 +2561,7 @@ return (_ctx, _cache) => {
         class: "dropdown-menu px-2 py-1",
         "aria-labelledby": dropdownId
       }, [
-        createVNode(script$b, normalizeProps(guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
+        createVNode(script$d, normalizeProps(guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
       ])
     ])
   ], 64 /* STABLE_FRAGMENT */))
@@ -2570,16 +2570,16 @@ return (_ctx, _cache) => {
 
 };
 
-script$a.__file = "src/lib/components/ShDropDownForm.vue";
+script$c.__file = "src/lib/components/ShDropDownForm.vue";
 
-var script$9 = {
+var script$b = {
   name: 'ShModal',
   props: ['modalTitle', 'modalId', 'modalSize'],
   components: {
   }
 };
 
-const _hoisted_1$8 = ["id"];
+const _hoisted_1$a = ["id"];
 const _hoisted_2$7 = { class: "modal-content" };
 const _hoisted_3$7 = { class: "modal-header" };
 const _hoisted_4$7 = { class: "modal-title" };
@@ -2612,15 +2612,15 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
         ])
       ])
     ], 2 /* CLASS */)
-  ], 8 /* PROPS */, _hoisted_1$8))
+  ], 8 /* PROPS */, _hoisted_1$a))
 }
 
-script$9.render = render$4;
-script$9.__file = "src/lib/components/ShModal.vue";
+script$b.render = render$4;
+script$b.__file = "src/lib/components/ShModal.vue";
 
-const _hoisted_1$7 = ["href"];
+const _hoisted_1$9 = ["href"];
 
-var script$8 = {
+var script$a = {
   __name: 'ShModalForm',
   props: ['action',
   'classes',
@@ -2656,13 +2656,13 @@ return (_ctx, _cache) => {
       "data-bs-toggle": "modal"
     }, [
       renderSlot(_ctx.$slots, "default")
-    ], 10 /* CLASS, PROPS */, _hoisted_1$7),
-    createVNode(script$9, {
+    ], 10 /* CLASS, PROPS */, _hoisted_1$9),
+    createVNode(script$b, {
       "modal-id": modalId,
       "modal-title": __props.modalTitle
     }, {
       default: withCtx(() => [
-        createVNode(script$b, normalizeProps(guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
+        createVNode(script$d, normalizeProps(guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
       ]),
       _: 1 /* STABLE */
     }, 8 /* PROPS */, ["modal-title"])
@@ -2672,9 +2672,9 @@ return (_ctx, _cache) => {
 
 };
 
-script$8.__file = "src/lib/components/ShModalForm.vue";
+script$a.__file = "src/lib/components/ShModalForm.vue";
 
-var script$7 = {
+var script$9 = {
   name: 'ShCanvas',
   props: ['canvasTitle', 'canvasId', 'position','canvasSize'],
   components: {
@@ -2691,7 +2691,7 @@ var script$7 = {
   }
 };
 
-const _hoisted_1$6 = ["id"];
+const _hoisted_1$8 = ["id"];
 const _hoisted_2$6 = { class: "offcanvas-header" };
 const _hoisted_3$6 = {
   class: "offcanvas-title",
@@ -2721,13 +2721,13 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     createElementVNode("div", _hoisted_4$6, [
       renderSlot(_ctx.$slots, "default")
     ])
-  ], 10 /* CLASS, PROPS */, _hoisted_1$6))
+  ], 10 /* CLASS, PROPS */, _hoisted_1$8))
 }
 
-script$7.render = render$3;
-script$7.__file = "src/lib/components/ShCanvas.vue";
+script$9.render = render$3;
+script$9.__file = "src/lib/components/ShCanvas.vue";
 
-var script$6 = {
+var script$8 = {
   name: 'Pagination',
   props: ['pagination_data', 'loadMore', 'hideCount', 'hideLoadMore'],
   data () {
@@ -2798,7 +2798,7 @@ var script$6 = {
   }
 };
 
-const _hoisted_1$5 = { key: 0 };
+const _hoisted_1$7 = { key: 0 };
 const _hoisted_2$5 = { class: "record_count_body mb-3" };
 const _hoisted_3$5 = /*#__PURE__*/createElementVNode("span", { class: "per_page_show" }, "Showing", -1 /* HOISTED */);
 const _hoisted_4$5 = /*#__PURE__*/createStaticVNode("<option value=\"10\">10</option><option value=\"25\">25</option><option value=\"50\">50</option><option value=\"100\">100</option><option value=\"200\">200</option>", 5);
@@ -2844,7 +2844,7 @@ const _hoisted_22$1 = {
 
 function render$2(_ctx, _cache, $props, $setup, $data, $options) {
   return (!$props.loadMore)
-    ? (openBlock(), createElementBlock("div", _hoisted_1$5, [
+    ? (openBlock(), createElementBlock("div", _hoisted_1$7, [
         createElementVNode("div", _hoisted_2$5, [
           _hoisted_3$5,
           createTextVNode("  "),
@@ -2916,8 +2916,8 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
       ]))
 }
 
-script$6.render = render$2;
-script$6.__file = "src/lib/components/list_templates/Pagination.vue";
+script$8.render = render$2;
+script$8.__file = "src/lib/components/list_templates/Pagination.vue";
 
 function swalSuccess (message) {
   Swal.fire('Success!', message, 'success');
@@ -3057,20 +3057,15 @@ async function runPlainRequest (url, message, title, data) {
     showLoaderOnConfirm: true,
     preConfirm: () => {
       return shApis.doPost(url, data).then(function (response) {
-        Swal.fire('Success!', 'Action completed successfully', 'success');
         return {
           response: response.data,
           success: true
         }
       })
-        .catch(reason => {
-          if (typeof reason.response === 'undefined') {
-            Swal.fire('Error!', `Connection to ${url} lost`, 'error');
-          } else {
-            Swal.fire(`Error ${reason.response.status}`, reason.response.statusText, 'error');
-          }
+        .catch(error => {
           return {
-            success: false
+            success: false,
+            error: error
           }
         })
     },
@@ -3098,7 +3093,7 @@ var shRepo = {
   formatDate
 };
 
-var script$5 = {
+var script$7 = {
   name: 'sh-table',
   props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],
   inject: ['channel'],
@@ -3312,8 +3307,8 @@ var script$5 = {
     this.reloadData();
   },
   components: {
-    ShCanvas: script$7,
-    pagination: script$6
+    ShCanvas: script$9,
+    pagination: script$8
   },
   computed: {
     windowWidth: function () {
@@ -3331,7 +3326,7 @@ var script$5 = {
   }
 };
 
-const _hoisted_1$4 = { class: "auto-table mt-2" };
+const _hoisted_1$6 = { class: "auto-table mt-2" };
 const _hoisted_2$4 = {
   key: 0,
   class: "col-md-4 mb-2"
@@ -3491,7 +3486,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_pagination = resolveComponent("pagination");
   const _component_sh_canvas = resolveComponent("sh-canvas");
 
-  return (openBlock(), createElementBlock("div", _hoisted_1$4, [
+  return (openBlock(), createElementBlock("div", _hoisted_1$6, [
     ($props.hasDownload)
       ? (openBlock(), createElementBlock("div", _hoisted_2$4, [
           createElementVNode("button", {
@@ -3901,10 +3896,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$5.render = render$1;
-script$5.__file = "src/lib/components/ShTable.vue";
+script$7.render = render$1;
+script$7.__file = "src/lib/components/ShTable.vue";
 
-var script$4 = {
+var script$6 = {
   name: 'ShTabs',
   props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive','classOne','classTwo','classes'],
   data () {
@@ -4025,10 +4020,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$4.render = render;
-script$4.__file = "src/lib/components/ShTabs.vue";
+script$6.render = render;
+script$6.__file = "src/lib/components/ShTabs.vue";
 
-const _hoisted_1$3 = {
+const _hoisted_1$5 = {
   class: "nav nav-tabs",
   role: "tablist"
 };
@@ -4039,7 +4034,7 @@ const _hoisted_2$3 = {
 const _hoisted_3$3 = ["onClick"];
 const _hoisted_4$3 = { class: "tab-content" };
 
-var script$3 = {
+var script$5 = {
   __name: 'ShDynamicTabs',
   props: ['tabs','data'],
   setup(__props) {
@@ -4064,7 +4059,7 @@ function setTab(tab){
 
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
-    createElementVNode("ul", _hoisted_1$3, [
+    createElementVNode("ul", _hoisted_1$5, [
       (openBlock(true), createElementBlock(Fragment, null, renderList(unref(tabs), (tab) => {
         return (openBlock(), createElementBlock("li", _hoisted_2$3, [
           createElementVNode("button", {
@@ -4085,7 +4080,158 @@ return (_ctx, _cache) => {
 
 };
 
-script$3.__file = "src/lib/components/ShDynamicTabs.vue";
+script$5.__file = "src/lib/components/ShDynamicTabs.vue";
+
+const _hoisted_1$4 = /*#__PURE__*/createElementVNode("span", {
+  class: "spinner-border spinner-border-sm me-1",
+  role: "status",
+  "aria-hidden": "true"
+}, null, -1 /* HOISTED */);
+
+var script$4 = {
+  __name: 'ShSilentAction',
+  props: {
+  data: Object,
+  loadingMessage: {
+    type: String,
+    default: 'Processing'
+  },
+  method: {
+    type: String,
+    default: 'POST'
+  },
+  url: {
+    type: String,
+    required: true
+  }
+},
+  emits: ['actionSuccessful','actionFailed'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+const processing = ref(false);
+
+
+function runAction(){
+  processing.value = true;
+  if(props.method === 'POST'){
+    shApis.doPost(props.url,props.data).then(res=>{
+      emit('actionSuccessful',res);
+      processing.value = false;
+    }).catch(reason=>{
+      emit('actionFailed', reason);
+      processing.value = false;
+    });
+  }
+  if(props.method === 'GET'){
+    shApis.doGet(props.url,props.data).then(res=>{
+      emit('actionSuccessful',res);
+      processing.value = false;
+    }).catch(reason=>{
+      emit('actionFailed', reason);
+      processing.value = false;
+    });
+  }
+}
+
+return (_ctx, _cache) => {
+  return (openBlock(), createElementBlock("a", {
+    class: normalizeClass(processing.value ? 'disabled':''),
+    onClick: runAction
+  }, [
+    (processing.value)
+      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+          _hoisted_1$4,
+          createElementVNode("span", null, toDisplayString(__props.loadingMessage), 1 /* TEXT */)
+        ], 64 /* STABLE_FRAGMENT */))
+      : createCommentVNode("v-if", true),
+    (!processing.value)
+      ? renderSlot(_ctx.$slots, "default", { key: 1 })
+      : createCommentVNode("v-if", true)
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$4.__file = "src/lib/components/ShSilentAction.vue";
+
+const _hoisted_1$3 = /*#__PURE__*/createElementVNode("span", {
+  class: "spinner-border spinner-border-sm me-1",
+  role: "status",
+  "aria-hidden": "true"
+}, null, -1 /* HOISTED */);
+
+
+var script$3 = {
+  __name: 'ShConfirmAction',
+  props: {
+  data: Object,
+  title: String,
+  message: String,
+  url: {
+    type: String,
+    required: true
+  },
+  loadingMessage: {
+    type: String,
+    default: 'Processing'
+  }
+},
+  emits: ['actionSuccessful', 'actionFailed','actionCanceled'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+const processing = ref(false);
+
+
+function runAction () {
+  processing.value = true;
+  shRepo.runPlainRequest(props.url, props.message, props.title, props.data).then(res => {
+    if(res.isConfirmed){
+      const value = res.value;
+      if(value.status){
+        emit('actionSuccessful', res);
+        processing.value = false;
+      } else {
+        emit('actionFailed', value);
+        processing.value = false;
+      }
+    } else {
+      emit('actionCanceled');
+      processing.value = false;
+    }
+  }).catch(ex => {
+    emit('actionFailed', ex);
+    processing.value = false;
+  });
+}
+
+return (_ctx, _cache) => {
+  return (openBlock(), createElementBlock("a", {
+    class: normalizeClass(processing.value ? 'disabled':''),
+    onClick: runAction
+  }, [
+    (processing.value)
+      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+          _hoisted_1$3,
+          createElementVNode("span", null, toDisplayString(__props.loadingMessage), 1 /* TEXT */)
+        ], 64 /* STABLE_FRAGMENT */))
+      : createCommentVNode("v-if", true),
+    (!processing.value)
+      ? renderSlot(_ctx.$slots, "default", { key: 1 })
+      : createCommentVNode("v-if", true)
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$3.__file = "src/lib/components/ShConfirmAction.vue";
 
 const useUserStore = defineStore('user-store', {
   state: () => ({
@@ -4213,7 +4359,7 @@ return (_ctx, _cache) => {
           _hoisted_5$2,
           createTextVNode(" ADD DEPARTMENT")
         ], 512 /* NEED_PATCH */),
-        createVNode(script$5, {
+        createVNode(script$7, {
           headers: ['id','name','description', 'created_at'],
           "end-point": "admin/departments/list",
           actions: {
@@ -4227,12 +4373,12 @@ return (_ctx, _cache) => {
       ]
     }
         }),
-        createVNode(script$9, {
+        createVNode(script$b, {
           "modal-id": "sh-department_modal",
           "modal-title": "Department Form"
         }, {
           default: withCtx(() => [
-            createVNode(script$b, {
+            createVNode(script$d, {
               "success-callback": "departmentAdded",
               onDepartmentAdded: departmentAdded,
               action: "admin/departments/store",
@@ -4364,7 +4510,7 @@ return (_ctx, _cache) => {
         createElementVNode("div", _hoisted_2$1, [
           _hoisted_3$1,
           createElementVNode("h5", null, "Department #" + toDisplayString(unref(department).id) + " - " + toDisplayString(unref(department).name) + " Allowed Modules", 1 /* TEXT */),
-          createVNode(script$5, {
+          createVNode(script$7, {
             actions: {
       label: 'Actions',
       actions: [
@@ -4384,12 +4530,12 @@ return (_ctx, _cache) => {
             headers: ['id',showModule,'created_at'],
             "end-point": 'admin/departments/department/list-modules/' + id.value
           }, null, 8 /* PROPS */, ["actions", "reload", "headers", "end-point"]),
-          createVNode(script$9, {
+          createVNode(script$b, {
             "modal-id": "addModule",
             "modal-title": "Add Module Department"
           }, {
             default: withCtx(() => [
-              createVNode(script$b, {
+              createVNode(script$d, {
                 "reload-select-items": unref(reload),
                 "success-callback": moduleAdded,
                 "fill-selects": {
@@ -4411,7 +4557,7 @@ return (_ctx, _cache) => {
             ref: permissionCanvasBtn,
             "data-bs-toggle": "offcanvas"
           }, null, 512 /* NEED_PATCH */),
-          createVNode(script$7, {
+          createVNode(script$9, {
             "canvas-id": "permissionsCanvas",
             position: "end enlarged",
             "canvas-title": "Module Permissions"
@@ -4526,7 +4672,7 @@ return (_ctx, _cache) => {
     : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
         (section.value === 'login')
           ? (openBlock(), createElementBlock("div", _hoisted_2, [
-              createVNode(script$b, {
+              createVNode(script$d, {
                 class: "sh-login-form",
                 fields: ['email','password'],
                 "action-label": "Login",
@@ -4551,7 +4697,7 @@ return (_ctx, _cache) => {
               (unref(registerSubTitle))
                 ? (openBlock(), createElementBlock("span", _hoisted_8, toDisplayString(unref(registerSubTitle)), 1 /* TEXT */))
                 : createCommentVNode("v-if", true),
-              createVNode(script$b, {
+              createVNode(script$d, {
                 class: "sh-login-form",
                 fields: unref(registrationFields),
                 "action-label": "Sign Up",
@@ -4615,4 +4761,4 @@ const ShFrontend = {
   }
 };
 
-export { script$7 as ShCanvas, script$a as ShDropDownForm, script$3 as ShDynamicTabs, script$b as ShForm, ShFrontend, script$9 as ShModal, script$8 as ShModalForm, script$e as ShPhone, script$5 as ShTable, script$4 as ShTabs, shApis, shRepo, ShStorage as shStorage, useUserStore };
+export { script$9 as ShCanvas, script$3 as ShConfirmAction, script$c as ShDropDownForm, script$5 as ShDynamicTabs, script$d as ShForm, ShFrontend, script$b as ShModal, script$a as ShModalForm, script$g as ShPhone, script$4 as ShSilentAction, script$7 as ShTable, script$6 as ShTabs, shApis, shRepo, ShStorage as shStorage, useUserStore };
