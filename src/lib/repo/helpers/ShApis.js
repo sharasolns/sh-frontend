@@ -5,8 +5,12 @@ import ShSession from './ShSession.js'
 let apiUrl = import.meta.env.VITE_APP_API_URL
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
-  apiUrl = import.meta.env.VITE_APP_API_PRODUCTION_URL
+  const productionUrl = import.meta.env.VITE_APP_API_PRODUCTION_URL
+  if(productionUrl){
+    apiUrl = productionUrl
+  }
 }
+
 const axios = Axios.create({
   baseURL: apiUrl
 })
