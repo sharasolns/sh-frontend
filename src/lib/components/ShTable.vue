@@ -1,62 +1,67 @@
 <template>
-<div class="auto-table mt-2">
-  <div class="col-md-4 mb-2" v-if="hasDownload">
-    <button :disabled="downloading" class="btn btn-warning btn-sm" @click="exportData()">
-      <template v-if="!downloading">
-        <i class="bi-download"></i> Export
-      </template>
-      <template v-else>
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <span class="visually-hidden">Loading...</span>
-      </template>
-    </button>
-  </div>
-  <div class="row" v-if="!hideSearch">
-    <div class="col-12 mb-3">
-      <div class="sh-search-bar">
-        <input type="search" v-on:change="reloadData(1)" v-model="filter_value" :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'" class="form-control sh-search-input">
+  <div class="auto-table mt-2">
+    <div class="col-md-4 mb-2" v-if="hasDownload">
+      <button :disabled="downloading" class="btn btn-warning btn-sm" @click="exportData()">
+        <template v-if="!downloading">
+          <i class="bi-download"></i> Export
+        </template>
+        <template v-else>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span class="visually-hidden">Loading...</span>
+        </template>
+      </button>
+    </div>
+    <div class="row" v-if="!hideSearch">
+      <div class="col-12 mb-3">
+        <div class="sh-search-bar">
+          <input type="search" v-on:change="reloadData(1)" v-model="filter_value"
+                 :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'" class="form-control sh-search-input">
+        </div>
       </div>
     </div>
-  </div>
-  <template v-if="hasDefaultSlot">
-    <div class="text-center" v-if="loading === 'loading'">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <template v-if="hasDefaultSlot">
+      <div class="text-center" v-if="loading === 'loading'">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
-    </div>
-    <div v-else-if="loading === 'error'" class="alert alert-danger">
+      <div v-else-if="loading === 'error'" class="alert alert-danger">
       <span :colspan="2">
         {{ loading_error }}
       </span>
-    </div>
-    <template v-if="loading === 'done'">
-      <template v-for="record in records" :key="record.id">
-        <slot :record="record"></slot>
+      </div>
+      <template v-if="loading === 'done'">
+        <template v-for="record in records" :key="record.id">
+          <slot :record="record"></slot>
+        </template>
       </template>
     </template>
-  </template>
-  <template v-if="hasRecordsSlot">
-    <div class="text-center" v-if="loading === 'loading'">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <template v-if="hasRecordsSlot">
+      <div class="text-center" v-if="loading === 'loading'">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
-    </div>
-    <div v-else-if="loading === 'error'" class="alert alert-danger">
+      <div v-else-if="loading === 'error'" class="alert alert-danger">
       <span :colspan="2">
         {{ loading_error }}
       </span>
-    </div>
-    <template v-if="loading === 'done'">
-      <slot name="records" :records="records"></slot>
+      </div>
+      <template v-if="loading === 'done'">
+        <slot name="records" :records="records"></slot>
+      </template>
     </template>
-  </template>
     <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700">
       <thead class="sh-thead">
       <tr>
         <th v-for="title in headers" :key="title[0]">
-          <a class="text-capitalize"  v-on:click="changeKey('order_by',title)" v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
-          <a class="text-capitalize"  v-on:click="changeKey('order_by',title)" v-else-if="typeof title === 'function'">{{  title(null).replace(/_/g, ' ') }}</a>
-          <a class="text-capitalize" v-else v-on:click="changeKey('order_by',title[0])" >{{ title[1].replace(/_/g, ' ') }}</a>
+          <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
+             v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
+          <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
+             v-else-if="typeof title === 'function'">{{ title(null).replace(/_/g, ' ') }}</a>
+          <a class="text-capitalize" v-else v-on:click="changeKey('order_by',title[0])">{{
+              title[1].replace(/_/g, ' ')
+            }}</a>
         </th>
         <th v-if="actions" class="text-capitalize">
           {{ actions.label }}
@@ -83,12 +88,15 @@
           <i class="bi-info-circle"></i> No records found
         </td>
       </tr>
-      <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class" @click="rowSelected(record)">
+      <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class"
+          @click="rowSelected(record)">
         <td v-for="key in headers" :key="key[0]">
-          <router-link v-if="typeof key === 'string' && links && links[key]" :to="replaceLinkUrl(links[key],record)" :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
+          <router-link v-if="typeof key === 'string' && links && links[key]" :to="replaceLinkUrl(links[key],record)"
+                       :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
           <span v-else-if="getFieldType(key) === 'numeric'">{{ Intl.NumberFormat().format(record[key]) }}</span>
-          <span  v-else-if="getFieldType(key) === 'money'" class="text-success fw-bold">{{ Intl.NumberFormat().format(record[key]) }}</span>
-          <span v-else-if="getFieldType(key) === 'date'">{{  formatDate(record[key]) }}</span>
+          <span v-else-if="getFieldType(key) === 'money'"
+                class="text-success fw-bold">{{ Intl.NumberFormat().format(record[key]) }}</span>
+          <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
           <span v-else-if="typeof key === 'string'" v-html="record[key]"></span>
           <span v-else-if="typeof key === 'function'" v-html="key(record, index)"></span>
           <span v-else v-html="record[key[0]]"></span>
@@ -97,15 +105,37 @@
           <template v-for="act in actions.actions" :key="act.path">
             <template v-if="!act.permission || user.isAllowedTo(act.permission)">
               <template v-if="!act.validator || act.validator(record)">
-                <a v-if="act.canvasId" :href="'#' + act.canvasId" data-bs-toggle="offcanvas" :class="act.class">
+                <sh-confirm-action
+                    v-if="act.type === 'confirmAction'"
+                    @actionSuccessful="doEmitAction('actionSuccessful',record)"
+                    @actionFailed="doEmitAction('actionFailed',record)"
+                    @actionCanceled="doEmitAction('actionCanceled',record)"
+                    :loading-message="act.label"
+                    :class="act.class" :url="replaceActionUrl(act.url,record)">
+                  <span v-if="act.icon" :class="act.icon"></span>
+                  {{ act.label }}
+                </sh-confirm-action>
+                <sh-silent-action
+                    v-else-if="act.type === 'silentAction'"
+                    @actionSuccessful="doEmitAction('actionSuccessful',record)"
+                    @actionFailed="doEmitAction('actionFailed',record)"
+                    @actionCanceled="doEmitAction('actionCanceled',record)"
+                    :loading-message="act.label"
+                    :class="act.class" :url="replaceActionUrl(act.url,record)">
+                  <span v-if="act.icon" :class="act.icon"></span>
+                  {{ act.label }}
+                </sh-silent-action>
+                <a v-else-if="act.canvasId" :href="'#' + act.canvasId" data-bs-toggle="offcanvas" :class="act.class">
                   <span v-if="act.icon" :class="act.icon"></span>
                   {{ act.label }}
                 </a>
-                <button :title="act.title"  :class="act.class ? act.class:'btn btn-default'" v-else-if="act.emits" @click="doEmitAction(act.emits,record)">
+                <button :title="act.title" :class="act.class ? act.class:'btn btn-default'" v-else-if="act.emits"
+                        @click="doEmitAction(act.emits,record)">
                   <span v-if="act.icon" :class="act.icon"></span>
                   {{ act.label }}
                 </button>
-                <router-link v-else-if="!act.emits" :title="act.title"  :to="replaceActionUrl(act.path,record)" :class="act.class">
+                <router-link v-else-if="!act.emits" :title="act.title" :to="replaceActionUrl(act.path,record)"
+                             :class="act.class">
                   <span v-if="act.icon" :class="act.icon"></span>
                   {{ act.label }}
                 </router-link>
@@ -131,16 +161,22 @@
       </div>
       <div class="mobile-list-items" v-else-if="loading === 'done'">
         <template v-for="(record,index) in records" :key="record.id">
-          <h3>{{ mobile_view }}</h3>
           <div class="single-mobile-req bg-light p-3" @click="rowSelected(record)">
             <template v-for="key in headers" :key="key[0]">
-              <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-if="typeof key === 'string' ">{{ key.replace(/_/g, ' ') }}</p>
-              <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else-if="typeof key === 'function'">{{ key(null).replace(/_/g, ' ') }}</p>
-              <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else>{{ key[1].replace(/_/g, ' ') }}</p>
+              <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-if="typeof key === 'string' ">
+                {{ key.replace(/_/g, ' ') }}</p>
+              <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else-if="typeof key === 'function'">
+                {{ key(null).replace(/_/g, ' ') }}</p>
+              <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else>{{
+                  key[1].replace(/_/g, ' ')
+                }}</p>
               <span>
-                <router-link v-if="typeof key === 'string' && links && links[key]" :to="replaceLinkUrl(links[key],record)" :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
+                <router-link v-if="typeof key === 'string' && links && links[key]"
+                             :to="replaceLinkUrl(links[key],record)" :class="getLinkClass(links[key])"
+                             v-html="record[key]"></router-link>
                 <span v-else-if="getFieldType(key) === 'numeric'">{{ Intl.NumberFormat().format(record[key]) }}</span>
-                <span v-else-if="getFieldType(key) === 'money'" class="text-primary fw-bold">KES {{ Intl.NumberFormat().format(record[key]) }}</span>
+                <span v-else-if="getFieldType(key) === 'money'"
+                      class="text-primary fw-bold">KES {{ Intl.NumberFormat().format(record[key]) }}</span>
                 <span v-else-if="typeof key    === 'string'" v-html="record[key]"></span>
                 <span v-else-if="typeof key === 'function'" v-html="key(record, index )"></span>
                 <span v-else v-html="record[key[0]]"></span>
@@ -155,11 +191,13 @@
                       <span v-if="act.icon" :class="act.icon"></span>
                       {{ act.label }}
                     </a>
-                    <button :title="act.title"  :class="act.class ? act.class:'btn btn-default'" v-else-if="act.emits" @click="doEmitAction(act.emits,record)">
+                    <button :title="act.title" :class="act.class ? act.class:'btn btn-default'" v-else-if="act.emits"
+                            @click="doEmitAction(act.emits,record)">
                       <span v-if="act.icon" :class="act.icon"></span>
                       {{ act.label }}
                     </button>
-                    <router-link v-else-if="!act.emits" :title="act.title"  :to="replaceActionUrl(act.path,record)" :class="act.class">
+                    <router-link v-else-if="!act.emits" :title="act.title" :to="replaceActionUrl(act.path,record)"
+                                 :class="act.class">
                       <span v-if="act.icon" :class="act.icon"></span>
                       {{ act.label }}
                     </router-link>
@@ -171,15 +209,19 @@
         </template>
       </div>
     </div>
-<pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore" :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey" load-more="1"></pagination>
-<template v-if="actions">
-<template v-for="action in actions.actions" :key="action.label">
-  <sh-canvas @offcanvasClosed="canvasClosed" v-if="action.canvasId" :position="action.canvasPosition" :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId">
-    <component v-if="selectedRecord" v-bind="action" :record="selectedRecord" :is="action.canvasComponent"/>
-  </sh-canvas>
-</template>
-</template>
-</div>
+    <pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore"
+                :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey"
+                load-more="1"></pagination>
+    <template v-if="actions">
+      <template v-for="action in actions.actions" :key="action.label">
+        <sh-canvas @offcanvasClosed="canvasClosed" v-if="action.canvasId" :position="action.canvasPosition"
+                   :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId">
+          <component v-if="selectedRecord" v-bind="cleanCanvasProps(action)" :record="selectedRecord"
+                     :is="action.canvasComponent"/>
+        </sh-canvas>
+      </template>
+    </template>
+  </div>
 </template>
 <script>
 import apis from '../repo/helpers/ShApis.js'
@@ -187,9 +229,12 @@ import pagination from './list_templates/Pagination.vue'
 import moment from 'moment'
 import helpers from '../repo/helpers/ShRepo.js'
 import ShCanvas from './ShCanvas.vue'
+import ShConfirmAction from '@/lib/components/ShConfirmAction.vue'
+import ShSilentAction from '@/lib/components/ShSilentAction.vue'
+
 export default {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds'],
   inject: ['channel'],
   data () {
     return {
@@ -215,15 +260,20 @@ export default {
     if (this.event) {
       // this.channel.listen(this.event, this.newRecordAdded)
     }
-    if(this.actions && this.actions.actions){
+    if (this.actions && this.actions.actions) {
       this.actions.actions.forEach(action => {
-        if(action.canvasComponent){
+        if (action.canvasComponent) {
           this.hasCanvas = true
         }
       })
     }
   },
   methods: {
+    cleanCanvasProps: function (actions) {
+      let replaced = actions
+      replaced.class = null
+      return replaced
+    },
     newRecordAdded: function (ev) {
       const record = ev.log
       if (record.user) {
@@ -231,16 +281,16 @@ export default {
       }
       this.records.unshift(record)
     },
-    canvasClosed: function(){
+    canvasClosed: function () {
       this.selectedRecord = null
     },
     rowSelected: function (row) {
       this.selectedRecord = null
       const self = this
-      setTimeout(()=>{
+      setTimeout(() => {
         this.selectedRecord = row
         this.$emit('rowSelected', row)
-      },100)
+      }, 100)
     },
     changeKey: function (key, value) {
       this[key] = value
@@ -265,12 +315,16 @@ export default {
     replaceActionUrl: function (path, obj) {
       if (path) {
         var matches = path.match(/\{(.*?)\}/g)
-        matches.forEach(key => {
-          key = key.replace('{', '')
-          key = key.replace('}', '')
-          path = path.replace(`{${key}}`, obj[key])
-        })
-        return path
+        try {
+          matches.forEach(key => {
+            key = key.replace('{', '')
+            key = key.replace('}', '')
+            path = path.replace(`{${key}}`, obj[key])
+          })
+          return path
+        } catch (e) {
+          return path
+        }
       }
       return ''
     },
@@ -347,7 +401,9 @@ export default {
       })
     },
     reloadData: function (page, append) {
-      if (typeof page !== 'undefined') { this.page = page }
+      if (typeof page !== 'undefined') {
+        this.page = page
+      }
       if (!append) {
         this.loading = 'loading'
       }
@@ -396,6 +452,12 @@ export default {
     }
   },
   watch: {
+    hideIds: {
+      handler(newValue) {
+        this.records = this.records.filter(record => !newValue.includes(record.id) && record)
+      },
+      deep: true
+    },
     reload () {
       this.reloadData()
     }
@@ -404,6 +466,8 @@ export default {
     this.reloadData()
   },
   components: {
+    ShSilentAction,
+    ShConfirmAction,
     ShCanvas,
     pagination
   },

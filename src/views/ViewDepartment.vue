@@ -5,7 +5,7 @@ const props = defineProps({
 })
 </script>
 <template>
-  <h3>{{ record }}</h3>
+  <div>{{ record }}</div>
 </template>
 
 <style scoped>
