@@ -3097,9 +3097,160 @@ var shRepo = {
   formatDate
 };
 
+const _hoisted_1$6 = /*#__PURE__*/createElementVNode("span", {
+  class: "spinner-border spinner-border-sm me-1",
+  role: "status",
+  "aria-hidden": "true"
+}, null, -1 /* HOISTED */);
+
+
 var script$7 = {
+  __name: 'ShConfirmAction',
+  props: {
+  data: Object,
+  title: String,
+  message: String,
+  url: {
+    type: String,
+    required: true
+  },
+  loadingMessage: {
+    type: String,
+    default: 'Processing'
+  }
+},
+  emits: ['actionSuccessful', 'actionFailed','actionCanceled'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+const processing = ref(false);
+
+
+function runAction () {
+  processing.value = true;
+  shRepo.runPlainRequest(props.url, props.message, props.title, props.data).then(res => {
+    if(res.isConfirmed){
+      const value = res.value;
+      if(value.status){
+        emit('actionSuccessful', res);
+        processing.value = false;
+      } else {
+        emit('actionFailed', value);
+        processing.value = false;
+      }
+    } else {
+      emit('actionCanceled');
+      processing.value = false;
+    }
+  }).catch(ex => {
+    emit('actionFailed', ex);
+    processing.value = false;
+  });
+}
+
+return (_ctx, _cache) => {
+  return (openBlock(), createElementBlock("a", {
+    class: normalizeClass(processing.value ? 'disabled':''),
+    onClick: runAction
+  }, [
+    (processing.value)
+      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+          _hoisted_1$6,
+          createElementVNode("span", null, toDisplayString(__props.loadingMessage), 1 /* TEXT */)
+        ], 64 /* STABLE_FRAGMENT */))
+      : createCommentVNode("v-if", true),
+    (!processing.value)
+      ? renderSlot(_ctx.$slots, "default", { key: 1 })
+      : createCommentVNode("v-if", true)
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$7.__file = "src/lib/components/ShConfirmAction.vue";
+
+const _hoisted_1$5 = /*#__PURE__*/createElementVNode("span", {
+  class: "spinner-border spinner-border-sm me-1",
+  role: "status",
+  "aria-hidden": "true"
+}, null, -1 /* HOISTED */);
+
+var script$6 = {
+  __name: 'ShSilentAction',
+  props: {
+  data: Object,
+  loadingMessage: {
+    type: String,
+    default: 'Processing'
+  },
+  method: {
+    type: String,
+    default: 'POST'
+  },
+  url: {
+    type: String,
+    required: true
+  }
+},
+  emits: ['actionSuccessful','actionFailed'],
+  setup(__props, { emit }) {
+
+const props = __props;
+
+
+const processing = ref(false);
+
+
+function runAction(){
+  processing.value = true;
+  if(props.method === 'POST'){
+    shApis.doPost(props.url,props.data).then(res=>{
+      emit('actionSuccessful',res);
+      processing.value = false;
+    }).catch(reason=>{
+      emit('actionFailed', reason);
+      processing.value = false;
+    });
+  }
+  if(props.method === 'GET'){
+    shApis.doGet(props.url,props.data).then(res=>{
+      emit('actionSuccessful',res);
+      processing.value = false;
+    }).catch(reason=>{
+      emit('actionFailed', reason);
+      processing.value = false;
+    });
+  }
+}
+
+return (_ctx, _cache) => {
+  return (openBlock(), createElementBlock("a", {
+    class: normalizeClass(processing.value ? 'disabled':''),
+    onClick: runAction
+  }, [
+    (processing.value)
+      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+          _hoisted_1$5,
+          createElementVNode("span", null, toDisplayString(__props.loadingMessage), 1 /* TEXT */)
+        ], 64 /* STABLE_FRAGMENT */))
+      : createCommentVNode("v-if", true),
+    (!processing.value)
+      ? renderSlot(_ctx.$slots, "default", { key: 1 })
+      : createCommentVNode("v-if", true)
+  ], 2 /* CLASS */))
+}
+}
+
+};
+
+script$6.__file = "src/lib/components/ShSilentAction.vue";
+
+var script$5 = {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds'],
   inject: ['channel'],
   data () {
     return {
@@ -3123,15 +3274,20 @@ var script$7 = {
   },
   mounted () {
     if (this.event) ;
-    if(this.actions && this.actions.actions){
+    if (this.actions && this.actions.actions) {
       this.actions.actions.forEach(action => {
-        if(action.canvasComponent){
+        if (action.canvasComponent) {
           this.hasCanvas = true;
         }
       });
     }
   },
   methods: {
+    cleanCanvasProps: function (actions) {
+      let replaced = actions;
+      replaced.class = null;
+      return replaced
+    },
     newRecordAdded: function (ev) {
       const record = ev.log;
       if (record.user) {
@@ -3139,15 +3295,15 @@ var script$7 = {
       }
       this.records.unshift(record);
     },
-    canvasClosed: function(){
+    canvasClosed: function () {
       this.selectedRecord = null;
     },
     rowSelected: function (row) {
       this.selectedRecord = null;
-      setTimeout(()=>{
+      setTimeout(() => {
         this.selectedRecord = row;
         this.$emit('rowSelected', row);
-      },100);
+      }, 100);
     },
     changeKey: function (key, value) {
       this[key] = value;
@@ -3172,12 +3328,16 @@ var script$7 = {
     replaceActionUrl: function (path, obj) {
       if (path) {
         var matches = path.match(/\{(.*?)\}/g);
-        matches.forEach(key => {
-          key = key.replace('{', '');
-          key = key.replace('}', '');
-          path = path.replace(`{${key}}`, obj[key]);
-        });
-        return path
+        try {
+          matches.forEach(key => {
+            key = key.replace('{', '');
+            key = key.replace('}', '');
+            path = path.replace(`{${key}}`, obj[key]);
+          });
+          return path
+        } catch (e) {
+          return path
+        }
       }
       return ''
     },
@@ -3254,7 +3414,9 @@ var script$7 = {
       });
     },
     reloadData: function (page, append) {
-      if (typeof page !== 'undefined') { this.page = page; }
+      if (typeof page !== 'undefined') {
+        this.page = page;
+      }
       if (!append) {
         this.loading = 'loading';
       }
@@ -3303,6 +3465,12 @@ var script$7 = {
     }
   },
   watch: {
+    hideIds: {
+      handler(newValue) {
+        this.records = this.records.filter(record => !newValue.includes(record.id) && record);
+      },
+      deep: true
+    },
     reload () {
       this.reloadData();
     }
@@ -3311,6 +3479,8 @@ var script$7 = {
     this.reloadData();
   },
   components: {
+    ShSilentAction: script$6,
+    ShConfirmAction: script$7,
     ShCanvas: script$9,
     pagination: script$8
   },
@@ -3330,7 +3500,7 @@ var script$7 = {
   }
 };
 
-const _hoisted_1$6 = { class: "auto-table mt-2" };
+const _hoisted_1$4 = { class: "auto-table mt-2" };
 const _hoisted_2$4 = {
   key: 0,
   class: "col-md-4 mb-2"
@@ -3487,10 +3657,12 @@ const _hoisted_64 = ["title", "onClick"];
 
 function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_link = resolveComponent("router-link");
+  const _component_sh_confirm_action = resolveComponent("sh-confirm-action");
+  const _component_sh_silent_action = resolveComponent("sh-silent-action");
   const _component_pagination = resolveComponent("pagination");
   const _component_sh_canvas = resolveComponent("sh-canvas");
 
-  return (openBlock(), createElementBlock("div", _hoisted_1$6, [
+  return (openBlock(), createElementBlock("div", _hoisted_1$4, [
     ($props.hasDownload)
       ? (openBlock(), createElementBlock("div", _hoisted_2$4, [
           createElementVNode("button", {
@@ -3669,28 +3841,17 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                         ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
                                             (!act.validator || act.validator(record))
                                               ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                                  (act.canvasId)
-                                                    ? (openBlock(), createElementBlock("a", {
+                                                  (act.type === 'confirmAction')
+                                                    ? (openBlock(), createBlock(_component_sh_confirm_action, {
                                                         key: 0,
-                                                        href: '#' + act.canvasId,
-                                                        "data-bs-toggle": "offcanvas",
-                                                        class: normalizeClass(act.class)
-                                                      }, [
-                                                        (act.icon)
-                                                          ? (openBlock(), createElementBlock("span", {
-                                                              key: 0,
-                                                              class: normalizeClass(act.icon)
-                                                            }, null, 2 /* CLASS */))
-                                                          : createCommentVNode("v-if", true),
-                                                        createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                      ], 10 /* CLASS, PROPS */, _hoisted_44))
-                                                    : (act.emits)
-                                                      ? (openBlock(), createElementBlock("button", {
-                                                          key: 1,
-                                                          title: act.title,
-                                                          class: normalizeClass(act.class ? act.class:'btn btn-default'),
-                                                          onClick: $event => ($options.doEmitAction(act.emits,record))
-                                                        }, [
+                                                        onActionSuccessful: $event => ($options.doEmitAction('actionSuccessful',record)),
+                                                        onActionFailed: $event => ($options.doEmitAction('actionFailed',record)),
+                                                        onActionCanceled: $event => ($options.doEmitAction('actionCanceled',record)),
+                                                        "loading-message": act.label,
+                                                        class: normalizeClass(act.class),
+                                                        url: $options.replaceActionUrl(act.url,record)
+                                                      }, {
+                                                        default: withCtx(() => [
                                                           (act.icon)
                                                             ? (openBlock(), createElementBlock("span", {
                                                                 key: 0,
@@ -3698,15 +3859,52 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                               }, null, 2 /* CLASS */))
                                                             : createCommentVNode("v-if", true),
                                                           createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                        ], 10 /* CLASS, PROPS */, _hoisted_45))
-                                                      : (!act.emits)
-                                                        ? (openBlock(), createBlock(_component_router_link, {
+                                                        ]),
+                                                        _: 2 /* DYNAMIC */
+                                                      }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onActionSuccessful", "onActionFailed", "onActionCanceled", "loading-message", "class", "url"]))
+                                                    : (act.type === 'silentAction')
+                                                      ? (openBlock(), createBlock(_component_sh_silent_action, {
+                                                          key: 1,
+                                                          onActionSuccessful: $event => ($options.doEmitAction('actionSuccessful',record)),
+                                                          onActionFailed: $event => ($options.doEmitAction('actionFailed',record)),
+                                                          onActionCanceled: $event => ($options.doEmitAction('actionCanceled',record)),
+                                                          "loading-message": act.label,
+                                                          class: normalizeClass(act.class),
+                                                          url: $options.replaceActionUrl(act.url,record)
+                                                        }, {
+                                                          default: withCtx(() => [
+                                                            (act.icon)
+                                                              ? (openBlock(), createElementBlock("span", {
+                                                                  key: 0,
+                                                                  class: normalizeClass(act.icon)
+                                                                }, null, 2 /* CLASS */))
+                                                              : createCommentVNode("v-if", true),
+                                                            createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
+                                                          ]),
+                                                          _: 2 /* DYNAMIC */
+                                                        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onActionSuccessful", "onActionFailed", "onActionCanceled", "loading-message", "class", "url"]))
+                                                      : (act.canvasId)
+                                                        ? (openBlock(), createElementBlock("a", {
                                                             key: 2,
-                                                            title: act.title,
-                                                            to: $options.replaceActionUrl(act.path,record),
+                                                            href: '#' + act.canvasId,
+                                                            "data-bs-toggle": "offcanvas",
                                                             class: normalizeClass(act.class)
-                                                          }, {
-                                                            default: withCtx(() => [
+                                                          }, [
+                                                            (act.icon)
+                                                              ? (openBlock(), createElementBlock("span", {
+                                                                  key: 0,
+                                                                  class: normalizeClass(act.icon)
+                                                                }, null, 2 /* CLASS */))
+                                                              : createCommentVNode("v-if", true),
+                                                            createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
+                                                          ], 10 /* CLASS, PROPS */, _hoisted_44))
+                                                        : (act.emits)
+                                                          ? (openBlock(), createElementBlock("button", {
+                                                              key: 3,
+                                                              title: act.title,
+                                                              class: normalizeClass(act.class ? act.class:'btn btn-default'),
+                                                              onClick: $event => ($options.doEmitAction(act.emits,record))
+                                                            }, [
                                                               (act.icon)
                                                                 ? (openBlock(), createElementBlock("span", {
                                                                     key: 0,
@@ -3714,10 +3912,26 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                                   }, null, 2 /* CLASS */))
                                                                 : createCommentVNode("v-if", true),
                                                               createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                            ]),
-                                                            _: 2 /* DYNAMIC */
-                                                          }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
-                                                        : createCommentVNode("v-if", true)
+                                                            ], 10 /* CLASS, PROPS */, _hoisted_45))
+                                                          : (!act.emits)
+                                                            ? (openBlock(), createBlock(_component_router_link, {
+                                                                key: 4,
+                                                                title: act.title,
+                                                                to: $options.replaceActionUrl(act.path,record),
+                                                                class: normalizeClass(act.class)
+                                                              }, {
+                                                                default: withCtx(() => [
+                                                                  (act.icon)
+                                                                    ? (openBlock(), createElementBlock("span", {
+                                                                        key: 0,
+                                                                        class: normalizeClass(act.icon)
+                                                                      }, null, 2 /* CLASS */))
+                                                                    : createCommentVNode("v-if", true),
+                                                                  createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
+                                                                ]),
+                                                                _: 2 /* DYNAMIC */
+                                                              }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
+                                                            : createCommentVNode("v-if", true)
                                                 ], 64 /* STABLE_FRAGMENT */))
                                               : createCommentVNode("v-if", true)
                                           ], 64 /* STABLE_FRAGMENT */))
@@ -3741,69 +3955,81 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                 : ($data.loading === 'done')
                   ? (openBlock(), createElementBlock("div", _hoisted_51, [
                       (openBlock(true), createElementBlock(Fragment, null, renderList($data.records, (record, index) => {
-                        return (openBlock(), createElementBlock(Fragment, {
-                          key: record.id
+                        return (openBlock(), createElementBlock("div", {
+                          key: record.id,
+                          class: "single-mobile-req bg-light p-3",
+                          onClick: $event => ($options.rowSelected(record))
                         }, [
-                          createElementVNode("h3", null, toDisplayString(_ctx.mobile_view), 1 /* TEXT */),
-                          createElementVNode("div", {
-                            class: "single-mobile-req bg-light p-3",
-                            onClick: $event => ($options.rowSelected(record))
-                          }, [
-                            (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (key) => {
-                              return (openBlock(), createElementBlock(Fragment, {
-                                key: key[0]
-                              }, [
-                                (typeof key === 'string' )
-                                  ? (openBlock(), createElementBlock("p", _hoisted_53, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
-                                  : (typeof key === 'function')
-                                    ? (openBlock(), createElementBlock("p", _hoisted_54, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
-                                    : (openBlock(), createElementBlock("p", _hoisted_55, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
-                                createElementVNode("span", null, [
-                                  (typeof key === 'string' && $props.links && $props.links[key])
-                                    ? (openBlock(), createBlock(_component_router_link, {
-                                        key: 0,
-                                        to: $options.replaceLinkUrl($props.links[key],record),
-                                        class: normalizeClass($options.getLinkClass($props.links[key])),
-                                        innerHTML: record[key]
-                                      }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
-                                    : ($options.getFieldType(key) === 'numeric')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_56, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
-                                      : ($options.getFieldType(key) === 'money')
-                                        ? (openBlock(), createElementBlock("span", _hoisted_57, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
-                                        : (typeof key    === 'string')
+                          (openBlock(true), createElementBlock(Fragment, null, renderList($props.headers, (key) => {
+                            return (openBlock(), createElementBlock(Fragment, {
+                              key: key[0]
+                            }, [
+                              (typeof key === 'string' )
+                                ? (openBlock(), createElementBlock("p", _hoisted_53, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                : (typeof key === 'function')
+                                  ? (openBlock(), createElementBlock("p", _hoisted_54, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
+                                  : (openBlock(), createElementBlock("p", _hoisted_55, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
+                              createElementVNode("span", null, [
+                                (typeof key === 'string' && $props.links && $props.links[key])
+                                  ? (openBlock(), createBlock(_component_router_link, {
+                                      key: 0,
+                                      to: $options.replaceLinkUrl($props.links[key],record),
+                                      class: normalizeClass($options.getLinkClass($props.links[key])),
+                                      innerHTML: record[key]
+                                    }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
+                                  : ($options.getFieldType(key) === 'numeric')
+                                    ? (openBlock(), createElementBlock("span", _hoisted_56, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                    : ($options.getFieldType(key) === 'money')
+                                      ? (openBlock(), createElementBlock("span", _hoisted_57, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      : (typeof key    === 'string')
+                                        ? (openBlock(), createElementBlock("span", {
+                                            key: 3,
+                                            innerHTML: record[key]
+                                          }, null, 8 /* PROPS */, _hoisted_58))
+                                        : (typeof key === 'function')
                                           ? (openBlock(), createElementBlock("span", {
-                                              key: 3,
-                                              innerHTML: record[key]
-                                            }, null, 8 /* PROPS */, _hoisted_58))
-                                          : (typeof key === 'function')
-                                            ? (openBlock(), createElementBlock("span", {
-                                                key: 4,
-                                                innerHTML: key(record, index )
-                                              }, null, 8 /* PROPS */, _hoisted_59))
-                                            : (openBlock(), createElementBlock("span", {
-                                                key: 5,
-                                                innerHTML: record[key[0]]
-                                              }, null, 8 /* PROPS */, _hoisted_60))
-                                ]),
-                                _hoisted_61
-                              ], 64 /* STABLE_FRAGMENT */))
-                            }), 128 /* KEYED_FRAGMENT */)),
-                            ($props.actions)
-                              ? (openBlock(), createElementBlock("div", _hoisted_62, [
-                                  (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
-                                    return (openBlock(), createElementBlock(Fragment, {
-                                      key: act.path
-                                    }, [
-                                      (!act.permission || $options.user.isAllowedTo(act.permission))
-                                        ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                            (!act.validator || act.validator(record))
-                                              ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                                  (act.canvasId)
-                                                    ? (openBlock(), createElementBlock("a", {
-                                                        key: 0,
-                                                        href: '#' + act.canvasId,
-                                                        "data-bs-toggle": "offcanvas",
-                                                        class: normalizeClass(act.class)
+                                              key: 4,
+                                              innerHTML: key(record, index )
+                                            }, null, 8 /* PROPS */, _hoisted_59))
+                                          : (openBlock(), createElementBlock("span", {
+                                              key: 5,
+                                              innerHTML: record[key[0]]
+                                            }, null, 8 /* PROPS */, _hoisted_60))
+                              ]),
+                              _hoisted_61
+                            ], 64 /* STABLE_FRAGMENT */))
+                          }), 128 /* KEYED_FRAGMENT */)),
+                          ($props.actions)
+                            ? (openBlock(), createElementBlock("div", _hoisted_62, [
+                                (openBlock(true), createElementBlock(Fragment, null, renderList($props.actions.actions, (act) => {
+                                  return (openBlock(), createElementBlock(Fragment, {
+                                    key: act.path
+                                  }, [
+                                    (!act.permission || $options.user.isAllowedTo(act.permission))
+                                      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+                                          (!act.validator || act.validator(record))
+                                            ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+                                                (act.canvasId)
+                                                  ? (openBlock(), createElementBlock("a", {
+                                                      key: 0,
+                                                      href: '#' + act.canvasId,
+                                                      "data-bs-toggle": "offcanvas",
+                                                      class: normalizeClass(act.class)
+                                                    }, [
+                                                      (act.icon)
+                                                        ? (openBlock(), createElementBlock("span", {
+                                                            key: 0,
+                                                            class: normalizeClass(act.icon)
+                                                          }, null, 2 /* CLASS */))
+                                                        : createCommentVNode("v-if", true),
+                                                      createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
+                                                    ], 10 /* CLASS, PROPS */, _hoisted_63))
+                                                  : (act.emits)
+                                                    ? (openBlock(), createElementBlock("button", {
+                                                        key: 1,
+                                                        title: act.title,
+                                                        class: normalizeClass(act.class ? act.class:'btn btn-default'),
+                                                        onClick: $event => ($options.doEmitAction(act.emits,record))
                                                       }, [
                                                         (act.icon)
                                                           ? (openBlock(), createElementBlock("span", {
@@ -3812,51 +4038,35 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                                                             }, null, 2 /* CLASS */))
                                                           : createCommentVNode("v-if", true),
                                                         createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                      ], 10 /* CLASS, PROPS */, _hoisted_63))
-                                                    : (act.emits)
-                                                      ? (openBlock(), createElementBlock("button", {
-                                                          key: 1,
+                                                      ], 10 /* CLASS, PROPS */, _hoisted_64))
+                                                    : (!act.emits)
+                                                      ? (openBlock(), createBlock(_component_router_link, {
+                                                          key: 2,
                                                           title: act.title,
-                                                          class: normalizeClass(act.class ? act.class:'btn btn-default'),
-                                                          onClick: $event => ($options.doEmitAction(act.emits,record))
-                                                        }, [
-                                                          (act.icon)
-                                                            ? (openBlock(), createElementBlock("span", {
-                                                                key: 0,
-                                                                class: normalizeClass(act.icon)
-                                                              }, null, 2 /* CLASS */))
-                                                            : createCommentVNode("v-if", true),
-                                                          createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                        ], 10 /* CLASS, PROPS */, _hoisted_64))
-                                                      : (!act.emits)
-                                                        ? (openBlock(), createBlock(_component_router_link, {
-                                                            key: 2,
-                                                            title: act.title,
-                                                            to: $options.replaceActionUrl(act.path,record),
-                                                            class: normalizeClass(act.class)
-                                                          }, {
-                                                            default: withCtx(() => [
-                                                              (act.icon)
-                                                                ? (openBlock(), createElementBlock("span", {
-                                                                    key: 0,
-                                                                    class: normalizeClass(act.icon)
-                                                                  }, null, 2 /* CLASS */))
-                                                                : createCommentVNode("v-if", true),
-                                                              createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                            ]),
-                                                            _: 2 /* DYNAMIC */
-                                                          }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
-                                                        : createCommentVNode("v-if", true)
-                                                ], 64 /* STABLE_FRAGMENT */))
-                                              : createCommentVNode("v-if", true)
-                                          ], 64 /* STABLE_FRAGMENT */))
-                                        : createCommentVNode("v-if", true)
-                                    ], 64 /* STABLE_FRAGMENT */))
-                                  }), 128 /* KEYED_FRAGMENT */))
-                                ]))
-                              : createCommentVNode("v-if", true)
-                          ], 8 /* PROPS */, _hoisted_52)
-                        ], 64 /* STABLE_FRAGMENT */))
+                                                          to: $options.replaceActionUrl(act.path,record),
+                                                          class: normalizeClass(act.class)
+                                                        }, {
+                                                          default: withCtx(() => [
+                                                            (act.icon)
+                                                              ? (openBlock(), createElementBlock("span", {
+                                                                  key: 0,
+                                                                  class: normalizeClass(act.icon)
+                                                                }, null, 2 /* CLASS */))
+                                                              : createCommentVNode("v-if", true),
+                                                            createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
+                                                          ]),
+                                                          _: 2 /* DYNAMIC */
+                                                        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["title", "to", "class"]))
+                                                      : createCommentVNode("v-if", true)
+                                              ], 64 /* STABLE_FRAGMENT */))
+                                            : createCommentVNode("v-if", true)
+                                        ], 64 /* STABLE_FRAGMENT */))
+                                      : createCommentVNode("v-if", true)
+                                  ], 64 /* STABLE_FRAGMENT */))
+                                }), 128 /* KEYED_FRAGMENT */))
+                              ]))
+                            : createCommentVNode("v-if", true)
+                        ], 8 /* PROPS */, _hoisted_52))
                       }), 128 /* KEYED_FRAGMENT */))
                     ]))
                   : createCommentVNode("v-if", true)
@@ -3888,7 +4098,7 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
                 }, {
                   default: withCtx(() => [
                     ($data.selectedRecord)
-                      ? (openBlock(), createBlock(resolveDynamicComponent(action.canvasComponent), mergeProps({ key: 0 }, action, { record: $data.selectedRecord }), null, 16 /* FULL_PROPS */, ["record"]))
+                      ? (openBlock(), createBlock(resolveDynamicComponent(action.canvasComponent), mergeProps({ key: 0 }, $options.cleanCanvasProps(action), { record: $data.selectedRecord }), null, 16 /* FULL_PROPS */, ["record"]))
                       : createCommentVNode("v-if", true)
                   ]),
                   _: 2 /* DYNAMIC */
@@ -3900,10 +4110,10 @@ function render$1(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$7.render = render$1;
-script$7.__file = "src/lib/components/ShTable.vue";
+script$5.render = render$1;
+script$5.__file = "src/lib/components/ShTable.vue";
 
-var script$6 = {
+var script$4 = {
   name: 'ShTabs',
   props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive','classOne','classTwo','classes'],
   data () {
@@ -4024,10 +4234,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$6.render = render;
-script$6.__file = "src/lib/components/ShTabs.vue";
+script$4.render = render;
+script$4.__file = "src/lib/components/ShTabs.vue";
 
-const _hoisted_1$5 = {
+const _hoisted_1$3 = {
   class: "nav nav-tabs",
   role: "tablist"
 };
@@ -4038,7 +4248,7 @@ const _hoisted_2$3 = {
 const _hoisted_3$3 = ["onClick"];
 const _hoisted_4$3 = { class: "tab-content" };
 
-var script$5 = {
+var script$3 = {
   __name: 'ShDynamicTabs',
   props: ['tabs','data'],
   setup(__props) {
@@ -4063,7 +4273,7 @@ function setTab(tab){
 
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
-    createElementVNode("ul", _hoisted_1$5, [
+    createElementVNode("ul", _hoisted_1$3, [
       (openBlock(true), createElementBlock(Fragment, null, renderList(unref(tabs), (tab) => {
         return (openBlock(), createElementBlock("li", _hoisted_2$3, [
           createElementVNode("button", {
@@ -4084,158 +4294,7 @@ return (_ctx, _cache) => {
 
 };
 
-script$5.__file = "src/lib/components/ShDynamicTabs.vue";
-
-const _hoisted_1$4 = /*#__PURE__*/createElementVNode("span", {
-  class: "spinner-border spinner-border-sm me-1",
-  role: "status",
-  "aria-hidden": "true"
-}, null, -1 /* HOISTED */);
-
-var script$4 = {
-  __name: 'ShSilentAction',
-  props: {
-  data: Object,
-  loadingMessage: {
-    type: String,
-    default: 'Processing'
-  },
-  method: {
-    type: String,
-    default: 'POST'
-  },
-  url: {
-    type: String,
-    required: true
-  }
-},
-  emits: ['actionSuccessful','actionFailed'],
-  setup(__props, { emit }) {
-
-const props = __props;
-
-
-const processing = ref(false);
-
-
-function runAction(){
-  processing.value = true;
-  if(props.method === 'POST'){
-    shApis.doPost(props.url,props.data).then(res=>{
-      emit('actionSuccessful',res);
-      processing.value = false;
-    }).catch(reason=>{
-      emit('actionFailed', reason);
-      processing.value = false;
-    });
-  }
-  if(props.method === 'GET'){
-    shApis.doGet(props.url,props.data).then(res=>{
-      emit('actionSuccessful',res);
-      processing.value = false;
-    }).catch(reason=>{
-      emit('actionFailed', reason);
-      processing.value = false;
-    });
-  }
-}
-
-return (_ctx, _cache) => {
-  return (openBlock(), createElementBlock("a", {
-    class: normalizeClass(processing.value ? 'disabled':''),
-    onClick: runAction
-  }, [
-    (processing.value)
-      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-          _hoisted_1$4,
-          createElementVNode("span", null, toDisplayString(__props.loadingMessage), 1 /* TEXT */)
-        ], 64 /* STABLE_FRAGMENT */))
-      : createCommentVNode("v-if", true),
-    (!processing.value)
-      ? renderSlot(_ctx.$slots, "default", { key: 1 })
-      : createCommentVNode("v-if", true)
-  ], 2 /* CLASS */))
-}
-}
-
-};
-
-script$4.__file = "src/lib/components/ShSilentAction.vue";
-
-const _hoisted_1$3 = /*#__PURE__*/createElementVNode("span", {
-  class: "spinner-border spinner-border-sm me-1",
-  role: "status",
-  "aria-hidden": "true"
-}, null, -1 /* HOISTED */);
-
-
-var script$3 = {
-  __name: 'ShConfirmAction',
-  props: {
-  data: Object,
-  title: String,
-  message: String,
-  url: {
-    type: String,
-    required: true
-  },
-  loadingMessage: {
-    type: String,
-    default: 'Processing'
-  }
-},
-  emits: ['actionSuccessful', 'actionFailed','actionCanceled'],
-  setup(__props, { emit }) {
-
-const props = __props;
-
-
-const processing = ref(false);
-
-
-function runAction () {
-  processing.value = true;
-  shRepo.runPlainRequest(props.url, props.message, props.title, props.data).then(res => {
-    if(res.isConfirmed){
-      const value = res.value;
-      if(value.status){
-        emit('actionSuccessful', res);
-        processing.value = false;
-      } else {
-        emit('actionFailed', value);
-        processing.value = false;
-      }
-    } else {
-      emit('actionCanceled');
-      processing.value = false;
-    }
-  }).catch(ex => {
-    emit('actionFailed', ex);
-    processing.value = false;
-  });
-}
-
-return (_ctx, _cache) => {
-  return (openBlock(), createElementBlock("a", {
-    class: normalizeClass(processing.value ? 'disabled':''),
-    onClick: runAction
-  }, [
-    (processing.value)
-      ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-          _hoisted_1$3,
-          createElementVNode("span", null, toDisplayString(__props.loadingMessage), 1 /* TEXT */)
-        ], 64 /* STABLE_FRAGMENT */))
-      : createCommentVNode("v-if", true),
-    (!processing.value)
-      ? renderSlot(_ctx.$slots, "default", { key: 1 })
-      : createCommentVNode("v-if", true)
-  ], 2 /* CLASS */))
-}
-}
-
-};
-
-script$3.__file = "src/lib/components/ShConfirmAction.vue";
+script$3.__file = "src/lib/components/ShDynamicTabs.vue";
 
 const useUserStore = defineStore('user-store', {
   state: () => ({
@@ -4363,7 +4422,7 @@ return (_ctx, _cache) => {
           _hoisted_5$2,
           createTextVNode(" ADD DEPARTMENT")
         ], 512 /* NEED_PATCH */),
-        createVNode(script$7, {
+        createVNode(script$5, {
           headers: ['id','name','description', 'created_at'],
           "end-point": "admin/departments/list",
           actions: {
@@ -4514,7 +4573,7 @@ return (_ctx, _cache) => {
         createElementVNode("div", _hoisted_2$1, [
           _hoisted_3$1,
           createElementVNode("h5", null, "Department #" + toDisplayString(unref(department).id) + " - " + toDisplayString(unref(department).name) + " Allowed Modules", 1 /* TEXT */),
-          createVNode(script$7, {
+          createVNode(script$5, {
             actions: {
       label: 'Actions',
       actions: [
@@ -4765,4 +4824,4 @@ const ShFrontend = {
   }
 };
 
-export { script$9 as ShCanvas, script$3 as ShConfirmAction, script$c as ShDropDownForm, script$5 as ShDynamicTabs, script$d as ShForm, ShFrontend, script$b as ShModal, script$a as ShModalForm, script$g as ShPhone, script$4 as ShSilentAction, script$7 as ShTable, script$6 as ShTabs, shApis, shRepo, ShStorage as shStorage, useUserStore };
+export { script$9 as ShCanvas, script$7 as ShConfirmAction, script$c as ShDropDownForm, script$3 as ShDynamicTabs, script$d as ShForm, ShFrontend, script$b as ShModal, script$a as ShModalForm, script$g as ShPhone, script$6 as ShSilentAction, script$5 as ShTable, script$4 as ShTabs, shApis, shRepo, ShStorage as shStorage, useUserStore };
