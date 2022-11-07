@@ -10,7 +10,9 @@ import router from './router.js'
 const app = createApp(App)
 app.use(createPinia())
 app.use(ShFrontend,{
-  sessionTimeout: 400,
+  sessionTimeout: 1,
+  loginUrl: '/login',
+  logoutApiEndpoint: 'auth/logout',
   router: router,
   registerTitle: 'Welcome, create a new account'
 })

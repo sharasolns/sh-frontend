@@ -13,6 +13,8 @@ const ShFrontend = {
     const registerEndpoint = options.registerEndpoint ?? 'auth/register'
     const registerTitle = options.registerTitle ?? 'Create a new account'
     const registerSubTitle = options.registerSubTitle ?? `It's quick and easy`
+    const logoutApiEndpoint = options.logoutApiEndpoint ?? `auth/logout`
+    const loginUrl = options.loginUrl ?? `/login`
     const redirectLogin = options.redirectLogin ?? `/`
     const redirectRegister = options.redirectRegister ?? `/`
     const registrationFields = options.registrationFields ?? ['name','email','phone','password','password_confirmation']
@@ -24,6 +26,8 @@ const ShFrontend = {
     app.provide('registerSubTitle', registerSubTitle)
     app.provide('redirectLogin', redirectLogin)
     app.provide('redirectRegister', redirectRegister)
+    app.provide('logoutApiEndpoint', logoutApiEndpoint)
+    app.provide('loginUrl', loginUrl)
     window.swalPosition = swalPosition
     if(options.router) {
       options.router.addRoute({
