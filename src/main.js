@@ -11,7 +11,7 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(ShFrontend,{
   sessionTimeout: 1,
-  loginUrl: '/login',
+  loginUrl: '/sh-auth',
   logoutApiEndpoint: 'auth/logout',
   router: router,
   registerTitle: 'Welcome, create a new account'

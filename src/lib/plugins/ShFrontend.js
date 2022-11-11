@@ -4,6 +4,7 @@ import Department from '../components/core/Departments/department/Department.vue
 import ShAuth from '../components/core/auth/ShAuth.vue'
 const ShFrontend = {
   install: (app, options) => {
+    ShStorage.setItem('ShConfig',options)
     if(options.sessionTimeout){
       app.provide('sessionTimeout',options.sessionTimeout)
       ShStorage.setItem('sessionTimeout',options.sessionTimeout)

@@ -58,7 +58,7 @@ function viewPermissions(rModule) {
     modulePermissions.value = res.data.permissions
     module.value = rModule
     if (rModule.permissions) {
-      selectedPermissions.value = JSON.parse(rModule.permissions)
+      selectedPermissions.value = rModule.permissions
     }
     console.log(module.value)
   }).catch(ex => {

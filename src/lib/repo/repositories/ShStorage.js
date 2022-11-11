@@ -7,7 +7,11 @@ function setItem (key, value) {
 }
 
 function getItem (key) {
-  return localStorage.getItem(key)
+  try {
+   return  JSON.parse(localStorage.getItem(key))
+  } catch (err) {
+    return localStorage.getItem(key)
+  }
 }
 function removeItem (key) {
   return localStorage.removeItem(key)

@@ -1,3 +1,4 @@
+import ShStorage from '../repositories/ShStorage.js'
 import Swal from 'sweetalert2'
 import apis from './ShApis.js'
 import moment from 'moment'
@@ -93,6 +94,7 @@ function getMenuCount (url) {
   })
 }
 
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -108,6 +110,11 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 })
+function getConfig() {
+  const config = ShStorage.getItem('ShConfig');
+  console.log(config)
+  return config
+}
 function showToast (message, toastType, position) {
   if (!toastType) {
     toastType = 'success'
@@ -168,6 +175,7 @@ export default {
   runPlainRequest,
   getMenuCount,
   setTabCounts,
+  getConfig,
   showToast,
   runSilentRequest,
   swalHttpError,

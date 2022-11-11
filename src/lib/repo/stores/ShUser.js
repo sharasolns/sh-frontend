@@ -14,13 +14,18 @@ export const useUserStore = defineStore('user-store', {
   }),
   actions: {
     setUser (){
-      const user = shstorage.getItem('user') ? JSON.parse(shstorage.getItem('user')) : null
+      let user = null
+      try {
+         user = shstorage.getItem('user') ? shstorage.getItem('user') : null
+      } catch (error) {
+        user= null
+      }
       if (user) {
         user.isAllowedTo = function (slug) {
           if (this.permissions) {
             let permissions = []
             if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions)
+              permissions = this.permissions
             } else {
               permissions = this.permissions
             }
@@ -31,13 +36,16 @@ export const useUserStore = defineStore('user-store', {
       }
       this.user = user
       apis.doGet('auth/user').then(res => {
-        const user = res.data.user
-        shstorage.setItem('user',res.data.user)
+        let user = res.data.user
+        if (typeof(user) === 'undefined') {
+           user = res.data
+        }
+        shstorage.setItem('user',user)
         user.isAllowedTo = function (slug) {
           if (this.permissions) {
             let permissions = []
             if (typeof this.permissions === 'string') {
-              permissions = JSON.parse(this.permissions)
+              permissions = this.permissions
             } else {
               permissions = this.permissions
             }
@@ -57,7 +65,7 @@ export const useUserStore = defineStore('user-store', {
       })
       if (this.user) {
         if (typeof this.user.permissions === 'string') {
-          this.permissions = JSON.parse(this.user.permissions)
+          this.permissions = this.user.permissions
         } else {
           this.permissions = this.user.permissions
         }

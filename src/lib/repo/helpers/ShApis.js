@@ -15,9 +15,7 @@ const axios = Axios.create({
   baseURL: apiUrl
 })
 function doGet (endPoint, data) {
-  if(!ShSession()){
-    // window.location.reload()
-  }
+  ShSession()
   return axios.get(endPoint, {
     params: data,
     crossOrigin: true,
@@ -28,9 +26,7 @@ function doGet (endPoint, data) {
   })
 }
 function doPost (endPoint, data) {
-  if(!ShSession()){
-    // window.location.reload()
-  }
+  ShSession()
   const freeEndpoints = [
     'auth/register/client',
     'auth/login'
