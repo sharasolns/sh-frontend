@@ -1,13 +1,13 @@
 import moment from 'moment'
 import ShStorage from '../repositories/ShStorage.js'
 import {inject} from 'vue'
-import shApis from "@/lib/repo/helpers/ShApis";
+import shApis from './ShApis'
 
 
 function logoutUser(){
   // let logoutUrl = inject()
   const logoutApiEndpoint = inject('logoutApiEndpoint','auth/logout')
-  shApis.doPost(logoutApiEndpoint).then(res=>{
+  shApis.doPost(logoutApiEndpoint ?? 'auth/logout').then(res=>{
     ShStorage.removeItem('access_token')
     ShStorage.removeItem('user')
     // const loginUrl = inject('loginUrl','/login')
@@ -33,7 +33,9 @@ const checkSession = function (isCheking) {
 
   if(ShStorage.getItem('access_token')){
     const timeOutSession = setTimeout(()=>{
-      logoutUser()
+      if(ShStorage.getItem('access_token')){
+        logoutUser()
+      }
     }, timeout * 60 * 1000)
     window.shLogoutTimeout = timeOutSession
   }

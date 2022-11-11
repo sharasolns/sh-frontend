@@ -229,8 +229,8 @@ import pagination from './list_templates/Pagination.vue'
 import moment from 'moment'
 import helpers from '../repo/helpers/ShRepo.js'
 import ShCanvas from './ShCanvas.vue'
-import ShConfirmAction from '@/lib/components/ShConfirmAction.vue'
-import ShSilentAction from '@/lib/components/ShSilentAction.vue'
+import ShConfirmAction from './ShConfirmAction.vue'
+import ShSilentAction from './ShSilentAction.vue'
 
 export default {
   name: 'sh-table',
