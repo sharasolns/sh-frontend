@@ -67,8 +67,12 @@ async function shSwalLogout () {
   }).then((result) => {
     if (result.isConfirmed) {
       logoutUser()
-    } else if (result.isDenied) {
-     updateSession()
+    } else {
+      window.ShConfirmation = null
+      clearInterval(window.shInterval)
+      const timeNow = moment().toISOString()
+      ShStorage.setItem('last_activity', timeNow)
+      startSession()
     }
   })
 }
@@ -90,6 +94,5 @@ const updateSession = () =>{
   }
   const timeNow = moment().toISOString()
   ShStorage.setItem('last_activity', timeNow)
-  window.ShConfirmation = null
 }
 export default updateSession
