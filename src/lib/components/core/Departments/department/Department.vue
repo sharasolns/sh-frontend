@@ -33,6 +33,7 @@ let getModule = computed(()=>{
 
 function moduleAdded () {
   shRepo.showToast('module added successfully', 'success')
+  userStore.setUser()
   reload.value++
 }
 function showModule (module) {
@@ -91,6 +92,7 @@ function submitPermissions() {
   shApis.doPost('admin/departments/department/permissions/' + getModule.value.id, data)
       .then(res => {
         reload.value++
+        userStore.setUser()
         shRepo.showToast('Permissions updated', 'success')
       })
 }

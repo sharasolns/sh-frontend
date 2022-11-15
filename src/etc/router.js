@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './views/home.vue'
-import Forms from './views/Forms.vue'
-import Tables from './views/Tables.vue'
-import Profile from './views/Profile.vue'
-import DynamicTabs from './views/DynamicTabs.vue'
-import Actions from './views/Actions.vue'
-import Summary from './views/Summary.vue'
+import Home from '../views/home.vue'
+import Forms from '../views/Forms.vue'
+import Tables from '../views/Tables.vue'
+import Profile from '../views/Profile.vue'
+import DynamicTabs from '../views/DynamicTabs.vue'
+import Actions from '../views/Actions.vue'
+import Summary from '../views/Summary.vue'
+import Tasks from '../views/tasks/Tasks.vue'
 const routes = [
   {
     path: '/',
@@ -14,6 +15,10 @@ const routes = [
   {
     path: '/forms',
     component: Forms
+  },
+  {
+    path: '/tasks',
+    component: Tasks
   },
   {
     path: '/tables',

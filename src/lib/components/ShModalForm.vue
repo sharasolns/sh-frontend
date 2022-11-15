@@ -16,18 +16,20 @@ const props = defineProps(['action',
   'files',
   'phones',
   'numbers',
-  'customComponent','modalTitle','class'])
-
+  'customComponent','modalTitle','class','successMessage'])
+const emit = defineEmits(['success'])
 const formProps = ref(props)
 let btnClass=props.class
 const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2)
-
+const success = (res)=>{
+  emit('success',res)
+}
 </script>
 <template>
   <a :class="btnClass" :href="'#' + modalId" data-bs-toggle="modal">
     <slot></slot>
   </a>
   <sh-modal :modal-id="modalId" :modal-title="modalTitle">
-    <sh-form v-bind="props"/>
+    <sh-form @success="success" v-bind="props"/>
   </sh-modal>
 </template>

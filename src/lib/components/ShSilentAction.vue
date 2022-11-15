@@ -1,11 +1,20 @@
 <script setup>
 import {ref} from 'vue'
 import ShApis from '../repo/helpers/ShApis.js'
+import shRepo from '../repo/helpers/ShRepo.js'
 const props = defineProps({
   data: Object,
   loadingMessage: {
     type: String,
     default: 'Processing'
+  },
+  successMessage: {
+    type: String,
+    default: 'Action Successful'
+  },
+  failMessage: {
+    type: String,
+    default: 'Action failed'
   },
   method: {
     type: String,
@@ -17,36 +26,40 @@ const props = defineProps({
   }
 })
 const processing = ref(false)
-const emit = defineEmits(['actionSuccessful','actionFailed'])
+const emit = defineEmits(['actionSuccessful','actionFailed','success'])
+const actionSuccessful = (res)=>{
+  processing.value = false
+  res.actionType = 'silentAction'
+  console.log(res.data,props.successMessage)
+  emit('actionSuccessful',res)
+  emit('success',res)
+  shRepo.showToast(res.data.message ?? props.successMessage)
+}
 
+const actionFailed = reason =>{
+  processing.value = false
+  console.log(reason)
+  shRepo.showToast('Failed')
+  reason.actionType = 'silentAction'
+  emit('actionFailed', reason)
+  shRepo.showToast(reason.message ?? props.failMessage,'error')
+}
 function runAction(){
   processing.value = true
   if(props.method === 'POST'){
     ShApis.doPost(props.url,props.data).then(res=>{
-      emit('actionSuccessful',res)
-      processing.value = false
+      actionSuccessful(res)
     }).catch(reason=>{
-      emit('actionFailed', reason)
-      processing.value = false
+      actionFailed(reason)
     })
   }
   if(props.method === 'GET'){
     ShApis.doGet(props.url,props.data).then(res=>{
-      emit('actionSuccessful',res)
-      processing.value = false
+      actionSuccessful(res)
     }).catch(reason=>{
-      emit('actionFailed', reason)
-      processing.value = false
+      actionFailed(reason)
     })
   }
-}
-
-function actionSuccessful(res){
-
-}
-
-function actionFailed(res){
-
 }
 </script>
 <template>

@@ -5,12 +5,11 @@ import App from './App.vue'
 import 'sweetalert2/dist/sweetalert2.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import 'bootstrap/dist/js/bootstrap'
-import router from './router.js'
+import router from './etc/router.js'
 const app = createApp(App)
 app.use(createPinia())
 app.use(ShFrontend,{
-  sessionTimeout: 1,
+  sessionTimeout: 30,
   loginUrl: '/sh-auth',
   logoutApiEndpoint: 'auth/logout',
   router: router,

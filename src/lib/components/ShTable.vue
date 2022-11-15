@@ -125,7 +125,7 @@
                   <span v-if="act.icon" :class="act.icon"></span>
                   {{ act.label }}
                 </sh-silent-action>
-                <a v-else-if="act.canvasId" :href="'#' + act.canvasId" data-bs-toggle="offcanvas" :class="act.class">
+                <a v-else-if="act.canvasId || act.type === 'offcanvas'" :href="'#' + act.canvasId" data-bs-toggle="offcanvas" :class="act.class">
                   <span v-if="act.icon" :class="act.icon"></span>
                   {{ act.label }}
                 </a>

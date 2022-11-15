@@ -53,6 +53,7 @@ import NProgress from 'nprogress'
 import ShPhone from './ShPhone.vue'
 import ShEditor from './FormComponent/ShEditor.vue'
 import ShSuggest from './FormComponent/ShSuggest.vue'
+import shRepo from '../repo/helpers/ShRepo.js'
 export default {
   name: 'ShForm',
   components: {
@@ -75,7 +76,8 @@ export default {
       'files',
       'phones',
       'numbers',
-      'customComponent'
+      'customComponent',
+      'successMessage'
   ],
   data: function () {
     return {
@@ -265,6 +267,11 @@ export default {
         Object.keys(this.form_files).forEach(key => {
           this.form_errors[key] = null
         })
+        this.$emit('formSubmitted',res.data)
+        this.$emit('success',res.data)
+        if(this.successMessage){
+          shRepo.showToast(this.successMessage)
+        }
         if (this.successCallback) {
           if (typeof this.successCallback === 'function') {
             this.successCallback(res.data)

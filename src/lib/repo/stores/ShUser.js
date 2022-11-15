@@ -42,6 +42,9 @@ export const useUserStore = defineStore('user-store', {
         }
         shstorage.setItem('user',user)
         user.isAllowedTo = function (slug) {
+          if(!slug){
+            return true
+          }
           if (this.permissions) {
             let permissions = []
             if (typeof this.permissions === 'string') {
