@@ -3,6 +3,7 @@
 import ShTable from '@/lib/components/ShTable.vue'
 import ShModalForm from '@/lib/components/ShModalForm.vue'
 import { ref } from 'vue'
+import ViewTask from '@/views/tasks/ViewTask.vue'
 const reload = ref(0)
 function taskAdded(){
 
@@ -18,7 +19,9 @@ const isInActive = (task)=>{
 }
 </script>
 <template>
-  <sh-modal-form success-message="Task added successfully" @success="reloadTable" :fields="['name','description']" action="tasks/store"><i class="bi-plus"></i> Add Tasks</sh-modal-form>
+  <sh-modal-form class="btn btn-info btn-sm" success-message="Task added successfully" @success="reloadTable" :fields="['name','description']" action="tasks/store">
+    <i class="bi-plus"></i> Add Task
+  </sh-modal-form>
   <sh-table
       :headers="['id','user','name','description']"
       @actionSuccessful="reloadTable"
@@ -49,6 +52,16 @@ const isInActive = (task)=>{
               class: 'btn btn-warning badge',
               icon: 'bi-x',
               validator: isActive
+            },
+            {
+             type:'offcanvas',
+             label: 'More',
+             class: 'btn btn-info badge',
+             icon: 'bi-eye',
+             canvasId:'simpleOffcanvasId',
+             canvasPosition: 'end',
+             canvasSize: 'md',
+             canvasComponent: ViewTask
             }
         ]
       }"

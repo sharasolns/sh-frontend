@@ -216,7 +216,7 @@
       <template v-for="action in actions.actions" :key="action.label">
         <sh-canvas @offcanvasClosed="canvasClosed" v-if="action.canvasId" :position="action.canvasPosition"
                    :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle" :canvas-id="action.canvasId">
-          <component v-if="selectedRecord" v-bind="cleanCanvasProps(action)" :record="selectedRecord"
+          <component @recordUpdated="reloadData" v-if="selectedRecord" v-bind="cleanCanvasProps(action)" :record="selectedRecord"
                      :is="action.canvasComponent"/>
         </sh-canvas>
       </template>
@@ -418,6 +418,7 @@ export default {
         this.pagination_data.loading = 1
       }
       apis.doGet(this.endPoint, data).then(req => {
+        this.$emit('dataReloaded', this.pagination_data)
         this.loading = 'done'
         const response = req.data.data
         this.pagination_data = {
