@@ -40,9 +40,6 @@ const checkSession = function (isCheking) {
           window.ShConfirmation = shSwalLogout()
         }
       }
-    } else {
-      console.log(pastSeconds)
-      console.log(pastMinutes)
     }
   }else {
     if (window.shInterval) {
