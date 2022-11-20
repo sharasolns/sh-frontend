@@ -4,6 +4,7 @@ import ShTable from '@/lib/components/ShTable.vue'
 import ShModalForm from '@/lib/components/ShModalForm.vue'
 import { ref } from 'vue'
 import ViewTask from '@/views/tasks/ViewTask.vue'
+import ShRepo from '@/lib/repo/helpers/ShRepo.js'
 const reload = ref(0)
 function taskAdded(){
 
@@ -17,8 +18,12 @@ const isActive = (task)=>{
 const isInActive = (task)=>{
   return task.status === 0
 }
+function formatNumber(no,dp=0){
+  return ShRepo.formatNumber(no,dp)
+}
 </script>
 <template>
+  <h5>{{ formatNumber(5.34,2) }}</h5>
   <sh-modal-form class="btn btn-info btn-sm" success-message="Task added successfully" @success="reloadTable" :fields="['name','description']" action="tasks/store">
     <i class="bi-plus"></i> Add Task
   </sh-modal-form>

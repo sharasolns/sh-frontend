@@ -9,7 +9,7 @@ import router from './etc/router.js'
 const app = createApp(App)
 app.use(createPinia())
 app.use(ShFrontend,{
-  sessionTimeout: 30,
+  sessionTimeout: 1,
   loginUrl: '/sh-auth',
   logoutApiEndpoint: 'auth/logout',
   router: router,

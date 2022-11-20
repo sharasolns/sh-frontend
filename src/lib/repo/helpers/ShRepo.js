@@ -168,6 +168,15 @@ function formatDate(date, format) {
   }
   return moment(date).format(format)
 }
+function formatNumber(amount,decimalPoints = 0){
+  return numberFormat(amount,decimalPoints)
+}
+function numberFormat(amount,decimalPoints = 0) {
+  let formatted = parseFloat(amount).toFixed(decimalPoints)
+  formatted =  new Intl.NumberFormat().format(formatted)
+  const formattedArr = formatted.split('.')
+  return decimalPoints === 0 ? formattedArr[0] : formattedArr[0] +'.' + (formattedArr[1] || '0').padEnd(decimalPoints,0)
+}
 
 export default {
   swalSuccess,
@@ -180,5 +189,7 @@ export default {
   runSilentRequest,
   swalHttpError,
   formatHttpCatchError,
-  formatDate
+  formatDate,
+  numberFormat,
+  formatNumber
 }
