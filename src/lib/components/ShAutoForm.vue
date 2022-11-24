@@ -43,13 +43,14 @@ const getFieldComponent = (field)=>{
   } else
   if((props.numbers && props.numbers.includes(field)) || defaultNumbers.includes(field)){
     return formComponents.number ?? NumberInput
-  } else
-  if((props.selects && props.selects.includes(field)) || defaultSelects.includes(field)){
-    return formComponents.select ?? SelectInput
-  } else
-  if((props.dates && props.dates.includes(field)) || defaultDates.includes(field)){
-    return formComponents.date ?? DateInput
   }
+  // else
+  // if((props.selects && props.selects.includes(field)) || defaultSelects.includes(field)){
+  //   return formComponents.select ?? SelectInput
+  // } else
+  // if((props.dates && props.dates.includes(field)) || defaultDates.includes(field)){
+  //   return formComponents.date ?? DateInput
+  // }
   return formComponents.text ?? TextInput
 }
 const shFormElementClasses = ref(null)

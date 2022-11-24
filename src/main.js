@@ -15,7 +15,8 @@ const shFormElementClasses = {
   helperText: 'form-text',
   actionBtn: 'btn btn-primary',
   formErrorTitle: 'alert alert-danger',
-  invalidFeedback: 'invalid-feedback'
+  invalidFeedback: 'invalid-feedback',
+  formControl: 'form-control'
 }
 const shFormComponents = {
   // text: SampleComponent,

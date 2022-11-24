@@ -17,7 +17,8 @@ const ShFrontend = {
       helperText: shFormElements.helperText ?? 'form-text',
       actionBtn: shFormElements.actionBtn ?? 'btn btn-primary',
       formErrorTitle: shFormElements.formErrorTitle ?? 'alert alert-danger',
-      invalidFeedback: shFormElements.invalidFeedback ?? 'invalid-feedback'
+      invalidFeedback: shFormElements.invalidFeedback ?? 'invalid-feedback',
+      formControl: shFormElements.formControl ?? 'invalid-feedback',
     }
     const swalPosition = options.swalPosition ?? 'top-end'
     const loginEndpoint = options.loginEndpoint ?? 'auth/login'
@@ -39,7 +40,7 @@ const ShFrontend = {
     app.provide('redirectLogin', redirectLogin)
     app.provide('redirectRegister', redirectRegister)
     app.provide('logoutApiEndpoint', logoutApiEndpoint)
-    app.provide('formComponents', options.shFormComponents)
+    app.provide('formComponents', options.shFormComponents && {})
     app.provide('loginUrl', loginUrl)
     app.provide('shFormElementClasses',defaultFormElementClasses)
     window.swalPosition = swalPosition
