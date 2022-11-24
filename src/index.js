@@ -1,4 +1,5 @@
 import ShForm from './lib/components/ShForm.vue'
+import ShAutoForm from './lib/components/ShAutoForm.vue'
 import ShDropDownForm from './lib/components/ShDropDownForm.vue'
 import ShModalForm from './lib/components/ShModalForm.vue'
 import ShCanvas from './lib/components/ShCanvas.vue'
@@ -31,5 +32,6 @@ export {
   ShDropDownForm,
   ShModalForm,
   ShSilentAction,
-    ShConfirmAction
+    ShConfirmAction,
+    ShAutoForm
 }
