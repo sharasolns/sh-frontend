@@ -7,6 +7,8 @@ import DynamicTabs from '../views/DynamicTabs.vue'
 import Actions from '../views/Actions.vue'
 import Summary from '../views/Summary.vue'
 import Tasks from '../views/tasks/Tasks.vue'
+import Notes from '../views/notes/Notes.vue'
+import FormTest from '../views/autoform/FormTest.vue'
 const routes = [
   {
     path: '/',
@@ -19,6 +21,14 @@ const routes = [
   {
     path: '/tasks',
     component: Tasks
+  },
+  {
+    path: '/notes',
+    component: Notes
+  },
+  {
+    path: '/autoform',
+    component: FormTest
   },
   {
     path: '/tables',

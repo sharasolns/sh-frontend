@@ -137,7 +137,7 @@ e.g
 
 Import First
 ```javascript
-import CkEditor from '@/lib/components/FormComponent/CkEditor.vue'
+import CkEditor from '@/lib/components/form-components/CkEditor.vue'
 ```
 
 Use it this way in your sh-form, key is the name of 

@@ -7,10 +7,14 @@ const userStore = useUserStore()
 const {user} = storeToRefs(userStore)
 import MainLayout from '@/views/layouts/MainLayout.vue'
 import { storeToRefs } from 'pinia'
+import { intercept } from '@/etc/interceptor.js'
 onMounted(()=>{
   userStore.setUser()
 })
 const timeOut = inject('sessionTimeout')
+if(window.shAxionInstance){
+  intercept(window.shAxionInstance)
+}
 </script>
 <template>
   <MainLayout/>

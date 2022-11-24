@@ -1,33 +1,23 @@
 import moment from 'moment'
-// import apis from 'src/lib/repo/helpers/ShApis.js'
 import Swal from 'sweetalert2'
 import shRepo from '../helpers/ShRepo.js'
-import ShRepo from '../helpers/ShRepo.js'
 import ShStorage from '../repositories/ShStorage.js'
-import {inject} from 'vue'
-import shApis from './ShApis'
 
 startSession()
 function logoutUser(){
-  const loginUrl = ShRepo.getConfig().loginUrl
-  const logoutApiEndpoint = inject('logoutApiEndpoint','auth/logout')
-  shApis.doPost(logoutApiEndpoint ?? 'auth/logout').then(res=>{
-    ShStorage.removeItem('access_token')
-    ShStorage.removeItem('user')
-    ShStorage.removeItem('last_activity')
-    if(window.shInterval){
-      clearInterval(window.shInterval)
-    }
-    window.location.href = loginUrl
-  }).catch(ex=>{
-    ShStorage.removeItem('access_token')
-    ShStorage.removeItem('user')
-    if(window.shInterval){
-      clearInterval(window.shInterval)
-    }
-    window.location.href = loginUrl
-  })
-  const user = ShStorage.getItem('user')
+  if(!sessionRestored()){
+    shRepo.signOutUser()
+  } else {
+    console.log('session has been restored in another tab')
+  }
+}
+function sessionRestored(){
+  const timeout = ShStorage.getItem('sessionTimeout') * 60
+  const last_activity = ShStorage.getItem('last_activity')
+  const pastSeconds = moment().diff(last_activity, 'seconds');
+  if(!ShStorage.getItem('access_token'))
+    return false
+  return pastSeconds < timeout
 }
 const checkSession = function (isCheking) {
   const timeout = ShStorage.getItem('sessionTimeout')
@@ -69,6 +59,10 @@ async function shSwalLogout (seconds = 30) {
     showLoaderOnConfirm: true,
     didOpen(popup) {
       timerInterval = setInterval(() => {
+        // if(sessionRestored() && ShStorage.getItem('access_token')){
+        //   console.log('swal closed by session restored')
+        //   Swal.close()
+        // }
         Swal.getHtmlContainer().querySelector('strong')
             .textContent = (Swal.getTimerLeft() / 1000)
             .toFixed(0)

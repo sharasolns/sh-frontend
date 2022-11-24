@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 const axios = Axios.create({
   baseURL: apiUrl
 })
+window.shAxionInstance = axios
 function doGet (endPoint, data) {
   ShSession()
   return axios.get(endPoint, {

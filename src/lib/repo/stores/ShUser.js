@@ -3,6 +3,7 @@ import shstorage from '../repositories/ShStorage.js'
 import apis from '../helpers/ShApis.js'
 import moment from 'moment'
 import ShStorage from '../repositories/ShStorage.js'
+import shRepo from '../helpers/ShRepo.js'
 
 export const useUserStore = defineStore('user-store', {
   state: () => ({
@@ -41,6 +42,9 @@ export const useUserStore = defineStore('user-store', {
            user = res.data
         }
         shstorage.setItem('user',user)
+        user.signOut = this.signOut
+        user.logout = this.signOut
+        user.logOut = this.signOut
         user.isAllowedTo = function (slug) {
           if(!slug){
             return true
@@ -77,9 +81,7 @@ export const useUserStore = defineStore('user-store', {
       ShStorage.setItem('session_start',timeNow)
     },
     signOut () {
-      shstorage.setItem('user',null)
-      shstorage.setItem('access_token',null)
-      this.user = null
+      shRepo.signOutUser()
     },
     logOut () {
       this.signOut()

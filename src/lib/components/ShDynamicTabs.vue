@@ -21,6 +21,9 @@ function setTab(tab){
     <li class="nav-item" role="presentation" v-for="tab in tabs">
       <button @click="setTab(tab)" class="nav-link" :class="currentTab === tab ? 'active':''">
         {{ tab.label }}
+        <template v-if="tab.count || tab.tabCount">
+          <i class="d-none"></i><sup class="sh_tab_count">{{ tab.count ?? tab.tabCount }}</sup>
+        </template>
       </button>
     </li>
   </ul>

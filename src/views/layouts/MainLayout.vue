@@ -48,23 +48,18 @@ const redirectUser = ()=>{
                   <ul class="navbar-nav">
                     <template v-for="menuItem in menuItems" :key="menuItem.slug">
                       <li class="nav-item" v-if="menuItem.type == 'single' && user.isAllowedTo(menuItem.slug)">
-                        <router-link class="nav-link" :to="menuItem.path" aria-current="page" href="#">{{  menuItem.label  }}</router-link>
+                        <router-link class="nav-link" :to="menuItem.path" aria-current="page" href="#">
+                          <i :class="`${menuItem.icon}`"/>
+                          {{  menuItem.label  }}
+                        </router-link>
                       </li>
                     </template>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Pricing</a>
-                    </li>
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown link
+                        {{  user.name }}
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" @click="user.logout" href="#">Logout</a></li>
                       </ul>
                     </li>
                   </ul>

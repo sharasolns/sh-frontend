@@ -50,9 +50,9 @@
 <script>
 import apis from '../repo/helpers/ShApis.js'
 import NProgress from 'nprogress'
-import ShPhone from './ShPhone.vue'
-import ShEditor from './FormComponent/ShEditor.vue'
-import ShSuggest from './FormComponent/ShSuggest.vue'
+import ShPhone from './form-components/ShPhone.vue'
+import ShEditor from './form-components/ShEditor.vue'
+import ShSuggest from './form-components/ShSuggest.vue'
 import shRepo from '../repo/helpers/ShRepo.js'
 export default {
   name: 'ShForm',

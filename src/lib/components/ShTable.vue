@@ -36,7 +36,7 @@
         </template>
       </template>
     </template>
-    <template v-if="hasRecordsSlot">
+    <template v-else-if="hasRecordsSlot">
       <div class="text-center" v-if="loading === 'loading'">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>

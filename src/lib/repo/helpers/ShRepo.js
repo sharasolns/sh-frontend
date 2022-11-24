@@ -2,6 +2,7 @@ import ShStorage from '../repositories/ShStorage.js'
 import Swal from 'sweetalert2'
 import apis from './ShApis.js'
 import moment from 'moment'
+import shApis from './ShApis.js'
 function swalSuccess (message) {
   Swal.fire('Success!', message, 'success')
 }
@@ -94,6 +95,23 @@ function getMenuCount (url) {
   })
 }
 
+const signOutUser = ()=>{
+  const loginUrl = getShConfig('loginUrl','auth/login')
+  const logoutApiEndPoint = getShConfig('logoutApiEndpoint','auth/logout')
+  console.log(loginUrl,logoutApiEndPoint)
+  shApis.doPost(logoutApiEndPoint).then(res=>{
+    ShStorage.removeItem('access_token')
+    ShStorage.removeItem('user')
+    ShStorage.removeItem('last_activity')
+    window.location.href = loginUrl
+  }).catch(ex=>{
+    ShStorage.removeItem('access_token')
+    ShStorage.removeItem('user')
+    ShStorage.removeItem('last_activity')
+    window.location.href = loginUrl
+  })
+}
+
 
 const Toast = Swal.mixin({
   toast: true,
@@ -110,9 +128,12 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 })
-function getConfig() {
-  const config = ShStorage.getItem('ShConfig');
-  console.log(config)
+function getShConfig(key = null,def = '') {
+
+  const config = ShStorage.getItem('ShConfig') ?? {}
+  if(key) {
+    return config[key] ?? def
+  }
   return config
 }
 function showToast (message, toastType, position) {
@@ -184,12 +205,13 @@ export default {
   runPlainRequest,
   getMenuCount,
   setTabCounts,
-  getConfig,
+  getShConfig,
   showToast,
   runSilentRequest,
   swalHttpError,
   formatHttpCatchError,
   formatDate,
   numberFormat,
-  formatNumber
+  formatNumber,
+  signOutUser
 }

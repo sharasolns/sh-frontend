@@ -27,7 +27,7 @@ watch(user,(newUser) => {
 function loginSuccessful(res){
   userStore.setAccessToken(res.token)
   userStore.setUser()
-  router.push(redirectLogin)
+  window.location.href = redirectLogin
 }
 function registrationSuccessful(res){
   userStore.setAccessToken(res.token)

@@ -1,0 +1,13 @@
+<script setup>
+import ShTable from '@/lib/components/ShTable.vue'
+</script>
+<template>
+  <sh-table end-point="notes/list" :headers="['id']">
+    <template v-slot:default="slotProps">
+      <h5>Note#{{ slotProps.record }}</h5>
+    </template>
+  </sh-table>
+</template>
+<style scoped>
+
+</style>

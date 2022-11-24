@@ -13,6 +13,20 @@ const menus = [
         path: '/tasks',
     },
     {
+        slug: 'notes',
+        type: 'single',
+        label: 'Notes',
+        icon: 'bi-book',
+        path: '/notes',
+    },
+    {
+        slug: 'notes',
+        type: 'single',
+        label: 'Auto Form',
+        icon: 'bi-book',
+        path: '/autoform',
+    },
+    {
         slug: 'departments',
         type: 'single',
         label: 'Departments',
