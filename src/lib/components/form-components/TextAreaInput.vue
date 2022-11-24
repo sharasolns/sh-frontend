@@ -16,5 +16,5 @@ onMounted(()=>{
 </script>
 
 <template>
-  <input type="text" v-model="inputModel" @change="modelValueUpdated" @keydown="modelValueUpdated" @updated="modelValueUpdated">
+  <textarea type="text" v-model="inputModel" @change="modelValueUpdated" @keydown="modelValueUpdated" @updated="modelValueUpdated"></textarea>
 </template>

@@ -1,5 +1,4 @@
 import /* Vue, */ { createApp } from 'vue'
-import axios from 'axios'
 import ShFrontend from './lib/plugins/ShFrontend.js'
 import { createPinia } from 'pinia'
 import App from './App.vue'
@@ -14,7 +13,16 @@ const shFormElementClasses = {
   formGroup: 'mb-2',
   formLabel: 'form-label',
   helperText: 'form-text',
-  actionBtn: 'btn btn-primary'
+  actionBtn: 'btn btn-primary',
+  formErrorTitle: 'alert alert-danger',
+  invalidFeedback: 'invalid-feedback'
+}
+const shFormComponents = {
+  // text: SampleComponent,
+  // email: SampleComponent,
+  // textArea: SampleComponent,
+  // number: SampleComponent,
+  // select: SampleComponent
 }
 app.use(ShFrontend,{
   sessionTimeout: 400,
@@ -23,7 +31,8 @@ app.use(ShFrontend,{
   router: router,
   registerTitle: 'Welcome, create a new account',
   formTextInput: TextInput,
-  shFormElementClasses
+  shFormElementClasses,
+  shFormComponents
 })
 app.use(router)
 

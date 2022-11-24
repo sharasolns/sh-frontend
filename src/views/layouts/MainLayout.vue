@@ -75,3 +75,4 @@ const redirectUser = ()=>{
     </div>
   </div>
 </template>
+<style></style>

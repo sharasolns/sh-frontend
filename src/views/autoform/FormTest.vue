@@ -1,17 +1,20 @@
 <script setup>
 import ShAutoForm from '@/lib/components/ShAutoForm.vue'
-const data = ['email',
+import ShModal from '@/lib/components/ShModal.vue'
+const data = [
   {
-    field: 'name',
-    helperText: 'your full',
-    // placeHolder: 'Your full name'
-    // label: 'Force'
+    field: 'name'
+  },
+  {
+    field: 'description'
   }
 ]
 </script>
 <template>
   <h5>Auto Form Test</h5>
-  <sh-auto-form :fields="data" :place-holders="{
+  <a href="#modalForm" class="btn btn-primary" data-bs-toggle="modal">Test Form</a>
+  <sh-modal modal-id="modalForm">
+    <sh-auto-form :fields="data" action="tasks/store" success-message="Task addedd successfully" :place-holders="{
     name: 'Your full name'
   }"  :labels="{
     // name: false,
@@ -21,4 +24,5 @@ const data = ['email',
     // name: 'Your full name',
     address: 'Your village name'
   }"/>
+  </sh-modal>
 </template>
