@@ -9,6 +9,9 @@ const data = [
   },
   {
     field: 'name',
+  },,
+  {
+    field: 'email',
   },
   {
     field: 'password',

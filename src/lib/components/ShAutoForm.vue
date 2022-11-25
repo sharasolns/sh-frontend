@@ -31,7 +31,7 @@ const getFieldComponent = (fieldObj)=>{
   const defaultDates = ['free_tier_days', 'recurring_date', 'date', 'paid_at']
   const passwords = ['password','password_confirmation','pin']
   const defaultPhones = ['phone']
-  const defaultEmails = ['phone']
+  const defaultEmails = ['email']
   const formComponents = inject('formComponents')
   const TextComponent = formComponents.text ?? TextInput
   const TextAreaComponent = formComponents.textArea ?? TextAreaInput
