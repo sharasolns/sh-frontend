@@ -40,7 +40,7 @@ const ShFrontend = {
     app.provide('redirectLogin', redirectLogin)
     app.provide('redirectRegister', redirectRegister)
     app.provide('logoutApiEndpoint', logoutApiEndpoint)
-    app.provide('formComponents', options.shFormComponents && {})
+    app.provide('formComponents', options.shFormComponents ?? {})
     app.provide('loginUrl', loginUrl)
     app.provide('shFormElementClasses',defaultFormElementClasses)
     window.swalPosition = swalPosition

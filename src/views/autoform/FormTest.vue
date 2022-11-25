@@ -3,7 +3,34 @@ import ShAutoForm from '@/lib/components/ShAutoForm.vue'
 import ShModal from '@/lib/components/ShModal.vue'
 const data = [
   {
-    field: 'name'
+    field: 'task',
+    type: 'select',
+    dataUrl: 'tasks/list/any'
+  },
+  {
+    field: 'name',
+  },
+  {
+    field: 'password',
+  },
+  {
+    field: 'age',
+    type: 'number',
+    // min: 0,
+    // max: 10
+  },
+  {
+    field: 'gender',
+    type: 'select',
+    data: [
+      {
+        id: 'Male',
+      },
+      {
+        label: 'Female',
+        value: 'female'
+      }
+    ]
   },
   {
     field: 'description'
@@ -12,9 +39,7 @@ const data = [
 </script>
 <template>
   <h5>Auto Form Test</h5>
-  <a href="#modalForm" class="btn btn-primary" data-bs-toggle="modal">Test Form</a>
-  <sh-modal modal-id="modalForm">
-    <sh-auto-form :fields="data" action="tasks/store" success-message="Task addedd successfully" :place-holders="{
+  <sh-auto-form :fields="data" action="tasks/store" success-message="Task addedd successfully" :place-holders="{
     name: 'Your full name'
   }"  :labels="{
     // name: false,
@@ -24,5 +49,4 @@ const data = [
     // name: 'Your full name',
     address: 'Your village name'
   }"/>
-  </sh-modal>
 </template>

@@ -8,6 +8,8 @@ import EmailInput from './form-components/EmailInput.vue'
 import NumberInput from './form-components/NumberInput.vue'
 import TextInput from './form-components/TextInput.vue'
 import TextAreaInput from './form-components/TextAreaInput.vue'
+import SelectInput from './form-components/SelectInput.vue'
+import PasswordInput from './form-components/PasswordInput.vue'
 
 const props = defineProps([
     'action','successCallback','retainDataAfterSubmission',
@@ -21,17 +23,33 @@ const props = defineProps([
 ])
 const emit = defineEmits(['success'])
 const formFields = ref([])
-const getFieldComponent = (field)=>{
+const getFieldComponent = (fieldObj)=>{
+  const field = fieldObj.field
   const defaultTextareas = ['message', 'meta_description', 'comment', 'call_response', 'comments', 'description']
   const defaultSelects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type']
   const defaultNumbers = ['age']
   const defaultDates = ['free_tier_days', 'recurring_date', 'date', 'paid_at']
+  const passwords = ['password','password_confirmation','pin']
   const defaultPhones = ['phone']
   const defaultEmails = ['phone']
   const formComponents = inject('formComponents')
+  const TextComponent = formComponents.text ?? TextInput
+  const TextAreaComponent = formComponents.textArea ?? TextAreaInput
+  const EmailComponent = formComponents.email ?? EmailInput
+  const PhoneComponent = formComponents.phone ?? PhoneInput
+  const NumberComponent = formComponents.number ?? NumberInput
+  const SelectComponent = formComponents.select ?? SelectInput
+  const PasswordComponent = formComponents.password ?? PasswordInput
   if(props.customComponents && props.customComponents[field]) {
     return props.customComponents[field]
-  } else
+  }
+  if(fieldObj.type){
+    return fieldObj.type === 'number' ? NumberComponent:fieldObj.type === 'textarea' ? TextAreaComponent : fieldObj.type === 'email' ? EmailComponent : fieldObj.type === 'phone' ? PhoneComponent : fieldObj.type ? SelectComponent:TextComponent
+  }else
+    if(passwords.includes(field)){
+      return PasswordComponent
+  }
+  else
   if((props.textAreas && props.textAreas.includes(field)) || defaultTextareas.includes(field)){
     return formComponents.textArea ?? TextAreaInput
   } else
@@ -118,7 +136,6 @@ onMounted((ev)=>{
       fieldObj.label && getLabel(fieldObj.field)
       !fieldObj.helper && fieldObj.helperText ? fieldObj.helper = fieldObj.helperText : fieldObj.helper = getHelperText(fieldObj.field)
       fieldObj.helperText === undefined && (fieldObj.label = getLabel(fieldObj.field))
-      fieldObj.component && getfieldObjComponent(fieldObj.field)
       fieldObj.placeholder && fieldObj.placeHolder && getPlaceholder(fieldObj.field)
       fieldObj.value = null
       formFields.value.push(fieldObj)
@@ -126,7 +143,6 @@ onMounted((ev)=>{
       formFields.value.push({
         field:field,label: getLabel(field),
         helper: getHelperText(field),
-        component: getFieldComponent(field),
         placeholder: getPlaceholder(field),
         value: null
       })
@@ -140,7 +156,7 @@ onMounted((ev)=>{
   <form ref="shAutoForm" class="sh-form" @submit="e => submitForm(e)">
     <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup')">
       <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
-      <component v-bind="getComponentProps(field)" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :placeholder="isFloating ? field.label:field.placeholder" :class="getComponentClass(field.field)" :is="getFieldComponent(field.field)"/>
+      <component v-bind="getComponentProps(field)" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :placeholder="isFloating ? field.label:field.placeholder" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
       <label v-if="isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
       <div v-if="field.helper" :class="getElementClass('helperText')" v-html="field.helper"></div>
       <div v-if="validationErrors[field.field]" :class="getElementClass('invalidFeedback')">

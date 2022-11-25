@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 
-const props = defineProps(['modelValue','label','min','max'])
+const props = defineProps(['modelValue','label'])
 const emit = defineEmits(['update:modelValue','clearValidationErrors'])
 const inputModel = ref(null)
 
@@ -16,5 +16,5 @@ onMounted(()=>{
 </script>
 
 <template>
-  <input :min="min" :max="max" type="number" v-model="inputModel" @change="modelValueUpdated" @keydown="modelValueUpdated" @updated="modelValueUpdated">
+  <input type="password" v-model="inputModel" @change="modelValueUpdated" @keydown="modelValueUpdated" @updated="modelValueUpdated">
 </template>

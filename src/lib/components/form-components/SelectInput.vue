@@ -1,20 +1,44 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import shApis from '../../repo/helpers/ShApis.js'
 
-const props = defineProps(['modelValue','label'])
+const props = defineProps(['modelValue','label','data','dataUrl'])
 const emit = defineEmits(['update:modelValue','clearValidationErrors'])
 const inputModel = ref(null)
-
+const selectOptions = ref(null)
 const modelValueUpdated = (e) => {
   emit('clearValidationErrors')
   emit('update:modelValue',inputModel)
 }
 onMounted(()=>{
   props.modelValue && (inputModel.value = props.modelValue)
+  if(props.data){
+    selectOptions.value = props.data.map(item=>{
+      return {
+        id: item.id ? item.id : item.key ? item.key : item.value ? item.value:item.name ? item.name:item.label,
+        name: item.label ? item.label : item.name ? item.name : item.value ? item.value:item.id ? item.id:item.option
+      }
+    })
+  } else if (props.dataUrl){
+    shApis.doGet(props.dataUrl,{all:1}).then(res=>{
+      selectOptions.value = res.data.map(item=>{
+        return {
+          id: item.id ? item.id : item.key ? item.key : item.value ? item.value:item.name ? item.name:item.label,
+          name: item.label ? item.label : item.name ? item.name : item.value ? item.value:item.id ? item.id:item.option
+        }
+      })
+    }).catch(ex=>{
+      console.log(ex)
+    })
+  }
 })
 
 </script>
 
 <template>
-  <input type="text" v-model="inputModel" @change="modelValueUpdated" @keydown="modelValueUpdated" @updated="modelValueUpdated">
+  <select v-model="inputModel" @change="modelValueUpdated" @keydown="modelValueUpdated" @updated="modelValueUpdated">
+    <template v-for="option in selectOptions" :key="option.id">
+      <option :value="option.id">{{ option.name }}</option>
+    </template>
+  </select>
 </template>
