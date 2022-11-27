@@ -20,7 +20,7 @@
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'password'" type="password" class="form-control">
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'email'" type="email" required class="form-control">
          <input :data-cy="field" type="datetime-local" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'datepicker' && isDisabled(field) === false" class="form-control active">
-         <ShPhone :country_code="country_code" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'phone'" required class="form-control"/>
+         <phone-input :country_code="country_code" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'phone'" required class="form-control"/>
          <ShSuggest :select-data="selectData[field]" :fill-selects="fillSelects[field]" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'suggest'"/>
          <ShEditor :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'editor'" class="form-control"/>
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
@@ -50,13 +50,15 @@
 <script>
 import apis from '../repo/helpers/ShApis.js'
 import NProgress from 'nprogress'
-import ShPhone from './form-components/ShPhone.vue'
+import ShPhone from './form-components/PhoneInput.vue'
 import ShEditor from './form-components/ShEditor.vue'
 import ShSuggest from './form-components/ShSuggest.vue'
 import shRepo from '../repo/helpers/ShRepo.js'
+import PhoneInput from './form-components/PhoneInput.vue'
 export default {
   name: 'ShForm',
   components: {
+    PhoneInput,
     ShSuggest,
     ShEditor,
     ShPhone

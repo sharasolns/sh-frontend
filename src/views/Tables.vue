@@ -2,8 +2,8 @@
 //
 import {ref} from 'vue'
 import ShTable from '../lib/components/ShTable.vue'
-import ViewDepartment from '@/views/ViewDepartment.vue'
-import shRepo from '@/lib/repo/helpers/ShRepo.js'
+import ViewDepartment from '../views/ViewDepartment.vue'
+import shRepo from '../lib/repo/helpers/ShRepo.js'
 const hideIds = ref([])
 const reload = ref(0)
 function actionFailed(record){

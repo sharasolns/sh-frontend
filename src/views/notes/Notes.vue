@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 
-import ShTable from '@/lib/components/ShTable.vue'
-import ShModalForm from '@/lib/components/ShModalForm.vue'
-import shRepo from '@/lib/repo/helpers/ShRepo.js'
-import ShDynamicTabs from '@/lib/components/ShDynamicTabs.vue'
-import NotesList from '@/views/notes/NotesList.vue'
+import ShTable from '../../lib/components/ShTable.vue'
+import ShModalForm from '../../lib/components/ShModalForm.vue'
+import shRepo from '../../lib/repo/helpers/ShRepo.js'
+import ShDynamicTabs from '../..//lib/components/ShDynamicTabs.vue'
+import NotesList from '../notes/NotesList.vue'
 const reload = ref(0)
 const notesStored = (res)=>{
   reload.value++

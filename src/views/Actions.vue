@@ -1,7 +1,7 @@
 <script setup>
-import ShSilentAction from '@/lib/components/ShSilentAction.vue'
+import ShSilentAction from '../lib/components/ShSilentAction.vue'
 import shRepo from '../lib/repo/helpers/ShRepo.js'
-import ShConfirmAction from '@/lib/components/ShConfirmAction.vue'
+import ShConfirmAction from '../lib/components/ShConfirmAction.vue'
 function actionSuccessful(){
   shRepo.showToast('Action successful','success')
 }

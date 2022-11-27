@@ -1,6 +1,6 @@
 <script setup>
-import ShAutoForm from '@/lib/components/ShAutoForm.vue'
-import ShModal from '@/lib/components/ShModal.vue'
+import ShAutoForm from '../../lib/components/ShAutoForm.vue'
+import ShModal from '../../lib/components/ShModal.vue'
 const data = [
   {
     field: 'task',

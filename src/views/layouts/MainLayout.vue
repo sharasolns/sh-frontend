@@ -6,7 +6,7 @@ const userStore = useUserStore()
 const {user} = storeToRefs(userStore)
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
-import menus from '@/etc/menus'
+import menus from '../../etc/menus.js'
 const route = useRoute()
 const router = useRouter()
 const menuItems = menus

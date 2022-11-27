@@ -1,5 +1,5 @@
 <script setup>
-import ShTable from '@/lib/components/ShTable.vue'
+import ShTable from '../../lib/components/ShTable.vue'
 </script>
 <template>
   <sh-table end-point="notes/list" :headers="['id']">

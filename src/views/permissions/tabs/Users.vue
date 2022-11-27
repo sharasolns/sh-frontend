@@ -1,7 +1,7 @@
 <script setup>
-import ShTable from '@/lib/components/ShTable.vue'
-import ShModalForm from '@/lib/components/ShModalForm.vue'
-import ShDropDownForm from '@/lib/components/ShDropDownForm.vue'
+import ShTable from '../../../lib/components/ShTable.vue'
+import ShModalForm from '../../../lib/components/ShModalForm.vue'
+import ShDropDownForm from '../../../lib/components/ShDropDownForm.vue'
 
 const props = defineProps(['department'])
 </script>

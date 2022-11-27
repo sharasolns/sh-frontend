@@ -1,4 +1,4 @@
-import shRepo from '@/lib/repo/helpers/ShRepo.js'
+import shRepo from '../lib/repo/helpers/ShRepo.js'
 
 const intercept = axiosInstance=> {
     axiosInstance.interceptors.response.use(function (response) {

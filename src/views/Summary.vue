@@ -1,13 +1,13 @@
 <script setup>
 //
-import ShDropDownForm from '@/lib/components/ShDropDownForm.vue'
-import ShModalForm from '@/lib/components/ShModalForm.vue'
-import ShSilentAction from '@/lib/components/ShSilentAction.vue'
-import shRepo from '@/lib/repo/helpers/ShRepo.js'
-import ShConfirmAction from '@/lib/components/ShConfirmAction.vue'
-import ShTable from '@/lib/components/ShTable.vue'
-import Permissions from '@/views/permissions/Permissions.vue'
-import Terms from '@/views/Terms.vue'
+import ShDropDownForm from '../lib/components/ShDropDownForm.vue'
+import ShModalForm from '../lib/components/ShModalForm.vue'
+import ShSilentAction from '../lib/components/ShSilentAction.vue'
+import shRepo from '../lib/repo/helpers/ShRepo.js'
+import ShConfirmAction from '../lib/components/ShConfirmAction.vue'
+import ShTable from '../lib/components/ShTable.vue'
+import Permissions from '../views/permissions/Permissions.vue'
+import Terms from '../views/Terms.vue'
 
 const title = 'Sh Dropdown Form'
 const actionFailed = () => {

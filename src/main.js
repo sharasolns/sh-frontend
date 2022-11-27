@@ -6,7 +6,7 @@ import 'sweetalert2/dist/sweetalert2.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import router from './etc/router.js'
-import SampleComponent from '@/views/autoform/SampleComponent.vue'
+import SampleComponent from './views/autoform/SampleComponent.vue'
 const app = createApp(App)
 app.use(createPinia())
 const shFormElementClasses = {
@@ -19,7 +19,7 @@ const shFormElementClasses = {
   formControl: 'form-control'
 }
 const shFormComponents = {
-  // text: SampleComponent,
+  text: SampleComponent,
   // email: SampleComponent,
   // textArea: SampleComponent,
   // number: SampleComponent,

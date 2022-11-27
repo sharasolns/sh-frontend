@@ -1,11 +1,11 @@
 <script setup>
 
-import ShTable from '@/lib/components/ShTable.vue'
-import ShModalForm from '@/lib/components/ShModalForm.vue'
+import ShTable from '../../lib/components/ShTable.vue'
+import ShModalForm from '../../lib/components/ShModalForm.vue'
 import { ref } from 'vue'
-import ViewTask from '@/views/tasks/ViewTask.vue'
-import ShRepo from '@/lib/repo/helpers/ShRepo.js'
-import ShModalFormAuto from '@/lib/components/ShModalFormAuto.vue'
+import ViewTask from './ViewTask.vue'
+import ShRepo from '../../lib/repo/helpers/ShRepo.js'
+import ShModalFormAuto from '../../lib/components/ShModalFormAuto.vue'
 const reload = ref(0)
 function taskAdded(){
 

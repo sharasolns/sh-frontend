@@ -14,7 +14,7 @@
 <script>
 import countries from '../../repo/helpers/countries.js'
 export default {
-  name: 'ShPhone',
+  name: 'PhoneInput',
   props: ['modelValue', 'country_code'],
   data () {
     return {

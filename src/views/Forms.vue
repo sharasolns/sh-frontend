@@ -1,10 +1,10 @@
 <script setup>
 import ShForm from '../lib/components/ShForm.vue'
 import ShModal from '../lib/components/ShModal.vue'
-import CkEditor from '@/lib/components/form-components/CkEditor.vue'
-import ShModalForm from '@/lib/components/ShModalForm.vue'
-import ShDropDownForm from '@/lib/components/ShDropDownForm.vue'
-import ShAutoForm from '@/lib/components/ShAutoForm.vue'
+import CkEditor from '../lib/components/form-components/CkEditor.vue'
+import ShModalForm from '../lib/components/ShModalForm.vue'
+import ShDropDownForm from '../lib/components/ShDropDownForm.vue'
+import ShAutoForm from '../lib/components/ShAutoForm.vue'
 function userLoggedIn(res){
   console.log(res)
 }

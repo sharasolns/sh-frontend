@@ -1,6 +1,6 @@
 {
   "name": "@iankibetsh/shframework",
-  "version": "1.3.5",
+  "version": "1.4.3",
   "description": "Vue library for handling laravel backend",
   "main": "dist/library.js",
   "module": "dist/library.mjs",
@@ -14,6 +14,9 @@
     "docs:build": "vuepress build docs",
     "dev": "vite",
     "serve": "vite"
+  },
+  "bin": {
+    "sh-copy-defaults": "./src/lib/cmds/cli.js"
   },
   "keywords": [],
   "author": "",

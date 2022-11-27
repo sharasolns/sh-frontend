@@ -1,7 +1,7 @@
 <script setup>
 //
 const props = defineProps(['record'])
-import ShDynamicTabs from '@/lib/components/ShDynamicTabs.vue'
+import ShDynamicTabs from '../../lib/components/ShDynamicTabs.vue'
 import Details from './tabs/Details.vue'
 import Users from './tabs/Users.vue'
 
