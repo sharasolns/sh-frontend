@@ -177,6 +177,7 @@
                 <span v-else-if="getFieldType(key) === 'numeric'">{{ Intl.NumberFormat().format(record[key]) }}</span>
                 <span v-else-if="getFieldType(key) === 'money'"
                       class="text-primary fw-bold">KES {{ Intl.NumberFormat().format(record[key]) }}</span>
+                <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
                 <span v-else-if="typeof key    === 'string'" v-html="record[key]"></span>
                 <span v-else-if="typeof key === 'function'" v-html="key(record, index )"></span>
                 <span v-else v-html="record[key[0]]"></span>
