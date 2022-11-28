@@ -9,9 +9,10 @@ const permissions = ['invoices','tasks','paymnents']
 const modules = ref([])
 const selectedModule = ref('tasks')
 const modulePermissions = ref(null)
+
+const selectedPermissions = ref([])
 const setModule = module=>{
-  selectedModule.value = module
-  getModulePermissions()
+  (selectedModule.value !== module) && (selectedModule.value = module) && getModulePermissions()
 }
 onMounted(() => {
   console.log(tabs.value.querySelectorAll('li'))
@@ -45,26 +46,41 @@ let mpModules = {}
   })
   return mpModules
 }
+const getLabel = permission => {
+  const arr = permission.split('.')
+  return arr[arr.length - 1].replaceAll('_',' ')
+}
+const getPermissionStyle = permission => {
+  return {
+    paddingLeft: `${(permission.split('.').length-1) * 20}px`
+  }
+}
 </script>
 <template>
+  {{ selectedPermissions }}
+
   <div class="row permissions-main d-flex">
-      <div id="permissions-nav" class="col-md-2 shadow d-flex align-items-center">
-        <ul ref="tabs" class="d-flex flex-column w-100">
+      <div id="permissions-nav" class="col-md-2 d-flex align-items-center py-4">
+        <ul ref="tabs" class="d-flex flex-column w-100 ps-2">
           <li v-for="module in modules" :class="selectedModule.id === module.id && 'active'" :key="module.id">
-            <input type="checkbox">
+            <input :checked="selectedModule.id === module.id" type="checkbox">
             <label class="text-capitalize" @click="setModule(module)"> {{  module.module.replaceAll('_',' ')  }}</label>
           </li>
         </ul>
       </div>
-      <div id="permissions-content" class="col-md-10">
-        <div class="alert alert-info" v-if="loading">
-          loading ...
-        </div>
-        <div v-else class="d-flex justify-content-evenly">
-          <div class="col-md-3 list-group" v-for="permissions in modulePermissions">
-            <label class="p-2 text-capitalize list-group-item pb-0 text-capitalize" v-for="permission in permissions">
-              <input type="checkbox"> {{ permission }}
-            </label>
+      <div id="permissions-content" class="col-md-10 py-4 pe-4 ps-0">
+        <div class="p-2 rounded-2 bg-white h-100">
+          <div class="alert alert-info" v-if="loading">
+            loading ...
+          </div>
+          <div v-else>
+            <div class="row row-cols-4 justify-content-between">
+              <div class="col py-3" v-for="permissions in modulePermissions">
+                <label class="text-capitalize list-group-item pb-1 text-capitalize" v-for="permission in permissions" :style="getPermissionStyle(permission)">
+                  <input v-model="selectedPermissions" :value="permission" type="checkbox"> {{ getLabel(permission) }}
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -77,29 +93,21 @@ let mpModules = {}
     padding: 0;
     ul {
       padding-left: 0;
+      max-height: 400px;
+      overflow-y: auto;
       li.active {
         border-right: none !important;
         position: relative;
         top: 0;
         left: 0;
         background: white;
-
-        &:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 40px;
-          height: 0px;
-          //border-right: #edeff2 solid 30px;
-          border-top: transparent solid 20px;
-          border-bottom: transparent solid 20px;
-        }
+        border-radius: 10px 0 0 10px;
       }
       li {
         list-style: none;
-        border: solid 1px #ccc;
-        padding-left: 3px;
+        //border: solid 1px #ccc;
+        //padding-left: 3px;
+        padding-inline-start: 10px;
         display: flex;
         gap: 5px;
         label {
@@ -112,8 +120,7 @@ let mpModules = {}
     }
   }
   div#permissions-content {
-    background: white;
-    //border: #bec7d3 2px solid;
+    //background: white;
   }
 }
 </style>
