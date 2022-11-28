@@ -224,18 +224,8 @@ export default {
     closeModal: function () {
       document.body.style = ''
       setTimeout(() => {
-        const form = this.$refs.ShAutoForm
-        if (form) {
-          const modal = form.closest('.modal.show')
-          if (modal) {
-            modal.click()
-          }
-        } else {
-          const backdrops = document.getElementsByClassName('modal-backdrop fade show')
-          if (backdrops.length > 0) {
-            backdrops[0].remove()
-          }
-        }
+        const closeBtn = this.$refs.ShAutoForm.closest('.modal-dialog').querySelector('[data-bs-dismiss="modal"]')
+        closeBtn && closeBtn.click()
         this.form_status = 0
       }, 1500)
     },
