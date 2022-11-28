@@ -1,6 +1,7 @@
 import ShStorage from '../repo/repositories/ShStorage.js'
 import Departments from '../components/core/Departments/Departments.vue'
 import Department from '../components/core/Departments/department/Department.vue'
+import ManagePermissions from '../components/core/Departments/department/ManagePermissions.vue'
 import ShAuth from '../components/core/auth/ShAuth.vue'
 import TextInput from '../components/form-components/TextInput.vue'
 const ShFrontend = {
@@ -56,6 +57,10 @@ const ShFrontend = {
       options.router.addRoute({
         path: '/sh-departments/permissions/:id',
         component: Department
+      })
+      options.router.addRoute({
+        path: '/sh-departments/manage-permissions/:id',
+        component: ManagePermissions
       })
     }
     //filter unwanted config items from options to be put in local storage
