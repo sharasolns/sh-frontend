@@ -10,6 +10,7 @@ import ShTabs from './lib/components/ShTabs.vue'
 import ShDynamicTabs from './lib/components/ShDynamicTabs.vue'
 import ShSilentAction from './lib/components/ShSilentAction.vue'
 import ShConfirmAction from './lib/components/ShConfirmAction.vue'
+import ManagePermissions from './lib/components/core/Departments/department/ManagePermissions.vue'
 import { useUserStore } from './lib/repo/stores/ShUser.js'
 import shApis from './lib/repo/helpers/ShApis.js'
 import shRepo from './lib/repo/helpers/ShRepo.js'
@@ -34,5 +35,6 @@ export {
   ShSilentAction,
     ShConfirmAction,
     ShAutoForm,
-    Countries
+    Countries,
+    ManagePermissions
 }

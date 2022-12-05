@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 
-const props = defineProps(['modelValue','label'])
+const props = defineProps(['modelValue','label','isInvalid'])
 const emit = defineEmits(['update:modelValue','clearValidationErrors'])
 const inputModel = ref(null)
 

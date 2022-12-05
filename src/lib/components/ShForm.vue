@@ -224,8 +224,11 @@ export default {
     closeModal: function () {
       document.body.style = ''
       setTimeout(() => {
-        const closeBtn = this.$refs.ShAutoForm.closest('.modal-dialog').querySelector('[data-bs-dismiss="modal"]')
-        closeBtn && closeBtn.click()
+        const modal = this.$refs.ShAutoForm.closest('.modal-dialog');
+        if(modal){
+          const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]')
+          closeBtn && closeBtn.click()
+        }
         this.form_status = 0
       }, 1500)
     },

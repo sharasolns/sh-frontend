@@ -7,7 +7,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 // import 'bootstrap'
 import router from './etc/router.js'
-import SampleComponent from './views/autoform/SampleComponent.vue'
+// import SampleComponent from './views/autoform/SampleComponent.vue'
+import PhoneInput from './components/form-components/PhoneInput.vue'
 const app = createApp(App)
 app.use(createPinia())
 const shFormElementClasses = {
@@ -20,7 +21,8 @@ const shFormElementClasses = {
   formControl: 'form-control'
 }
 const shFormComponents = {
-  text: SampleComponent,
+  // text: SampleComponent,
+  // phone: SampleComponent,
   // email: SampleComponent,
   // textArea: SampleComponent,
   // number: SampleComponent,

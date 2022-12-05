@@ -33,7 +33,7 @@ function departmentAdded (response) {
       actions: [
         {
           label: 'Permissions',
-          path: '/sh-departments/permissions/{id}',
+          path: '/sh-departments/manage-permissions/{id}',
           class: 'btn btn-info bi-lock btn-sm'
         }
       ]

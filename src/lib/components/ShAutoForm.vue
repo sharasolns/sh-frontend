@@ -10,6 +10,7 @@ import TextInput from './form-components/TextInput.vue'
 import TextAreaInput from './form-components/TextAreaInput.vue'
 import SelectInput from './form-components/SelectInput.vue'
 import PasswordInput from './form-components/PasswordInput.vue'
+import { ShAutoForm } from '../../index.js'
 
 const props = defineProps([
     'action','successCallback','retainDataAfterSubmission',
@@ -44,7 +45,7 @@ const getFieldComponent = (fieldObj)=>{
     return props.customComponents[field]
   }
   if(fieldObj.type){
-    return fieldObj.type === 'number' ? NumberComponent:fieldObj.type === 'textarea' ? TextAreaComponent : fieldObj.type === 'email' ? EmailComponent : fieldObj.type === 'phone' ? PhoneComponent : fieldObj.type ? SelectComponent:TextComponent
+    return fieldObj.type === 'number' ? NumberComponent:fieldObj.type === 'textarea' ? TextAreaComponent : fieldObj.type === 'email' ? EmailComponent : fieldObj.type === 'phone' ? PhoneComponent : fieldObj.type === 'password' ? PasswordComponent:fieldObj.type === 'select' ? SelectComponent:TextComponent
   }else
     if(passwords.includes(field)){
       return PasswordComponent
@@ -75,10 +76,14 @@ const shFormElementClasses = ref(null)
 shFormElementClasses.value = inject('shFormElementClasses')
 const shAutoForm = ref(null)
 const closeModal = e => {
-  setTimeout(()=>{
-    const closeBtn = shAutoForm.value.closest('.modal-dialog').querySelector('[data-bs-dismiss="modal"]')
-    closeBtn && closeBtn.click()
-  },1000)
+  setTimeout(() => {
+    const modal = ShAutoForm.value.closest('.modal-dialog');
+    if(modal){
+      const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]')
+      closeBtn && closeBtn.click()
+    }
+    this.form_status = 0
+  }, 1500)
 }
 const getLabel = field => (props.labels && (props.labels[field] !== undefined)) ? props.labels[field]:_.startCase(_.camelCase(field))
 const getComponentClass = field => validationErrors.value[field] ? getElementClass('formControl') + ' is-invalid':getElementClass('formControl')
@@ -156,7 +161,7 @@ onMounted((ev)=>{
   <form ref="shAutoForm" class="sh-form" @submit="e => submitForm(e)">
     <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup')">
       <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
-      <component v-bind="getComponentProps(field)" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :placeholder="isFloating ? field.label:field.placeholder" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
+      <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :placeholder="isFloating ? field.label:field.placeholder" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
       <label v-if="isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
       <div v-if="field.helper" :class="getElementClass('helperText')" v-html="field.helper"></div>
       <div v-if="validationErrors[field.field]" :class="getElementClass('invalidFeedback')">

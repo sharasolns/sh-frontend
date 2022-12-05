@@ -14,7 +14,7 @@
     <div class="row" v-if="!hideSearch">
       <div class="col-12 mb-3">
         <div class="sh-search-bar">
-          <input type="search" v-on:change="reloadData(1)" v-model="filter_value"
+          <input @keyup="userTyping" type="search" v-on:change="reloadData(1)" v-model="filter_value"
                  :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'" class="form-control sh-search-input">
         </div>
       </div>
@@ -254,7 +254,8 @@ export default {
       downloading: false,
       appUrl: window.VITE_APP_API_URL,
       hasCanvas: 0,
-      selectedRecord: null
+      selectedRecord: null,
+      timeOut: null
     }
   },
   mounted () {
@@ -270,6 +271,17 @@ export default {
     }
   },
   methods: {
+    userTyping: function(){
+      if (this.timeOut){
+        console.log('timer cleared')
+        clearTimeout(this.timeOut)
+      }
+      const self = this
+      this.timeOut = setTimeout(()=>{
+        console.log('Searching')
+        self.reloadData(1)
+      },1000)
+    },
     cleanCanvasProps: function (actions) {
       let replaced = actions
       replaced.class = null

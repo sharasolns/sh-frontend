@@ -9,12 +9,16 @@ const data = [
   },
   {
     field: 'name',
-  },,
+  },
+  {
+    field: 'phone'
+  },
   {
     field: 'email',
   },
   {
     field: 'password',
+    type: 'select'
   },
   {
     field: 'age',
