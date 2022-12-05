@@ -14,7 +14,7 @@
     <div class="row" v-if="!hideSearch">
       <div class="col-12 mb-3">
         <div class="sh-search-bar">
-          <input @keyup="userTyping" type="search" v-on:change="reloadData(1)" v-model="filter_value"
+          <input @keydown="userTyping" @keyup="userTyping" type="search" v-on:change="reloadData(1)" v-model="filter_value"
                  :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'" class="form-control sh-search-input">
         </div>
       </div>
