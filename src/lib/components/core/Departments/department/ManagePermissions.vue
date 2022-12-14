@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import shApis from '../../../../repo/helpers/ShApis.js'
 import ShSilentAction from '../../../ShSilentAction.vue'
 import { useUserStore } from '../../../../repo/stores/ShUser.js'
+import shRepo from '../../../../repo/helpers/ShRepo.js'
 
 const emit = defineEmits(['success'])
 
@@ -26,24 +27,35 @@ const setModule = module=>{
 onMounted(() => {
   getDepartmentModules()
 })
+const loadingModules = ref(false)
 const getDepartmentModules = ()=>{
-  shApis.doGet(`admin/departments/department/list-all-modules/admin/${departmentId}`).then(res=>{
+  loadingModules.value = true
+  shApis.doGet(`sh-departments/department/list-all-modules/sh-departments/${departmentId}`).then(res=>{
+    loadingModules.value = false
     modules.value = res.data.modules
     department.value = res.data.department
     departmentModules.value = res.data.departmentModules
     selectedModule.value = res.data.modules[0]
     getModulePermissions()
+  }).catch(ex=>{
+    loadingModules.value = false
+    // console.log(ex)
+    shRepo.showToast(ex.message, 'error')
   })
 }
 const loading = ref(false)
 const getModulePermissions = () => {
   loading.value = true
   modulePermissions.value = null
-  shApis.doGet(`admin/departments/department/get-module-permissions/${selectedModule.value}?department_id=${departmentId}`).then(res=>{
+  shApis.doGet(`sh-departments/department/get-module-permissions/${selectedModule.value}?department_id=${departmentId}`).then(res=>{
     loading.value = false
     modulePermissions.value = reformatModulePermissions(res.data.permissions)
     selectedPermissions.value = res.data.selectedPermissions ?? []
     permissionsChanged.value = false
+  }).catch(ex=>{
+    console.log(ex)
+    loading.value = false
+    shRepo.showToast(ex.message, 'error')
   })
 }
 const permissionsUpdated = (res)=>{
@@ -94,8 +106,12 @@ const getPermissionStyle = permission => {
 </script>
 <template>
   <div class="row permissions-main d-flex">
+
       <div id="permissions-nav" class="col-md-3 d-flex align-items-center py-4">
-        <ul class="d-flex flex-column w-100 px-2">
+        <div class="mx-auto" v-if="loadingModules">
+          <span class="spinner-grow mx-auto"></span>
+        </div>
+        <ul class="d-flex flex-column w-100 px-2" v-else>
           <li v-for="module in modules" :class="selectedModule === module && 'active'" :key="selectedModule">
             <input :checked="departmentModules.includes(module)" @click="checkAllPermissions" :disabled="selectedModule !== module" type="checkbox">
             <label class="text-capitalize" @click="setModule(module)"> {{  module.replaceAll('_',' ')  }}</label>
@@ -117,7 +133,7 @@ const getPermissionStyle = permission => {
             </div>
             <div class="w-100 row" v-if="permissionsChanged">
               <div class="col-md-3">
-                <sh-silent-action @success="permissionsUpdated" :url="`admin/departments/department/permissions/${departmentId}/${selectedModule}`" :data="{permissions: selectedPermissions}" class="btn btn-primary d-block"><i class="bi-check"></i> Save</sh-silent-action>
+                <sh-silent-action @success="permissionsUpdated" :url="`sh-departments/department/permissions/${departmentId}/${selectedModule}`" :data="{permissions: selectedPermissions}" class="btn btn-primary d-block"><i class="bi-check"></i> Save</sh-silent-action>
               </div>
             </div>
           </div>

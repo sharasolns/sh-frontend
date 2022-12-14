@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted, ref } from 'vue'
+import { inject, onMounted, ref, watch } from 'vue'
 import _ from 'lodash'
 import shApis from '../repo/helpers/ShApis.js'
 import shRepo from '../repo/helpers/ShRepo.js'
@@ -19,12 +19,16 @@ const props = defineProps([
   'helperTexts','labels','data',
   'actionLabel',
     'textAreas',
+    'currentData',
     'emails',
     'phones','numbers','selects','dates'
 ])
 const emit = defineEmits(['success'])
 const formFields = ref([])
 const getFieldComponent = (fieldObj)=>{
+  if(fieldObj.component){
+    return fieldObj.component
+  }
   const field = fieldObj.field
   const defaultTextareas = ['message', 'meta_description', 'comment', 'call_response', 'comments', 'description']
   const defaultSelects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type']
@@ -134,14 +138,28 @@ const submitForm = e => {
   return false
 }
 const submitBtnWidth = ref(null)
+const setExistingData = ()=>{
+  console.log(props.currentData, formFields.value)
+  const existingData = props.currentData
+  if (props.currentData) {
+    formFields.value.map(field=>{
+      existingData[field.field] && (field.value = existingData[field.field])
+    })
+  }
+}
+watch(()=>props.currentData,()=>{
+  setExistingData()
+})
 onMounted((ev)=>{
   props.fields && props.fields.map(field=>{
     if(typeof field === 'object') {
       const fieldObj = {...field}
-      fieldObj.label && getLabel(fieldObj.field)
-      !fieldObj.helper && fieldObj.helperText ? fieldObj.helper = fieldObj.helperText : fieldObj.helper = getHelperText(fieldObj.field)
-      fieldObj.helperText === undefined && (fieldObj.label = getLabel(fieldObj.field))
-      fieldObj.placeholder && fieldObj.placeHolder && getPlaceholder(fieldObj.field)
+      // fieldObj.label && getLabel(fieldObj.field)
+      fieldObj.helper = fieldObj.helperText ?? fieldObj.helper
+      // !fieldObj.helper && fieldObj.helperText ? fieldObj.helper = fieldObj.helperText : fieldObj.helper = getHelperText(fieldObj.field)
+      // fieldObj.helperText === undefined && ()
+      fieldObj.label = fieldObj.label ?? getLabel(fieldObj.field)
+      // fieldObj.placeholder && fieldObj.placeHolder && getPlaceholder(fieldObj.field)
       fieldObj.value = null
       formFields.value.push(fieldObj)
     } else {
@@ -153,6 +171,7 @@ onMounted((ev)=>{
       })
     }
   })
+  setExistingData()
 })
 
 </script>
@@ -161,12 +180,14 @@ onMounted((ev)=>{
   <form ref="shAutoForm" class="sh-form" @submit="e => submitForm(e)">
     <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup')">
       <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
-      <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :placeholder="isFloating ? field.label:field.placeholder" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
+      <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
       <label v-if="isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
       <div v-if="field.helper" :class="getElementClass('helperText')" v-html="field.helper"></div>
       <div v-if="validationErrors[field.field]" :class="getElementClass('invalidFeedback')">
         {{  validationErrors[field.field] }}
       </div>
+<!--      <h5>{{ getFieldComponent(field) }}</h5>-->
+<!--      <h5>{{ getComponentProps(field) }}</h5>-->
     </div>
     <div :class="getElementClass('formGroup')">
       <button :style="{width: submitBtnWidth}" ref="submitBtn" :disabled="loading" :class="getElementClass('actionBtn')">

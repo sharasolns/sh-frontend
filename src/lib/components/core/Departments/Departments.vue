@@ -28,7 +28,7 @@ function departmentAdded (response) {
         <div class="card sh-departments-card shadow">
           <div class="card-body">
             <a data-bs-toggle="modal" ref="addDeptBtn" href="#sh-department_modal" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> ADD DEPARTMENT</a>
-            <sh-table :headers="['id','name','description', 'created_at']" end-point="admin/departments/list" :actions="{
+            <sh-table :headers="['id','name','description', 'created_at']" end-point="sh-departments/list" :actions="{
       label: 'Action',
       actions: [
         {
