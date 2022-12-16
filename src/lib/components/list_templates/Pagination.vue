@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loadMore">
+  <div v-if="paginationStyle !== 'loadMore'">
     <div class="record_count_body mb-3">
       <span class="per_page_show">Showing</span>&nbsp;
       <select class="select_per_page" v-on:change="changePerPage" v-model="per_page">
@@ -39,7 +39,7 @@
 <script>
 export default {
   name: 'Pagination',
-  props: ['pagination_data', 'loadMore', 'hideCount', 'hideLoadMore'],
+  props: ['pagination_data', 'loadMore', 'hideCount', 'hideLoadMore', 'paginationStyle'],
   data () {
     return {
       current_page: this.pagination_data.current,

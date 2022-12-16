@@ -69,6 +69,7 @@ export default {
     'hasTerms',
     'country_code',
     'submitBtnClass',
+      'retainModal',
     'fields',
     'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
     'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
@@ -275,7 +276,7 @@ export default {
           }
         }
         NProgress.done()
-        if (!this.retain_modal_after_submission) {
+        if (!this.retainModal) {
           this.closeModal()
         }
       }).catch((reason, data) => {

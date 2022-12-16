@@ -66,7 +66,7 @@ const ShFrontend = {
     //filter unwanted config items from options to be put in local storage
     const removeKeys = ['formTextInput','router','shFormElementClasses']
     const allowKeys = []
-    Object.keys(options).map(key=> ((typeof options[key] !== 'string' && !allowKeys.includes(key)) || removeKeys.includes(key)) && delete options[key])
+    Object.keys(options).map(key=> ((!['string','integer','number'].includes(typeof options[key]) && !allowKeys.includes(key)) || removeKeys.includes(key)) && delete options[key])
 
     ShStorage.setItem('ShConfig',options)
   }

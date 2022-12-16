@@ -106,7 +106,7 @@
             <template v-if="!act.permission || user.isAllowedTo(act.permission)">
               <template v-if="!act.validator || act.validator(record)">
                 <sh-confirm-action
-                    v-if="act.type === 'confirmAction'"
+                    v-if="['confirmAction','confirmaction','confirm-action','confirm'].includes(act.type)"
                     @actionSuccessful="doEmitAction('actionSuccessful',record)"
                     @actionFailed="doEmitAction('actionFailed',record)"
                     @actionCanceled="doEmitAction('actionCanceled',record)"
@@ -116,7 +116,7 @@
                   {{ act.label }}
                 </sh-confirm-action>
                 <sh-silent-action
-                    v-else-if="act.type === 'silentAction'"
+                    v-else-if="['silentAction','silentaction','silent-action','silent'].includes(act.type)"
                     @actionSuccessful="doEmitAction('actionSuccessful',record)"
                     @actionFailed="doEmitAction('actionFailed',record)"
                     @actionCanceled="doEmitAction('actionCanceled',record)"
@@ -212,7 +212,7 @@
     </div>
     <pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore"
                 :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey"
-                load-more="1"></pagination>
+                :pagination-style="pageStyle"></pagination>
     <template v-if="actions">
       <template v-for="action in actions.actions" :key="action.label">
         <sh-canvas @offcanvasClosed="canvasClosed" v-if="action.canvasId" :position="action.canvasPosition"
@@ -232,16 +232,16 @@ import helpers from '../repo/helpers/ShRepo.js'
 import ShCanvas from './ShCanvas.vue'
 import ShConfirmAction from './ShConfirmAction.vue'
 import ShSilentAction from './ShSilentAction.vue'
-
+import shRepo from '../repo/helpers/ShRepo.js'
 export default {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds'],
+  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle'],
   inject: ['channel'],
   data () {
     return {
       order_by: '',
       order_method: '',
-      per_page: this.pageCount ? this.pageCount : 30,
+      per_page: shRepo.getShConfig('tablePerPage',10),
       page: 1,
       filter_value: '',
       loading: 'loading',
@@ -255,7 +255,8 @@ export default {
       appUrl: window.VITE_APP_API_URL,
       hasCanvas: 0,
       selectedRecord: null,
-      timeOut: null
+      timeOut: null,
+      pageStyle: this.paginationStyle ?? shRepo.getShConfig('tablePaginationStyle','loadMore')
     }
   },
   mounted () {

@@ -36,6 +36,8 @@ app.use(ShFrontend,{
   logoutApiEndpoint: 'auth/logout',
   router: router,
   registerTitle: 'Welcome, create a new account',
+  tablePaginationStyle: 'table',
+  tablePerPage: 5,
   shFormElementClasses,
   shFormComponents
 })
