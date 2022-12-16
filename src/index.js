@@ -2,6 +2,7 @@ import ShForm from './lib/components/ShForm.vue'
 import ShAutoForm from './lib/components/ShAutoForm.vue'
 import ShDropDownForm from './lib/components/ShDropDownForm.vue'
 import ShModalForm from './lib/components/ShModalForm.vue'
+import ShModalFormAuto from './lib/components/ShModalFormAuto.vue'
 import ShCanvas from './lib/components/ShCanvas.vue'
 import ShModal from './lib/components/ShModal.vue'
 import ShPhone from './lib/components/form-components/PhoneInput.vue'
@@ -36,5 +37,6 @@ export {
     ShConfirmAction,
     ShAutoForm,
     Countries,
-    ManagePermissions
+    ManagePermissions,
+    ShModalFormAuto
 }
