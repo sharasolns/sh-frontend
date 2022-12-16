@@ -25,7 +25,7 @@
          <ShEditor :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'editor'" class="form-control"/>
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
          <textarea :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'textarea'" class="form-control"></textarea>
-         <select :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'select' && selectData[field] != null" class="form-control">
+         <select :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'select'" class="form-control">
            <option v-for="item in selectData[field]" :key="item.id"  :value="item.id">{{item.name}}</option>
          </select>
          <div v-if="form_errors[field] != null " class="invalid-feedback">
@@ -122,6 +122,9 @@ export default {
       }
     },
     getFieldType: function (field) {
+      if(this.fillSelects && this.fillSelects[field]){
+        return 'select';
+      }
       if(this.customComponent && this.customComponent[field]){
         return 'component'
       }
@@ -341,14 +344,10 @@ export default {
           }
           this.suggests.push(key)
         } else if (this.fillSelects[key].data) {
-          selectData[key] = this.fillSelects[key].data
-          this.selectData = selectData
-          console.log(this.selectData)
+          this.selectData[key] = this.fillSelects[key].data
         } else {
           apis.doGet(this.fillSelects[key].url, { all: 1 }).then(res => {
-            // selectData[key] = res.data
-            // console.log(res)
-            this.selectData[key] = res.data.data
+            this.selectData[key] = res.data
           }).catch(res => {
             console.log(res)
           })

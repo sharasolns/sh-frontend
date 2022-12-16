@@ -25,9 +25,13 @@ function formatNumber(no,dp=0){
 </script>
 <template>
   <h5>{{ formatNumber(5.34,2) }}</h5>
-  <sh-modal-form-auto class="btn btn-info btn-sm" success-message="Task added successfully" @success="reloadTable" :fields="['name','description']" action="tasks/store">
+  <sh-modal-form class="btn btn-info btn-sm" success-message="Task added successfully" :fill-selects="{
+    task_id: {
+      url: 'tasks/list/any?all=1'
+    }
+  }" @success="reloadTable" :fields="['task_id','name','description']" action="tasks/store">
     <i class="bi-plus"></i> Add Task
-  </sh-modal-form-auto>
+  </sh-modal-form>
   <sh-table
       :headers="['id','user','name','description']"
       @actionSuccessful="reloadTable"
