@@ -228,10 +228,21 @@ export default {
     closeModal: function () {
       document.body.style = ''
       setTimeout(() => {
-        const modal = this.$refs.ShAutoForm.closest('.modal-dialog');
-        if(modal){
-          const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]')
-          closeBtn && closeBtn.click()
+        const form = this.$refs.ShAutoForm
+        if(form){
+          const modal = form.closest('.modal-dialog');
+          if(modal){
+            const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]')
+            closeBtn && closeBtn.click()
+          }
+        } else {
+          //form was mysteriously unmounted! try remove any modal backdrop if possible
+          const modalBackdrop = document.querySelector('.modal-backdrop')
+          if(modalBackdrop) {
+            if(!document.querySelector('.modal.show')){
+              modalBackdrop.remove()
+            }
+          }
         }
         this.form_status = 0
       }, 1500)

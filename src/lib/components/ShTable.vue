@@ -274,14 +274,12 @@ export default {
   methods: {
     userTyping: function(){
       if (this.timeOut){
-        console.log('timer cleared')
         clearTimeout(this.timeOut)
       }
       const self = this
       this.timeOut = setTimeout(()=>{
-        console.log('Searching')
         self.reloadData(1)
-      },1000)
+      },800)
     },
     cleanCanvasProps: function (actions) {
       let replaced = actions
@@ -317,7 +315,6 @@ export default {
       this.reloadData()
     },
     getLinkClass: function (config) {
-      console.log(config)
       if (typeof config === 'object') {
         return config.class
       }
@@ -366,10 +363,10 @@ export default {
     },
     replaceLinkUrl: function (path, obj) {
       if (typeof path === 'object') {
-        path = path.link
+        path = path.link ?? path.url
       }
       var matches = path.match(/\{(.*?)\}/g)
-      matches.forEach(key => {
+      matches && matches.forEach(key => {
         key = key.replace('{', '')
         key = key.replace('}', '')
         path = path.replace(`{${key}}`, obj[key])
@@ -408,7 +405,6 @@ export default {
           // window.open(this.appUrl + 'external-download?file=' + res.data.file + '&name=' + res.data.name, '_blank').focus()
         }
       }).catch(reason => {
-        console.log(reason)
         this.downloading = false
         const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText}`
         helpers.swalError('Error', error)
@@ -453,9 +449,6 @@ export default {
           this.pagination_data.displayCount = totalShown
           const scrollingElement = (document.scrollingElement || document.body)
           scrollingElement.scrollTop = scrollingElement.scrollHeight
-          // const all = []
-          // console.log(all.push(response.data))
-          // console.log(this.records, response.data)
         } else {
           this.records = response.data
         }

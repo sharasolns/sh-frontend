@@ -17,6 +17,7 @@ const props = defineProps([
   'successMessage','fields','customComponents','placeHolders',
   'formClasses',
   'helperTexts','labels','data',
+  'formClass',
   'actionLabel',
     'textAreas',
     'currentData',
@@ -177,7 +178,7 @@ onMounted((ev)=>{
 </script>
 <template>
   <div/>
-  <form ref="shAutoForm" class="sh-form" @submit="e => submitForm(e)">
+  <form :class="formClass" ref="shAutoForm" class="sh-form" @submit="e => submitForm(e)">
     <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup')">
       <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
       <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>

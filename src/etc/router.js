@@ -9,6 +9,8 @@ import Summary from '../views/Summary.vue'
 import Tasks from '../views/tasks/Tasks.vue'
 import Notes from '../views/notes/Notes.vue'
 import FormTest from '../views/autoform/FormTest.vue'
+import ViewNote from '../views/notes/note/ViewNote.vue'
+import NoteComment from '../views/notes/note/NoteComment.vue'
 const routes = [
   {
     path: '/',
@@ -24,7 +26,27 @@ const routes = [
   },
   {
     path: '/notes',
-    component: Notes
+    component: Notes,
+    children: [
+      {
+        path: 'note/:id',
+        component: ViewNote,
+        meta: {
+          popup: 'canvas',
+          side: 'end',
+          size: 'md'
+        },
+        children: [
+          {
+            path: 'add-comment',
+            component: NoteComment,
+            meta: {
+              popup: 'modal',
+            }
+          }
+        ]
+      }
+    ]
   },
   {
     path: '/autoform',

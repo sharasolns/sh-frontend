@@ -11,6 +11,8 @@ import ShTabs from './lib/components/ShTabs.vue'
 import ShDynamicTabs from './lib/components/ShDynamicTabs.vue'
 import ShSilentAction from './lib/components/ShSilentAction.vue'
 import ShConfirmAction from './lib/components/ShConfirmAction.vue'
+import ShModalBtn from './lib/components/ShModalBtn.vue'
+import ShCanvasBtn from './lib/components/ShCanvasBtn.vue'
 import ManagePermissions from './lib/components/core/Departments/department/ManagePermissions.vue'
 import { useUserStore } from './lib/repo/stores/ShUser.js'
 import shApis from './lib/repo/helpers/ShApis.js'
@@ -38,5 +40,7 @@ export {
     ShAutoForm,
     Countries,
     ManagePermissions,
-    ShModalFormAuto
+    ShModalFormAuto,
+    ShModalBtn,
+    ShCanvasBtn
 }

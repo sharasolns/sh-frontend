@@ -8,6 +8,7 @@ const {user} = storeToRefs(userStore)
 import MainLayout from './views/layouts/MainLayout.vue'
 import { storeToRefs } from 'pinia'
 import { intercept } from './etc/interceptor.js'
+import ShPopups from './lib/components/ShPopups.vue'
 onMounted(()=>{
   userStore.setUser()
 })
@@ -18,6 +19,7 @@ if(window.shAxionInstance){
 </script>
 <template>
   <MainLayout/>
+  <ShPopups/>
 </template>
 
 <style>
