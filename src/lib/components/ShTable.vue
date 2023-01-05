@@ -54,14 +54,12 @@
     <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700">
       <thead class="sh-thead">
       <tr>
-        <th v-for="title in headers" :key="title[0]">
+        <th v-for="title in headers" :key="title">
           <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
              v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
-          <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
+          <a class="text-capitalize" v-on:click="changeKey('order_by',title(null))"
              v-else-if="typeof title === 'function'">{{ title(null).replace(/_/g, ' ') }}</a>
-          <a class="text-capitalize" v-else v-on:click="changeKey('order_by',title[0])">{{
-              title[1].replace(/_/g, ' ')
-            }}</a>
+          <a class="text-capitalize" v-else-if="typeof title !== 'undefined'" v-on:click="changeKey('order_by',title)" >{{ title.replace(/_/g, ' ') }}</a>
         </th>
         <th v-if="actions" class="text-capitalize">
           {{ actions.label }}
@@ -90,7 +88,7 @@
       </tr>
       <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class"
           @click="rowSelected(record)">
-        <td v-for="key in headers" :key="key[0]">
+        <td v-for="key in headers" :key="key">
           <router-link v-if="typeof key === 'string' && links && links[key]" :to="replaceLinkUrl(links[key],record)"
                        :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
           <span v-else-if="getFieldType(key) === 'numeric'">{{ Intl.NumberFormat().format(record[key]) }}</span>
