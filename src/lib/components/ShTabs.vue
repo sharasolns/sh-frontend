@@ -97,7 +97,6 @@ const setCounts = (res) => {
 }
 </script>
 <template>
-  <h3>{{ path }}</h3>
   <ul class="nav nav-tabs sh-tabs" :class="classes">
     <li class="nav-item" v-for="tab in tabs" :key="tab">
       <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
