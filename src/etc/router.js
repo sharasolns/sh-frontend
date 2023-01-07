@@ -11,6 +11,9 @@ import Notes from '../views/notes/Notes.vue'
 import FormTest from '../views/autoform/FormTest.vue'
 import ViewNote from '../views/notes/note/ViewNote.vue'
 import NoteComment from '../views/notes/note/NoteComment.vue'
+import TabsTest from '../views/TabsTest.vue'
+import TabOne from '../views/tabs/TabOne.vue'
+import TabTwo from '../views/tabs/TabTwo.vue'
 const routes = [
   {
     path: '/',
@@ -21,7 +24,21 @@ const routes = [
     component: Forms
   },
   {
-    path: '/tasks',
+    path: '/tabs-test',
+    component: TabsTest,
+    children: [
+      {
+        path: 'tab/one',
+        component: TabOne
+      },
+      {
+        path: 'tab/two',
+        component: TabTwo
+      }
+    ]
+  },
+  {
+    path: '/tabs',
     component: Tasks
   },
   {

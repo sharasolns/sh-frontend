@@ -66,7 +66,7 @@ const initPopup = ()=>{
     })
   }
 }
-const goBack = ()=> route.matched.length > 1 && router.back()
+const goBack = ()=> route.matched.length > 1 && router.push(route.matched[route.matched.length-2].path)
 </script>
 <template>
   <a data-bs-toggle="offcanvas" :href="'#' + canvasId" shallowRef="canvasButton" class="d-none">Open Modal</a>

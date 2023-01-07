@@ -1,4 +1,103 @@
+<script setup>
+import { onMounted, ref, watch } from 'vue'
+import apis from '../repo/helpers/ShApis.js'
+import { useRoute, useRouter } from 'vue-router'
+
+const props = defineProps({
+  tabs: {
+    type: Array,
+    required: true
+  },
+  baseUrl: {
+    type: String,
+    required: true
+  },
+  sharedData: {
+    type: Object
+  },
+  tabCounts: {
+    type: Object
+  },
+  responsive: {
+    type: Object
+  },
+  classes: {
+    type: String
+  },
+  classOne: {
+    type: String
+  },
+  classTwo: {
+    type: String
+  }
+})
+const route = useRoute()
+const router = useRouter()
+const currentTab = ref('')
+const path = ref(route.path)
+
+onMounted(()=>{
+  resetTabCounts()
+  setTab(props.tabs[0])
+})
+
+watch(()=>props.tabCounts, () => {
+  resetTabCounts()
+})
+
+watch(()=>route.path,(newPath)=>{
+  path.value = newPath
+})
+
+const setTab = (tab) => {
+  if (tab) {
+    currentTab.value = tab.replace(/_/g, ' ')
+  }
+}
+const setTabCounts = (tabCounts) => {
+  if (typeof tabCounts === 'object') {
+    setCounts(tabCounts)
+  } else {
+    apis.doGet(tabCounts).then(res => {
+      setCounts(res.data)
+    })
+  }
+}
+const resetTabCounts = () => {
+  const arr = route.fullPath.split('/')
+  if (!tabExistsInUrl()) {
+    router.push(route.fullPath + '/tab/' + props.tabs[0])
+  } else {
+    currentTab.value = arr[arr.length - 1]
+  }
+  if (props.tabCounts) {
+    setTabCounts(props.tabCounts)
+  }
+}
+const tabExistsInUrl = () => {
+  let exists = false
+  props.tabs.forEach(tab => {
+    if (route.fullPath.includes(`/${tab}`)) {
+      exists = true
+    }
+  })
+  return exists
+}
+const setCounts = (res) => {
+  Object.keys(res).forEach(key => {
+    let elem = document.getElementsByClassName('sh_tab_' + key)
+    if (elem) {
+      let txt = elem.innerHTML
+      txt = txt.split('<i class="d-none"></i>')[0]
+      if (parseInt(res[key]) > 0) {
+        elem.innerHTML = txt + '<i class="d-none"></i><sup class="sh_tab_count">' + res[key] + '</sup>'
+      }
+    }
+  })
+}
+</script>
 <template>
+  <h3>{{ path }}</h3>
   <ul class="nav nav-tabs sh-tabs" :class="classes">
     <li class="nav-item" v-for="tab in tabs" :key="tab">
       <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
@@ -7,93 +106,10 @@
     </li>
   </ul>
   <div class="tab-content" :class="classTwo">
-    <router-view :currentTab="currentTab" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
+    <router-view :currentTab="currentTab" :key="path" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
   </div>
 </template>
-<script>
-import apis from '../repo/helpers/ShApis.js'
 
-export default {
-  name: 'ShTabs',
-  props: ['tabs', 'baseUrl', 'sharedData', 'tabCounts', 'responsive','classOne','classTwo','classes'],
-  data () {
-    return {
-      currentTab: '',
-      generatedId: null,
-      isResponsive: typeof this.responsive !== 'undefined'
-    }
-  },
-  watch: {
-    refreshStatus: function (state) {
-      if (state === 0) {
-        if (this.tabCounts) {
-          this.setTabCounts(this.tabCounts)
-        }
-      }
-    },
-    tabCounts: function () {
-      this.resetTabCounts()
-    }
-  },
-  computed: {
-    refreshStatus () {
-    }
-  },
-  mounted () {
-    this.generatedId = 'tab' + Math.random().toString(36).slice(2)
-    this.resetTabCounts()
-    this.setTab(this.tabs[0])
-  },
-  methods: {
-    setTab: function (tab) {
-      if (tab) {
-        this.currentTab = tab.replace(/_/g, ' ')
-      }
-    },
-    setTabCounts: function (tabCounts) {
-      if (typeof tabCounts === 'object') {
-        this.setCounts(tabCounts)
-      } else {
-        apis.doGet(tabCounts).then(res => {
-          this.setCounts(res.data)
-        })
-      }
-    },
-    resetTabCounts: function () {
-      const arr = this.$route.fullPath.split('/')
-      if (!this.tabExistsInUrl()) {
-        this.$router.push(this.$route.fullPath + '/tab/' + this.tabs[0])
-      } else {
-        this.currentTab = arr[arr.length - 1]
-      }
-      if (this.tabCounts) {
-        this.setTabCounts(this.tabCounts)
-      }
-    },
-    tabExistsInUrl: function () {
-      let exists = false
-      this.tabs.forEach(tab => {
-        if (this.$route.fullPath.includes(tab)) {
-          exists = true
-        }
-      })
-      return exists
-    },
-    setCounts: function (res) {
-      Object.keys(res).forEach(key => {
-        let elem = document.getElementsByClassName('sh_tab_' + key)
-        if (elem) {
-          let txt = elem.innerHTML
-          txt = txt.split('<i class="d-none"></i>')[0]
-          if (parseInt(res[key]) > 0) {
-            elem.innerHTML = txt + '<i class="d-none"></i><sup class="sh_tab_count">' + res[key] + '</sup>'
-          }
-        }
-      })
-    }
-  }
-}
-</script>
 <style scoped>
 
 </style>
