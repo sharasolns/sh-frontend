@@ -1,10 +1,11 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { watch, ref, markRaw } from 'vue'
-import {Modal, Offcanvas} from 'bootstrap'
+import { Modal, Offcanvas } from 'bootstrap'
 import _ from 'lodash'
 import ShModal from './ShModal.vue'
 import ShCanvas from './ShCanvas.vue'
+
 const route = useRoute()
 const popUp = ref(route.meta.popUp)
 const modalId = _.uniqueId('modal_')
@@ -15,58 +16,65 @@ const router = useRouter()
 const position = ref(null)
 const size = ref(null)
 const popups = []
-const popupPaths =[]
-watch(()=>route.meta, meta=>{
+const popupPaths = []
+watch(() => route.meta, meta => {
   popUp.value = meta.popUp ?? meta.popup
-  if(popUp.value){
+  if (popUp.value) {
     // popups.push(meta)
     !popupPaths.includes(route.path) && popupPaths.push(route.path) && popups.push(meta)
     position.value = meta.position ?? meta.side
     size.value = meta.size
-    componentView.value = markRaw(route.matched[route.matched.length-1].components.default)
-    setTimeout(()=>{
+    componentView.value = markRaw(route.matched[route.matched.length - 1].components.default)
+    setTimeout(() => {
       initPopup()
-    },100)
+    }, 100)
   } else {
     //no pop up, check if we have any unclosed backdrop
-    setTimeout(()=>{
+    setTimeout(() => {
       closeOrphanedBackdrops()
-    },100)
+    }, 100)
   }
 })
-const closeOrphanedBackdrops = ()=>{
+const closeOrphanedBackdrops = () => {
   const offCanvasBackdrop = document.querySelector('.offcanvas-backdrop')
-  if(offCanvasBackdrop) {
-    if(!document.querySelector('.offcanvas.show')){
+  if (offCanvasBackdrop) {
+    if (!document.querySelector('.offcanvas.show')) {
       offCanvasBackdrop.remove()
     }
   }
   const modalBackdrop = document.querySelector('.modal-backdrop')
-  if(modalBackdrop) {
-    if(!document.querySelector('.modal.show')){
+  if (modalBackdrop) {
+    if (!document.querySelector('.modal.show')) {
       modalBackdrop.remove()
     }
   }
 }
-const initPopup = ()=>{
-  if(popUp.value === 'modal') {
+const initPopup = () => {
+  if (popUp.value === 'modal') {
     // modalButton.value.click()
     const modal = document.getElementById(modalId)
-    const bsModal = new Modal(modal,{})
+    const bsModal = new Modal(modal, {})
     bsModal.show()
     modal.addEventListener('hidden.bs.modal', event => {
       event.target.id === modalId && goBack()
     })
-  } else if (['offcanvas','canvas','offCanvas'].includes(popUp.value)){
+  } else if (['offcanvas', 'canvas', 'offCanvas'].includes(popUp.value)) {
     const offCanvas = document.getElementById(canvasId)
-    const bsOffCanvas = new Offcanvas(offCanvas,{})
+    const bsOffCanvas = new Offcanvas(offCanvas, {})
     bsOffCanvas.show()
     offCanvas.addEventListener('hidden.bs.offcanvas', event => {
       event.target.id === canvasId && goBack()
     })
   }
 }
-const goBack = ()=> route.matched.length > 1 && router.push(route.matched[route.matched.length-2].path)
+const goBack = () => {
+  if (route.matched.length) {
+    let backUrl = route.matched[route.matched.length - 2].path
+    const params = route.params
+    Object.keys(params).map(key => backUrl = backUrl.replace(`:${key}`,params[key]))
+    router.push(backUrl)
+  }
+}
 </script>
 <template>
   <a data-bs-toggle="offcanvas" :href="'#' + canvasId" shallowRef="canvasButton" class="d-none">Open Modal</a>

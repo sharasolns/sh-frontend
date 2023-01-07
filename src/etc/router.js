@@ -42,7 +42,7 @@ const routes = [
     component: Tasks
   },
   {
-    path: '/notes',
+    path: '/notes/:q',
     component: Notes,
     children: [
       {

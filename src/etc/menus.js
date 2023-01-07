@@ -24,7 +24,7 @@ const menus = [
         type: 'single',
         label: 'Notes',
         icon: 'bi-book',
-        path: '/notes',
+        path: '/notes/qp',
     },
     {
         slug: 'notes',
