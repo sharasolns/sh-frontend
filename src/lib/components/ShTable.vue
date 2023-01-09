@@ -89,7 +89,7 @@
       <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class"
           @click="rowSelected(record)">
         <td v-for="key in headers" :key="key">
-          <router-link v-if="typeof key === 'string' && links && links[key]" :to="replaceLinkUrl(links[key],record)"
+          <router-link v-if="typeof key === 'string' && links && links[key]" :target="links[key].target ? '_blank':''" :to="replaceLinkUrl(links[key],record)"
                        :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
           <span v-else-if="getFieldType(key) === 'numeric'">{{ Intl.NumberFormat().format(record[key]) }}</span>
           <span v-else-if="getFieldType(key) === 'money'"

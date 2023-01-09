@@ -5,7 +5,7 @@ import ShTable from '../../lib/components/ShTable.vue'
   <sh-table end-point="notes/list" :headers="['id','title','note']"
   :links="{
     id: {
-      url: '/notes/qp/note/{id}'
+      url: '/notes/qp/note/{id}',
     }
   }"
   >
