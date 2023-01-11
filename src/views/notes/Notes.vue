@@ -11,6 +11,7 @@ import ShModal from '../../lib/components/ShModal.vue'
 import ShModalBtn from '../../lib/components/ShModalBtn.vue'
 import ShCanvas from '../../lib/components/ShCanvas.vue'
 import ShCanvasBtn from '../../lib/components/ShCanvasBtn.vue'
+import ShRange from '../../lib/components/ShRange.vue'
 const reload = ref(0)
 const notesStored = (res)=>{
   reload.value++

@@ -15,6 +15,13 @@ const menus = [
     {
         slug: 'tasks',
         type: 'single',
+        label: 'Graph',
+        icon: 'bi-grid',
+        path: '/graph',
+    },
+    {
+        slug: 'tasks',
+        type: 'single',
         label: 'Tabs Test',
         icon: 'bi-grid',
         path: '/tabs-test',

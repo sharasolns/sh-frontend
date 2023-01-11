@@ -466,6 +466,9 @@ export default {
     },
     reload () {
       this.reloadData()
+    },
+    endPoint() {
+      this.reloadData()
     }
   },
   created () {

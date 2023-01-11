@@ -5,7 +5,7 @@ import App from './App.vue'
 import 'sweetalert2/dist/sweetalert2.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-// import 'bootstrap'
+import 'bootstrap'
 import router from './etc/router.js'
 // import SampleComponent from './views/autoform/SampleComponent.vue'
 import PhoneInput from './components/form-components/PhoneInput.vue'
@@ -32,6 +32,7 @@ const shFormComponents = {
 }
 app.use(ShFrontend,{
   sessionTimeout: 400,
+  defaultRange: 'This Month',
   loginUrl: '/sh-auth',
   logoutApiEndpoint: 'auth/logout',
   router: router,

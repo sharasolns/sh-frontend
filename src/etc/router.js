@@ -14,6 +14,7 @@ import NoteComment from '../views/notes/note/NoteComment.vue'
 import TabsTest from '../views/TabsTest.vue'
 import TabOne from '../views/tabs/TabOne.vue'
 import TabTwo from '../views/tabs/TabTwo.vue'
+import Graph from '../views/Graph.vue'
 const routes = [
   {
     path: '/',
@@ -22,6 +23,10 @@ const routes = [
   {
     path: '/forms',
     component: Forms
+  },
+  {
+    path: '/graph',
+    component: Graph
   },
   {
     path: '/tabs-test',
