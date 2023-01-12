@@ -2,10 +2,15 @@
 import ShTable from '../../lib/components/ShTable.vue'
 import { ref } from 'vue'
 import ShRange from '../../lib/components/ShRange.vue'
+import shApis from '../../lib/repo/helpers/ShApis.js'
 
 const range = ref(null)
-const rangeSelected = selected => {
-  range.value = selected
+const rangeSelected = (range) => {
+  shApis.doGet(`reports/place-logs/stats?${range.query}`).then(res=>{
+    drawGraph(res.data)
+  }).catch(ex=>{
+    shRepo.showToast(ex.message,'error')
+  })
 }
 </script>
 <template>
