@@ -6,10 +6,14 @@ import 'sweetalert2/dist/sweetalert2.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap'
-import router from './etc/router.js'
+import router from './app/routes/router.js'
+
+import './views/assets/main.css'
+
+
 // import SampleComponent from './views/autoform/SampleComponent.vue'
-import PhoneInput from './components/form-components/PhoneInput.vue'
-import PasswordInput from './components/form-components/PasswordInput.vue'
+import PhoneInput from './views/components/form-components/PhoneInput.vue'
+import PasswordInput from './views/components/form-components/PasswordInput.vue'
 const app = createApp(App)
 app.use(createPinia())
 const shFormElementClasses = {
@@ -37,7 +41,7 @@ app.use(ShFrontend,{
   logoutApiEndpoint: 'auth/logout',
   router: router,
   registerTitle: 'Welcome, create a new account',
-  tablePaginationStyle: 'table',
+  tablePaginationStyle: 'loadMore',
   tablePerPage: 5,
   shFormElementClasses,
   shFormComponents

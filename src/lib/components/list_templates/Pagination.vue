@@ -31,8 +31,11 @@
     <div class="text-center" v-if="!hideCount">
       <span class="per_page_show">Showing {{ pagination_data.displayCount }} of {{ pagination_data.record_count }} items</span>
     </div>
-    <div class="text-center" v-if="this.pagination_data.loading !== 1 && pagination_data.displayCount < pagination_data.record_count && !hideLoadMore">
-      <button class="btn btn-sm btn-primary mt-1" @click="loadMoreRecords">Load More</button>
+    <div class="text-center" v-if="pagination_data.displayCount < pagination_data.record_count && !hideLoadMore">
+      <button v-if="this.pagination_data.loading !== 1" class="btn btn-sm btn-primary mt-1" @click="loadMoreRecords">
+        Load More
+      </button>
+      <span v-else class="spinner-border"></span>
     </div>
   </div>
 </template>

@@ -6,17 +6,8 @@ import ShModal from './../../../components/ShModal.vue'
 import ShForm from './../../../components/ShForm.vue'
 import shRepo from './../../../repo/helpers/ShRepo.js'
 
-let editingDepartment = ref(null)
-let allPermissions = ref([])
 let permissions = ref([])
 let reload = ref(0)
-let permissionsModalBtn = ref(null)
-
-onMounted(() => {
-  shApis.doGet('admin/departments/all-permissions').then(res => {
-    allPermissions.value = res.data
-  })
-})
 
 function departmentAdded (response) {
   shRepo.showToast('Department added')

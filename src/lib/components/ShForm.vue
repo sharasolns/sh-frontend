@@ -22,7 +22,6 @@
          <input :data-cy="field" type="datetime-local" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'datepicker' && isDisabled(field) === false" class="form-control active">
          <phone-input :country_code="country_code" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'phone'" required class="form-control"/>
          <ShSuggest :select-data="selectData[field]" :fill-selects="fillSelects[field]" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'suggest'"/>
-         <ShEditor :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'editor'" class="form-control"/>
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
          <textarea :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'textarea'" class="form-control"></textarea>
          <select :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'select'" class="form-control">
@@ -51,7 +50,6 @@
 import apis from '../repo/helpers/ShApis.js'
 import NProgress from 'nprogress'
 import ShPhone from './form-components/PhoneInput.vue'
-import ShEditor from './form-components/ShEditor.vue'
 import ShSuggest from './form-components/ShSuggest.vue'
 import shRepo from '../repo/helpers/ShRepo.js'
 import PhoneInput from './form-components/PhoneInput.vue'
@@ -60,7 +58,6 @@ export default {
   components: {
     PhoneInput,
     ShSuggest,
-    ShEditor,
     ShPhone
   },
   props: [
@@ -122,9 +119,6 @@ export default {
       }
     },
     getFieldType: function (field) {
-      if(this.fillSelects && this.fillSelects[field]){
-        return 'select';
-      }
       if(this.customComponent && this.customComponent[field]){
         return 'component'
       }
@@ -145,6 +139,9 @@ export default {
       }
       if(this.files && this.files.includes(field)){
         return 'file'
+      }
+      if(this.fillSelects && this.fillSelects[field]){
+        return 'select';
       }
       const textareas = ['message', 'meta_description', 'comment', 'call_response', 'comments', 'description']
       const selects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type']

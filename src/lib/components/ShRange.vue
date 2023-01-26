@@ -20,6 +20,13 @@ const emit = defineEmits(['rangeSelected'])
 const selectedDate = ref(null)
 const rangeLabel = ref(null)
 const showCustom = ref(false)
+const customFrom = ref(null)
+const customTo = ref(null)
+
+const applyCustom = ()=>{
+  const date = [moment(customFrom.value),moment(customTo.value)]
+  setDate(date,'Custom')
+}
 
 const dates = ref([
   {
@@ -43,8 +50,16 @@ const dates = ref([
     value: [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
   },
   {
-    label: '1 Month',
-    value: [moment().subtract(29, 'days'), moment()]
+    label: 'Last 30 days',
+    value: [moment().subtract(30, 'days'), moment()]
+  },
+  {
+    label: 'Last 60 days',
+    value: [moment().subtract(60, 'days'), moment()]
+  },
+  {
+    label: 'Last 90 days',
+    value: [moment().subtract(90, 'days'), moment()]
   },
   {
     label: '1 Year',
@@ -58,14 +73,14 @@ const dates = ref([
 const  setDate =  (date, label) => {
   selectedDate.value = date
   rangeLabel.value = '<strong>' + label + '</strong><small>(' + date[0].format('MMMM D, YYYY') + ' - ' + date[1].format('MMMM D, YYYY') + ')</small>'
-  const from = date[0].format('L')
-  const to = date[1].format('L')
+  const from = date[0]
+  const to = date[1]
   const period = label.toString().toLowerCase().replaceAll(' ','_')
   emit('rangeSelected', {
     from: from,
     to: to,
     period: period,
-    query: `from=${from}&to=${to}&period=${period}`
+    query: `from=${from.format('L')}&to=${to.format('L')}&period=${period}`
   })
 }
 onMounted(() => {
@@ -98,15 +113,16 @@ onMounted(() => {
               date.label
             }}</a>
         </li>
-<!--        <li>-->
-<!--          <div class="dropdown-item">-->
-<!--            <div @clik="showCustom = true">Custom</div>-->
-<!--            <div v-if="showCustom">-->
-<!--              <input type="date">-->
-<!--              <input type="date">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </li>-->
+        <li class="border-top">
+          <div class="dropdown-item d-flex flex-column">
+            <span>Custom</span>
+            <div>
+              <input v-model="customFrom" type="date">
+              <input v-model="customTo" type="date">
+            </div>
+            <button v-if="customFrom && customTo" class="btn btn-sm btn-info mt-1" @click="applyCustom">Apply</button>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
