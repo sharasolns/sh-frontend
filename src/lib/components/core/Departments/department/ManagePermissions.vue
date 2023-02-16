@@ -79,7 +79,7 @@ const setPermissionsChanged = ()=>{
   permissionsChanged.value = true
   return true
 }
-const checkAllPermissions = ()=>{
+const checkAllPermissions = (module)=>{
   if(selectedPermissions.value.length > 0) {
     selectedPermissions.value = []
   } else {
@@ -91,6 +91,7 @@ const checkAllPermissions = ()=>{
         selectedPermissions.value.push(permission)
       })
     })
+    selectedPermissions.value.push(module)
   }
   permissionsChanged.value = true
 }
@@ -113,7 +114,7 @@ const getPermissionStyle = permission => {
         </div>
         <ul class="d-flex flex-column w-100 px-2" v-else>
           <li v-for="module in modules" :class="selectedModule === module && 'active'" :key="selectedModule">
-            <input :checked="departmentModules.includes(module)" @click="checkAllPermissions" :disabled="selectedModule !== module" type="checkbox">
+            <input :checked="departmentModules.includes(module)" @click="checkAllPermissions(module)" :disabled="selectedModule !== module" type="checkbox">
             <label class="text-capitalize" @click="setModule(module)"> {{  module.replaceAll('_',' ')  }}</label>
           </li>
         </ul>

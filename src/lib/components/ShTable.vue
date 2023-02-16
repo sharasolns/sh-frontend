@@ -54,7 +54,7 @@
     <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700">
       <thead class="sh-thead">
       <tr>
-        <th v-for="title in headers" :key="title">
+        <th v-for="title in tableHeaders" :key="title">
           <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
              v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
           <a class="text-capitalize" v-on:click="changeKey('order_by',title(null))"
@@ -68,7 +68,7 @@
       </thead>
       <tbody class="sh-tbody">
       <tr class="text-center" v-if="loading === 'loading'">
-        <td :colspan="headers.length">
+        <td :colspan="tableHeaders.length">
           <div class="text-center">
             <div class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
@@ -77,18 +77,18 @@
         </td>
       </tr>
       <tr class="text-center alert alert-danger" v-else-if="loading === 'error'">
-        <td :colspan="headers.length">
+        <td :colspan="tableHeaders.length">
           {{ loading_error }}
         </td>
       </tr>
       <tr class="text-center alert alert-info no_records" v-else-if="records.length === 0">
-        <td :colspan="actions ? headers.length + 1 : headers.length">
+        <td :colspan="actions ? tableHeaders.length + 1 : tableHeaders.length">
           <i class="bi-info-circle"></i> No records found
         </td>
       </tr>
       <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class"
           @click="rowSelected(record)">
-        <td v-for="key in headers" :key="key">
+        <td v-for="key in tableHeaders" :key="key">
           <router-link v-if="typeof key === 'string' && links && links[key]" :target="links[key].target ? '_blank':''" :to="replaceLinkUrl(links[key],record)"
                        :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
           <span v-else-if="getFieldType(key) === 'numeric'">{{ Intl.NumberFormat().format(record[key]) }}</span>
@@ -160,7 +160,7 @@
       <div class="mobile-list-items" v-else-if="loading === 'done'">
         <template v-for="(record,index) in records" :key="record.id">
           <div class="single-mobile-req bg-light p-3" @click="rowSelected(record)">
-            <template v-for="key in headers" :key="key[0]">
+            <template v-for="key in tableHeaders" :key="key[0]">
               <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-if="typeof key === 'string' ">
                 {{ key.replace(/_/g, ' ') }}</p>
               <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else-if="typeof key === 'function'">
@@ -233,7 +233,7 @@ import ShSilentAction from './ShSilentAction.vue'
 import shRepo from '../repo/helpers/ShRepo.js'
 export default {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle'],
+  props: ['endPoint', 'headers','query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle'],
   inject: ['channel'],
   data () {
     return {
@@ -254,10 +254,14 @@ export default {
       hasCanvas: 0,
       selectedRecord: null,
       timeOut: null,
+      tableHeaders: [],
       pageStyle: this.paginationStyle ?? shRepo.getShConfig('tablePaginationStyle','loadMore')
     }
   },
   mounted () {
+    if(this.headers){
+      this.tableHeaders = this.headers
+    }
     if (this.event) {
       // this.channel.listen(this.event, this.newRecordAdded)
     }
@@ -420,12 +424,19 @@ export default {
         order_method: this.order_method,
         per_page: this.per_page,
         page: this.page,
-        filter_value: this.filter_value
+        filter_value: this.filter_value,
+        paginated: true
       }
       if (this.pagination_data) {
         this.pagination_data.loading = 1
       }
-      apis.doGet(this.endPoint, data).then(req => {
+      let endPoint = this.endPoint
+      if(!this.endPoint && this.query){
+        //send ql query
+        endPoint = 'sh-ql'
+        data.query = this.query
+      }
+      apis.doGet(endPoint, data).then(req => {
         this.$emit('dataReloaded', this.pagination_data)
         this.loading = 'done'
         const response = req.data.data
@@ -437,6 +448,9 @@ export default {
           per_page: response.per_page,
           loading: 0,
           displayCount: response.total > response.per_page ? response.per_page : response.total
+        }
+        if(!this.headers && response.total > 0){
+          this.tableHeaders = Object.keys(response.data[0])
         }
         if (append) {
           this.records.push(...response.data)

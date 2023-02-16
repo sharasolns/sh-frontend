@@ -15,6 +15,7 @@ const intercept = axiosInstance=> {
         // Do something with response data
         return response;
     }, function (error) {
+        console.log(error.response)
         Nprogress.done()
         const url = error.request.responseURL.replace(error.config.baseURL,'')
         // Any status codes that falls outside the range of 2xx cause this function to trigger

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const props = defineProps(['modelValue','label','min','max'])
 const emit = defineEmits(['update:modelValue','clearValidationErrors'])
@@ -12,7 +12,11 @@ const modelValueUpdated = (e) => {
 onMounted(()=>{
   props.modelValue && (inputModel.value = props.modelValue)
 })
-
+watch(()=>props.modelValue, (newValue)=>{
+  if(newValue) {
+    inputModel.value = newValue
+  }
+})
 </script>
 
 <template>

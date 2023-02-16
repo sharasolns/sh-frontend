@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import shApis from '../../repo/helpers/ShApis.js'
 
 const props = defineProps(['modelValue','label','data','dataUrl'])
@@ -32,7 +32,11 @@ onMounted(()=>{
     })
   }
 })
-
+watch(()=>props.modelValue, (newValue)=>{
+  if(newValue) {
+    inputModel.value = newValue
+  }
+})
 </script>
 
 <template>

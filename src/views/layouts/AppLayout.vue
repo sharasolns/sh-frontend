@@ -8,7 +8,6 @@ import { useUserStore } from '@/lib/repo/stores/ShUser.js'
 import shRepo from '@/lib/repo/helpers/ShRepo.js'
 import shApis from '@/lib/repo/helpers/ShApis.js'
 import ShTable from '@/lib/components/ShTable.vue'
-import ShPopups from '@/lib/components/ShPopups.vue'
 
 let menus = ref([])
 
@@ -234,7 +233,6 @@ onMounted(() => {
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <sh-popups/>
     <router-view v-if="user" />
 
   </main><!-- End #main -->

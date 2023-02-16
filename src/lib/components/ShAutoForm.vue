@@ -10,7 +10,6 @@ import TextInput from './form-components/TextInput.vue'
 import TextAreaInput from './form-components/TextAreaInput.vue'
 import SelectInput from './form-components/SelectInput.vue'
 import PasswordInput from './form-components/PasswordInput.vue'
-import { ShAutoForm } from '../../index.js'
 
 const props = defineProps([
     'action','successCallback','retainDataAfterSubmission',
@@ -22,7 +21,7 @@ const props = defineProps([
     'textAreas',
     'currentData',
     'emails',
-    'phones','numbers','selects','dates'
+    'phones','numbers','selects','dates','gqlMutation'
 ])
 const emit = defineEmits(['success'])
 const formFields = ref([])
@@ -82,12 +81,11 @@ shFormElementClasses.value = inject('shFormElementClasses')
 const shAutoForm = ref(null)
 const closeModal = e => {
   setTimeout(() => {
-    const modal = ShAutoForm.value.closest('.modal-dialog');
+    const modal = shAutoForm.value.closest('.modal-dialog');
     if(modal){
       const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]')
       closeBtn && closeBtn.click()
     }
-    this.form_status = 0
   }, 1500)
 }
 const getLabel = field => (props.labels && (props.labels[field] !== undefined)) ? props.labels[field]:_.startCase(_.camelCase(field))
@@ -114,42 +112,73 @@ const submitForm = e => {
   e.preventDefault()
   loading.value = true
   const data = {}
-  formFields.value.map(field=>data[field.field] = field.value)
-  shApis.doPost(props.action,data).then(res=>{
-    loading.value = false
-    emit('formSubmitted',res.data)
-    emit('success',res.data)
-    props.successMessage && shRepo.showToast(props.successMessage)
-    props.successCallback && props.successCallback(res.data)
-    !props.retainDataAfterSubmission && formFields.value.map(field=>field.value = null)
-    closeModal()
-  }).catch(reason=>{
-    console.log(reason)
-    loading.value = false
-    const httpStatus = reason.response ? reason.response.status:0
-    formError.value = httpStatus === 422 ? formError.value = null:reason.message ?? null
-    let httpErrors = {}
-    httpStatus === 422 && typeof reason.response.data.errors === 'object' && (httpErrors = reason.response.data.errors)
-    if(httpErrors && reason.response){
-      Object.keys(httpErrors).map(key=>validationErrors.value[key] = typeof httpErrors[key] === 'string' ? httpErrors[key]:httpErrors[key][0])
-    }
-    (httpStatus !== 422 && formError.value) && shRepo.showToast(formError.value,'error')
-    validationErrors.value
+  formFields.value.map(field=>{
+    data[field.field] = field.value
   })
+  if(props.gqlMutation) {
+    let args = `(`
+    let selectFields = Object.keys(data)
+    selectFields.forEach(key=>{
+      if(data[key]) {
+        args +=`${key}: "${data[key]}",`
+      }
+    })
+    args+=`)`
+    args = args.replace(',)',')')
+    if(args == '()') {
+      args = ''
+    }
+    const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`
+    console.log(mutation)
+    shApis.graphQlMutate(mutation).then(res=>handleSuccessRequest(res)).catch(reason=>handlefailedRequest(reason))
+  } else {
+    shApis.doPost(props.action,data).then(res=>handleSuccessRequest(res)).catch(reason=>handlefailedRequest(reason))
+  }
   return false
 }
+
+const handleSuccessRequest = res=>{
+  loading.value = false
+  emit('formSubmitted',res.data)
+  emit('success',res.data)
+  props.successMessage && shRepo.showToast(props.successMessage)
+  props.successCallback && props.successCallback(res.data)
+  !props.retainDataAfterSubmission && formFields.value.map(field=>field.value = null)
+  closeModal()
+}
+
+const handlefailedRequest = reason=>{
+  console.log(reason)
+  loading.value = false
+  const httpStatus = reason.response ? reason.response.status:0
+  formError.value = httpStatus === 422 ? formError.value = null:reason.message ?? null
+  let httpErrors = {}
+  httpStatus === 422 && typeof reason.response.data.errors === 'object' && (httpErrors = reason.response.data.errors)
+  if(httpErrors && reason.response){
+    Object.keys(httpErrors).map(key=>validationErrors.value[key] = typeof httpErrors[key] === 'string' ? httpErrors[key]:httpErrors[key][0])
+  }
+  (httpStatus !== 422 && formError.value) && shRepo.showToast(formError.value,'error')
+  validationErrors.value
+}
 const submitBtnWidth = ref(null)
-const setExistingData = ()=>{
-  console.log(props.currentData, formFields.value)
-  const existingData = props.currentData
+const setExistingData = (existingData)=>{
   if (props.currentData) {
-    formFields.value.map(field=>{
-      existingData[field.field] && (field.value = existingData[field.field])
+    const newFields = formFields.value.map(fl=>{
+      if(existingData[fl.field]) {
+        fl.value = existingData[fl.field]
+      }
+      return fl
+      // console.log(fl)
+      // console.log(field, existingData)
+      // existingData[field.field] && (field.value = existingData[field.field])
     })
+    formFields.value = null
+    console.log(newFields)
+    formFields.value = newFields
   }
 }
-watch(()=>props.currentData,()=>{
-  setExistingData()
+watch(()=>props.currentData,(newData)=>{
+  setExistingData(newData)
 })
 onMounted((ev)=>{
   props.fields && props.fields.map(field=>{
@@ -171,8 +200,13 @@ onMounted((ev)=>{
         value: null
       })
     }
+    formFields.value.push({
+      field: 'id',
+      type: 'hidden'
+      // label: 'IF'
+    })
   })
-  setExistingData()
+  setExistingData(props.currentData)
 })
 
 </script>
@@ -180,15 +214,18 @@ onMounted((ev)=>{
   <div/>
   <form :class="formClass" ref="shAutoForm" class="sh-form" @submit="e => submitForm(e)">
     <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup')">
-      <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
-      <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
-      <label v-if="isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
-      <div v-if="field.helper" :class="getElementClass('helperText')" v-html="field.helper"></div>
-      <div v-if="validationErrors[field.field]" :class="getElementClass('invalidFeedback')">
-        {{  validationErrors[field.field] }}
-      </div>
-<!--      <h5>{{ getFieldComponent(field) }}</h5>-->
-<!--      <h5>{{ getComponentProps(field) }}</h5>-->
+      <template v-if="field.type === 'hidden'">
+        <input type="hidden" v-model="formFields[index].value">
+      </template>
+      <template v-else>
+        <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
+        <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
+        <label v-if="isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
+        <div v-if="field.helper" :class="getElementClass('helperText')" v-html="field.helper"></div>
+        <div v-if="validationErrors[field.field]" :class="getElementClass('invalidFeedback')">
+          {{  validationErrors[field.field] }}
+        </div>
+      </template>
     </div>
     <div :class="getElementClass('formGroup')">
       <button :style="{width: submitBtnWidth}" ref="submitBtn" :disabled="loading" :class="getElementClass('actionBtn')">

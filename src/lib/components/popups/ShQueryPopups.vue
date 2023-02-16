@@ -1,30 +1,30 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
-import { watch, ref, markRaw } from 'vue'
 import { Modal, Offcanvas } from 'bootstrap'
+import { defineAsyncComponent, ref, watch } from 'vue'
 import _ from 'lodash'
-import ShModal from './ShModal.vue'
-import ShCanvas from './ShCanvas.vue'
-
+import PopupLoading from './etc/PopupLoading.vue'
+import ErrorLoadingPopup from './etc/ErrorLoadingPopup.vue'
+import ShCanvas from '../ShCanvas.vue'
+import ShModal from '../ShModal.vue'
+import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const popUp = ref(route.meta.popUp)
 const modalId = _.uniqueId('modal_')
 const canvasId = _.uniqueId('canvas_')
-const componentView = ref(null)
+let PopupComponent = ref(null)
 const parent = ref(null)
 const router = useRouter()
 const position = ref(null)
 const size = ref(null)
 const popups = []
 const popupPaths = []
-watch(() => route.meta, meta => {
-  popUp.value = meta.popUp ?? meta.popup
+const AsyncComp =ref(null)
+watch(() => route.query.popup, pop => {
+  popUp.value = pop
+  position.value = route.query.position ?? route.query.side
+  size.value = route.query.size
   if (popUp.value) {
-    // popups.push(meta)
-    !popupPaths.includes(route.path) && popupPaths.push(route.path) && popups.push(meta)
-    position.value = meta.position ?? meta.side
-    size.value = meta.size
-    componentView.value = markRaw(route.matched[route.matched.length - 1].components.default)
+    loadPopupComponent()
     setTimeout(() => {
       initPopup()
     }, 100)
@@ -35,6 +35,24 @@ watch(() => route.meta, meta => {
     }, 100)
   }
 })
+const loadPopupComponent = ()=>{
+  const component =  route.query.comp || ''
+  PopupComponent.value = defineAsyncComponent({
+    // the loader function
+    loader: () => import(`../../../views/popups/${component}Popup.vue`),
+
+    // A component to use while the async component is loading
+    loadingComponent: PopupLoading,
+    // Delay before showing the loading component. Default: 200ms.
+    delay: 200,
+
+    // A component to use if the load fails
+    errorComponent: ErrorLoadingPopup,
+    // The error component will be displayed if a timeout is
+    // provided and exceeded. Default: Infinity.
+    timeout: 3000
+  })
+}
 const closeOrphanedBackdrops = () => {
   const offCanvasBackdrop = document.querySelector('.offcanvas-backdrop')
   if (offCanvasBackdrop) {
@@ -69,23 +87,23 @@ const initPopup = () => {
 }
 const goBack = () => {
   if (route.matched.length) {
-    let backUrl = route.matched[route.matched.length - 2].path
-    const params = route.params
-    Object.keys(params).map(key => backUrl = backUrl.replace(`:${key}`,params[key]))
+    let backUrl = route.path
+    // const params = route.params
+    // Object.keys(params).map(key => backUrl = backUrl.replace(`:${key}`,params[key]))
     router.push(backUrl)
   }
 }
 </script>
 <template>
-  <a data-bs-toggle="offcanvas" :href="'#' + canvasId" shallowRef="canvasButton" class="d-none">Open Modal</a>
   <template v-if="popUp === 'modal'">
     <sh-modal :modal-id="modalId" :modal-size="size">
-      <component :is="componentView"/>
+      <popup-component/>
     </sh-modal>
   </template>
   <template v-if="['offcanvas','canvas','offCanvas'].includes(popUp)">
     <sh-canvas :canvas-id="canvasId" :canvas-size="size" :position="position">
-      <component :is="componentView"/>
+      <popup-component/>
+      <async-comp/>
     </sh-canvas>
   </template>
 </template>

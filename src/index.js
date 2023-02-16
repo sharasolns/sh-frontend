@@ -14,7 +14,8 @@ import ShConfirmAction from './lib/components/ShConfirmAction.vue'
 import ShModalBtn from './lib/components/ShModalBtn.vue'
 import ShCanvasBtn from './lib/components/ShCanvasBtn.vue'
 import ManagePermissions from './lib/components/core/Departments/department/ManagePermissions.vue'
-import ShPopups from './lib/components/ShPopups.vue'
+import ShRoutePopups from './lib/components/popups/ShRoutePopups.vue'
+import ShQueryPopups from './lib/components/popups/ShQueryPopups.vue'
 import ShRange from './lib/components/ShRange.vue'
 import { useUserStore } from './lib/repo/stores/ShUser.js'
 import shApis from './lib/repo/helpers/ShApis.js'
@@ -22,6 +23,7 @@ import shRepo from './lib/repo/helpers/ShRepo.js'
 import shStorage from './lib/repo/repositories/ShStorage.js'
 import ShFrontend from './lib/plugins/ShFrontend.js'
 import Countries from './lib/repo/helpers/countries.js'
+import shGql from './lib/repo/graphql/shGql.js'
 export {
   ShForm,
   ShCanvas,
@@ -45,6 +47,8 @@ export {
     ShModalFormAuto,
     ShModalBtn,
     ShCanvasBtn,
-    ShPopups,
-    ShRange
+    ShRoutePopups,
+    ShQueryPopups,
+    ShRange,
+    shGql
 }

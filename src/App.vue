@@ -5,6 +5,8 @@ import {onMounted} from "vue";
 import {storeToRefs} from "pinia";
 import { intercept } from '@/app/etc/interceptor.js'
 import { useUserStore } from './lib/repo/stores/ShUser.js'
+import ShRoutePopups from '@/lib/components/popups/ShRoutePopups.vue'
+import ShQueryPopups from '@/lib/components/popups/ShQueryPopups.vue'
 
 
 
@@ -22,6 +24,8 @@ onMounted(() => {
 <template>
   <app-layout v-if="user"/>
   <auth-layout v-else/>
+  <sh-route-popups/>
+  <sh-query-popups/>
 </template>
 
 <style scoped>

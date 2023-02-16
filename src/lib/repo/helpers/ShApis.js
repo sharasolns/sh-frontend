@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import shstorage from '../repositories/ShStorage.js'
 import ShSession from './ShSession.js'
-
+const graphQlEndpoint = 'sh-ql'
 let apiUrl = import.meta.env.VITE_APP_API_URL
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
@@ -41,8 +41,22 @@ function doPost (endPoint, data) {
     }
   )
 }
+function graphQlQuery(query) {
+  const data = {
+    query
+  }
+  return doGet(graphQlEndpoint,data)
+}
+function graphQlMutate(mutation) {
+  const data = {
+    query: `mutation ${mutation}`
+  }
+  return doPost(graphQlEndpoint,data)
+}
 
 export default {
   doGet,
-  doPost
+  doPost,
+  graphQlQuery,
+  graphQlMutate
 }

@@ -86,7 +86,8 @@ const tabExistsInUrl = () => {
 const setCounts = (res) => {
   Object.keys(res).forEach(key => {
     let elem = document.getElementsByClassName('sh_tab_' + key)
-    if (elem) {
+    if (elem.length > 0) {
+      elem = elem[0]
       let txt = elem.innerHTML
       txt = txt.split('<i class="d-none"></i>')[0]
       if (parseInt(res[key]) > 0) {
@@ -100,7 +101,9 @@ const setCounts = (res) => {
   <ul class="nav nav-tabs sh-tabs" :class="classes">
     <li class="nav-item" v-for="tab in tabs" :key="tab">
       <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
-                   :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">{{ tab.replace(/_/g, ' ') }}
+                   :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">
+        {{ tab.replace(/_/g, ' ') }}
+
       </router-link>
     </li>
   </ul>

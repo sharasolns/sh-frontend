@@ -32,7 +32,6 @@ const shFormComponents = {
   // textArea: SampleComponent,
   // number: SampleComponent,
   password: PasswordInput,
-  // select: SampleComponent
 }
 app.use(ShFrontend,{
   sessionTimeout: 400,
@@ -41,9 +40,10 @@ app.use(ShFrontend,{
   logoutApiEndpoint: 'auth/logout',
   router: router,
   registerTitle: 'Welcome, create a new account',
-  tablePaginationStyle: 'loadMore',
-  tablePerPage: 5,
+  tablePaginationStyle: 'pages',
+  tablePerPage: 10,
   shFormElementClasses,
+  toastTimer: 4000,
   shFormComponents
 })
 app.use(router)

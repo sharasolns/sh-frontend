@@ -38,6 +38,14 @@ export default {
   mounted () {
     this.setSelectedCountry()
   },
+  watch: {
+    modelValue: function(newVal){
+      if(!this.input){
+        let phone = newVal.replace('+254','')
+        this.input = phone.replace('+1','')
+      }
+    }
+  },
   methods: {
     updateValue: function () {
       let phone = this.input

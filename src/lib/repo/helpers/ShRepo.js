@@ -113,21 +113,7 @@ const signOutUser = ()=>{
 }
 
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  customClass: {
-    popup: 'colored-toast'
-  },
-  iconColor: 'white',
-  timer: 2000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
+
 function getShConfig(key = null,def = '') {
 
   const config = ShStorage.getItem('ShConfig') ?? {}
@@ -136,19 +122,37 @@ function getShConfig(key = null,def = '') {
   }
   return config
 }
-function showToast (message, toastType, position) {
+function showToast (message, toastType, config) {
+  const mixinConfig = {
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    customClass: {
+      popup: 'colored-toast'
+    },
+    iconColor: 'white',
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  }
   if (!toastType) {
     toastType = 'success'
   }
-  if(!position){
-    position = window.swalPosition
+  if(config){
+    // alert(config.position)
+    Object.keys(config).map(key=>mixinConfig[key] = config.key)
   }
+  const Toast = Swal.mixin(mixinConfig)
   Toast.mixin({
-    position: position
+    position: 'top'
   })
   Toast.fire({
     icon: toastType,
-    title: message
+    title: message,
+    postion: 'bottom'
   })
 }
 
