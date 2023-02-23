@@ -47,7 +47,7 @@ const rangeSelected = range=>{
               },
               {
                 label: 'More',
-                path: '?taskId={id}&popup=modal&comp=ViewTask',
+                path: '?taskId={id}&popup=canvas&comp=ViewTask',
                 class: 'btn btn-info btn-sm'
               }
             ]

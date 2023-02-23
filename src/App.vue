@@ -7,6 +7,11 @@ import { intercept } from '@/app/etc/interceptor.js'
 import { useUserStore } from './lib/repo/stores/ShUser.js'
 import ShRoutePopups from '@/lib/components/popups/ShRoutePopups.vue'
 import ShQueryPopups from '@/lib/components/popups/ShQueryPopups.vue'
+import { useAppStore } from './lib/repo/stores/ShApp.js'
+
+const appStore = useAppStore()
+
+const {refreshKey} = storeToRefs(appStore)
 
 
 
@@ -22,7 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <app-layout v-if="user"/>
+  <app-layout v-if="user" :key="refreshKey"/>
   <auth-layout v-else/>
   <sh-route-popups/>
   <sh-query-popups/>

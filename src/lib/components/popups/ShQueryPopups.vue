@@ -1,17 +1,17 @@
 <script setup>
-import { Modal, Offcanvas } from 'bootstrap'
-import { defineAsyncComponent, ref, watch } from 'vue'
-import _ from 'lodash'
-import PopupLoading from './etc/PopupLoading.vue'
-import ErrorLoadingPopup from './etc/ErrorLoadingPopup.vue'
-import ShCanvas from '../ShCanvas.vue'
-import ShModal from '../ShModal.vue'
 import { useRoute, useRouter } from 'vue-router'
+import { watch, ref, defineAsyncComponent } from 'vue'
+import { Modal, Offcanvas } from 'bootstrap'
+import _ from 'lodash'
+
+import ShModal from '../ShModal.vue'
+import ShCanvas from '../ShCanvas.vue'
+
 const route = useRoute()
-const popUp = ref(route.meta.popUp)
+const popUp = ref(route.query.popUp)
 const modalId = _.uniqueId('modal_')
 const canvasId = _.uniqueId('canvas_')
-let PopupComponent = ref(null)
+let popupComponent = ref(null)
 const parent = ref(null)
 const router = useRouter()
 const position = ref(null)
@@ -23,8 +23,8 @@ watch(() => route.query.popup, pop => {
   popUp.value = pop
   position.value = route.query.position ?? route.query.side
   size.value = route.query.size
+  popupComponent.value = route.query.comp ?? route.query.component
   if (popUp.value) {
-    loadPopupComponent()
     setTimeout(() => {
       initPopup()
     }, 100)
@@ -32,27 +32,10 @@ watch(() => route.query.popup, pop => {
     //no pop up, check if we have any unclosed backdrop
     setTimeout(() => {
       closeOrphanedBackdrops()
-    }, 100)
+    }, 500)
   }
 })
-const loadPopupComponent = ()=>{
-  const component =  route.query.comp || ''
-  PopupComponent.value = defineAsyncComponent({
-    // the loader function
-    loader: () => import(`../../../views/popups/${component}Popup.vue`),
 
-    // A component to use while the async component is loading
-    loadingComponent: PopupLoading,
-    // Delay before showing the loading component. Default: 200ms.
-    delay: 200,
-
-    // A component to use if the load fails
-    errorComponent: ErrorLoadingPopup,
-    // The error component will be displayed if a timeout is
-    // provided and exceeded. Default: Infinity.
-    timeout: 3000
-  })
-}
 const closeOrphanedBackdrops = () => {
   const offCanvasBackdrop = document.querySelector('.offcanvas-backdrop')
   if (offCanvasBackdrop) {
@@ -97,13 +80,12 @@ const goBack = () => {
 <template>
   <template v-if="popUp === 'modal'">
     <sh-modal :modal-id="modalId" :modal-size="size">
-      <popup-component/>
+      <component :is="popupComponent"/>
     </sh-modal>
   </template>
   <template v-if="['offcanvas','canvas','offCanvas'].includes(popUp)">
-    <sh-canvas :canvas-id="canvasId" :canvas-size="size" :position="position">
-      <popup-component/>
-      <async-comp/>
+    <sh-canvas :key="size + position" :canvas-id="canvasId" :canvas-size="size" :position="position">
+      <component :is="popupComponent"/>
     </sh-canvas>
   </template>
 </template>

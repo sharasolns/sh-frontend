@@ -14,6 +14,7 @@ import './views/assets/main.css'
 // import SampleComponent from './views/autoform/SampleComponent.vue'
 import PhoneInput from './views/components/form-components/PhoneInput.vue'
 import PasswordInput from './views/components/form-components/PasswordInput.vue'
+import ViewTaskPopup from '@/views/popups/ViewTaskPopup.vue'
 const app = createApp(App)
 app.use(createPinia())
 const shFormElementClasses = {
@@ -46,6 +47,9 @@ app.use(ShFrontend,{
   toastTimer: 4000,
   shFormComponents
 })
+
+//popups
+app.component('ViewTask', ViewTaskPopup)
 app.use(router)
 
 app.mount('#main_vx_app')

@@ -32,7 +32,7 @@ watch(() => route.meta, meta => {
     //no pop up, check if we have any unclosed backdrop
     setTimeout(() => {
       closeOrphanedBackdrops()
-    }, 100)
+    }, 500)
   }
 })
 const closeOrphanedBackdrops = () => {

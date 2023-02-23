@@ -5,10 +5,13 @@ import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import shGql from '@/lib/repo/graphql/shGql.js'
 import shRepo from '@/lib/repo/helpers/ShRepo.js'
+import { useAppStore } from '@'
 const route = useRoute()
 const id = route.params.id
 const editTask = ref(null)
 const mutation = ref('addTask')
+
+const appStore = useAppStore()
 if(id){
   mutation.value = 'updateTask'
   shGql.query(`{
@@ -23,11 +26,11 @@ if(id){
   })
 }
 onMounted(()=>{
-  shRepo.showToast('Hello','success', {position: 'top-left'})
+  // shRepo.showToast('Hello','success', {position: 'top-start'})
 })
 </script>
 <template>
-<sh-auto-form :current-data="editTask" success-message="Task added successfully" :fields="['name','description','phone']" :gqlMutation="mutation"></sh-auto-form>
+<sh-auto-form :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="['name','description','phone']" :gqlMutation="mutation"></sh-auto-form>
 </template>
 
 <style scoped>

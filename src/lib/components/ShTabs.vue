@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import apis from '../repo/helpers/ShApis.js'
 import { useRoute, useRouter } from 'vue-router'
+import shRepo from '../repo/helpers/ShRepo.js'
 
 const props = defineProps({
   tabs: {
@@ -98,7 +99,7 @@ const setCounts = (res) => {
 }
 </script>
 <template>
-  <ul class="nav nav-tabs sh-tabs" :class="classes">
+  <ul class="nav nav-tabs sh-tabs" :class="classes ?? shRepo.getShConfig('tabsClass','sh-tabs nav-tabs-bordered')">
     <li class="nav-item" v-for="tab in tabs" :key="tab">
       <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
                    :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">

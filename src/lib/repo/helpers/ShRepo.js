@@ -142,13 +142,13 @@ function showToast (message, toastType, config) {
     toastType = 'success'
   }
   if(config){
-    // alert(config.position)
-    Object.keys(config).map(key=>mixinConfig[key] = config.key)
+    Object.keys(config).map(key=>mixinConfig[key] = config[key])
   }
+  console.log(mixinConfig)
   const Toast = Swal.mixin(mixinConfig)
-  Toast.mixin({
-    position: 'top'
-  })
+  // Toast.mixin({
+  //   position: 'top'
+  // })
   Toast.fire({
     icon: toastType,
     title: message,
