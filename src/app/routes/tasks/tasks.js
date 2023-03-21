@@ -10,7 +10,8 @@ export default [
                 path: 'form/:id?',
                 component: TaskForm,
                 meta: {
-                    popup: 'modal'
+                    popup: 'modal',
+                    title: 'Task Form'
                 }
             }
         ]

@@ -1,11 +1,12 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { watch, ref, defineAsyncComponent } from 'vue'
+import { watch, ref } from 'vue'
 import { Modal, Offcanvas } from 'bootstrap'
 import _ from 'lodash'
 
 import ShModal from '../ShModal.vue'
 import ShCanvas from '../ShCanvas.vue'
+import ShQueryForm from '../ShQueryForm.vue'
 
 const route = useRoute()
 const popUp = ref(route.query.popUp)
@@ -16,14 +17,21 @@ const parent = ref(null)
 const router = useRouter()
 const position = ref(null)
 const size = ref(null)
+const title = ref(null)
 const popups = []
 const popupPaths = []
 const AsyncComp =ref(null)
+
 watch(() => route.query.popup, pop => {
   popUp.value = pop
   position.value = route.query.position ?? route.query.side
   size.value = route.query.size
-  popupComponent.value = route.query.comp ?? route.query.component
+  title.value = route.query.title
+  let queryComponent = route.query.comp ?? route.query.component
+  if(['shqueryform','queryform'].includes(queryComponent.toLowerCase())) {
+    queryComponent = ShQueryForm
+  }
+  popupComponent.value = queryComponent
   if (popUp.value) {
     setTimeout(() => {
       initPopup()
@@ -79,12 +87,12 @@ const goBack = () => {
 </script>
 <template>
   <template v-if="popUp === 'modal'">
-    <sh-modal :modal-id="modalId" :modal-size="size">
+    <sh-modal :modal-title="title" :modal-id="modalId" :modal-size="size">
       <component :is="popupComponent"/>
     </sh-modal>
   </template>
   <template v-if="['offcanvas','canvas','offCanvas'].includes(popUp)">
-    <sh-canvas :key="size + position" :canvas-id="canvasId" :canvas-size="size" :position="position">
+    <sh-canvas :canvas-title="title" :key="size + position" :canvas-id="canvasId" :canvas-size="size" :position="position">
       <component :is="popupComponent"/>
     </sh-canvas>
   </template>

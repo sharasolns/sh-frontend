@@ -15,6 +15,7 @@ const parent = ref(null)
 const router = useRouter()
 const position = ref(null)
 const size = ref(null)
+const title = ref(null)
 const popups = []
 const popupPaths = []
 watch(() => route.meta, meta => {
@@ -24,6 +25,7 @@ watch(() => route.meta, meta => {
     // !popupPaths.includes(route.path) && popupPaths.push(route.path) && popups.push(meta)
     position.value = meta.position ?? meta.side
     size.value = meta.size
+    title.value = meta.title
     componentView.value = markRaw(route.matched[route.matched.length - 1].components.default)
     setTimeout(() => {
       initPopup()
@@ -79,12 +81,12 @@ const goBack = () => {
 <template>
   <a data-bs-toggle="offcanvas" :href="'#' + canvasId" shallowRef="canvasButton" class="d-none">Open Modal</a>
   <template v-if="popUp === 'modal'">
-    <sh-modal :modal-id="modalId" :modal-size="size">
+    <sh-modal :modal-title="title" :modal-id="modalId" :modal-size="size">
       <component :is="componentView"/>
     </sh-modal>
   </template>
   <template v-if="['offcanvas','canvas','offCanvas'].includes(popUp)">
-    <sh-canvas :canvas-id="canvasId" :canvas-size="size" :position="position">
+    <sh-canvas :canvas-id="canvasId" :canvas-title="title" :canvas-size="size" :position="position">
       <component :is="componentView"/>
     </sh-canvas>
   </template>
