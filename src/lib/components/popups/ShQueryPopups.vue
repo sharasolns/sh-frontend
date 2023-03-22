@@ -28,7 +28,7 @@ watch(() => route.query.popup, pop => {
   size.value = route.query.size
   title.value = route.query.title
   let queryComponent = route.query.comp ?? route.query.component
-  if(['shqueryform','queryform'].includes(queryComponent.toLowerCase())) {
+  if(queryComponent && ['shqueryform','queryform'].includes(queryComponent.toLowerCase())) {
     queryComponent = ShQueryForm
   }
   popupComponent.value = queryComponent

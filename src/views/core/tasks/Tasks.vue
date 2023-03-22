@@ -32,7 +32,8 @@ const rangeSelected = range=>{
 <h5>All Tasks</h5>
   <div class="card">
     <div class="card-body">
-      <router-link to="tasks/form" class="btn btn-info btn-sm"><i class="bi-plus"></i> Add Task</router-link>
+      <router-link to="/tasks/form" class="btn btn-info btn-sm"><i class="bi-plus"></i> Add Task</router-link>
+      <router-link to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store" class="btn btn-info btn-sm ms-2"><i class="bi-plus"></i> PopupQuery Form</router-link>
       <sh-range @range-selected="rangeSelected"/>
       <sh-table
           :headers="['id',showUser,'name','description','phone','created_at']"
