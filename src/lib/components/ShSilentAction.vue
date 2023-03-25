@@ -23,6 +23,9 @@ const props = defineProps({
   url: {
     type: String,
     required: true
+  },
+  disableSuccessMessage: {
+    type: Boolean
   }
 })
 const processing = ref(false)
@@ -33,7 +36,9 @@ const actionSuccessful = (res)=>{
   console.log(res.data,props.successMessage)
   emit('actionSuccessful',res)
   emit('success',res)
-  shRepo.showToast(res.data.message ?? props.successMessage)
+  if(!props.disableSuccessMessage) {
+    shRepo.showToast(res.data.message ?? props.successMessage)
+  }
 }
 
 const actionFailed = reason =>{
