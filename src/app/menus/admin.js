@@ -12,5 +12,12 @@ export default [
         label: 'Tasks',
         icon: 'bi-activity',
         path: '/tasks',
+    },
+    {
+        slug: 'notes',
+        type: 'single',
+        label: 'Notes',
+        icon: 'bi-list',
+        path: '/notes',
     }
 ]

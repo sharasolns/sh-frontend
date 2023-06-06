@@ -170,13 +170,25 @@ h6 {
     line-height: 0;
 }
 
-.dropdown-menu .dropdown-item:hover {
+.dropdown-menu .dropdown-item:hover,.sh-range-dropdown  li:hover {
     background-color: #f6f9ff;
+}
+
+.sh-range-preset{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+.sh-range-dropdown  li{
+    list-style: none;
+}
+.sh-range-dropdown  ul{
+    padding-left: 0;
 }
 
 @media (min-width: 768px) {
     .sh-search-bar{
         max-width: 400px;
+        min-width: 350px;
     }
     .dropdown-menu-arrow::before {
         content: "";

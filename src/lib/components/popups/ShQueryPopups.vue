@@ -79,9 +79,17 @@ const initPopup = () => {
 const goBack = () => {
   if (route.matched.length) {
     let backUrl = route.path
-    // const params = route.params
-    // Object.keys(params).map(key => backUrl = backUrl.replace(`:${key}`,params[key]))
-    router.push(backUrl)
+    const params = route.query
+      let query = '?'
+      // console.log(params)
+    Object.keys(params).map(key => {
+        const removeKeys = ['popup','comp','component']
+        if(!removeKeys.includes(key)) {
+            query += `${key}=${params[key]}&`
+        }
+    })
+      console.log(query)
+    router.push(backUrl + query)
   }
 }
 </script>

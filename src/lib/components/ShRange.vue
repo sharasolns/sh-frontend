@@ -34,6 +34,10 @@ const dates = ref([
     value: [moment(), moment()]
   },
   {
+    label: 'Yesterday',
+    value: [moment().subtract(1, 'days'), moment()]
+  },
+    {
     label: '7 Days',
     value: [moment().subtract(7, 'days'), moment()]
   },
@@ -61,6 +65,10 @@ const dates = ref([
     label: 'Last 90 days',
     value: [moment().subtract(90, 'days'), moment()]
   },
+    {
+        label: 'This Year',
+        value: [moment().startOf('year'), moment()]
+    },
   {
     label: '1 Year',
     value: [moment().subtract(12, 'months'), moment()]
@@ -105,25 +113,29 @@ onMounted(() => {
            aria-expanded="false">
         <i class="bi-calendar text-dark"></i> <span v-html="rangeLabel"></span>
       </div>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <li v-for="date in dates" :key="date.label" @click="setDate(date.value, date.label)">
-          <a class="dropdown-item"
-             :class="date.value === selectedDate ? 'active' : ''"
-             href="#">{{
-              date.label
-            }}</a>
-        </li>
-        <li class="border-top">
-          <div class="dropdown-item d-flex flex-column">
-            <span>Custom</span>
-            <div>
-              <input v-model="customFrom" type="date">
-              <input v-model="customTo" type="date">
-            </div>
-            <button v-if="customFrom && customTo" class="btn btn-sm btn-info mt-1" @click="applyCustom">Apply</button>
-          </div>
-        </li>
-      </ul>
+      <div class="dropdown-menu sh-range-dropdown" aria-labelledby="dropdownMenuLink">
+          <ul class="sh-range-preset">
+              <li v-for="date in dates" :key="date.label" @click="setDate(date.value, date.label)">
+                  <a class="dropdown-item"
+                     :class="date.value === selectedDate ? 'active' : ''"
+                     href="#">{{
+                      date.label
+                      }}</a>
+              </li>
+          </ul>
+          <ul>
+              <li class="border-top">
+                  <div class="dropdown-item d-flex flex-column">
+                      <span>Custom</span>
+                      <div>
+                          <input v-model="customFrom" type="date">
+                          <input v-model="customTo" type="date">
+                      </div>
+                      <button v-if="customFrom && customTo" class="btn btn-sm btn-info mt-1" @click="applyCustom">Apply</button>
+                  </div>
+              </li>
+          </ul>
+      </div>
     </div>
   </div>
 </template>
