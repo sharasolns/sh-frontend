@@ -23,7 +23,7 @@ const props = defineProps([
     'emails',
     'phones','numbers','selects','dates','gqlMutation'
 ])
-const emit = defineEmits(['success'])
+const emit = defineEmits(['success','fieldChanged','formSubmitted','formError'])
 const formFields = ref([])
 const getFieldComponent = (fieldObj)=>{
   if(fieldObj.component){
@@ -93,7 +93,10 @@ const getComponentClass = field => validationErrors.value[field] ? getElementCla
 const getHelperText = field => (props.helperTexts && props.helperTexts[field]) ? props.helperTexts[field]:false
 const getElementClass = section => (props.formClasses && props.formClasses[section]) ? props.formClasses[section]:shFormElementClasses.value[section] ?? _.snakeCase(section).replace(/_/gi,'-')
 const getPlaceholder = field => (props.placeHolders && props.placeHolders[field]) && props.placeHolders[field]
-const removeValidationError = field => delete validationErrors.value[field]
+const fieldChanged = field => {
+    delete validationErrors.value[field]
+    emit('fieldChanged', field, formFields.value.filter(f=>f.field === field)[0].value)
+}
 const getComponentProps = field => {
   const newField = {...field}
   delete newField.component
@@ -219,7 +222,7 @@ onMounted((ev)=>{
       </template>
       <template v-else>
         <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
-        <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="removeValidationError(field.field)" @update:modelValue="removeValidationError(field.field)" v-model="formFields[index].value" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
+        <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="fieldChanged(field.field)" @update:modelValue="fieldChanged(field.field)" v-model="formFields[index].value" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
         <label v-if="isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
         <div v-if="field.helper" :class="getElementClass('helperText')" v-html="field.helper"></div>
         <div v-if="validationErrors[field.field]" :class="getElementClass('invalidFeedback')">

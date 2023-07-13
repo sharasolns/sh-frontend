@@ -81,7 +81,7 @@ const goBack = () => {
 <template>
   <a data-bs-toggle="offcanvas" :href="'#' + canvasId" shallowRef="canvasButton" class="d-none">Open Modal</a>
   <template v-if="popUp === 'modal'">
-    <sh-modal :modal-title="title" :modal-id="modalId" :modal-size="size">
+    <sh-modal :modal-title="title" :modal-id="modalId" :modal-size="size" data-bs-backdrop="static" data-bs-keyboard="false">
       <component :is="componentView"/>
     </sh-modal>
   </template>

@@ -95,7 +95,7 @@ const goBack = () => {
 </script>
 <template>
   <template v-if="popUp === 'modal'">
-    <sh-modal :modal-title="title" :modal-id="modalId" :modal-size="size">
+    <sh-modal :modal-title="title" data-bs-backdrop="static" data-bs-keyboard="false" :modal-id="modalId" :modal-size="size">
       <component :is="popupComponent"/>
     </sh-modal>
   </template>

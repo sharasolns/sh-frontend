@@ -28,9 +28,13 @@ if(id){
 onMounted(()=>{
   // shRepo.showToast('Hello','success', {position: 'top-start'})
 })
+
+const fieldChanged = (field, value)=>{
+  console.log(field, value )
+}
 </script>
 <template>
-<sh-auto-form :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="['name','description','phone']" :gqlMutation="mutation"></sh-auto-form>
+<sh-auto-form @field-changed="fieldChanged" :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="['name','description','phone']" :gqlMutation="mutation"></sh-auto-form>
 </template>
 
 <style scoped>
