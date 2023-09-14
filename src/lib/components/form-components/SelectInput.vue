@@ -15,7 +15,7 @@ onMounted(()=>{
   if(props.data){
     selectOptions.value = props.data.map(item=>{
       return {
-        id: item.id ? item.id : item.key ? item.key : item.value ? item.value:item.name ? item.name:item.label,
+        id: typeof item.id !== 'undefined' ? item.id : item.key ? item.key : item.value ? item.value:item.name ? item.name:item.label,
         name: item.label ? item.label : item.name ? item.name : item.value ? item.value:item.id ? item.id:item.option
       }
     })
