@@ -16,11 +16,14 @@
                 <div v-if="hasRange" class="sh-range-selector">
                     <sh-range @range-selected="rangeChanged"/>
                 </div>
-                <div class="sh-search-bar" :class="hasRange ? 'ms-2':''">
+                <div class="sh-search-bar input-group" :class="hasRange ? 'ms-2':''">
                     <input @keydown="userTyping" @keyup="userTyping" type="search" v-on:change="reloadData(1)"
                            v-model="filter_value"
                            :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'"
                            class="form-control sh-search-input">
+                  <span class="input-group-text exact_checkbox" v-if="filter_value.length > 1">
+                    <input @change="reloadData" :value="true" v-model="exactMatch" type="checkbox"/><span class="ms-1">Exact</span>
+                  </span>
                 </div>
             </div>
         </div>
@@ -262,6 +265,7 @@ export default {
             order_method: '',
             per_page: shRepo.getShConfig('tablePerPage', 10),
             page: 1,
+          exactMatch: false,
             filter_value: '',
             loading: 'loading',
             loading_error: '',
@@ -460,7 +464,8 @@ export default {
                 paginated: true,
                 from: this.from,
                 to: this.to,
-                period: this.period
+                period: this.period,
+              exact: this.exactMatch
             }
             if (this.pagination_data) {
                 this.pagination_data.loading = 1
