@@ -13,8 +13,6 @@ const appStore = useAppStore()
 
 const {refreshKey} = storeToRefs(appStore)
 
-
-
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 

@@ -24,7 +24,7 @@ const canvasSide = ref(pos.value ?  `offcanvas-${pos.value}` : 'offcanvas-start'
 
 onMounted(()=>{
   const canvas = document.getElementById(props.canvasId)
-  canvas.addEventListener('hidden.bs.offcanvas', event => {
+  canvas && canvas.addEventListener('hidden.bs.offcanvas', event => {
     event.target.id === props.canvasId && emit('canvasClosed')
   })
 })
