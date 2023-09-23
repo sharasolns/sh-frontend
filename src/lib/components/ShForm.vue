@@ -286,6 +286,7 @@ export default {
             this.$emit(this.successCallback, res.data)
           }
         }
+        this.$emit('success',res.data)
         NProgress.done()
         if (!this.retainModal) {
           this.closeModal()
