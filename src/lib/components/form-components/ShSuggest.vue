@@ -66,7 +66,7 @@ function filterData(e){
     })
   } else {
     ShApis.doGet(props.fillSelects.url, { all: 1,filter_value: filterValue }).then(res => {
-      suggestions.value = res.data.data
+      suggestions.value = res.data.data ?? res.data
     }).catch(res => {
       console.log(res)
     })
