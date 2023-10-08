@@ -2,7 +2,7 @@
 import {onMounted, ref} from 'vue'
 import ShApis from '../../repo/helpers/ShApis.js'
 
-const props = defineProps(['fillSelects','modelValue'])
+const props = defineProps(['data','url','fillSelects','modelValue'])
 const emit = defineEmits(['update:modelValue'])
 let id = ref(null)
 let filterValue = ref(null)
@@ -13,8 +13,9 @@ onMounted(() => {
   resetData()
 })
 function resetData(){
-  if(props.fillSelects.data) {
-    suggestions.value = props.fillSelects.data
+  const data = props.data ?? props.fillSelects.data
+  if(data) {
+    suggestions.value = data
   }
 }
 function addSuggestion(sgn){
@@ -58,18 +59,23 @@ function filterData(e){
   }
   let filterValue = e.target.innerText
   searchText.value = filterValue
-  if(props.fillSelects.data) {
-    suggestions.value = props.fillSelects.data.filter(item=>{
+  const propsData = props.data ?? props.fillSelects.data
+  if(propsData) {
+    suggestions.value = propsData.filter(item=>{
       if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
         return item
       }
     })
-  } else {
-    ShApis.doGet(props.fillSelects.url, { all: 1,filter_value: filterValue }).then(res => {
-      suggestions.value = res.data.data ?? res.data
-    }).catch(res => {
-      console.log(res)
-    })
+  }
+   else {
+    const propsUrl = props.url ?? props.fillSelects.url
+    if (propsUrl) {
+      ShApis.doGet(propsUrl, { all: 1,filter_value: filterValue }).then(res => {
+        suggestions.value = res.data.data ?? res.data
+      }).catch(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>
