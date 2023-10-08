@@ -17,6 +17,7 @@ import ManagePermissions from './lib/components/core/Departments/department/Mana
 import ShRoutePopups from './lib/components/popups/ShRoutePopups.vue'
 import ShQueryPopups from './lib/components/popups/ShQueryPopups.vue'
 import ShRange from './lib/components/ShRange.vue'
+import ShSuggest from './lib/components/form-components/ShSuggest.vue'
 import { useUserStore } from './lib/repo/stores/ShUser.js'
 import { useAppStore } from './lib/repo/stores/ShApp.js'
 import shApis from './lib/repo/helpers/ShApis.js'
@@ -31,6 +32,7 @@ export {
   ShModal,
   ShPhone,
   ShTable,
+    ShSuggest,
   ShTabs,
     ShDynamicTabs,
   useUserStore,
