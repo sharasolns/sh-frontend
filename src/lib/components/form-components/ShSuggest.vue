@@ -2,7 +2,7 @@
 import {onMounted, ref} from 'vue'
 import ShApis from '../../repo/helpers/ShApis.js'
 
-const props = defineProps(['data','url','fillSelects','modelValue'])
+const props = defineProps(['data','allowMultiple','url','modelValue'])
 const emit = defineEmits(['update:modelValue'])
 let id = ref(null)
 let filterValue = ref(null)
@@ -13,14 +13,14 @@ onMounted(() => {
   resetData()
 })
 function resetData(){
-  const data = props.data ?? props.fillSelects.data
+  const data = props.data
   if(data) {
     suggestions.value = data
   }
 }
 function addSuggestion(sgn){
   let selected = selectedSuggestions.value
-  if(selected.length > 0 && !props.fillSelects.allowMultiple){
+  if(selected.length > 0 && !props.allowMultiple){
     selected = []
   }
   if(!selected.includes(sgn)){
@@ -34,7 +34,7 @@ function updateModelValue(){
   let selectedItems = selectedSuggestions.value
   if(selectedItems.length === 0) {
     emit('update:modelValue', null)
-  }  else if (!props.fillSelects.allowMultiple) {
+  }  else if (!props.allowMultiple) {
     emit('update:modelValue', selectedItems[0].id)
   } else {
     const ids = selectedItems.map(item => {
@@ -59,23 +59,18 @@ function filterData(e){
   }
   let filterValue = e.target.innerText
   searchText.value = filterValue
-  const propsData = props.data ?? props.fillSelects.data
-  if(propsData) {
-    suggestions.value = propsData.filter(item=>{
+  if(props.data) {
+    suggestions.value = props.data.filter(item=>{
       if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
         return item
       }
     })
-  }
-   else {
-    const propsUrl = props.url ?? props.fillSelects.url
-    if (propsUrl) {
-      ShApis.doGet(propsUrl, { all: 1,filter_value: filterValue }).then(res => {
+  } else if (props.url) {
+      ShApis.doGet(props.url, { all: 1,filter_value: filterValue }).then(res => {
         suggestions.value = res.data.data ?? res.data
       }).catch(res => {
         console.log(res)
       })
-    }
   }
 }
 </script>

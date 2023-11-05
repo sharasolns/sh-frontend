@@ -224,6 +224,11 @@ onMounted((ev)=>{
         <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
         <component v-bind="getComponentProps(field)" :isInvalid="typeof validationErrors[field.field] !== 'undefined'" @click="fieldChanged(field.field)" @update:modelValue="fieldChanged(field.field)" v-model="formFields[index].value" :class="getComponentClass(field.field)" :is="getFieldComponent(field)"/>
         <label v-if="isFloating && field.label" :class="getElementClass('formLabel')" v-html="field.label"></label>
+        <div class="form-notch" v-if="isFloating">
+          <div class="form-notch-leading"></div>
+          <div class="form-notch-middle"></div>
+          <div class="form-notch-trailing"></div>
+        </div>
         <div v-if="field.helper" :class="getElementClass('helperText')" v-html="field.helper"></div>
         <div v-if="validationErrors[field.field]" :class="getElementClass('invalidFeedback')">
           {{  validationErrors[field.field] }}

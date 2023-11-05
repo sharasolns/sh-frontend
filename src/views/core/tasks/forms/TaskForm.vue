@@ -37,7 +37,8 @@ const fields = [
     field: 'task_id',
     label: 'Task',
     component: ShSuggest,
-    data: [
+    url: 'tasks/list',
+    datas: [
       {
         id: 1,
         name: 'Task 1'
