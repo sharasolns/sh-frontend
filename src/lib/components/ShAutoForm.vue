@@ -109,7 +109,6 @@ const submitBtn = ref(false)
 const validationErrors = ref({})
 const formError = ref(null)
 const submitForm = e => {
-  console.log(formFields.value)
   submitBtnWidth.value = submitBtn.value.getBoundingClientRect().width + 'px !important'
   validationErrors.value = {}
   e.preventDefault()
@@ -132,7 +131,6 @@ const submitForm = e => {
       args = ''
     }
     const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`
-    console.log(mutation)
     shApis.graphQlMutate(mutation).then(res=>handleSuccessRequest(res)).catch(reason=>handlefailedRequest(reason))
   } else {
     shApis.doPost(props.action,data).then(res=>handleSuccessRequest(res)).catch(reason=>handlefailedRequest(reason))
@@ -151,7 +149,6 @@ const handleSuccessRequest = res=>{
 }
 
 const handlefailedRequest = reason=>{
-  console.log(reason)
   loading.value = false
   const httpStatus = reason.response ? reason.response.status:0
   formError.value = httpStatus === 422 ? formError.value = null:reason.message ?? null
@@ -176,7 +173,6 @@ const setExistingData = (existingData)=>{
       // existingData[field.field] && (field.value = existingData[field.field])
     })
     formFields.value = null
-    console.log(newFields)
     formFields.value = newFields
   }
 }

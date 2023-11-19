@@ -258,7 +258,6 @@ import ShRange from './ShRange.vue'
 export default {
     name: 'sh-table',
     props: ['endPoint', 'headers', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange'],
-    inject: ['channel'],
     data() {
         return {
             order_by: '',
@@ -290,9 +289,6 @@ export default {
     mounted() {
         if (this.headers) {
             this.tableHeaders = this.headers
-        }
-        if (this.event) {
-            // this.channel.listen(this.event, this.newRecordAdded)
         }
         if (this.actions && this.actions.actions) {
             this.actions.actions.forEach(action => {
