@@ -472,7 +472,6 @@ export default {
                 endPoint = 'sh-ql'
                 data.query = this.query
             }
-            console.log(endPoint, this.range)
             apis.doGet(endPoint, data).then(req => {
                 this.$emit('dataReloaded', this.pagination_data)
                 this.loading = 'done'
