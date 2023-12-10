@@ -351,7 +351,7 @@ export default {
           if (!this.suggests) {
             this.suggests = []
           }
-          this.suggests.push(key)
+          this.suggests[key] = this.fillSelects[key].data
         } else if (this.fillSelects[key].data) {
           this.selectData[key] = this.fillSelects[key].data
         } else {

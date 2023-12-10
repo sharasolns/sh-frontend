@@ -262,7 +262,7 @@ export default {
         return {
             order_by: '',
             order_method: '',
-            per_page: shRepo.getShConfig('tablePerPage', 10),
+            per_page: this.pageCount ?? shRepo.getShConfig('tablePerPage', 10),
             page: 1,
           exactMatch: false,
             filter_value: '',
