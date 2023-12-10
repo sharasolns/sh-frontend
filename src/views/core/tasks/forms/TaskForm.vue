@@ -77,8 +77,7 @@ const fields = [
 <template>
   <sh-form :fields="['task_id']" :fill-selects="{
     task_id: {
-          url: 'tasks/list?all=1',
-          suggest: true
+          url: 'tasks/list?all=1'
         }
   }" action="/tasks" />
 <sh-auto-form @field-changed="fieldChanged" :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="fields" :gqlMutation="mutation"></sh-auto-form>

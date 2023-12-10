@@ -357,7 +357,7 @@ export default {
           this.selectData[key] = this.fillSelects[key].data
         } else {
           apis.doGet(this.fillSelects[key].url, { all: 1 }).then(res => {
-            this.selectData[key] = res.data
+            this.selectData[key] = res.data.data ?? res.data
           }).catch(res => {
             console.log(res)
           })
