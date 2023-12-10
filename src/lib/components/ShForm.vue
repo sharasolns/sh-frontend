@@ -21,7 +21,7 @@
          <input :data-cy="field" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'email'" type="email" required class="form-control">
          <input :data-cy="field" type="datetime-local" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'datepicker' && isDisabled(field) === false" class="form-control active">
          <phone-input :country_code="country_code" :placeholder="allPlaceHolders[field] ? allPlaceHolders[field] : ''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'phone'" required class="form-control"/>
-         <ShSuggest :select-data="selectData[field]" :fill-selects="fillSelects[field]" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'suggest'"/>
+         <ShSuggest :select-data="selectData[field]" :fill-selects="fillSelects[field]" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" :url="suggests[field].url ?? false" :data="suggests[field].data ?? false" v-if="getFieldType(field) === 'suggest'"/>
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
          <textarea :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'textarea'" class="form-control"></textarea>
          <select :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'select'" class="form-control">
@@ -122,7 +122,8 @@ export default {
       if(this.customComponent && this.customComponent[field]){
         return 'component'
       }
-      if(this.suggests && this.suggests.includes(field)){
+      if(this.suggests && this.suggests[field]){
+        // alert('found')
         return 'suggest'
       }
       if(this.editors && this.editors.includes(field)){
@@ -351,7 +352,7 @@ export default {
           if (!this.suggests) {
             this.suggests = []
           }
-          this.suggests[key] = this.fillSelects[key].data
+          this.suggests[key] = this.fillSelects[key]
         } else if (this.fillSelects[key].data) {
           this.selectData[key] = this.fillSelects[key].data
         } else {

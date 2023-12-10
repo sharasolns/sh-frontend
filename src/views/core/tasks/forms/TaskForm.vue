@@ -6,6 +6,7 @@ import { onMounted, ref } from 'vue'
 import shGql from '@/lib/repo/graphql/shGql.js'
 import shRepo from '@/lib/repo/helpers/ShRepo.js'
 import { ShSuggest, useAppStore } from '@'
+import ShForm from '@/lib/components/ShForm.vue'
 const route = useRoute()
 const id = route.params.id
 const editTask = ref(null)
@@ -74,6 +75,12 @@ const fields = [
 ]
 </script>
 <template>
+  <sh-form :fields="['task_id']" :fill-selects="{
+    task_id: {
+          url: 'tasks/list?all=1',
+          suggest: true
+        }
+  }" action="/tasks" />
 <sh-auto-form @field-changed="fieldChanged" :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="fields" :gqlMutation="mutation"></sh-auto-form>
 </template>
 

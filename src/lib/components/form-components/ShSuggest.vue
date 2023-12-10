@@ -59,7 +59,6 @@ function filterData(e){
   }
   let filterValue = e.target.innerText
   searchText.value = filterValue
-  console.log(props)
   if (props.url) {
     ShApis.doGet(props.url, { all: 1,filter_value: filterValue }).then(res => {
       suggestions.value = res.data.data ?? res.data
@@ -72,6 +71,8 @@ function filterData(e){
         return item
       }
     })
+  } else {
+    console.log("Error: no data or url provided");
   }
 }
 </script>
