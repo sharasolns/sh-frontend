@@ -10,6 +10,7 @@ import TextInput from './form-components/TextInput.vue'
 import TextAreaInput from './form-components/TextAreaInput.vue'
 import SelectInput from './form-components/SelectInput.vue'
 import PasswordInput from './form-components/PasswordInput.vue'
+import ShSuggest from './form-components/ShSuggest.vue'
 
 const props = defineProps([
     'action','successCallback','retainDataAfterSubmission',
@@ -49,6 +50,9 @@ const getFieldComponent = (fieldObj)=>{
     return props.customComponents[field]
   }
   if(fieldObj.type){
+    if(fieldObj.type === 'suggest' || fieldObj.type === 'suggests'){
+      return ShSuggest
+    }
     return fieldObj.type === 'number' ? NumberComponent:fieldObj.type === 'textarea' ? TextAreaComponent : fieldObj.type === 'email' ? EmailComponent : fieldObj.type === 'phone' ? PhoneComponent : fieldObj.type === 'password' ? PasswordComponent:fieldObj.type === 'select' ? SelectComponent:TextComponent
   }else
     if(passwords.includes(field)){
