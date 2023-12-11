@@ -29,7 +29,7 @@ const getFieldComponent = (fieldObj)=>{
   if(fieldObj.component){
     return fieldObj.component
   }
-  const field = fieldObj.field
+  const field = fieldObj.field ?? fieldObj.name
   const defaultTextareas = ['message', 'meta_description', 'comment', 'call_response', 'comments', 'description']
   const defaultSelects = ['gender', 'payment_method', 'allow_view_mode', 'reasons_name', 'has_free_tier', 'payment_period', 'role', 'register_as', 'account_type']
   const defaultNumbers = ['age']
@@ -183,6 +183,7 @@ onMounted((ev)=>{
   props.fields && props.fields.map(field=>{
     if(typeof field === 'object') {
       const fieldObj = {...field}
+      fieldObj.field = fieldObj.field ?? fieldObj.name
       // fieldObj.label && getLabel(fieldObj.field)
       fieldObj.helper = fieldObj.helperText ?? fieldObj.helper
       // !fieldObj.helper && fieldObj.helperText ? fieldObj.helper = fieldObj.helperText : fieldObj.helper = getHelperText(fieldObj.field)
