@@ -188,7 +188,7 @@ onMounted((ev)=>{
       fieldObj.helper = fieldObj.helperText ?? fieldObj.helper
       // !fieldObj.helper && fieldObj.helperText ? fieldObj.helper = fieldObj.helperText : fieldObj.helper = getHelperText(fieldObj.field)
       // fieldObj.helperText === undefined && ()
-      fieldObj.label = fieldObj.label ?? getLabel(fieldObj.field)
+      fieldObj.label = fieldObj.label ?? getLabel(fieldObj.field ?? fieldObj.name)
       // fieldObj.placeholder && fieldObj.placeHolder && getPlaceholder(fieldObj.field)
       fieldObj.value = null
       formFields.value.push(fieldObj)
