@@ -2,6 +2,7 @@
 
 import ShTable from '@/lib/components/ShTable.vue'
 import ShRange from '@/lib/components/ShRange.vue'
+import shRepo from '@/lib/repo/helpers/ShRepo'
 const query = `{
   tasks (id:{gt: 4}) {
       name
@@ -27,6 +28,15 @@ const showUser = (row)=>{
 const rangeSelected = range=>{
   console.log(range)
 }
+
+const deleteTask = item=>{
+  shRepo.runPlainRequest(`tasks/delete/${item.id}`).then(res=>{
+    console.log(res)
+    res.isConfirmed && shRepo.showToast('Task deleted')
+  }).catch(ex=>{
+    shRepo.showToast(ex.message, 'error')
+  })
+}
 </script>
 <template>
 <h5>All Tasks</h5>
@@ -50,6 +60,12 @@ const rangeSelected = range=>{
                 label: 'More',
                 path: '?taskId={id}&popup=canvas&comp=ViewTask&title=View Task',
                 class: 'btn btn-info btn-sm'
+              },
+              {
+                label: 'Delete',
+                icon: 'bi bi-trash',
+                class: 'btn btn-outline-danger btn-sm',
+                emits: deleteTask
               }
             ]
           }"
