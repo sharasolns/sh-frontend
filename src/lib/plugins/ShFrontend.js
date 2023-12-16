@@ -4,7 +4,7 @@ import Department from '../components/core/Departments/department/Department.vue
 import ManagePermissions from '../components/core/Departments/department/ManagePermissions.vue'
 import ShAuth from '../components/core/auth/ShAuth.vue'
 import TextInput from '../components/form-components/TextInput.vue'
-import NoRecords from '@/lib/components/others/NoRecords.vue'
+import NoRecords from '../components/others/NoRecords.vue'
 const ShFrontend = {
   install: (app, options) => {
     if(options.sessionTimeout){

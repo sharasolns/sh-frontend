@@ -14,8 +14,8 @@ import './views/assets/main.css'
 // import SampleComponent from './views/autoform/SampleComponent.vue'
 import PhoneInput from './views/components/form-components/PhoneInput.vue'
 import PasswordInput from './views/components/form-components/PasswordInput.vue'
-import ViewTaskPopup from '@/views/popups/ViewTaskPopup.vue'
-import NoRecords from '@/lib/components/others/NoRecords.vue'
+import ViewTaskPopup from './views/popups/ViewTaskPopup.vue'
+import NoRecords from './lib/components/others/NoRecords.vue'
 const app = createApp(App)
 app.use(createPinia())
 const shFormElementClasses = {

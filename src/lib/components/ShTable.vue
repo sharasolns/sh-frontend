@@ -1,6 +1,6 @@
 <script setup>
 import { inject } from 'vue'
-import NoRecords from '@/lib/components/others/NoRecords.vue'
+import NoRecords from './others/NoRecords.vue'
 
 const noRecordsComponent = inject('noRecordsComponent', NoRecords)
 </script>
@@ -51,17 +51,17 @@ const noRecordsComponent = inject('noRecordsComponent', NoRecords)
       </template>
     </template>
     <template v-else-if="hasRecordsSlot">
-      <div class="text-center" v-if="loading === 'loading'">
+      <div class="text-center" v-if="loading === 'loading' && !cacheKey">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      <div v-else-if="loading === 'error'" class="alert alert-danger">
+      <div v-else-if="loading === 'error' && !cacheKey" class="alert alert-danger error-loading">
       <span>
         {{ loading_error }}
       </span>
       </div>
-      <template v-if="loading === 'done'">
+      <template v-if="loading === 'done' || cacheKey">
         <component :is="noRecordsComponent" v-if="records.length === 0">
           <i class="bi-info-circle"></i> {{ noRecordsMessage ?? 'No records found' }}
         </component>
