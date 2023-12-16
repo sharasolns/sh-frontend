@@ -15,6 +15,7 @@ import './views/assets/main.css'
 import PhoneInput from './views/components/form-components/PhoneInput.vue'
 import PasswordInput from './views/components/form-components/PasswordInput.vue'
 import ViewTaskPopup from '@/views/popups/ViewTaskPopup.vue'
+import NoRecords from '@/lib/components/others/NoRecords.vue'
 const app = createApp(App)
 app.use(createPinia())
 const shFormElementClasses = {
@@ -41,7 +42,8 @@ app.use(ShFrontend,{
   logoutApiEndpoint: 'auth/logout',
   router: router,
   registerTitle: 'Welcome, create a new account',
-  tablePaginationStyle: 'loadMore', //loadMore,table
+  tablePaginationStyle: 'table', //loadMore,table
+  noRecordsComponent: NoRecords,
   tablePerPage: 3,
   shFormElementClasses,
   toastTimer: 4000,

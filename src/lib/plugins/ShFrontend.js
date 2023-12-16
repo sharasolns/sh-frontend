@@ -4,6 +4,7 @@ import Department from '../components/core/Departments/department/Department.vue
 import ManagePermissions from '../components/core/Departments/department/ManagePermissions.vue'
 import ShAuth from '../components/core/auth/ShAuth.vue'
 import TextInput from '../components/form-components/TextInput.vue'
+import NoRecords from '@/lib/components/others/NoRecords.vue'
 const ShFrontend = {
   install: (app, options) => {
     if(options.sessionTimeout){
@@ -31,6 +32,7 @@ const ShFrontend = {
     const loginUrl = options.loginUrl ?? `/login`
     const redirectLogin = options.redirectLogin ?? `/`
     const redirectRegister = options.redirectRegister ?? `/`
+    const noRecordsComponent = options.noRecordsComponent ?? NoRecords
     const registrationFields = options.registrationFields ?? ['name','email','phone','password','password_confirmation']
     const AuthComponent = options.authComponent ?? ShAuth
     app.provide('loginEndpoint',loginEndpoint)
@@ -44,6 +46,7 @@ const ShFrontend = {
     app.provide('formComponents', options.shFormComponents ?? {})
     app.provide('loginUrl', loginUrl)
     app.provide('shFormElementClasses',defaultFormElementClasses)
+    app.provide('noRecordsComponent',noRecordsComponent)
     window.swalPosition = swalPosition
     if(options.router) {
       options.router.addRoute({

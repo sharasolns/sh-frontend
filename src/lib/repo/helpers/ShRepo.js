@@ -182,7 +182,11 @@ async function runPlainRequest(url, message, title, data){
                 }
             })
                 .catch(error => {
-                    throw new Error(error)
+                    return {
+                        success: false,
+                        error: error,
+                        message: error.message
+                    }
                 })
         },
         allowOutsideClick: () => !Swal.isLoading()

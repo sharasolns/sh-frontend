@@ -12,8 +12,9 @@ const modelValueUpdated = (e) => {
 }
 onMounted(()=>{
   props.modelValue && (inputModel.value = props.modelValue)
-  if(props.data){
-    selectOptions.value = props.data.map(item=>{
+  const options = props.data ?? props.options
+  if(options){
+    selectOptions.value = options.map(item=>{
       return {
         id: typeof item.id !== 'undefined' ? item.id : item.key ? item.key : item.value ? item.value:item.name ? item.name:item.label,
         name: item.label ? item.label : item.name ? item.name : item.value ? item.value:item.id ? item.id:item.option
