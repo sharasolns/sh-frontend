@@ -468,7 +468,7 @@ export default {
       if (typeof page !== 'undefined') {
         this.page = page
       }
-      if (this.cacheKey && this.records && this.records.length > 0 && this.page < 2) {
+      if (this.cacheKey && this.records && this.page < 2) {
         this.loading = 'done'
       } else if (!append) {
         this.loading = 'loading'
