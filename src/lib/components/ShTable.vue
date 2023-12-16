@@ -1,8 +1,11 @@
 <script setup>
 import { inject } from 'vue'
 import NoRecords from './others/NoRecords.vue'
-
+import { storeToRefs } from 'pinia'
+import { useUserStore } from './../repo/stores/ShUser.js'
 const noRecordsComponent = inject('noRecordsComponent', NoRecords)
+
+const {user} = storeToRefs(useUserStore())
 </script>
 <template>
   <div class="auto-table mt-2">

@@ -54,7 +54,8 @@ const deleteTask = item=>{
                 {
                 label: 'Edit',
                 path: 'tasks/form/{id}',
-                class: 'btn btn-info btn-sm'
+                class: 'btn btn-info btn-sm',
+                permission: 'tasks.edit'
               },
               {
                 label: 'More',
