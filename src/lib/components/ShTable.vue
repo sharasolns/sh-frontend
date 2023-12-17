@@ -65,7 +65,7 @@ const {user} = storeToRefs(useUserStore())
       </span>
       </div>
       <template v-if="loading === 'done' || cacheKey">
-        <component :is="noRecordsComponent" v-if="records.length === 0">
+        <component :is="noRecordsComponent" v-if="!records || records.length === 0">
           <i class="bi-info-circle"></i> {{ noRecordsMessage ?? 'No records found' }}
         </component>
         <slot name="records" :records="records"></slot>
