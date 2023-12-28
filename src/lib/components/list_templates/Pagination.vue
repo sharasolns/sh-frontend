@@ -3,11 +3,7 @@
     <div class="record_count_body mb-3">
       <span class="per_page_show">Showing</span>&nbsp;
       <select class="select_per_page" v-on:change="changePerPage" v-model="per_page">
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="200">200</option>
+        <option v-for="option in pageOptions" :value="option">{{  option }}</option>
       </select>
       <span class="record_counts"> of {{ pagination_data.record_count }} items</span>
     </div>
@@ -42,12 +38,20 @@
 <script>
 export default {
   name: 'Pagination',
-  props: ['pagination_data', 'loadMore', 'hideCount', 'hideLoadMore', 'paginationStyle'],
+  props: ['pagination_data', 'loadMore', 'hideCount', 'hideLoadMore', 'paginationStyle','perPage'],
   data () {
     return {
       current_page: this.pagination_data.current,
       per_page: this.pagination_data.per_page,
-      loadingMore: 0
+      loadingMore: 0,
+      pageOptions: [10,25,50,100,200,400]
+    }
+  },
+  mounted(){
+    if(!this.pageOptions.includes(this.perPage)){
+      const recordCount = this.pagination_data.record_count
+      recordCount > 0 && recordCount < this.perPage && this.pageOptions.push(recordCount)
+      recordCount > 0 && recordCount >= this.perPage && this.pageOptions.push(this.perPage)
     }
   },
   methods: {

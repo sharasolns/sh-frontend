@@ -241,6 +241,7 @@ const {user} = storeToRefs(useUserStore())
       </div>
     </div>
     <pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore"
+                :per-page="per_page"
                 :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey"
                 :pagination-style="pageStyle"></pagination>
     <template v-if="actions">
@@ -281,7 +282,7 @@ export default {
       filter_value: '',
       loading: 'loading',
       loading_error: '',
-      records: [],
+      records: null,
       total: 0,
       pagination_data: null,
       moreDetailsId: null,
@@ -464,14 +465,14 @@ export default {
     },
     setCachedData: function (){
       if (this.cacheKey) {
-        this.records = shStorage.getItem('sh_table_cache_' + this.cacheKey, [])
+        this.records = shStorage.getItem('sh_table_cache_' + this.cacheKey, null)
       }
     },
     reloadData: function (page, append){
       if (typeof page !== 'undefined') {
         this.page = page
       }
-      if (this.cacheKey && this.records && this.page < 2) {
+      if (this.cacheKey && this.records !== null) {
         this.loading = 'done'
       } else if (!append) {
         this.loading = 'loading'
