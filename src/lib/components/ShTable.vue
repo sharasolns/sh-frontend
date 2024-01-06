@@ -499,9 +499,9 @@ export default {
         data.query = this.query
       }
       apis.doGet(endPoint, data).then(req => {
-        this.$emit('dataReloaded', this.pagination_data)
         this.loading = 'done'
         const response = req.data.data
+        this.$emit('dataLoaded', response)
         if (this.page < 2 && this.cacheKey) {
           shStorage.setItem('sh_table_cache_' + this.cacheKey, response.data)
         }
