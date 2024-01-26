@@ -174,7 +174,16 @@ function showToast(message, toastType, config){
         toastType = 'success';
     }
     if (config) {
-        Object.keys(config).map(key => mixinConfig[key] = config[key]);
+        Object.keys(config).map(key =>{
+            let newKey = key;
+            if(key === 'duration'){
+                newKey = 'timer';
+            }
+            if(key === 'timeout'){
+                newKey = 'timer';
+            }
+            mixinConfig[newKey] = config[key];
+        });
     }
     console.log(mixinConfig);
     const Toast = Swal.mixin(mixinConfig);
