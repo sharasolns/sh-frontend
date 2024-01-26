@@ -4840,6 +4840,7 @@ const __default__ = {
         data.query = this.query;
       }
       shApis.doGet(endPoint, data).then(req => {
+        this.$emit('dataReloaded', this.pagination_data);
         this.loading = 'done';
         const response = req.data.data;
         this.$emit('dataLoaded', response);
