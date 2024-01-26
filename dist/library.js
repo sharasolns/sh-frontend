@@ -4843,6 +4843,7 @@ const __default__ = {
         this.$emit('dataReloaded', this.pagination_data);
         this.loading = 'done';
         const response = req.data.data;
+        this.$emit('dataLoaded', response);
         if (this.page < 2 && this.cacheKey) {
           ShStorage.setItem('sh_table_cache_' + this.cacheKey, response.data);
         }
