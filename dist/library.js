@@ -404,26 +404,34 @@ const axios = Axios__default["default"].create({
   baseURL: apiUrl
 });
 window.shAxionInstance = axios;
-function doGet (endPoint, data) {
+function doGet (endPoint, data,extraConfig) {
   updateSession();
-  return axios.get(endPoint, {
-    params: data,
-    crossOrigin: true,
+  const config = {
     headers: {
       Authorization: 'Bearer ' + ShStorage.getItem('access_token')
-      // 'X-CSRF-TOKEN': 'INVALID'
     }
+  };
+    if (extraConfig) {
+        Object.assign(config, extraConfig);
+    }
+  return axios.get(endPoint, {
+    params: data,
+    crossOrigin: true
   })
 }
-function doPost (endPoint, data) {
+function doPost (endPoint, data, extraConfig) {
   updateSession();
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + ShStorage.getItem('access_token')
+    }
+  };
+    if (extraConfig) {
+        Object.assign(config, extraConfig);
+    }
   return axios.post(endPoint,
     data,
-    {
-      headers: {
-        Authorization: 'Bearer ' + ShStorage.getItem('access_token')
-      }
-    }
+    config
   )
 }
 function graphQlQuery(query) {

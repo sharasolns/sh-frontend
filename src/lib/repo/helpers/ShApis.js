@@ -15,30 +15,39 @@ const axios = Axios.create({
   baseURL: apiUrl
 })
 window.shAxionInstance = axios
-function doGet (endPoint, data) {
+function doGet (endPoint, data,extraConfig) {
   ShSession()
+  let config = {
+    headers: {
+      Authorization: 'Bearer ' + shstorage.getItem('access_token')
+    }
+  }
+    if (extraConfig) {
+        Object.assign(config, extraConfig)
+    }
   return axios.get(endPoint, {
     params: data,
     crossOrigin: true,
-    headers: {
-      Authorization: 'Bearer ' + shstorage.getItem('access_token')
-      // 'X-CSRF-TOKEN': 'INVALID'
-    }
+    ...config
   })
 }
-function doPost (endPoint, data) {
+function doPost (endPoint, data, extraConfig) {
   ShSession()
   const freeEndpoints = [
     'auth/register/client',
     'auth/login'
   ]
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + shstorage.getItem('access_token')
+    }
+  }
+    if (extraConfig) {
+        Object.assign(config, extraConfig)
+    }
   return axios.post(endPoint,
     data,
-    {
-      headers: {
-        Authorization: 'Bearer ' + shstorage.getItem('access_token')
-      }
-    }
+    config
   )
 }
 function graphQlQuery(query) {
