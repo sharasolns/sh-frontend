@@ -23,6 +23,7 @@ const popupPaths = []
 const AsyncComp =ref(null)
 
 import { useAppStore } from './../../repo/stores/ShApp.js'
+import { storeToRefs } from 'pinia'
 const {refreshKey} = storeToRefs(useAppStore())
 
 watch(() => route.query.popup, pop => {

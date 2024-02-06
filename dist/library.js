@@ -6111,7 +6111,7 @@ const size = vue.ref(null);
 const title = vue.ref(null);
 vue.ref(null);
 
-const {refreshKey} = storeToRefs(useAppStore());
+const {refreshKey} = pinia.storeToRefs(useAppStore());
 
 vue.watch(() => route.query.popup, pop => {
   popUp.value = pop;

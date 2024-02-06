@@ -5,7 +5,7 @@ import { Modal, Offcanvas } from 'bootstrap';
 import NProgress from 'nprogress';
 import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, unref, normalizeClass, resolveComponent, createBlock, resolveDynamicComponent, watch, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
 import _ from 'lodash';
-import { defineStore, storeToRefs as storeToRefs$1 } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 
 function setItem (key, value) {
@@ -4927,7 +4927,7 @@ var script$b = /*#__PURE__*/Object.assign(__default__, {
 
 const noRecordsComponent = inject('noRecordsComponent', script$g);
 
-const {user} = storeToRefs$1(useUserStore());
+const {user} = storeToRefs(useUserStore());
 
 return (_ctx, _cache) => {
   const _component_router_link = resolveComponent("router-link");
@@ -5946,7 +5946,7 @@ var script$5 = {
   __name: 'ShRoutePopups',
   setup(__props) {
 
-const {refreshKey} = storeToRefs$1(useAppStore());
+const {refreshKey} = storeToRefs(useAppStore());
 const route = useRoute();
 const popUp = ref(route.meta.popUp);
 const modalId = _.uniqueId('modal_');
@@ -6328,7 +6328,7 @@ let modulePermissions = ref(null);
 let selectedPermissions = ref([]);
 const userStore = useUserStore();
 
-storeToRefs$1(userStore);
+storeToRefs(userStore);
 
 onMounted(() => {
 getDepartment();
@@ -6542,7 +6542,7 @@ var script = {
 const router = useRouter();
 const userStore = useUserStore();
 userStore.setUser();
-const {user} = storeToRefs$1(userStore);
+const {user} = storeToRefs(userStore);
 const section = ref('login');
 const registerEndpoint = inject('registerEndpoint');
 const loginEndpoint = inject('loginEndpoint');
