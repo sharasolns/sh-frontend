@@ -5,7 +5,9 @@ import { Modal, Offcanvas } from 'bootstrap'
 import _ from 'lodash'
 import ShModal from '../ShModal.vue'
 import ShCanvas from '../ShCanvas.vue'
-
+import { storeToRefs } from 'pinia'
+import { useAppStore } from './../../repo/stores/ShApp.js'
+const {refreshKey} = storeToRefs(useAppStore())
 const route = useRoute()
 const popUp = ref(route.meta.popUp)
 const modalId = _.uniqueId('modal_')
@@ -82,12 +84,12 @@ const goBack = () => {
   <a data-bs-toggle="offcanvas" :href="'#' + canvasId" shallowRef="canvasButton" class="d-none">Open Modal</a>
   <template v-if="popUp === 'modal'">
     <sh-modal :modal-title="title" :modal-id="modalId" :modal-size="size" data-bs-backdrop="static" data-bs-keyboard="false">
-      <component :is="componentView"/>
+      <component :key="refreshKey" :is="componentView"/>
     </sh-modal>
   </template>
   <template v-if="['offcanvas','canvas','offCanvas'].includes(popUp)">
     <sh-canvas :canvas-id="canvasId" :canvas-title="title" :canvas-size="size" :position="position">
-      <component :is="componentView"/>
+      <component :key="refreshKey" :is="componentView"/>
     </sh-canvas>
   </template>
 </template>

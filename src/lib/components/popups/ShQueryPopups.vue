@@ -22,6 +22,9 @@ const popups = []
 const popupPaths = []
 const AsyncComp =ref(null)
 
+import { useAppStore } from './../../repo/stores/ShApp.js'
+const {refreshKey} = storeToRefs(useAppStore())
+
 watch(() => route.query.popup, pop => {
   popUp.value = pop
   position.value = route.query.position ?? route.query.side
@@ -96,12 +99,12 @@ const goBack = () => {
 <template>
   <template v-if="popUp === 'modal'">
     <sh-modal :modal-title="title" data-bs-backdrop="static" data-bs-keyboard="false" :modal-id="modalId" :modal-size="size">
-      <component :is="popupComponent"/>
+      <component :key="refreshKey" :is="popupComponent"/>
     </sh-modal>
   </template>
   <template v-if="['offcanvas','canvas','offCanvas'].includes(popUp)">
     <sh-canvas :canvas-title="title" :key="size + position" :canvas-id="canvasId" :canvas-size="size" :position="position">
-      <component :is="popupComponent"/>
+      <component :key="refreshKey" :is="popupComponent"/>
     </sh-canvas>
   </template>
 </template>

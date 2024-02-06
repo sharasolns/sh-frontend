@@ -5,7 +5,7 @@ import { Modal, Offcanvas } from 'bootstrap';
 import NProgress from 'nprogress';
 import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, unref, normalizeClass, resolveComponent, createBlock, resolveDynamicComponent, watch, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
 import _ from 'lodash';
-import { defineStore, storeToRefs } from 'pinia';
+import { defineStore, storeToRefs as storeToRefs$1 } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 
 function setItem (key, value) {
@@ -394,7 +394,7 @@ const axios = Axios.create({
 window.shAxionInstance = axios;
 function doGet (endPoint, data,extraConfig) {
   updateSession();
-  const config = {
+  let config = {
     headers: {
       Authorization: 'Bearer ' + ShStorage.getItem('access_token')
     }
@@ -404,7 +404,8 @@ function doGet (endPoint, data,extraConfig) {
     }
   return axios.get(endPoint, {
     params: data,
-    crossOrigin: true
+    crossOrigin: true,
+    ...config
   })
 }
 function doPost (endPoint, data, extraConfig) {
@@ -4926,7 +4927,7 @@ var script$b = /*#__PURE__*/Object.assign(__default__, {
 
 const noRecordsComponent = inject('noRecordsComponent', script$g);
 
-const {user} = storeToRefs(useUserStore());
+const {user} = storeToRefs$1(useUserStore());
 
 return (_ctx, _cache) => {
   const _component_router_link = resolveComponent("router-link");
@@ -5916,13 +5917,36 @@ return (_ctx, _cache) => {
 script$6.__scopeId = "data-v-0d4fa0ac";
 script$6.__file = "src/lib/components/core/Departments/department/ManagePermissions.vue";
 
-const _hoisted_1$3 = ["href"];
+const useAppStore = defineStore('sh-app',{
+    state: ()=>{
+        return {
+            refreshKey: 0,
+            appData: {}
+        }
+    },
+    actions: {
+        refreshPage () {
+            this.refreshKey++;
+            return true
+        },
+        refresh () {
+            this.refreshKey++;
+            return true
+        },
+        reload () {
+            this.refreshKey++;
+            return true
+        }
+    }
+});
 
+const _hoisted_1$3 = ["href"];
 
 var script$5 = {
   __name: 'ShRoutePopups',
   setup(__props) {
 
+const {refreshKey} = storeToRefs$1(useAppStore());
 const route = useRoute();
 const popUp = ref(route.meta.popUp);
 const modalId = _.uniqueId('modal_');
@@ -6011,7 +6035,7 @@ return (_ctx, _cache) => {
           "data-bs-keyboard": "false"
         }, {
           default: withCtx(() => [
-            (openBlock(), createBlock(resolveDynamicComponent(componentView.value)))
+            (openBlock(), createBlock(resolveDynamicComponent(componentView.value), { key: unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["modal-title", "modal-id", "modal-size"]))
@@ -6025,7 +6049,7 @@ return (_ctx, _cache) => {
           position: position.value
         }, {
           default: withCtx(() => [
-            (openBlock(), createBlock(resolveDynamicComponent(componentView.value)))
+            (openBlock(), createBlock(resolveDynamicComponent(componentView.value), { key: unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["canvas-id", "canvas-title", "canvas-size", "position"]))
@@ -6074,6 +6098,8 @@ const position = ref(null);
 const size = ref(null);
 const title = ref(null);
 ref(null);
+
+const {refreshKey} = storeToRefs(useAppStore());
 
 watch(() => route.query.popup, pop => {
   popUp.value = pop;
@@ -6158,7 +6184,7 @@ return (_ctx, _cache) => {
           "modal-size": size.value
         }, {
           default: withCtx(() => [
-            (openBlock(), createBlock(resolveDynamicComponent(unref(popupComponent))))
+            (openBlock(), createBlock(resolveDynamicComponent(unref(popupComponent)), { key: unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["modal-title", "modal-id", "modal-size"]))
@@ -6172,7 +6198,7 @@ return (_ctx, _cache) => {
           position: position.value
         }, {
           default: withCtx(() => [
-            (openBlock(), createBlock(resolveDynamicComponent(unref(popupComponent))))
+            (openBlock(), createBlock(resolveDynamicComponent(unref(popupComponent)), { key: unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["canvas-title", "canvas-id", "canvas-size", "position"]))
@@ -6184,29 +6210,6 @@ return (_ctx, _cache) => {
 };
 
 script$3.__file = "src/lib/components/popups/ShQueryPopups.vue";
-
-const useAppStore = defineStore('sh-app',{
-    state: ()=>{
-        return {
-            refreshKey: 0,
-            appData: {}
-        }
-    },
-    actions: {
-        refreshPage () {
-            this.refreshKey++;
-            return true
-        },
-        refresh () {
-            this.refreshKey++;
-            return true
-        },
-        reload () {
-            this.refreshKey++;
-            return true
-        }
-    }
-});
 
 const _hoisted_1$2 = /*#__PURE__*/createElementVNode("h5", null, "Departments", -1 /* HOISTED */);
 const _hoisted_2$2 = { class: "card sh-departments-card shadow" };
@@ -6325,7 +6328,7 @@ let modulePermissions = ref(null);
 let selectedPermissions = ref([]);
 const userStore = useUserStore();
 
-storeToRefs(userStore);
+storeToRefs$1(userStore);
 
 onMounted(() => {
 getDepartment();
@@ -6539,7 +6542,7 @@ var script = {
 const router = useRouter();
 const userStore = useUserStore();
 userStore.setUser();
-const {user} = storeToRefs(userStore);
+const {user} = storeToRefs$1(userStore);
 const section = ref('login');
 const registerEndpoint = inject('registerEndpoint');
 const loginEndpoint = inject('loginEndpoint');

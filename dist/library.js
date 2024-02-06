@@ -406,7 +406,7 @@ const axios = Axios__default["default"].create({
 window.shAxionInstance = axios;
 function doGet (endPoint, data,extraConfig) {
   updateSession();
-  const config = {
+  let config = {
     headers: {
       Authorization: 'Bearer ' + ShStorage.getItem('access_token')
     }
@@ -416,7 +416,8 @@ function doGet (endPoint, data,extraConfig) {
     }
   return axios.get(endPoint, {
     params: data,
-    crossOrigin: true
+    crossOrigin: true,
+    ...config
   })
 }
 function doPost (endPoint, data, extraConfig) {
@@ -5928,13 +5929,36 @@ return (_ctx, _cache) => {
 script$6.__scopeId = "data-v-0d4fa0ac";
 script$6.__file = "src/lib/components/core/Departments/department/ManagePermissions.vue";
 
-const _hoisted_1$3 = ["href"];
+const useAppStore = pinia.defineStore('sh-app',{
+    state: ()=>{
+        return {
+            refreshKey: 0,
+            appData: {}
+        }
+    },
+    actions: {
+        refreshPage () {
+            this.refreshKey++;
+            return true
+        },
+        refresh () {
+            this.refreshKey++;
+            return true
+        },
+        reload () {
+            this.refreshKey++;
+            return true
+        }
+    }
+});
 
+const _hoisted_1$3 = ["href"];
 
 var script$5 = {
   __name: 'ShRoutePopups',
   setup(__props) {
 
+const {refreshKey} = pinia.storeToRefs(useAppStore());
 const route = vueRouter.useRoute();
 const popUp = vue.ref(route.meta.popUp);
 const modalId = ___default["default"].uniqueId('modal_');
@@ -6023,7 +6047,7 @@ return (_ctx, _cache) => {
           "data-bs-keyboard": "false"
         }, {
           default: vue.withCtx(() => [
-            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(componentView.value)))
+            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(componentView.value), { key: vue.unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["modal-title", "modal-id", "modal-size"]))
@@ -6037,7 +6061,7 @@ return (_ctx, _cache) => {
           position: position.value
         }, {
           default: vue.withCtx(() => [
-            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(componentView.value)))
+            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(componentView.value), { key: vue.unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["canvas-id", "canvas-title", "canvas-size", "position"]))
@@ -6086,6 +6110,8 @@ const position = vue.ref(null);
 const size = vue.ref(null);
 const title = vue.ref(null);
 vue.ref(null);
+
+const {refreshKey} = storeToRefs(useAppStore());
 
 vue.watch(() => route.query.popup, pop => {
   popUp.value = pop;
@@ -6170,7 +6196,7 @@ return (_ctx, _cache) => {
           "modal-size": size.value
         }, {
           default: vue.withCtx(() => [
-            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(popupComponent))))
+            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(popupComponent)), { key: vue.unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["modal-title", "modal-id", "modal-size"]))
@@ -6184,7 +6210,7 @@ return (_ctx, _cache) => {
           position: position.value
         }, {
           default: vue.withCtx(() => [
-            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(popupComponent))))
+            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(popupComponent)), { key: vue.unref(refreshKey) }))
           ]),
           _: 1 /* STABLE */
         }, 8 /* PROPS */, ["canvas-title", "canvas-id", "canvas-size", "position"]))
@@ -6196,29 +6222,6 @@ return (_ctx, _cache) => {
 };
 
 script$3.__file = "src/lib/components/popups/ShQueryPopups.vue";
-
-const useAppStore = pinia.defineStore('sh-app',{
-    state: ()=>{
-        return {
-            refreshKey: 0,
-            appData: {}
-        }
-    },
-    actions: {
-        refreshPage () {
-            this.refreshKey++;
-            return true
-        },
-        refresh () {
-            this.refreshKey++;
-            return true
-        },
-        reload () {
-            this.refreshKey++;
-            return true
-        }
-    }
-});
 
 const _hoisted_1$2 = /*#__PURE__*/vue.createElementVNode("h5", null, "Departments", -1 /* HOISTED */);
 const _hoisted_2$2 = { class: "card sh-departments-card shadow" };
