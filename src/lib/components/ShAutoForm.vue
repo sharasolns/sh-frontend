@@ -17,6 +17,7 @@ const props = defineProps([
   'successMessage','fields','customComponents','placeHolders',
   'formClasses',
   'helperTexts','labels','data',
+  'fillSelects',
   'formClass',
   'actionLabel',
     'textAreas',
@@ -49,6 +50,15 @@ const getFieldComponent = (fieldObj)=>{
   if(props.customComponents && props.customComponents[field]) {
     return props.customComponents[field]
   }
+  if(props.fillSelects && props.fillSelects[field]){
+    Object.assign(fieldObj, props.fillSelects[field])
+    if(fieldObj.suggests || fieldObj.suggest){
+      fieldObj.type = 'suggests'
+    } else {
+      fieldObj.type = 'select'
+    }
+  }
+
   if(fieldObj.type){
     if(fieldObj.type === 'suggest' || fieldObj.type === 'suggests'){
       return ShSuggest

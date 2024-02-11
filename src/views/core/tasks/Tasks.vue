@@ -3,6 +3,7 @@
 import ShTable from '@/lib/components/ShTable.vue'
 import ShRange from '@/lib/components/ShRange.vue'
 import shRepo from '@/lib/repo/helpers/ShRepo'
+import ShModalForm from '@/lib/components/ShModalForm.vue'
 import NoRecords from '@/lib/components/others/NoRecords.vue'
 const query = `{
   tasks (id:{gt: 4}) {
@@ -40,6 +41,31 @@ const deleteTask = item=>{
 <h5>All Tasks</h5>
   <div class="card">
     <div class="card-body">
+      <sh-modal-form
+          :fields="['service_id','commission_type','commission']"
+          :action="'/services/providers/store?user_id='"
+          :fill-selects="{
+                  service_id: {
+                  url: '/services/list?all=1',
+                  suggest: true
+                 },
+                 commission_type: {
+                   data: [
+                       {
+                         id: 'fixed',
+                         name: 'Fixed'
+                       },
+                       {
+                         id: 'percentage',
+                         name: 'Percentage'
+                       }
+                   ]
+                 }
+
+            }"
+          class="btn btn-info ms-auto bi-plus"
+      > Add Provider
+      </sh-modal-form>
       <router-link to="/tasks/form" class="btn btn-info btn-sm"><i class="bi-plus"></i> Add Task</router-link>
       <router-link to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store" class="btn btn-info btn-sm ms-2"><i class="bi-plus"></i> PopupQuery Form</router-link>
       <sh-range @range-selected="rangeSelected"/>
