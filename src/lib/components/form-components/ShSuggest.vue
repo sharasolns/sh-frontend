@@ -42,6 +42,7 @@ function updateModelValue(){
     })
     emit('update:modelValue', ids)
   }
+  hideDropDown()
 }
 function removeSuggestion(sgt){
   selectedSuggestions.value  = selectedSuggestions.value.filter(selectedSgt=>{
@@ -53,18 +54,11 @@ function removeSuggestion(sgt){
 }
 let searchText = ref(null)
 function filterData(e){
-  let dropdownElem = document.getElementById('dropwdown_section' + id.value)
-  if(!dropdownElem.classList.contains('show')){
-    dropdownElem.classList.add('show')
-  }
+  showDropDown()
   let filterValue = e.target.innerText
   searchText.value = filterValue
   if (props.url) {
-    ShApis.doGet(props.url, { all: 1,filter_value: filterValue }).then(res => {
-      suggestions.value = res.data.data ?? res.data
-    }).catch(res => {
-      console.log(res)
-    })
+    fetchRemoteData()
   } else if(props.data) {
     suggestions.value = props.data.filter(item=>{
       if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
@@ -73,6 +67,27 @@ function filterData(e){
     })
   } else {
     console.log("Error: no data or url provided");
+  }
+}
+
+const fetchRemoteData = ()=>{
+  ShApis.doGet(props.url, { all: 1 }).then(res => {
+    suggestions.value = res.data.data ?? res.data
+  }).catch(res => {
+    console.log(res)
+  })
+}
+
+const showDropDown = ()=>{
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value)
+  if(!dropdownElem.classList.contains('show')){
+    dropdownElem.classList.add('show')
+  }
+}
+const hideDropDown = ()=>{
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value)
+  if(dropdownElem.classList.contains('show')){
+    dropdownElem.classList.remove('show')
   }
 }
 </script>
@@ -90,7 +105,7 @@ function filterData(e){
     <ul class="dropdown-menu w-100" :id="'dropwdown_section' + id" :aria-labelledby="id">
       <template v-if="suggestions && suggestions.length > 0" v-for="suggestion in suggestions" :key="suggestion.id">
         <li v-if="suggestion.name">
-          <a @click="addSuggestion(suggestion)" class="dropdown-item" :class="selectedSuggestions.includes(suggestion) ? 'active':''" href="#">{{ suggestion.name ?? suggestion.text }}</a>
+          <span style="cursor: pointer;" @click="addSuggestion(suggestion)" class="dropdown-item" :class="selectedSuggestions.includes(suggestion) ? 'active':''" href="#">{{ suggestion.name ?? suggestion.text }}</span>
         </li>
       </template>
       <li v-else-if="searchText" class="dropdown-item sh-suggest-no-results">

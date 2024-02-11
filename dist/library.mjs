@@ -2013,7 +2013,7 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
           key: country.dialCode
         }, toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$d))
       }), 128 /* KEYED_FRAGMENT */))
-    ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+    ], 544 /* NEED_HYDRATION, NEED_PATCH */), [
       [vModelSelect, $data.selectedCountry]
     ]),
     withDirectives(createElementVNode("input", {
@@ -2023,7 +2023,7 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
       onInput: _cache[2] || (_cache[2] = (...args) => ($options.updateValue && $options.updateValue(...args))),
       placeholder: "712345678",
       "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => (($data.input) = $event))
-    }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+    }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [
       [vModelText, $data.input]
     ])
   ]))
@@ -2057,12 +2057,10 @@ var script$u = {
   __name: 'ShSuggest',
   props: ['data','allowMultiple','url','modelValue'],
   emits: ['update:modelValue'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 let id = ref(null);
 ref(null);
 let suggestions = ref(null);
@@ -2101,6 +2099,7 @@ function updateModelValue(){
     });
     emit('update:modelValue', ids);
   }
+  hideDropDown();
 }
 function removeSuggestion(sgt){
   selectedSuggestions.value  = selectedSuggestions.value.filter(selectedSgt=>{
@@ -2112,18 +2111,11 @@ function removeSuggestion(sgt){
 }
 let searchText = ref(null);
 function filterData(e){
-  let dropdownElem = document.getElementById('dropwdown_section' + id.value);
-  if(!dropdownElem.classList.contains('show')){
-    dropdownElem.classList.add('show');
-  }
+  showDropDown();
   let filterValue = e.target.innerText;
   searchText.value = filterValue;
   if (props.url) {
-    shApis.doGet(props.url, { all: 1,filter_value: filterValue }).then(res => {
-      suggestions.value = res.data.data ?? res.data;
-    }).catch(res => {
-      console.log(res);
-    });
+    fetchRemoteData();
   } else if(props.data) {
     suggestions.value = props.data.filter(item=>{
       if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
@@ -2134,6 +2126,27 @@ function filterData(e){
     console.log("Error: no data or url provided");
   }
 }
+
+const fetchRemoteData = ()=>{
+  shApis.doGet(props.url, { all: 1 }).then(res => {
+    suggestions.value = res.data.data ?? res.data;
+  }).catch(res => {
+    console.log(res);
+  });
+};
+
+const showDropDown = ()=>{
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value);
+  if(!dropdownElem.classList.contains('show')){
+    dropdownElem.classList.add('show');
+  }
+};
+const hideDropDown = ()=>{
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value);
+  if(dropdownElem.classList.contains('show')){
+    dropdownElem.classList.remove('show');
+  }
+};
 
 return (_ctx, _cache) => {
   return (unref(id))
@@ -2164,7 +2177,7 @@ return (_ctx, _cache) => {
             onInput: filterData,
             onChange: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$a)
+          }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_5$a)
         ], 8 /* PROPS */, _hoisted_2$d),
         createElementVNode("ul", {
           class: "dropdown-menu w-100",
@@ -2178,7 +2191,8 @@ return (_ctx, _cache) => {
                 }, [
                   (suggestion.name)
                     ? (openBlock(), createElementBlock("li", _hoisted_7$8, [
-                        createElementVNode("a", {
+                        createElementVNode("span", {
+                          style: {"cursor":"pointer"},
                           onClick: $event => (addSuggestion(suggestion)),
                           class: normalizeClass(["dropdown-item", unref(selectedSuggestions).includes(suggestion) ? 'active':'']),
                           href: "#"
@@ -2628,7 +2642,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     modelValue: _ctx.form_elements[field],
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                  }, null, 40 /* PROPS, HYDRATE_EVENTS */, ["data-cy", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
+                  }, null, 40 /* PROPS, NEED_HYDRATION */, ["data-cy", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
                 : createCommentVNode("v-if", true),
               ($options.getFieldType(field) === 'file')
                 ? (openBlock(), createElementBlock("input", {
@@ -2642,7 +2656,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     ref: 'file_'+field,
                     onChange: $event => ($options.handleFileUpload(field)),
                     type: "file"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_10$5))
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_10$5))
                 : createCommentVNode("v-if", true),
               ($options.getFieldType(field) === 'numeric')
                 ? withDirectives((openBlock(), createElementBlock("input", {
@@ -2654,7 +2668,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "number"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_11$5)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_11$5)), [
                     [vModelText, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2668,7 +2682,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "password"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_12$4)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_12$4)), [
                     [vModelText, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2683,7 +2697,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "email",
                     required: ""
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_13$4)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_13$4)), [
                     [vModelText, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2696,7 +2710,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     onFocus: $event => ($options.removeErrors(field)),
                     class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control active"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_14$3)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_14$3)), [
                     [vModelText, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2735,7 +2749,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "text"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_15$3)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_15$3)), [
                     [vModelText, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2746,7 +2760,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     onFocus: $event => ($options.removeErrors(field)),
                     class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_16$3)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_16$3)), [
                     [vModelText, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2764,7 +2778,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                         value: item.id
                       }, toDisplayString(item.name), 9 /* TEXT, PROPS */, _hoisted_18$3))
                     }), 128 /* KEYED_FRAGMENT */))
-                  ], 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_17$3)), [
+                  ], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_17$3)), [
                     [vModelSelect, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2776,7 +2790,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
         }), 128 /* KEYED_FRAGMENT */))
       ]),
       ($props.hasTerms)
-        ? (openBlock(), createElementBlock("div", _hoisted_20$1, _hoisted_23$1))
+        ? (openBlock(), createElementBlock("div", _hoisted_20$1, [..._hoisted_23$1]))
         : createCommentVNode("v-if", true),
       (_ctx.form_status == 1)
         ? (openBlock(), createElementBlock("button", {
@@ -2806,12 +2820,10 @@ var script$s = {
   __name: 'EmailInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2834,7 +2846,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vModelText, inputModel.value]
   ])
 }
@@ -2851,12 +2863,10 @@ var script$r = {
   __name: 'NumberInput',
   props: ['modelValue','label','min','max'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2881,7 +2891,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_1$l)), [
+  }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_1$l)), [
     [vModelText, inputModel.value]
   ])
 }
@@ -2895,12 +2905,10 @@ var script$q = {
   __name: 'TextInput',
   props: ['modelValue','label','isInvalid'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2925,7 +2933,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vModelText, inputModel.value]
   ])
 }
@@ -2939,12 +2947,10 @@ var script$p = {
   __name: 'TextAreaInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2967,7 +2973,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vModelText, inputModel.value]
   ])
 }
@@ -2984,12 +2990,10 @@ var script$o = {
   __name: 'SelectInput',
   props: ['modelValue','label','data','dataUrl'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = ref(null);
 const selectOptions = ref(null);
 const modelValueUpdated = (e) => {
@@ -3038,7 +3042,7 @@ return (_ctx, _cache) => {
         value: option.id
       }, toDisplayString(option.name), 9 /* TEXT, PROPS */, _hoisted_1$k))
     }), 128 /* KEYED_FRAGMENT */))
-  ], 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  ], 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vModelSelect, inputModel.value]
   ])
 }
@@ -3052,12 +3056,10 @@ var script$n = {
   __name: 'PasswordInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = ref(null);
 
 const modelValueUpdated = (e) => {
@@ -3076,7 +3078,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vModelText, inputModel.value]
   ])
 }
@@ -3128,12 +3130,10 @@ var script$m = {
     'phones','numbers','selects','dates','gqlMutation'
 ],
   emits: ['success','fieldChanged','formSubmitted','formError'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const formFields = ref([]);
 const getFieldComponent = (fieldObj)=>{
   if(fieldObj.component){
@@ -3366,7 +3366,7 @@ return (_ctx, _cache) => {
                     }, null, 10 /* CLASS, PROPS */, _hoisted_4$a))
                   : createCommentVNode("v-if", true),
                 (unref(isFloating))
-                  ? (openBlock(), createElementBlock("div", _hoisted_5$8, _hoisted_9$5))
+                  ? (openBlock(), createElementBlock("div", _hoisted_5$8, [..._hoisted_9$5]))
                   : createCommentVNode("v-if", true),
                 (field.helper)
                   ? (openBlock(), createElementBlock("div", {
@@ -3402,7 +3402,7 @@ return (_ctx, _cache) => {
             : createCommentVNode("v-if", true)
         ], 14 /* CLASS, STYLE, PROPS */, _hoisted_11$4)
       ], 2 /* CLASS */)
-    ], 34 /* CLASS, HYDRATE_EVENTS */)
+    ], 34 /* CLASS, NEED_HYDRATION */)
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -3434,8 +3434,6 @@ var script$l = {
   setup(__props) {
 
 const props = __props;
-
-
 
 ref(props);
 let btnClass=props.class;
@@ -3508,12 +3506,10 @@ var script$k = {
     }
 },
   emits: ['modalClosed'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
+const emit = __emit;
 const props = __props;
-
-
-
 onMounted(() => {
     const modal = document.getElementById(props.modalId);
     modal.addEventListener('hidden.bs.modal', event => {
@@ -3569,18 +3565,31 @@ var script$j = {
   'phones',
   'numbers',
   'customComponent','modalTitle','class','successMessage'],
-  emits: ['success'],
-  setup(__props, { emit }) {
+  emits: ['success','fieldChanged','formSubmitted','formError','modalId'],
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 ref(props);
 let btnClass=props.class;
 const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2);
 const success = (res)=>{
   emit('success',res);
+};
+onMounted(()=>{
+  emit('modalId',modalId);
+});
+
+const fieldChanged = (field, value)=>{
+  emit('fieldChanged',field, value);
+};
+
+const formSubmitted = (res)=>{
+  emit('formSubmitted',res);
+};
+
+const formError = (res)=>{
+  emit('formError',res);
 };
 
 return (_ctx, _cache) => {
@@ -3597,7 +3606,12 @@ return (_ctx, _cache) => {
       "modal-title": __props.modalTitle
     }, {
       default: withCtx(() => [
-        createVNode(script$t, mergeProps({ onSuccess: success }, props), null, 16 /* FULL_PROPS */)
+        createVNode(script$m, mergeProps({
+          onSuccess: success,
+          onFieldChanged: fieldChanged,
+          onFormSubmitted: formSubmitted,
+          onFormError: formError
+        }, props), null, 16 /* FULL_PROPS */)
       ]),
       _: 1 /* STABLE */
     }, 8 /* PROPS */, ["modal-title"])
@@ -3629,12 +3643,10 @@ var script$i = {
   'numbers',
   'customComponent','modalTitle','class','successMessage'],
   emits: ['success'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const formProps = ref(props);
 let btnClass=props.class;
 const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2);
@@ -3698,12 +3710,10 @@ var script$h = {
   }
 },
   emits: ['canvasClosed'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
+const emit = __emit;
 const props = __props;
-
-
-
 const pos = ref(props.position ?? props.side);
 const canvasSide = ref(pos.value ?  `offcanvas-${pos.value}` : 'offcanvas-start');
 
@@ -3994,7 +4004,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             (openBlock(true), createElementBlock(Fragment, null, renderList($data.pageOptions, (option) => {
               return (openBlock(), createElementBlock("option", { value: option }, toDisplayString(option), 9 /* TEXT, PROPS */, _hoisted_4$7))
             }), 256 /* UNKEYED_FRAGMENT */))
-          ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+          ], 544 /* NEED_HYDRATION, NEED_PATCH */), [
             [vModelSelect, $data.per_page]
           ]),
           createElementVNode("span", _hoisted_5$6, " of " + toDisplayString($props.pagination_data.record_count) + " items", 1 /* TEXT */)
@@ -4040,7 +4050,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ]))
     : (openBlock(), createElementBlock("div", _hoisted_11$3, [
         (this.pagination_data.loading === 1 && $props.loadMore && $props.hideLoadMore)
-          ? (openBlock(), createElementBlock("div", _hoisted_12$2, _hoisted_14$2))
+          ? (openBlock(), createElementBlock("div", _hoisted_12$2, [..._hoisted_14$2]))
           : createCommentVNode("v-if", true),
         (!$props.hideCount)
           ? (openBlock(), createElementBlock("div", _hoisted_15$2, [
@@ -4095,14 +4105,12 @@ var script$e = {
   }
 },
   emits: ['actionSuccessful', 'actionFailed','success','actionCanceled'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
 
-
-
 const processing = ref(false);
-
+const emit = __emit;
 const actionSuccessful = (res)=>{
   processing.value = false;
   res.actionType = 'silentAction';
@@ -4194,13 +4202,11 @@ var script$d = {
   }
 },
   emits: ['actionSuccessful','actionFailed','success'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
 const processing = ref(false);
-
+const emit = __emit;
 const actionSuccessful = (res)=>{
   processing.value = false;
   res.actionType = 'silentAction';
@@ -4297,13 +4303,11 @@ var script$c = {
   }
 },
   emits: ['rangeSelected'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
 
-
-
-
+const emit = __emit;
 
 const selectedDate = ref(null);
 const rangeLabel = ref(null);
@@ -4971,7 +4975,7 @@ return (_ctx, _cache) => {
                 "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ((_ctx.filter_value) = $event)),
                 placeholder: __props.searchPlaceholder ? __props.searchPlaceholder : 'Search',
                 class: "form-control sh-search-input"
-              }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_10$1), [
+              }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_10$1), [
                 [vModelText, _ctx.filter_value]
               ]),
               (_ctx.filter_value.length > 1)
@@ -4981,7 +4985,7 @@ return (_ctx, _cache) => {
                       value: true,
                       "onUpdate:modelValue": _cache[6] || (_cache[6] = $event => ((_ctx.exactMatch) = $event)),
                       type: "checkbox"
-                    }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+                    }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [
                       [vModelCheckbox, _ctx.exactMatch]
                     ]),
                     _hoisted_12$1
@@ -4994,7 +4998,7 @@ return (_ctx, _cache) => {
     (_ctx.hasDefaultSlot)
       ? (openBlock(), createElementBlock(Fragment, { key: 2 }, [
           (_ctx.loading === 'loading')
-            ? (openBlock(), createElementBlock("div", _hoisted_13$1, _hoisted_15$1))
+            ? (openBlock(), createElementBlock("div", _hoisted_13$1, [..._hoisted_15$1]))
             : (_ctx.loading === 'error')
               ? (openBlock(), createElementBlock("div", _hoisted_16$1, [
                   createElementVNode("span", null, toDisplayString(_ctx.loading_error), 1 /* TEXT */)
@@ -5012,7 +5016,7 @@ return (_ctx, _cache) => {
       : (_ctx.hasRecordsSlot)
         ? (openBlock(), createElementBlock(Fragment, { key: 3 }, [
             (_ctx.loading === 'loading' && !__props.cacheKey)
-              ? (openBlock(), createElementBlock("div", _hoisted_17$1, _hoisted_19))
+              ? (openBlock(), createElementBlock("div", _hoisted_17$1, [..._hoisted_19]))
               : (_ctx.loading === 'error' && !__props.cacheKey)
                 ? (openBlock(), createElementBlock("div", _hoisted_20, [
                     createElementVNode("span", null, toDisplayString(_ctx.loading_error), 1 /* TEXT */)
@@ -5073,7 +5077,7 @@ return (_ctx, _cache) => {
                   ? (openBlock(), createElementBlock("tr", _hoisted_28, [
                       createElementVNode("td", {
                         colspan: _ctx.tableHeaders.length
-                      }, _hoisted_31, 8 /* PROPS */, _hoisted_29)
+                      }, [..._hoisted_31], 8 /* PROPS */, _hoisted_29)
                     ]))
                   : (_ctx.loading === 'error')
                     ? (openBlock(), createElementBlock("tr", _hoisted_32, [
@@ -5245,7 +5249,7 @@ return (_ctx, _cache) => {
             ], 2 /* CLASS */))
           : (openBlock(), createElementBlock("div", _hoisted_47, [
               (_ctx.loading === 'loading')
-                ? (openBlock(), createElementBlock("div", _hoisted_48, _hoisted_50))
+                ? (openBlock(), createElementBlock("div", _hoisted_48, [..._hoisted_50]))
                 : (_ctx.loading === 'error')
                   ? (openBlock(), createElementBlock("div", _hoisted_51, [
                       createElementVNode("span", null, toDisplayString(_ctx.loading_error), 1 /* TEXT */)
@@ -5452,8 +5456,6 @@ var script$a = {
   setup(__props) {
 
 const props = __props;
-
-
 const route = useRoute();
 const router = useRouter();
 const currentTab = ref('');
@@ -5581,8 +5583,6 @@ var script$9 = {
   setup(__props) {
 
 const props = __props;
-
-
 const tabs = props.tabs;
 let currentTab = shallowRef(null);
 const generatedId = ref(null);
@@ -5646,8 +5646,6 @@ var script$8 = {
 },
   setup(__props) {
 
-
-
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock("a", {
     href: `#${__props.modalId}`,
@@ -5674,8 +5672,6 @@ var script$7 = {
   }
 },
   setup(__props) {
-
-
 
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock("a", {
@@ -5735,9 +5731,9 @@ const _hoisted_18 = /*#__PURE__*/ _withScopeId$1(() => /*#__PURE__*/createElemen
 var script$6 = {
   __name: 'ManagePermissions',
   emits: ['success'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
-
+const emit = __emit;
 
 const userStore =useUserStore();
 
@@ -5839,7 +5835,7 @@ return (_ctx, _cache) => {
   return (openBlock(), createElementBlock("div", _hoisted_1$4, [
     createElementVNode("div", _hoisted_2$3, [
       (loadingModules.value)
-        ? (openBlock(), createElementBlock("div", _hoisted_3$3, _hoisted_5$2))
+        ? (openBlock(), createElementBlock("div", _hoisted_3$3, [..._hoisted_5$2]))
         : (openBlock(), createElementBlock("ul", _hoisted_6$2, [
             (openBlock(true), createElementBlock(Fragment, null, renderList(modules.value, (module) => {
               return (openBlock(), createElementBlock("li", {

@@ -48,10 +48,7 @@ function removeSuggestion(sgt){
 }
 let searchText = ref(null)
 function filterData(e){
-  let dropdownElem = document.getElementById('dropdown_section' + id.value)
-  if(!dropdownElem.classList.contains('show')){
-    dropdownElem.classList.add('show')
-  }
+  showDropDown()
   let filterValue = e.target.innerText
   searchText.value = filterValue
   ShApis.doGet(props.url, { all: 1,filter_value: filterValue }).then(res => {
@@ -64,6 +61,20 @@ function filterData(e){
   }).catch(res => {
     console.log(res)
   })
+}
+
+const showDropDown = ()=>{
+  let dropdownElem = document.getElementById('dropdown_section' + id.value)
+  if(!dropdownElem.classList.contains('show')){
+    dropdownElem.classList.add('show')
+  }
+}
+
+const closeDropdown = ()=>{
+  let dropdownElem = document.getElementById('dropdown_section' + id.value)
+  if(dropdownElem.classList.contains('show')){
+    dropdownElem.classList.remove('show')
+  }
 }
 </script>
 <template>

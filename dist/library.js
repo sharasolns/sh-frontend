@@ -2025,7 +2025,7 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
           key: country.dialCode
         }, vue.toDisplayString(country.name + '(' + country.dialCode + ')'), 9 /* TEXT, PROPS */, _hoisted_4$d))
       }), 128 /* KEYED_FRAGMENT */))
-    ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+    ], 544 /* NEED_HYDRATION, NEED_PATCH */), [
       [vue.vModelSelect, $data.selectedCountry]
     ]),
     vue.withDirectives(vue.createElementVNode("input", {
@@ -2035,7 +2035,7 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
       onInput: _cache[2] || (_cache[2] = (...args) => ($options.updateValue && $options.updateValue(...args))),
       placeholder: "712345678",
       "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => (($data.input) = $event))
-    }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+    }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [
       [vue.vModelText, $data.input]
     ])
   ]))
@@ -2069,12 +2069,10 @@ var script$u = {
   __name: 'ShSuggest',
   props: ['data','allowMultiple','url','modelValue'],
   emits: ['update:modelValue'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 let id = vue.ref(null);
 vue.ref(null);
 let suggestions = vue.ref(null);
@@ -2113,6 +2111,7 @@ function updateModelValue(){
     });
     emit('update:modelValue', ids);
   }
+  hideDropDown();
 }
 function removeSuggestion(sgt){
   selectedSuggestions.value  = selectedSuggestions.value.filter(selectedSgt=>{
@@ -2124,18 +2123,11 @@ function removeSuggestion(sgt){
 }
 let searchText = vue.ref(null);
 function filterData(e){
-  let dropdownElem = document.getElementById('dropwdown_section' + id.value);
-  if(!dropdownElem.classList.contains('show')){
-    dropdownElem.classList.add('show');
-  }
+  showDropDown();
   let filterValue = e.target.innerText;
   searchText.value = filterValue;
   if (props.url) {
-    shApis.doGet(props.url, { all: 1,filter_value: filterValue }).then(res => {
-      suggestions.value = res.data.data ?? res.data;
-    }).catch(res => {
-      console.log(res);
-    });
+    fetchRemoteData();
   } else if(props.data) {
     suggestions.value = props.data.filter(item=>{
       if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
@@ -2146,6 +2138,27 @@ function filterData(e){
     console.log("Error: no data or url provided");
   }
 }
+
+const fetchRemoteData = ()=>{
+  shApis.doGet(props.url, { all: 1 }).then(res => {
+    suggestions.value = res.data.data ?? res.data;
+  }).catch(res => {
+    console.log(res);
+  });
+};
+
+const showDropDown = ()=>{
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value);
+  if(!dropdownElem.classList.contains('show')){
+    dropdownElem.classList.add('show');
+  }
+};
+const hideDropDown = ()=>{
+  let dropdownElem = document.getElementById('dropwdown_section' + id.value);
+  if(dropdownElem.classList.contains('show')){
+    dropdownElem.classList.remove('show');
+  }
+};
 
 return (_ctx, _cache) => {
   return (vue.unref(id))
@@ -2176,7 +2189,7 @@ return (_ctx, _cache) => {
             onInput: filterData,
             onChange: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5$a)
+          }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_5$a)
         ], 8 /* PROPS */, _hoisted_2$d),
         vue.createElementVNode("ul", {
           class: "dropdown-menu w-100",
@@ -2190,7 +2203,8 @@ return (_ctx, _cache) => {
                 }, [
                   (suggestion.name)
                     ? (vue.openBlock(), vue.createElementBlock("li", _hoisted_7$8, [
-                        vue.createElementVNode("a", {
+                        vue.createElementVNode("span", {
+                          style: {"cursor":"pointer"},
                           onClick: $event => (addSuggestion(suggestion)),
                           class: vue.normalizeClass(["dropdown-item", vue.unref(selectedSuggestions).includes(suggestion) ? 'active':'']),
                           href: "#"
@@ -2640,7 +2654,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     modelValue: _ctx.form_elements[field],
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                  }, null, 40 /* PROPS, HYDRATE_EVENTS */, ["data-cy", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
+                  }, null, 40 /* PROPS, NEED_HYDRATION */, ["data-cy", "placeholder", "name", "onFocus", "class", "modelValue", "onUpdate:modelValue"]))
                 : vue.createCommentVNode("v-if", true),
               ($options.getFieldType(field) === 'file')
                 ? (vue.openBlock(), vue.createElementBlock("input", {
@@ -2654,7 +2668,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     ref: 'file_'+field,
                     onChange: $event => ($options.handleFileUpload(field)),
                     type: "file"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_10$5))
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_10$5))
                 : vue.createCommentVNode("v-if", true),
               ($options.getFieldType(field) === 'numeric')
                 ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
@@ -2666,7 +2680,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "number"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_11$5)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_11$5)), [
                     [vue.vModelText, _ctx.form_elements[field]]
                   ])
                 : vue.createCommentVNode("v-if", true),
@@ -2680,7 +2694,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "password"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_12$4)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_12$4)), [
                     [vue.vModelText, _ctx.form_elements[field]]
                   ])
                 : vue.createCommentVNode("v-if", true),
@@ -2695,7 +2709,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "email",
                     required: ""
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_13$4)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_13$4)), [
                     [vue.vModelText, _ctx.form_elements[field]]
                   ])
                 : vue.createCommentVNode("v-if", true),
@@ -2708,7 +2722,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     onFocus: $event => ($options.removeErrors(field)),
                     class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control active"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_14$3)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_14$3)), [
                     [vue.vModelText, _ctx.form_elements[field]]
                   ])
                 : vue.createCommentVNode("v-if", true),
@@ -2747,7 +2761,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event),
                     type: "text"
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_15$3)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_15$3)), [
                     [vue.vModelText, _ctx.form_elements[field]]
                   ])
                 : vue.createCommentVNode("v-if", true),
@@ -2758,7 +2772,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     onFocus: $event => ($options.removeErrors(field)),
                     class: vue.normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                  }, null, 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_16$3)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_16$3)), [
                     [vue.vModelText, _ctx.form_elements[field]]
                   ])
                 : vue.createCommentVNode("v-if", true),
@@ -2776,7 +2790,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                         value: item.id
                       }, vue.toDisplayString(item.name), 9 /* TEXT, PROPS */, _hoisted_18$3))
                     }), 128 /* KEYED_FRAGMENT */))
-                  ], 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_17$3)), [
+                  ], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_17$3)), [
                     [vue.vModelSelect, _ctx.form_elements[field]]
                   ])
                 : vue.createCommentVNode("v-if", true),
@@ -2788,7 +2802,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
         }), 128 /* KEYED_FRAGMENT */))
       ]),
       ($props.hasTerms)
-        ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_20$1, _hoisted_23$1))
+        ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_20$1, [..._hoisted_23$1]))
         : vue.createCommentVNode("v-if", true),
       (_ctx.form_status == 1)
         ? (vue.openBlock(), vue.createElementBlock("button", {
@@ -2818,12 +2832,10 @@ var script$s = {
   __name: 'EmailInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = vue.ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2846,7 +2858,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vue.vModelText, inputModel.value]
   ])
 }
@@ -2863,12 +2875,10 @@ var script$r = {
   __name: 'NumberInput',
   props: ['modelValue','label','min','max'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = vue.ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2893,7 +2903,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_1$l)), [
+  }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_1$l)), [
     [vue.vModelText, inputModel.value]
   ])
 }
@@ -2907,12 +2917,10 @@ var script$q = {
   __name: 'TextInput',
   props: ['modelValue','label','isInvalid'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = vue.ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2937,7 +2945,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vue.vModelText, inputModel.value]
   ])
 }
@@ -2951,12 +2959,10 @@ var script$p = {
   __name: 'TextAreaInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = vue.ref(null);
 
 const modelValueUpdated = (e) => {
@@ -2979,7 +2985,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vue.vModelText, inputModel.value]
   ])
 }
@@ -2996,12 +3002,10 @@ var script$o = {
   __name: 'SelectInput',
   props: ['modelValue','label','data','dataUrl'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = vue.ref(null);
 const selectOptions = vue.ref(null);
 const modelValueUpdated = (e) => {
@@ -3050,7 +3054,7 @@ return (_ctx, _cache) => {
         value: option.id
       }, vue.toDisplayString(option.name), 9 /* TEXT, PROPS */, _hoisted_1$k))
     }), 128 /* KEYED_FRAGMENT */))
-  ], 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  ], 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vue.vModelSelect, inputModel.value]
   ])
 }
@@ -3064,12 +3068,10 @@ var script$n = {
   __name: 'PasswordInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const inputModel = vue.ref(null);
 
 const modelValueUpdated = (e) => {
@@ -3088,7 +3090,7 @@ return (_ctx, _cache) => {
     onChange: modelValueUpdated,
     onKeydown: modelValueUpdated,
     onUpdated: modelValueUpdated
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)), [
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
     [vue.vModelText, inputModel.value]
   ])
 }
@@ -3140,12 +3142,10 @@ var script$m = {
     'phones','numbers','selects','dates','gqlMutation'
 ],
   emits: ['success','fieldChanged','formSubmitted','formError'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const formFields = vue.ref([]);
 const getFieldComponent = (fieldObj)=>{
   if(fieldObj.component){
@@ -3378,7 +3378,7 @@ return (_ctx, _cache) => {
                     }, null, 10 /* CLASS, PROPS */, _hoisted_4$a))
                   : vue.createCommentVNode("v-if", true),
                 (vue.unref(isFloating))
-                  ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_5$8, _hoisted_9$5))
+                  ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_5$8, [..._hoisted_9$5]))
                   : vue.createCommentVNode("v-if", true),
                 (field.helper)
                   ? (vue.openBlock(), vue.createElementBlock("div", {
@@ -3414,7 +3414,7 @@ return (_ctx, _cache) => {
             : vue.createCommentVNode("v-if", true)
         ], 14 /* CLASS, STYLE, PROPS */, _hoisted_11$4)
       ], 2 /* CLASS */)
-    ], 34 /* CLASS, HYDRATE_EVENTS */)
+    ], 34 /* CLASS, NEED_HYDRATION */)
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -3446,8 +3446,6 @@ var script$l = {
   setup(__props) {
 
 const props = __props;
-
-
 
 vue.ref(props);
 let btnClass=props.class;
@@ -3520,12 +3518,10 @@ var script$k = {
     }
 },
   emits: ['modalClosed'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
+const emit = __emit;
 const props = __props;
-
-
-
 vue.onMounted(() => {
     const modal = document.getElementById(props.modalId);
     modal.addEventListener('hidden.bs.modal', event => {
@@ -3581,18 +3577,31 @@ var script$j = {
   'phones',
   'numbers',
   'customComponent','modalTitle','class','successMessage'],
-  emits: ['success'],
-  setup(__props, { emit }) {
+  emits: ['success','fieldChanged','formSubmitted','formError','modalId'],
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 vue.ref(props);
 let btnClass=props.class;
 const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2);
 const success = (res)=>{
   emit('success',res);
+};
+vue.onMounted(()=>{
+  emit('modalId',modalId);
+});
+
+const fieldChanged = (field, value)=>{
+  emit('fieldChanged',field, value);
+};
+
+const formSubmitted = (res)=>{
+  emit('formSubmitted',res);
+};
+
+const formError = (res)=>{
+  emit('formError',res);
 };
 
 return (_ctx, _cache) => {
@@ -3609,7 +3618,12 @@ return (_ctx, _cache) => {
       "modal-title": __props.modalTitle
     }, {
       default: vue.withCtx(() => [
-        vue.createVNode(script$t, vue.mergeProps({ onSuccess: success }, props), null, 16 /* FULL_PROPS */)
+        vue.createVNode(script$m, vue.mergeProps({
+          onSuccess: success,
+          onFieldChanged: fieldChanged,
+          onFormSubmitted: formSubmitted,
+          onFormError: formError
+        }, props), null, 16 /* FULL_PROPS */)
       ]),
       _: 1 /* STABLE */
     }, 8 /* PROPS */, ["modal-title"])
@@ -3641,12 +3655,10 @@ var script$i = {
   'numbers',
   'customComponent','modalTitle','class','successMessage'],
   emits: ['success'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
-
+const emit = __emit;
 const formProps = vue.ref(props);
 let btnClass=props.class;
 const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2);
@@ -3710,12 +3722,10 @@ var script$h = {
   }
 },
   emits: ['canvasClosed'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
+const emit = __emit;
 const props = __props;
-
-
-
 const pos = vue.ref(props.position ?? props.side);
 const canvasSide = vue.ref(pos.value ?  `offcanvas-${pos.value}` : 'offcanvas-start');
 
@@ -4006,7 +4016,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.pageOptions, (option) => {
               return (vue.openBlock(), vue.createElementBlock("option", { value: option }, vue.toDisplayString(option), 9 /* TEXT, PROPS */, _hoisted_4$7))
             }), 256 /* UNKEYED_FRAGMENT */))
-          ], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+          ], 544 /* NEED_HYDRATION, NEED_PATCH */), [
             [vue.vModelSelect, $data.per_page]
           ]),
           vue.createElementVNode("span", _hoisted_5$6, " of " + vue.toDisplayString($props.pagination_data.record_count) + " items", 1 /* TEXT */)
@@ -4052,7 +4062,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ]))
     : (vue.openBlock(), vue.createElementBlock("div", _hoisted_11$3, [
         (this.pagination_data.loading === 1 && $props.loadMore && $props.hideLoadMore)
-          ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_12$2, _hoisted_14$2))
+          ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_12$2, [..._hoisted_14$2]))
           : vue.createCommentVNode("v-if", true),
         (!$props.hideCount)
           ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_15$2, [
@@ -4107,14 +4117,12 @@ var script$e = {
   }
 },
   emits: ['actionSuccessful', 'actionFailed','success','actionCanceled'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
 
-
-
 const processing = vue.ref(false);
-
+const emit = __emit;
 const actionSuccessful = (res)=>{
   processing.value = false;
   res.actionType = 'silentAction';
@@ -4206,13 +4214,11 @@ var script$d = {
   }
 },
   emits: ['actionSuccessful','actionFailed','success'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
-
-
 const processing = vue.ref(false);
-
+const emit = __emit;
 const actionSuccessful = (res)=>{
   processing.value = false;
   res.actionType = 'silentAction';
@@ -4309,13 +4315,11 @@ var script$c = {
   }
 },
   emits: ['rangeSelected'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
 const props = __props;
 
-
-
-
+const emit = __emit;
 
 const selectedDate = vue.ref(null);
 const rangeLabel = vue.ref(null);
@@ -4983,7 +4987,7 @@ return (_ctx, _cache) => {
                 "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ((_ctx.filter_value) = $event)),
                 placeholder: __props.searchPlaceholder ? __props.searchPlaceholder : 'Search',
                 class: "form-control sh-search-input"
-              }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_10$1), [
+              }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_10$1), [
                 [vue.vModelText, _ctx.filter_value]
               ]),
               (_ctx.filter_value.length > 1)
@@ -4993,7 +4997,7 @@ return (_ctx, _cache) => {
                       value: true,
                       "onUpdate:modelValue": _cache[6] || (_cache[6] = $event => ((_ctx.exactMatch) = $event)),
                       type: "checkbox"
-                    }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [
+                    }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [
                       [vue.vModelCheckbox, _ctx.exactMatch]
                     ]),
                     _hoisted_12$1
@@ -5006,7 +5010,7 @@ return (_ctx, _cache) => {
     (_ctx.hasDefaultSlot)
       ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 2 }, [
           (_ctx.loading === 'loading')
-            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_13$1, _hoisted_15$1))
+            ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_13$1, [..._hoisted_15$1]))
             : (_ctx.loading === 'error')
               ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_16$1, [
                   vue.createElementVNode("span", null, vue.toDisplayString(_ctx.loading_error), 1 /* TEXT */)
@@ -5024,7 +5028,7 @@ return (_ctx, _cache) => {
       : (_ctx.hasRecordsSlot)
         ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 3 }, [
             (_ctx.loading === 'loading' && !__props.cacheKey)
-              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_17$1, _hoisted_19))
+              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_17$1, [..._hoisted_19]))
               : (_ctx.loading === 'error' && !__props.cacheKey)
                 ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_20, [
                     vue.createElementVNode("span", null, vue.toDisplayString(_ctx.loading_error), 1 /* TEXT */)
@@ -5085,7 +5089,7 @@ return (_ctx, _cache) => {
                   ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_28, [
                       vue.createElementVNode("td", {
                         colspan: _ctx.tableHeaders.length
-                      }, _hoisted_31, 8 /* PROPS */, _hoisted_29)
+                      }, [..._hoisted_31], 8 /* PROPS */, _hoisted_29)
                     ]))
                   : (_ctx.loading === 'error')
                     ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_32, [
@@ -5257,7 +5261,7 @@ return (_ctx, _cache) => {
             ], 2 /* CLASS */))
           : (vue.openBlock(), vue.createElementBlock("div", _hoisted_47, [
               (_ctx.loading === 'loading')
-                ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_48, _hoisted_50))
+                ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_48, [..._hoisted_50]))
                 : (_ctx.loading === 'error')
                   ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_51, [
                       vue.createElementVNode("span", null, vue.toDisplayString(_ctx.loading_error), 1 /* TEXT */)
@@ -5464,8 +5468,6 @@ var script$a = {
   setup(__props) {
 
 const props = __props;
-
-
 const route = vueRouter.useRoute();
 const router = vueRouter.useRouter();
 const currentTab = vue.ref('');
@@ -5593,8 +5595,6 @@ var script$9 = {
   setup(__props) {
 
 const props = __props;
-
-
 const tabs = props.tabs;
 let currentTab = vue.shallowRef(null);
 const generatedId = vue.ref(null);
@@ -5658,8 +5658,6 @@ var script$8 = {
 },
   setup(__props) {
 
-
-
 return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock("a", {
     href: `#${__props.modalId}`,
@@ -5686,8 +5684,6 @@ var script$7 = {
   }
 },
   setup(__props) {
-
-
 
 return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock("a", {
@@ -5747,9 +5743,9 @@ const _hoisted_18 = /*#__PURE__*/ _withScopeId$1(() => /*#__PURE__*/vue.createEl
 var script$6 = {
   __name: 'ManagePermissions',
   emits: ['success'],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
 
-
+const emit = __emit;
 
 const userStore =useUserStore();
 
@@ -5851,7 +5847,7 @@ return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$4, [
     vue.createElementVNode("div", _hoisted_2$3, [
       (loadingModules.value)
-        ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$3, _hoisted_5$2))
+        ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$3, [..._hoisted_5$2]))
         : (vue.openBlock(), vue.createElementBlock("ul", _hoisted_6$2, [
             (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(modules.value, (module) => {
               return (vue.openBlock(), vue.createElementBlock("li", {
