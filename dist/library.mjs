@@ -2128,7 +2128,12 @@ function filterData(e){
 }
 
 const fetchRemoteData = ()=>{
-  shApis.doGet(props.url, { all: 1 }).then(res => {
+  const data = {
+    all: 1,
+    filter_value: searchText.value,
+    here: 'three'
+  };
+  shApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data;
   }).catch(res => {
     console.log(res);
@@ -3335,7 +3340,7 @@ return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
     _hoisted_1$j,
     createElementVNode("form", {
-      class: normalizeClass([__props.formClass, "sh-form"]),
+      class: normalizeClass([__props.formClass, "sh-auto-form"]),
       ref_key: "shAutoForm",
       ref: shAutoForm,
       onSubmit: _cache[0] || (_cache[0] = e => submitForm(e))
@@ -3411,7 +3416,8 @@ return (_ctx, _cache) => {
             ? (openBlock(), createElementBlock("span", _hoisted_13$3, "Submit"))
             : createCommentVNode("v-if", true)
         ], 14 /* CLASS, STYLE, PROPS */, _hoisted_11$4)
-      ], 2 /* CLASS */)
+      ], 2 /* CLASS */),
+      renderSlot(_ctx.$slots, "default")
     ], 34 /* CLASS, NEED_HYDRATION */)
   ], 64 /* STABLE_FRAGMENT */))
 }

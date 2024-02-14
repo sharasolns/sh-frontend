@@ -226,7 +226,7 @@ onMounted((ev)=>{
 </script>
 <template>
   <div/>
-  <form :class="formClass" ref="shAutoForm" class="sh-form" @submit="e => submitForm(e)">
+  <form :class="formClass" ref="shAutoForm" class="sh-auto-form" @submit="e => submitForm(e)">
     <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup')">
       <template v-if="field.type === 'hidden'">
         <input type="hidden" v-model="formFields[index].value">
@@ -254,5 +254,6 @@ onMounted((ev)=>{
         <span v-if="!loading">Submit</span>
       </button>
     </div>
+    <slot/>
   </form>
 </template>

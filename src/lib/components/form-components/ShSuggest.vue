@@ -71,7 +71,12 @@ function filterData(e){
 }
 
 const fetchRemoteData = ()=>{
-  ShApis.doGet(props.url, { all: 1 }).then(res => {
+  const data = {
+    all: 1,
+    filter_value: searchText.value,
+    here: 'three'
+  }
+  ShApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data
   }).catch(res => {
     console.log(res)
