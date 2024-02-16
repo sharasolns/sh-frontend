@@ -7,6 +7,7 @@ import shGql from '@/lib/repo/graphql/shGql.js'
 import shRepo from '@/lib/repo/helpers/ShRepo.js'
 import { ShSuggest, useAppStore } from '@'
 import ShForm from '@/lib/components/ShForm.vue'
+import SuggestTemplate from '@/views/core/tasks/forms/SuggestTemplate.vue'
 const route = useRoute()
 const id = route.params.id
 const editTask = ref(null)
@@ -37,53 +38,30 @@ const fields = [
   {
     field: 'task_id',
     label: 'Task',
-    component: ShSuggest,
+    suggests: true,
     url: 'tasks/list',
-    datas: [
-      {
-        id: 1,
-        name: 'Task 1'
-      },
-      {
-        id: 2,
-        name: 'Task 2'
-      },
-      {
-        id: 3,
-        name: 'Task 3'
-      }
-    ]
+    required: true,
+    optionTemplate: SuggestTemplate,
+    // selectedOptionTemplate: SuggestTemplate
   },
   {
     field: 'name',
     label: 'Name',
     type: 'text',
-    required: true
-  },
-  {
-    field: 'description',
-    label: 'Description',
-    type: 'textarea',
-    required: true
-  },
-  {
-    field: 'phone',
-    label: 'Phone',
-    type: 'phone',
-    required: true
   }
 ]
 </script>
 <template>
-  <sh-auto-form :fields="['task_id']" :fill-selects="{
-    task_id: {
-          dataUrl: 'tasks/list?all=1'
-        }
-  }" action="/tasks" />
-<sh-auto-form :currentDataa="{
-  task_id: 41
+<!--  <sh-auto-form :fields="['task_id']" :fill-selects="{-->
+<!--    task_id: {-->
+<!--          url: 'tasks/list?all=1'-->
+<!--        }-->
+<!--  }" action="/tasks" />-->
+<sh-auto-form :current-data="{
+  task_id: 2,
+  name: 'Task 1'
 
-}" @field-changed="fieldChanged" :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="fields" :gqlMutation="mutation"></sh-auto-form>
+}" @field-changed="fieldChanged" @success="appStore.refresh()" success-message="Task added successfully" :fields="fields" :gqlMutation="mutation"></sh-auto-form>
 </template>
 
 <style scoped>

@@ -3,7 +3,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { Modal, Offcanvas } from 'bootstrap';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, unref, normalizeClass, resolveComponent, createBlock, resolveDynamicComponent, watch, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
+import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, watch, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
 import _ from 'lodash';
 import { defineStore, storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
@@ -185,7 +185,7 @@ function showToast(message, toastType, config){
             mixinConfig[newKey] = config[key];
         });
     }
-    console.log(mixinConfig);
+    // console.log(mixinConfig)
     const Toast = Swal.mixin(mixinConfig);
     // Toast.mixin({
     //   position: 'top'
@@ -2037,11 +2037,11 @@ const _hoisted_1$n = {
   class: "dropdown sh-suggest"
 };
 const _hoisted_2$d = ["id"];
-const _hoisted_3$c = { class: "badge bg-secondary m-1 sh-selected-item" };
-const _hoisted_4$c = ["onClick"];
-const _hoisted_5$a = ["id"];
-const _hoisted_6$9 = ["id", "aria-labelledby"];
-const _hoisted_7$8 = { key: 0 };
+const _hoisted_3$c = { class: "sh-suggestions-holder" };
+const _hoisted_4$c = { class: "badge bg-secondary m-1 sh-selected-item" };
+const _hoisted_5$a = ["onClick"];
+const _hoisted_6$9 = ["id"];
+const _hoisted_7$8 = ["id", "aria-labelledby"];
 const _hoisted_8$7 = ["onClick"];
 const _hoisted_9$7 = {
   key: 1,
@@ -2055,7 +2055,7 @@ const _hoisted_10$6 = {
 
 var script$u = {
   __name: 'ShSuggest',
-  props: ['data','allowMultiple','url','modelValue'],
+  props: ['data','allowMultiple','url','modelValue','optionTemplate'],
   emits: ['update:modelValue'],
   setup(__props, { emit: __emit }) {
 
@@ -2068,6 +2068,11 @@ let selectedSuggestions = ref([]);
 onMounted(() => {
   id.value = 'sid' + (Math.random() + 1).toString(36).substring(7);
   resetData();
+  if(props.url){
+    fetchRemoteData();
+  } else {
+    initializeExisting();
+  }
 });
 function resetData(){
   const data = props.data;
@@ -2131,10 +2136,10 @@ const fetchRemoteData = ()=>{
   const data = {
     all: 1,
     filter_value: searchText.value,
-    here: 'three'
   };
   shApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data;
+    initializeExisting();
   }).catch(res => {
     console.log(res);
   });
@@ -2153,36 +2158,60 @@ const hideDropDown = ()=>{
   }
 };
 
+const initializeExisting = ()=>{
+  console.log(props);
+  if(props.modelValue && suggestions.value){
+    if(props.allowMultiple){
+      let selected = [];
+      props.modelValue.forEach(id=>{
+        let found = suggestions.value.find(sgt=>{
+          return sgt.id === id
+        });
+        if(found){
+          selected.push(found);
+        }
+      });
+      selectedSuggestions.value = selected;
+    } else {
+      let found = suggestions.value.find(sgt=>{
+        return sgt.id === props.modelValue
+      });
+      if(found){
+        selectedSuggestions.value = [found];
+      }
+    }
+  }
+};
+
 return (_ctx, _cache) => {
   return (unref(id))
     ? (openBlock(), createElementBlock("div", _hoisted_1$n, [
         createElementVNode("div", {
           id: unref(id),
           "data-bs-toggle": "dropdown",
-          class: "form-control p-0 d-flex sh-suggest-control dropdown-toggle",
+          class: "p-0 d-flex sh-suggest-control dropdown-toggle",
           "aria-expanded": "false"
         }, [
-          createElementVNode("div", null, [
+          createElementVNode("div", _hoisted_3$c, [
             (openBlock(true), createElementBlock(Fragment, null, renderList(unref(selectedSuggestions), (sgt) => {
-              return (openBlock(), createElementBlock("h5", _hoisted_3$c, [
+              return (openBlock(), createElementBlock("h5", _hoisted_4$c, [
                 createTextVNode(toDisplayString(sgt.name) + " ", 1 /* TEXT */),
                 createElementVNode("button", {
                   onClick: $event => (removeSuggestion(sgt.id)),
                   type: "button",
                   class: "btn-close border-start border-1 ms-1",
                   "aria-label": "Close"
-                }, null, 8 /* PROPS */, _hoisted_4$c)
+                }, null, 8 /* PROPS */, _hoisted_5$a)
               ]))
             }), 256 /* UNKEYED_FRAGMENT */))
           ]),
           createElementVNode("div", {
             id: 'input_' + unref(id),
             contenteditable: "true",
-            onClick: filterData,
             onInput: filterData,
             onChange: filterData,
             class: "flex-fill h-100 sh-suggestion-input"
-          }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_5$a)
+          }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_6$9)
         ], 8 /* PROPS */, _hoisted_2$d),
         createElementVNode("ul", {
           class: "dropdown-menu w-100",
@@ -2195,21 +2224,29 @@ return (_ctx, _cache) => {
                   key: suggestion.id
                 }, [
                   (suggestion.name)
-                    ? (openBlock(), createElementBlock("li", _hoisted_7$8, [
-                        createElementVNode("span", {
-                          style: {"cursor":"pointer"},
-                          onClick: $event => (addSuggestion(suggestion)),
-                          class: normalizeClass(["dropdown-item", unref(selectedSuggestions).includes(suggestion) ? 'active':'']),
-                          href: "#"
-                        }, toDisplayString(suggestion.name ?? suggestion.text), 11 /* TEXT, CLASS, PROPS */, _hoisted_8$7)
-                      ]))
+                    ? (openBlock(), createElementBlock("li", {
+                        key: 0,
+                        onClick: $event => (addSuggestion(suggestion))
+                      }, [
+                        (__props.optionTemplate)
+                          ? (openBlock(), createBlock(resolveDynamicComponent(__props.optionTemplate), {
+                              key: 0,
+                              option: suggestion
+                            }, null, 8 /* PROPS */, ["option"]))
+                          : (openBlock(), createElementBlock("span", {
+                              key: 1,
+                              style: {"cursor":"pointer"},
+                              class: normalizeClass(["dropdown-item", unref(selectedSuggestions).includes(suggestion) ? 'active':'']),
+                              href: "#"
+                            }, toDisplayString(suggestion.name ?? suggestion.text), 3 /* TEXT, CLASS */))
+                      ], 8 /* PROPS */, _hoisted_8$7))
                     : createCommentVNode("v-if", true)
                 ], 64 /* STABLE_FRAGMENT */))
               }), 128 /* KEYED_FRAGMENT */))
             : (unref(searchText))
               ? (openBlock(), createElementBlock("li", _hoisted_9$7, " No results found "))
               : (openBlock(), createElementBlock("li", _hoisted_10$6, " Type to search... "))
-        ], 8 /* PROPS */, _hoisted_6$9)
+        ], 8 /* PROPS */, _hoisted_7$8)
       ]))
     : createCommentVNode("v-if", true)
 }
@@ -2569,7 +2606,7 @@ const _hoisted_10$5 = ["data-cy", "placeholder", "name", "onFocus", "onChange"];
 const _hoisted_11$5 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_12$4 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_13$4 = ["data-cy", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
-const _hoisted_14$3 = ["data-cy", "name", "onFocus", "onUpdate:modelValue"];
+const _hoisted_14$4 = ["data-cy", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_15$3 = ["disabled", "placeholder", "name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_16$3 = ["name", "onFocus", "onUpdate:modelValue"];
 const _hoisted_17$3 = ["name", "onFocus", "onUpdate:modelValue"];
@@ -2715,7 +2752,7 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
                     onFocus: $event => ($options.removeErrors(field)),
                     class: normalizeClass([_ctx.form_errors[field] == null ? ' field_' + field:'is-invalid ' + field, "form-control active"]),
                     "onUpdate:modelValue": $event => ((_ctx.form_elements[field]) = $event)
-                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_14$3)), [
+                  }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_14$4)), [
                     [vModelText, _ctx.form_elements[field]]
                   ])
                 : createCommentVNode("v-if", true),
@@ -2993,7 +3030,7 @@ const _hoisted_1$k = ["value"];
 
 var script$o = {
   __name: 'SelectInput',
-  props: ['modelValue','label','data','dataUrl'],
+  props: ['modelValue','label','url','required','options','dataUrl','data'],
   emits: ['update:modelValue','clearValidationErrors'],
   setup(__props, { emit: __emit }) {
 
@@ -3006,6 +3043,7 @@ const modelValueUpdated = (e) => {
   emit('update:modelValue',inputModel);
 };
 onMounted(()=>{
+  console.log(props);
   props.modelValue && (inputModel.value = props.modelValue);
   const options = props.data ?? props.options;
   if(options){
@@ -3015,8 +3053,8 @@ onMounted(()=>{
         name: item.label ? item.label : item.name ? item.name : item.value ? item.value:item.id ? item.id:item.option
       }
     });
-  } else if (props.dataUrl){
-    shApis.doGet(props.dataUrl,{all:1}).then(res=>{
+  } else if (props.dataUrl || props.url) {
+    shApis.doGet(props.dataUrl ??  props.url,{all:1}).then(res=>{
       selectOptions.value = res.data.map(item=>{
         return {
           id: item.id ? item.id : item.key ? item.key : item.value ? item.value:item.name ? item.name:item.label,
@@ -3096,59 +3134,63 @@ script$n.__file = "src/lib/components/form-components/PasswordInput.vue";
 const _hoisted_1$j = /*#__PURE__*/createElementVNode("div", null, null, -1 /* HOISTED */);
 const _hoisted_2$b = ["onUpdate:modelValue"];
 const _hoisted_3$a = ["innerHTML"];
-const _hoisted_4$a = ["innerHTML"];
-const _hoisted_5$8 = {
+const _hoisted_4$a = {
+  key: 0,
+  class: "text-danger sh-required"
+};
+const _hoisted_5$8 = ["innerHTML"];
+const _hoisted_6$7 = {
   key: 2,
   class: "form-notch"
 };
-const _hoisted_6$7 = /*#__PURE__*/createElementVNode("div", { class: "form-notch-leading" }, null, -1 /* HOISTED */);
-const _hoisted_7$6 = /*#__PURE__*/createElementVNode("div", { class: "form-notch-middle" }, null, -1 /* HOISTED */);
-const _hoisted_8$5 = /*#__PURE__*/createElementVNode("div", { class: "form-notch-trailing" }, null, -1 /* HOISTED */);
-const _hoisted_9$5 = [
-  _hoisted_6$7,
+const _hoisted_7$6 = /*#__PURE__*/createElementVNode("div", { class: "form-notch-leading" }, null, -1 /* HOISTED */);
+const _hoisted_8$5 = /*#__PURE__*/createElementVNode("div", { class: "form-notch-middle" }, null, -1 /* HOISTED */);
+const _hoisted_9$5 = /*#__PURE__*/createElementVNode("div", { class: "form-notch-trailing" }, null, -1 /* HOISTED */);
+const _hoisted_10$4 = [
   _hoisted_7$6,
-  _hoisted_8$5
+  _hoisted_8$5,
+  _hoisted_9$5
 ];
-const _hoisted_10$4 = ["innerHTML"];
-const _hoisted_11$4 = ["disabled"];
-const _hoisted_12$3 = {
+const _hoisted_11$4 = ["innerHTML"];
+const _hoisted_12$3 = ["disabled"];
+const _hoisted_13$3 = {
   key: 0,
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
 };
-const _hoisted_13$3 = { key: 1 };
+const _hoisted_14$3 = { key: 1 };
 
 
 var script$m = {
   __name: 'ShAutoForm',
   props: [
-    'action','successCallback','retainDataAfterSubmission',
-  'successMessage','fields','customComponents','placeHolders',
+  'action', 'successCallback', 'retainDataAfterSubmission',
+  'successMessage', 'fields', 'customComponents', 'placeHolders',
   'formClasses',
-  'helperTexts','labels','data',
+  'helperTexts', 'labels', 'data',
   'fillSelects',
   'formClass',
   'actionLabel',
-    'textAreas',
-    'currentData',
-    'emails',
-    'phones','numbers','selects','dates','gqlMutation'
+  'textAreas',
+  'currentData',
+  'emails',
+  'phones', 'numbers', 'selects', 'dates', 'gqlMutation'
 ],
-  emits: ['success','fieldChanged','formSubmitted','formError'],
+  emits: ['success', 'fieldChanged', 'formSubmitted', 'formError'],
   setup(__props, { emit: __emit }) {
 
 const props = __props;
 const emit = __emit;
 const formFields = ref([]);
-const getFieldComponent = (fieldObj)=>{
-  if(fieldObj.component){
+const getFieldComponent = (fieldObj) => {
+  if (fieldObj.component) {
     return fieldObj.component
   }
   const field = fieldObj.field ?? fieldObj.name;
   const defaultTextareas = ['message', 'meta_description', 'comment', 'call_response', 'comments', 'description'];
   const defaultNumbers = ['age'];
-  const passwords = ['password','password_confirmation','pin'];
+  const passwords = ['password', 'password_confirmation', 'pin'];
   const defaultPhones = ['phone'];
   const defaultEmails = ['email'];
   const formComponents = inject('formComponents');
@@ -3159,38 +3201,35 @@ const getFieldComponent = (fieldObj)=>{
   const NumberComponent = formComponents.number ?? script$r;
   const SelectComponent = formComponents.select ?? script$o;
   const PasswordComponent = formComponents.password ?? script$n;
-  if(props.customComponents && props.customComponents[field]) {
+  if (props.customComponents && props.customComponents[field]) {
     return props.customComponents[field]
   }
-  if(props.fillSelects && props.fillSelects[field]){
+  if (props.fillSelects && props.fillSelects[field]) {
     Object.assign(fieldObj, props.fillSelects[field]);
-    if(fieldObj.suggests || fieldObj.suggest){
+    if (fieldObj.suggests || fieldObj.suggest) {
       fieldObj.type = 'suggests';
     } else {
       fieldObj.type = 'select';
     }
   }
+  if(fieldObj.suggests || fieldObj.suggest){
+    fieldObj.type = 'suggests';
+  }
 
-  if(fieldObj.type){
-    if(fieldObj.type === 'suggest' || fieldObj.type === 'suggests'){
+  if (fieldObj.type) {
+    if (fieldObj.type === 'suggest' || fieldObj.type === 'suggests') {
       return script$u
     }
-    return fieldObj.type === 'number' ? NumberComponent:fieldObj.type === 'textarea' ? TextAreaComponent : fieldObj.type === 'email' ? EmailComponent : fieldObj.type === 'phone' ? PhoneComponent : fieldObj.type === 'password' ? PasswordComponent:fieldObj.type === 'select' ? SelectComponent:TextComponent
-  }else
-    if(passwords.includes(field)){
-      return PasswordComponent
-  }
-  else
-  if((props.textAreas && props.textAreas.includes(field)) || defaultTextareas.includes(field)){
+    return fieldObj.type === 'number' ? NumberComponent : fieldObj.type === 'textarea' ? TextAreaComponent : fieldObj.type === 'email' ? EmailComponent : fieldObj.type === 'phone' ? PhoneComponent : fieldObj.type === 'password' ? PasswordComponent : fieldObj.type === 'select' ? SelectComponent : TextComponent
+  } else if (passwords.includes(field)) {
+    return PasswordComponent
+  } else if ((props.textAreas && props.textAreas.includes(field)) || defaultTextareas.includes(field)) {
     return formComponents.textArea ?? script$p
-  } else
-  if((props.emails && props.emails.includes(field)) || defaultEmails.includes(field)){
+  } else if ((props.emails && props.emails.includes(field)) || defaultEmails.includes(field)) {
     return formComponents.email ?? script$s
-  } else
-  if((props.phones && props.phones.includes(field)) || defaultPhones.includes(field)){
+  } else if ((props.phones && props.phones.includes(field)) || defaultPhones.includes(field)) {
     return formComponents.phone ?? script$v
-  } else
-  if((props.numbers && props.numbers.includes(field)) || defaultNumbers.includes(field)){
+  } else if ((props.numbers && props.numbers.includes(field)) || defaultNumbers.includes(field)) {
     return formComponents.number ?? script$r
   }
   // else
@@ -3208,20 +3247,20 @@ const shAutoForm = ref(null);
 const closeModal = e => {
   setTimeout(() => {
     const modal = shAutoForm.value.closest('.modal-dialog');
-    if(modal){
+    if (modal) {
       const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]');
       closeBtn && closeBtn.click();
     }
   }, 1500);
 };
-const getLabel = field => (props.labels && (props.labels[field] !== undefined)) ? props.labels[field]:_.startCase(_.camelCase(field));
-const getComponentClass = field => validationErrors.value[field] ? getElementClass('formControl') + ' is-invalid':getElementClass('formControl');
-const getHelperText = field => (props.helperTexts && props.helperTexts[field]) ? props.helperTexts[field]:false;
-const getElementClass = section => (props.formClasses && props.formClasses[section]) ? props.formClasses[section]:shFormElementClasses.value[section] ?? _.snakeCase(section).replace(/_/gi,'-');
+const getLabel = field => (props.labels && (props.labels[field] !== undefined)) ? props.labels[field] : _.startCase(_.camelCase(field));
+const getComponentClass = field => validationErrors.value[field] ? getElementClass('formControl') + ' is-invalid' : getElementClass('formControl');
+const getHelperText = field => (props.helperTexts && props.helperTexts[field]) ? props.helperTexts[field] : false;
+const getElementClass = section => (props.formClasses && props.formClasses[section]) ? props.formClasses[section] : shFormElementClasses.value[section] ?? _.snakeCase(section).replace(/_/gi, '-');
 const getPlaceholder = field => (props.placeHolders && props.placeHolders[field]) && props.placeHolders[field];
 const fieldChanged = field => {
-    delete validationErrors.value[field];
-    emit('fieldChanged', field, formFields.value.filter(f=>f.field === field)[0].value);
+  delete validationErrors.value[field];
+  emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value);
 };
 const getComponentProps = field => {
   const newField = {...field};
@@ -3240,57 +3279,58 @@ const submitForm = e => {
   e.preventDefault();
   loading.value = true;
   const data = {};
-  formFields.value.map(field=>{
+  formFields.value.map(field => {
     data[field.field] = field.value;
   });
-  if(props.gqlMutation) {
+  if (props.gqlMutation) {
     let args = `(`;
     let selectFields = Object.keys(data);
-    selectFields.forEach(key=>{
-      if(data[key]) {
-        args +=`${key}: "${data[key]}",`;
+    selectFields.forEach(key => {
+      if (data[key]) {
+        args += `${key}: "${data[key]}",`;
       }
     });
-    args+=`)`;
-    args = args.replace(',)',')');
-    if(args == '()') {
+    args += `)`;
+    args = args.replace(',)', ')');
+    if (args == '()') {
       args = '';
     }
     const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`;
-    shApis.graphQlMutate(mutation).then(res=>handleSuccessRequest(res)).catch(reason=>handlefailedRequest(reason));
+    shApis.graphQlMutate(mutation).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason));
   } else {
-    shApis.doPost(props.action,data).then(res=>handleSuccessRequest(res)).catch(reason=>handlefailedRequest(reason));
+    shApis.doPost(props.action, data).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason));
   }
   return false
 };
 
-const handleSuccessRequest = res=>{
+const handleSuccessRequest = res => {
   loading.value = false;
-  emit('formSubmitted',res.data);
-  emit('success',res.data);
+  emit('formSubmitted', res.data);
+  emit('success', res.data);
   props.successMessage && shRepo.showToast(props.successMessage);
   props.successCallback && props.successCallback(res.data);
-  !props.retainDataAfterSubmission && formFields.value.map(field=>field.value = null);
+  !props.retainDataAfterSubmission && formFields.value.map(field => field.value = null);
   closeModal();
 };
 
-const handlefailedRequest = reason=>{
+const handlefailedRequest = reason => {
   loading.value = false;
-  const httpStatus = reason.response ? reason.response.status:0;
-  formError.value = httpStatus === 422 ? formError.value = null:reason.message ?? null;
+  const httpStatus = reason.response ? reason.response.status : 0;
+  formError.value = httpStatus === 422 ? formError.value = null : reason.message ?? null;
   let httpErrors = {};
   httpStatus === 422 && typeof reason.response.data.errors === 'object' && (httpErrors = reason.response.data.errors);
-  if(httpErrors && reason.response){
-    Object.keys(httpErrors).map(key=>validationErrors.value[key] = typeof httpErrors[key] === 'string' ? httpErrors[key]:httpErrors[key][0]);
+  if (httpErrors && reason.response) {
+    Object.keys(httpErrors).map(key => validationErrors.value[key] = typeof httpErrors[key] === 'string' ? httpErrors[key] : httpErrors[key][0]);
   }
-  (httpStatus !== 422 && formError.value) && shRepo.showToast(formError.value,'error');
+  (httpStatus !== 422 && formError.value) && shRepo.showToast(formError.value, 'error');
   validationErrors.value;
 };
 const submitBtnWidth = ref(null);
-const setExistingData = (existingData)=>{
-  if (props.currentData) {
-    const newFields = formFields.value.map(fl=>{
-      if(existingData[fl.field]) {
+const setExistingData = (existingData) => {
+  console.log(existingData,props);
+  if (existingData) {
+    const newFields = formFields.value.map(fl => {
+      if (existingData[fl.field]) {
         fl.value = existingData[fl.field];
       }
       return fl
@@ -3302,13 +3342,15 @@ const setExistingData = (existingData)=>{
     formFields.value = newFields;
   }
 };
-watch(()=>props.currentData,(newData)=>{
+watch(() => props.currentData, (newData) => {
   setExistingData(newData);
 });
-onMounted((ev)=>{
-  props.fields && props.fields.map(field=>{
-    if(typeof field === 'object') {
-      const fieldObj = {...field};
+onMounted((ev) => {
+  console.log(props);
+  props.fields && props.fields.map(field => {
+    let fieldObj = {};
+    if (typeof field === 'object') {
+      fieldObj = {...field};
       fieldObj.field = fieldObj.field ?? fieldObj.name;
       // fieldObj.label && getLabel(fieldObj.field)
       fieldObj.helper = fieldObj.helperText ?? fieldObj.helper;
@@ -3317,15 +3359,19 @@ onMounted((ev)=>{
       fieldObj.label = fieldObj.label ?? getLabel(fieldObj.field ?? fieldObj.name);
       // fieldObj.placeholder && fieldObj.placeHolder && getPlaceholder(fieldObj.field)
       fieldObj.value = null;
-      formFields.value.push(fieldObj);
     } else {
-      formFields.value.push({
-        field:field,label: getLabel(field),
+      fieldObj = {
+        field: field, label: getLabel(field),
         helper: getHelperText(field),
         placeholder: getPlaceholder(field),
         value: null
-      });
+      };
+
+      if(props.fillSelects && props.fillSelects[fieldObj.field]){
+        Object.assign(fieldObj, props.fillSelects[fieldObj.field]);
+      }
     }
+    formFields.value.push(fieldObj);
     formFields.value.push({
       field: 'id',
       type: 'hidden'
@@ -3362,9 +3408,16 @@ return (_ctx, _cache) => {
                 (!unref(isFloating) && field.label)
                   ? (openBlock(), createElementBlock("label", {
                       key: 0,
-                      class: normalizeClass(getElementClass('formLabel')),
-                      innerHTML: field.label
-                    }, null, 10 /* CLASS, PROPS */, _hoisted_3$a))
+                      class: normalizeClass(getElementClass('formLabel'))
+                    }, [
+                      createElementVNode("span", {
+                        innerHTML: field.label,
+                        class: "sh-label"
+                      }, null, 8 /* PROPS */, _hoisted_3$a),
+                      (field.required)
+                        ? (openBlock(), createElementBlock("span", _hoisted_4$a, "*"))
+                        : createCommentVNode("v-if", true)
+                    ], 2 /* CLASS */))
                   : createCommentVNode("v-if", true),
                 (openBlock(), createBlock(resolveDynamicComponent(getFieldComponent(field)), mergeProps(getComponentProps(field), {
                   isInvalid: typeof validationErrors.value[field.field] !== 'undefined',
@@ -3378,17 +3431,17 @@ return (_ctx, _cache) => {
                       key: 1,
                       class: normalizeClass(getElementClass('formLabel')),
                       innerHTML: field.label
-                    }, null, 10 /* CLASS, PROPS */, _hoisted_4$a))
+                    }, null, 10 /* CLASS, PROPS */, _hoisted_5$8))
                   : createCommentVNode("v-if", true),
                 (unref(isFloating))
-                  ? (openBlock(), createElementBlock("div", _hoisted_5$8, [..._hoisted_9$5]))
+                  ? (openBlock(), createElementBlock("div", _hoisted_6$7, [..._hoisted_10$4]))
                   : createCommentVNode("v-if", true),
                 (field.helper)
                   ? (openBlock(), createElementBlock("div", {
                       key: 3,
                       class: normalizeClass(getElementClass('helperText')),
                       innerHTML: field.helper
-                    }, null, 10 /* CLASS, PROPS */, _hoisted_10$4))
+                    }, null, 10 /* CLASS, PROPS */, _hoisted_11$4))
                   : createCommentVNode("v-if", true),
                 (validationErrors.value[field.field])
                   ? (openBlock(), createElementBlock("div", {
@@ -3410,12 +3463,12 @@ return (_ctx, _cache) => {
           class: normalizeClass(getElementClass('actionBtn'))
         }, [
           (loading.value)
-            ? (openBlock(), createElementBlock("span", _hoisted_12$3))
+            ? (openBlock(), createElementBlock("span", _hoisted_13$3))
             : createCommentVNode("v-if", true),
           (!loading.value)
-            ? (openBlock(), createElementBlock("span", _hoisted_13$3, "Submit"))
+            ? (openBlock(), createElementBlock("span", _hoisted_14$3, "Submit"))
             : createCommentVNode("v-if", true)
-        ], 14 /* CLASS, STYLE, PROPS */, _hoisted_11$4)
+        ], 14 /* CLASS, STYLE, PROPS */, _hoisted_12$3)
       ], 2 /* CLASS */),
       renderSlot(_ctx.$slots, "default")
     ], 34 /* CLASS, NEED_HYDRATION */)

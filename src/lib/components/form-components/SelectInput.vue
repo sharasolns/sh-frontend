@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import shApis from '../../repo/helpers/ShApis.js'
 
-const props = defineProps(['modelValue','label','data','dataUrl'])
+const props = defineProps(['modelValue','label','url','required','options','dataUrl','data'])
 const emit = defineEmits(['update:modelValue','clearValidationErrors'])
 const inputModel = ref(null)
 const selectOptions = ref(null)

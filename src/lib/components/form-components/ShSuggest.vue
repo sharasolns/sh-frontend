@@ -2,7 +2,7 @@
 import {onMounted, ref} from 'vue'
 import ShApis from '../../repo/helpers/ShApis.js'
 
-const props = defineProps(['data','allowMultiple','url','modelValue'])
+const props = defineProps(['data','allowMultiple','url','modelValue','optionTemplate'])
 const emit = defineEmits(['update:modelValue'])
 let id = ref(null)
 let filterValue = ref(null)
@@ -128,8 +128,8 @@ const initializeExisting = ()=>{
 </script>
 <template>
   <div class="dropdown sh-suggest" v-if="id">
-    <div :id="id" data-bs-toggle="dropdown" class="form-control p-0 d-flex sh-suggest-control dropdown-toggle" aria-expanded="false">
-      <div>
+    <div :id="id" data-bs-toggle="dropdown" class="p-0 d-flex sh-suggest-control dropdown-toggle" aria-expanded="false">
+      <div class="sh-suggestions-holder">
         <h5 class="badge bg-secondary m-1 sh-selected-item" v-for="sgt in selectedSuggestions">
           {{ sgt.name }}
           <button @click="removeSuggestion(sgt.id)" type="button" class="btn-close border-start border-1 ms-1" aria-label="Close"></button>
@@ -139,8 +139,9 @@ const initializeExisting = ()=>{
     </div>
     <ul class="dropdown-menu w-100" :id="'dropwdown_section' + id" :aria-labelledby="id">
       <template v-if="suggestions && suggestions.length > 0" v-for="suggestion in suggestions" :key="suggestion.id">
-        <li v-if="suggestion.name">
-          <span style="cursor: pointer;" @click="addSuggestion(suggestion)" class="dropdown-item" :class="selectedSuggestions.includes(suggestion) ? 'active':''" href="#">{{ suggestion.name ?? suggestion.text }}</span>
+        <li v-if="suggestion.name" @click="addSuggestion(suggestion)">
+          <component  v-if="optionTemplate" :is="optionTemplate" :option="suggestion" />
+          <span v-else style="cursor: pointer;" class="dropdown-item" :class="selectedSuggestions.includes(suggestion) ? 'active':''" href="#">{{ suggestion.name ?? suggestion.text }}</span>
         </li>
       </template>
       <li v-else-if="searchText" class="dropdown-item sh-suggest-no-results">
@@ -161,6 +162,7 @@ const initializeExisting = ()=>{
 }
 .sh-suggest{
   margin-bottom: 1rem;
+  padding: 0rem 0rem;
 }
 .sh-suggest-control::after{
   margin-top: auto;

@@ -158,7 +158,7 @@ function showToast(message, toastType, config){
             mixinConfig[newKey] = config[key]
         })
     }
-    console.log(mixinConfig)
+    // console.log(mixinConfig)
     const Toast = Swal.mixin(mixinConfig)
     // Toast.mixin({
     //   position: 'top'
