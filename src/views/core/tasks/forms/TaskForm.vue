@@ -75,12 +75,15 @@ const fields = [
 ]
 </script>
 <template>
-  <sh-form :fields="['task_id']" :fill-selects="{
+  <sh-auto-form :fields="['task_id']" :fill-selects="{
     task_id: {
-          url: 'tasks/list?all=1'
+          dataUrl: 'tasks/list?all=1'
         }
   }" action="/tasks" />
-<sh-auto-form @field-changed="fieldChanged" :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="fields" :gqlMutation="mutation"></sh-auto-form>
+<sh-auto-form :currentDataa="{
+  task_id: 41
+
+}" @field-changed="fieldChanged" :current-data="editTask" @success="appStore.refresh()" success-message="Task added successfully" :fields="fields" :gqlMutation="mutation"></sh-auto-form>
 </template>
 
 <style scoped>

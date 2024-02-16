@@ -11,6 +11,11 @@ let selectedSuggestions = ref([])
 onMounted(() => {
   id.value = 'sid' + (Math.random() + 1).toString(36).substring(7)
   resetData()
+  if(props.url){
+    fetchRemoteData()
+  } else {
+    initializeExisting()
+  }
 })
 function resetData(){
   const data = props.data
@@ -74,10 +79,10 @@ const fetchRemoteData = ()=>{
   const data = {
     all: 1,
     filter_value: searchText.value,
-    here: 'three'
   }
   ShApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data
+    initializeExisting()
   }).catch(res => {
     console.log(res)
   })
@@ -95,6 +100,31 @@ const hideDropDown = ()=>{
     dropdownElem.classList.remove('show')
   }
 }
+
+const initializeExisting = ()=>{
+  console.log(props)
+  if(props.modelValue && suggestions.value){
+    if(props.allowMultiple){
+      let selected = []
+      props.modelValue.forEach(id=>{
+        let found = suggestions.value.find(sgt=>{
+          return sgt.id === id
+        })
+        if(found){
+          selected.push(found)
+        }
+      })
+      selectedSuggestions.value = selected
+    } else {
+      let found = suggestions.value.find(sgt=>{
+        return sgt.id === props.modelValue
+      })
+      if(found){
+        selectedSuggestions.value = [found]
+      }
+    }
+  }
+}
 </script>
 <template>
   <div class="dropdown sh-suggest" v-if="id">
@@ -105,7 +135,7 @@ const hideDropDown = ()=>{
           <button @click="removeSuggestion(sgt.id)" type="button" class="btn-close border-start border-1 ms-1" aria-label="Close"></button>
         </h5>
       </div>
-      <div :id="'input_' + id" contenteditable="true" @click="filterData" @input="filterData" @change="filterData" class="flex-fill h-100 sh-suggestion-input"></div>
+      <div :id="'input_' + id" contenteditable="true" @input="filterData" @change="filterData" class="flex-fill h-100 sh-suggestion-input"></div>
     </div>
     <ul class="dropdown-menu w-100" :id="'dropwdown_section' + id" :aria-labelledby="id">
       <template v-if="suggestions && suggestions.length > 0" v-for="suggestion in suggestions" :key="suggestion.id">

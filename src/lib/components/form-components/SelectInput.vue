@@ -11,6 +11,7 @@ const modelValueUpdated = (e) => {
   emit('update:modelValue',inputModel)
 }
 onMounted(()=>{
+  console.log(props)
   props.modelValue && (inputModel.value = props.modelValue)
   const options = props.data ?? props.options
   if(options){
@@ -20,8 +21,8 @@ onMounted(()=>{
         name: item.label ? item.label : item.name ? item.name : item.value ? item.value:item.id ? item.id:item.option
       }
     })
-  } else if (props.dataUrl){
-    shApis.doGet(props.dataUrl,{all:1}).then(res=>{
+  } else if (props.dataUrl || props.url) {
+    shApis.doGet(props.dataUrl ??  props.url,{all:1}).then(res=>{
       selectOptions.value = res.data.map(item=>{
         return {
           id: item.id ? item.id : item.key ? item.key : item.value ? item.value:item.name ? item.name:item.label,
