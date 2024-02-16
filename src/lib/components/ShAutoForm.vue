@@ -23,7 +23,8 @@ const props = defineProps([
   'textAreas',
   'currentData',
   'emails',
-  'phones', 'numbers', 'selects', 'dates', 'gqlMutation'
+  'phones', 'numbers', 'selects', 'dates', 'gqlMutation',
+    'required'
 ])
 const emit = defineEmits(['success', 'fieldChanged', 'formSubmitted', 'formError'])
 const formFields = ref([])
@@ -216,6 +217,9 @@ onMounted((ev) => {
       if(props.fillSelects && props.fillSelects[fieldObj.field]){
         Object.assign(fieldObj, props.fillSelects[fieldObj.field])
       }
+    }
+    if(props.required && props.required.includes(fieldObj.field)){
+      fieldObj.required = true
     }
     formFields.value.push(fieldObj)
     formFields.value.push({

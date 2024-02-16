@@ -3187,7 +3187,8 @@ var script$m = {
   'textAreas',
   'currentData',
   'emails',
-  'phones', 'numbers', 'selects', 'dates', 'gqlMutation'
+  'phones', 'numbers', 'selects', 'dates', 'gqlMutation',
+    'required'
 ],
   emits: ['success', 'fieldChanged', 'formSubmitted', 'formError'],
   setup(__props, { emit: __emit }) {
@@ -3382,6 +3383,9 @@ vue.onMounted((ev) => {
       if(props.fillSelects && props.fillSelects[fieldObj.field]){
         Object.assign(fieldObj, props.fillSelects[fieldObj.field]);
       }
+    }
+    if(props.required && props.required.includes(fieldObj.field)){
+      fieldObj.required = true;
     }
     formFields.value.push(fieldObj);
     formFields.value.push({

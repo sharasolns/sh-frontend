@@ -52,11 +52,14 @@ const fields = [
 ]
 </script>
 <template>
-<!--  <sh-auto-form :fields="['task_id']" :fill-selects="{-->
-<!--    task_id: {-->
-<!--          url: 'tasks/list?all=1'-->
-<!--        }-->
-<!--  }" action="/tasks" />-->
+  <sh-auto-form :fields="['task_id']"
+                :required="[ 'task_id']"
+
+                :fill-selects="{
+    task_id: {
+          url: 'tasks/list?all=1'
+        }
+  }" action="/tasks" />
 <sh-auto-form :current-data="{
   task_id: 2,
   name: 'Task 1'

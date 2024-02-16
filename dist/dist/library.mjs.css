@@ -31,38 +31,6 @@
   color: white;
 }
 
-.sh-phone{
-  display: flex;
-  width: 100%;
-  align-items: center;
-  padding: 0 0.25rem;
-}
-.phone-country{
-  width: 2rem;
-  border: none;
-  align-self: center;
-  outline: none !important;
-  padding: 0.4rem;
-  border-right: 1px solid #0003;
-}
-.phone-number{
-  width: calc(100% - 2.2rem);
-  border: none;
-  align-self: center;
-  outline: none;
-  margin-bottom: 0;
-  padding: 0.4rem;
-}
-.sh-phone img{
-  padding: 0.125rem;
-  width: 2rem;
-  height: 2rem;
-}
-.phone-number::placeholder{
-  font-weight: 300;
-  opacity: 0.5;
-}
-
 .permissions-main {
   background: #edeff2;
 }
@@ -93,6 +61,38 @@
   cursor: pointer;
   height: 100%;
   flex-grow: 1;
+}
+
+.sh-phone{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0 0.25rem;
+}
+.phone-country{
+  width: 2rem;
+  border: none;
+  align-self: center;
+  outline: none !important;
+  padding: 0.4rem;
+  border-right: 1px solid #0003;
+}
+.phone-number{
+  width: calc(100% - 2.2rem);
+  border: none;
+  align-self: center;
+  outline: none;
+  margin-bottom: 0;
+  padding: 0.4rem;
+}
+.sh-phone img{
+  padding: 0.125rem;
+  width: 2rem;
+  height: 2rem;
+}
+.phone-number::placeholder{
+  font-weight: 300;
+  opacity: 0.5;
 }
 
 .sh-selected-item{
