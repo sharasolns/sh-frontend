@@ -3633,6 +3633,7 @@ var script$j = {
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
   'datePickers',
+  'required',
   'textAreas',
   'files',
   'phones',

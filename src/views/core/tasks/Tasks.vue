@@ -97,6 +97,20 @@ const deleteTask = item=>{
           }"
       >
       </sh-table>
+
+      <sh-modal-form
+          modal-id="addPayment"
+          modal-title="Add Payment"
+          :fields="['payment_account','amount', 'reference' ]"
+          :required="['payment_account','amount', 'reference' ]"
+          :action="`invoices/payments/store`"
+          :fill-selects="{
+                                    payment_account: {
+                                        url: `accounts/payment-accounts/list/any`,
+                                        suggests: true
+                                    }
+                                }" class="btn btn-primary btn-sm me-2">
+        <i class="bi bi-cash"></i>  Mark Paid  </sh-modal-form>
     </div>
   </div>
 </template>

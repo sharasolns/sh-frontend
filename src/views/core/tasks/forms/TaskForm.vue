@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import shGql from '@/lib/repo/graphql/shGql.js'
 import shRepo from '@/lib/repo/helpers/ShRepo.js'
-import { ShSuggest, useAppStore } from '@'
+import { ShModalForm, ShSuggest, useAppStore } from '@'
 import ShForm from '@/lib/components/ShForm.vue'
 import SuggestTemplate from '@/views/core/tasks/forms/SuggestTemplate.vue'
 const route = useRoute()
@@ -52,6 +52,7 @@ const fields = [
 ]
 </script>
 <template>
+
   <sh-auto-form :fields="['task_id']"
                 :required="[ 'task_id']"
 
