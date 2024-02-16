@@ -48,6 +48,17 @@ const fields = [
     field: 'name',
     label: 'Name',
     type: 'text',
+  },
+  {
+    field: 'description',
+    label: 'Description',
+    type: 'textarea',
+  },
+  {
+    field: 'phone',
+    label: 'Phone',
+    type: 'text',
+
   }
 ]
 </script>
@@ -62,8 +73,8 @@ const fields = [
         }
   }" action="/tasks" />
 <sh-auto-form :current-data="{
-  task_id: 2,
-  name: 'Task 1'
+  // task_id: 2,
+  // name: 'Task 1'
 
 }" @field-changed="fieldChanged" @success="appStore.refresh()" success-message="Task added successfully" :fields="fields" :gqlMutation="mutation"></sh-auto-form>
 </template>
