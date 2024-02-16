@@ -53,7 +53,7 @@ const fields = [
 </script>
 <template>
 
-  <sh-auto-form :fields="['task_id']"
+  <sh-auto-form :fields="['task_id','date']"
                 :required="[ 'task_id']"
 
                 :fill-selects="{

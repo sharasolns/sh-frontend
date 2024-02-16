@@ -11,6 +11,7 @@ import TextAreaInput from './form-components/TextAreaInput.vue'
 import SelectInput from './form-components/SelectInput.vue'
 import PasswordInput from './form-components/PasswordInput.vue'
 import ShSuggest from './form-components/ShSuggest.vue'
+import DateInput from './form-components/DateInput.vue'
 
 const props = defineProps([
   'action', 'successCallback', 'retainDataAfterSubmission',
@@ -83,9 +84,9 @@ const getFieldComponent = (fieldObj) => {
   // if((props.selects && props.selects.includes(field)) || defaultSelects.includes(field)){
   //   return formComponents.select ?? SelectInput
   // } else
-  // if((props.dates && props.dates.includes(field)) || defaultDates.includes(field)){
-  //   return formComponents.date ?? DateInput
-  // }
+  if((props.dates && props.dates.includes(field)) || defaultDates.includes(field)){
+    return formComponents.date ?? DateInput
+  }
   return formComponents.text ?? TextInput
 }
 const shFormElementClasses = ref(null)

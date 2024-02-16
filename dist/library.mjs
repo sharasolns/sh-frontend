@@ -1916,7 +1916,7 @@ const countries = [
   }
 ];
 
-var script$v = {
+var script$w = {
   name: 'PhoneInput',
   props: ['modelValue', 'country_code'],
   data () {
@@ -2029,8 +2029,8 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 
-script$v.render = render$3;
-script$v.__file = "src/lib/components/form-components/PhoneInput.vue";
+script$w.render = render$3;
+script$w.__file = "src/lib/components/form-components/PhoneInput.vue";
 
 const _hoisted_1$n = {
   key: 0,
@@ -2053,7 +2053,7 @@ const _hoisted_10$6 = {
 };
 
 
-var script$u = {
+var script$v = {
   __name: 'ShSuggest',
   props: ['data','allowMultiple','url','modelValue','optionTemplate'],
   emits: ['update:modelValue'],
@@ -2254,15 +2254,15 @@ return (_ctx, _cache) => {
 
 };
 
-script$u.__scopeId = "data-v-71cc9569";
-script$u.__file = "src/lib/components/form-components/ShSuggest.vue";
+script$v.__scopeId = "data-v-71cc9569";
+script$v.__file = "src/lib/components/form-components/ShSuggest.vue";
 
-var script$t = {
+var script$u = {
   name: 'ShForm',
   components: {
-    PhoneInput: script$v,
-    ShSuggest: script$u,
-    ShPhone: script$v
+    PhoneInput: script$w,
+    ShSuggest: script$v,
+    ShPhone: script$w
   },
   props: [
       'action',
@@ -2855,10 +2855,10 @@ function render$2(_ctx, _cache, $props, $setup, $data, $options) {
   ], 64 /* STABLE_FRAGMENT */))
 }
 
-script$t.render = render$2;
-script$t.__file = "src/lib/components/ShForm.vue";
+script$u.render = render$2;
+script$u.__file = "src/lib/components/ShForm.vue";
 
-var script$s = {
+var script$t = {
   __name: 'EmailInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
@@ -2896,12 +2896,12 @@ return (_ctx, _cache) => {
 
 };
 
-script$s.__file = "src/lib/components/form-components/EmailInput.vue";
+script$t.__file = "src/lib/components/form-components/EmailInput.vue";
 
 const _hoisted_1$l = ["min", "max"];
 
 
-var script$r = {
+var script$s = {
   __name: 'NumberInput',
   props: ['modelValue','label','min','max'],
   emits: ['update:modelValue','clearValidationErrors'],
@@ -2941,9 +2941,9 @@ return (_ctx, _cache) => {
 
 };
 
-script$r.__file = "src/lib/components/form-components/NumberInput.vue";
+script$s.__file = "src/lib/components/form-components/NumberInput.vue";
 
-var script$q = {
+var script$r = {
   __name: 'TextInput',
   props: ['modelValue','label','isInvalid'],
   emits: ['update:modelValue','clearValidationErrors'],
@@ -2983,9 +2983,9 @@ return (_ctx, _cache) => {
 
 };
 
-script$q.__file = "src/lib/components/form-components/TextInput.vue";
+script$r.__file = "src/lib/components/form-components/TextInput.vue";
 
-var script$p = {
+var script$q = {
   __name: 'TextAreaInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
@@ -3023,12 +3023,12 @@ return (_ctx, _cache) => {
 
 };
 
-script$p.__file = "src/lib/components/form-components/TextAreaInput.vue";
+script$q.__file = "src/lib/components/form-components/TextAreaInput.vue";
 
 const _hoisted_1$k = ["value"];
 
 
-var script$o = {
+var script$p = {
   __name: 'SelectInput',
   props: ['modelValue','label','url','required','options','dataUrl','data'],
   emits: ['update:modelValue','clearValidationErrors'],
@@ -3093,9 +3093,9 @@ return (_ctx, _cache) => {
 
 };
 
-script$o.__file = "src/lib/components/form-components/SelectInput.vue";
+script$p.__file = "src/lib/components/form-components/SelectInput.vue";
 
-var script$n = {
+var script$o = {
   __name: 'PasswordInput',
   props: ['modelValue','label'],
   emits: ['update:modelValue','clearValidationErrors'],
@@ -3129,7 +3129,49 @@ return (_ctx, _cache) => {
 
 };
 
-script$n.__file = "src/lib/components/form-components/PasswordInput.vue";
+script$o.__file = "src/lib/components/form-components/PasswordInput.vue";
+
+var script$n = {
+  __name: 'DateInput',
+  props: ['modelValue','label','isInvalid'],
+  emits: ['update:modelValue','clearValidationErrors'],
+  setup(__props, { emit: __emit }) {
+
+const props = __props;
+const emit = __emit;
+const inputModel = ref(null);
+
+const modelValueUpdated = (e) => {
+  emit('clearValidationErrors');
+  emit('update:modelValue',inputModel);
+};
+onMounted(()=>{
+  props.modelValue && (inputModel.value = props.modelValue);
+});
+
+watch(()=>props.modelValue, (newValue)=>{
+  if(newValue) {
+    inputModel.value = newValue;
+  }
+});
+
+
+return (_ctx, _cache) => {
+  return withDirectives((openBlock(), createElementBlock("input", {
+    type: "datetime-local",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((inputModel).value = $event)),
+    onChange: modelValueUpdated,
+    onKeydown: modelValueUpdated,
+    onUpdated: modelValueUpdated
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)), [
+    [vModelText, inputModel.value]
+  ])
+}
+}
+
+};
+
+script$n.__file = "src/lib/components/form-components/DateInput.vue";
 
 const _hoisted_1$j = /*#__PURE__*/createElementVNode("div", null, null, -1 /* HOISTED */);
 const _hoisted_2$b = ["onUpdate:modelValue"];
@@ -3191,17 +3233,18 @@ const getFieldComponent = (fieldObj) => {
   const field = fieldObj.field ?? fieldObj.name;
   const defaultTextareas = ['message', 'meta_description', 'comment', 'call_response', 'comments', 'description'];
   const defaultNumbers = ['age'];
+  const defaultDates = ['free_tier_days', 'recurring_date', 'date', 'paid_at'];
   const passwords = ['password', 'password_confirmation', 'pin'];
   const defaultPhones = ['phone'];
   const defaultEmails = ['email'];
   const formComponents = inject('formComponents');
-  const TextComponent = formComponents.text ?? script$q;
-  const TextAreaComponent = formComponents.textArea ?? script$p;
-  const EmailComponent = formComponents.email ?? script$s;
-  const PhoneComponent = formComponents.phone ?? script$v;
-  const NumberComponent = formComponents.number ?? script$r;
-  const SelectComponent = formComponents.select ?? script$o;
-  const PasswordComponent = formComponents.password ?? script$n;
+  const TextComponent = formComponents.text ?? script$r;
+  const TextAreaComponent = formComponents.textArea ?? script$q;
+  const EmailComponent = formComponents.email ?? script$t;
+  const PhoneComponent = formComponents.phone ?? script$w;
+  const NumberComponent = formComponents.number ?? script$s;
+  const SelectComponent = formComponents.select ?? script$p;
+  const PasswordComponent = formComponents.password ?? script$o;
   if (props.customComponents && props.customComponents[field]) {
     return props.customComponents[field]
   }
@@ -3219,28 +3262,28 @@ const getFieldComponent = (fieldObj) => {
 
   if (fieldObj.type) {
     if (fieldObj.type === 'suggest' || fieldObj.type === 'suggests') {
-      return script$u
+      return script$v
     }
     return fieldObj.type === 'number' ? NumberComponent : fieldObj.type === 'textarea' ? TextAreaComponent : fieldObj.type === 'email' ? EmailComponent : fieldObj.type === 'phone' ? PhoneComponent : fieldObj.type === 'password' ? PasswordComponent : fieldObj.type === 'select' ? SelectComponent : TextComponent
   } else if (passwords.includes(field)) {
     return PasswordComponent
   } else if ((props.textAreas && props.textAreas.includes(field)) || defaultTextareas.includes(field)) {
-    return formComponents.textArea ?? script$p
+    return formComponents.textArea ?? script$q
   } else if ((props.emails && props.emails.includes(field)) || defaultEmails.includes(field)) {
-    return formComponents.email ?? script$s
+    return formComponents.email ?? script$t
   } else if ((props.phones && props.phones.includes(field)) || defaultPhones.includes(field)) {
-    return formComponents.phone ?? script$v
+    return formComponents.phone ?? script$w
   } else if ((props.numbers && props.numbers.includes(field)) || defaultNumbers.includes(field)) {
-    return formComponents.number ?? script$r
+    return formComponents.number ?? script$s
   }
   // else
   // if((props.selects && props.selects.includes(field)) || defaultSelects.includes(field)){
   //   return formComponents.select ?? SelectInput
   // } else
-  // if((props.dates && props.dates.includes(field)) || defaultDates.includes(field)){
-  //   return formComponents.date ?? DateInput
-  // }
-  return formComponents.text ?? script$q
+  if((props.dates && props.dates.includes(field)) || defaultDates.includes(field)){
+    return formComponents.date ?? script$n
+  }
+  return formComponents.text ?? script$r
 };
 const shFormElementClasses = ref(null);
 shFormElementClasses.value = inject('shFormElementClasses');
@@ -3532,7 +3575,7 @@ return (_ctx, _cache) => {
         class: "dropdown-menu px-2 py-1",
         "aria-labelledby": dropdownId
       }, [
-        createVNode(script$t, normalizeProps(guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
+        createVNode(script$u, normalizeProps(guardReactiveProps(props)), null, 16 /* FULL_PROPS */)
       ])
     ])
   ], 64 /* STABLE_FRAGMENT */))
@@ -6347,7 +6390,7 @@ return (_ctx, _cache) => {
           "modal-title": "Department Form"
         }, {
           default: withCtx(() => [
-            createVNode(script$t, {
+            createVNode(script$u, {
               "success-callback": "departmentAdded",
               "current-data": department.value,
               onDepartmentAdded: departmentAdded,
@@ -6507,7 +6550,7 @@ return (_ctx, _cache) => {
             "modal-title": "Add Module Department"
           }, {
             default: withCtx(() => [
-              createVNode(script$t, {
+              createVNode(script$u, {
                 "reload-select-items": unref(reload),
                 "success-callback": moduleAdded,
                 "fill-selects": {
@@ -6644,7 +6687,7 @@ return (_ctx, _cache) => {
     : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
         (section.value === 'login')
           ? (openBlock(), createElementBlock("div", _hoisted_2, [
-              createVNode(script$t, {
+              createVNode(script$u, {
                 class: "sh-login-form",
                 fields: ['email','password'],
                 "action-label": "Login",
@@ -6669,7 +6712,7 @@ return (_ctx, _cache) => {
               (unref(registerSubTitle))
                 ? (openBlock(), createElementBlock("span", _hoisted_8, toDisplayString(unref(registerSubTitle)), 1 /* TEXT */))
                 : createCommentVNode("v-if", true),
-              createVNode(script$t, {
+              createVNode(script$u, {
                 class: "sh-login-form",
                 fields: unref(registrationFields),
                 "action-label": "Sign Up",
@@ -6716,7 +6759,7 @@ const ShFrontend = {
     const registerTitle = options.registerTitle ?? 'Create a new account';
     const registerSubTitle = options.registerSubTitle ?? `It's quick and easy`;
     const logoutApiEndpoint = options.logoutApiEndpoint ?? `auth/logout`;
-    options.formTextInput ?? script$q;
+    options.formTextInput ?? script$r;
     const loginUrl = options.loginUrl ?? `/login`;
     const redirectLogin = options.redirectLogin ?? `/`;
     const redirectRegister = options.redirectRegister ?? `/`;
@@ -6776,4 +6819,4 @@ var shGql = {
     mutate
 };
 
-export { countries as Countries, script$6 as ManagePermissions, script$m as ShAutoForm, script$h as ShCanvas, script$7 as ShCanvasBtn, script$e as ShConfirmAction, script$l as ShDropDownForm, script$9 as ShDynamicTabs, script$t as ShForm, ShFrontend, script$k as ShModal, script$8 as ShModalBtn, script$j as ShModalForm, script$i as ShModalFormAuto, script$v as ShPhone, script$3 as ShQueryPopups, script$c as ShRange, script$5 as ShRoutePopups, script$d as ShSilentAction, script$u as ShSuggest, script$b as ShTable, script$a as ShTabs, shApis, shGql, shRepo, ShStorage as shStorage, useAppStore, useUserStore };
+export { countries as Countries, script$6 as ManagePermissions, script$m as ShAutoForm, script$h as ShCanvas, script$7 as ShCanvasBtn, script$e as ShConfirmAction, script$l as ShDropDownForm, script$9 as ShDynamicTabs, script$u as ShForm, ShFrontend, script$k as ShModal, script$8 as ShModalBtn, script$j as ShModalForm, script$i as ShModalFormAuto, script$w as ShPhone, script$3 as ShQueryPopups, script$c as ShRange, script$5 as ShRoutePopups, script$d as ShSilentAction, script$v as ShSuggest, script$b as ShTable, script$a as ShTabs, shApis, shGql, shRepo, ShStorage as shStorage, useAppStore, useUserStore };
