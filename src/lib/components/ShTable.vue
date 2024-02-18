@@ -416,7 +416,16 @@ export default {
     },
     replaceLinkUrl: function (path, obj){
       if (typeof path === 'object') {
-        path = path.link ?? path.url
+       // check path,link or url
+        if (path.link) {
+          path = path.link
+        } else if (path.url) {
+          path = path.url
+        } else if(path.path){
+          path = path.path
+        } else {
+          path = ''
+        }
       }
       var matches = path.match(/\{(.*?)\}/g)
       matches && matches.forEach(key => {

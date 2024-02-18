@@ -2151,7 +2151,7 @@ const fetchRemoteData = ()=>{
   };
   shApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data;
-    initializeExisting();
+    initializeExisting(props.modelValue);
   }).catch(res => {
     console.log(res);
   });
@@ -2170,12 +2170,11 @@ const hideDropDown = ()=>{
   }
 };
 
-const initializeExisting = ()=>{
-  console.log(props);
-  if(props.modelValue && suggestions.value){
+const initializeExisting = (currentValue)=>{
+  if(currentValue && suggestions.value){
     if(props.allowMultiple){
       let selected = [];
-      props.modelValue.forEach(id=>{
+      currentValue.forEach(id=>{
         let found = suggestions.value.find(sgt=>{
           return sgt.id === id
         });
@@ -2186,7 +2185,7 @@ const initializeExisting = ()=>{
       selectedSuggestions.value = selected;
     } else {
       let found = suggestions.value.find(sgt=>{
-        return sgt.id === props.modelValue
+        return sgt.id === currentValue
       });
       if(found){
         selectedSuggestions.value = [found];
@@ -2194,6 +2193,11 @@ const initializeExisting = ()=>{
     }
   }
 };
+vue.watch(()=>props.modelValue, (newValue)=>{
+  if(newValue) {
+    initializeExisting(newValue);
+  }
+});
 
 return (_ctx, _cache) => {
   return (vue.unref(id))
@@ -3693,7 +3697,7 @@ var script$j = {
   'files',
   'phones',
   'numbers',
-  'customComponent','modalTitle','class','successMessage'],
+  'customComponent','modalTitle','class','successMessage', 'modalId'],
   emits: ['success','fieldChanged','formSubmitted','formError','modalId'],
   setup(__props, { emit: __emit }) {
 
@@ -3701,12 +3705,12 @@ const props = __props;
 const emit = __emit;
 vue.ref(props);
 let btnClass=props.class;
-const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2);
+const realModalId = props.modalId ?? 'rand' + (Math.random() + 1).toString(36).substring(2);
 const success = (res)=>{
   emit('success',res);
 };
 vue.onMounted(()=>{
-  emit('modalId',modalId);
+  emit('modalId',realModalId);
 });
 
 const fieldChanged = (field, value)=>{
@@ -3725,25 +3729,26 @@ return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
     vue.createElementVNode("a", {
       class: vue.normalizeClass(vue.unref(btnClass)),
-      href: '#' + modalId,
+      href: '#' + vue.unref(realModalId),
       "data-bs-toggle": "modal"
     }, [
       vue.renderSlot(_ctx.$slots, "default")
     ], 10 /* CLASS, PROPS */, _hoisted_1$g),
     vue.createVNode(script$k, {
-      "modal-id": modalId,
+      "modal-id": vue.unref(realModalId),
       "modal-title": __props.modalTitle
     }, {
       default: vue.withCtx(() => [
-        vue.createVNode(script$m, vue.mergeProps({
+        (vue.openBlock(), vue.createBlock(script$m, vue.mergeProps({
           onSuccess: success,
           onFieldChanged: fieldChanged,
           onFormSubmitted: formSubmitted,
-          onFormError: formError
-        }, props), null, 16 /* FULL_PROPS */)
+          onFormError: formError,
+          key: JSON.stringify(__props.currentData ?? {})
+        }, props), null, 16 /* FULL_PROPS */))
       ]),
       _: 1 /* STABLE */
-    }, 8 /* PROPS */, ["modal-title"])
+    }, 8 /* PROPS */, ["modal-id", "modal-title"])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -4896,7 +4901,16 @@ const __default__ = {
     },
     replaceLinkUrl: function (path, obj){
       if (typeof path === 'object') {
-        path = path.link ?? path.url;
+       // check path,link or url
+        if (path.link) {
+          path = path.link;
+        } else if (path.url) {
+          path = path.url;
+        } else if(path.path){
+          path = path.path;
+        } else {
+          path = '';
+        }
       }
       var matches = path.match(/\{(.*?)\}/g);
       matches && matches.forEach(key => {

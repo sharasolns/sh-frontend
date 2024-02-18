@@ -31,38 +31,6 @@
   opacity: 0.5;
 }
 
-.permissions-main {
-  background: #edeff2;
-}
-.permissions-main div#permissions-nav {
-  padding: 0;
-}
-.permissions-main div#permissions-nav ul {
-  padding-left: 0;
-  max-height: 400px;
-  overflow-y: auto;
-}
-.permissions-main div#permissions-nav ul li.active {
-  border-right: none !important;
-  position: relative;
-  top: 0;
-  left: 0;
-  background: #88b3b370;
-  border-radius: 10px;
-}
-.permissions-main div#permissions-nav ul li {
-  list-style: none;
-  padding-inline-start: 10px;
-  display: flex;
-  gap: 5px;
-}
-.permissions-main div#permissions-nav ul li label {
-  padding: 8px 0;
-  cursor: pointer;
-  height: 100%;
-  flex-grow: 1;
-}
-
 .colored-toast.swal2-icon-success {
   background-color: #a5dc86 !important;
 }
@@ -93,6 +61,38 @@
 
 .colored-toast .swal2-html-container {
   color: white;
+}
+
+.permissions-main {
+  background: #edeff2;
+}
+.permissions-main div#permissions-nav {
+  padding: 0;
+}
+.permissions-main div#permissions-nav ul {
+  padding-left: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.permissions-main div#permissions-nav ul li.active {
+  border-right: none !important;
+  position: relative;
+  top: 0;
+  left: 0;
+  background: #88b3b370;
+  border-radius: 10px;
+}
+.permissions-main div#permissions-nav ul li {
+  list-style: none;
+  padding-inline-start: 10px;
+  display: flex;
+  gap: 5px;
+}
+.permissions-main div#permissions-nav ul li label {
+  padding: 8px 0;
+  cursor: pointer;
+  height: 100%;
+  flex-grow: 1;
 }
 
 .sh-selected-item{

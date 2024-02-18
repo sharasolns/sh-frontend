@@ -3,7 +3,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { Modal, Offcanvas } from 'bootstrap';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, watch, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
+import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, watch, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
 import _ from 'lodash';
 import { defineStore, storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
@@ -2139,7 +2139,7 @@ const fetchRemoteData = ()=>{
   };
   shApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data;
-    initializeExisting();
+    initializeExisting(props.modelValue);
   }).catch(res => {
     console.log(res);
   });
@@ -2158,12 +2158,11 @@ const hideDropDown = ()=>{
   }
 };
 
-const initializeExisting = ()=>{
-  console.log(props);
-  if(props.modelValue && suggestions.value){
+const initializeExisting = (currentValue)=>{
+  if(currentValue && suggestions.value){
     if(props.allowMultiple){
       let selected = [];
-      props.modelValue.forEach(id=>{
+      currentValue.forEach(id=>{
         let found = suggestions.value.find(sgt=>{
           return sgt.id === id
         });
@@ -2174,7 +2173,7 @@ const initializeExisting = ()=>{
       selectedSuggestions.value = selected;
     } else {
       let found = suggestions.value.find(sgt=>{
-        return sgt.id === props.modelValue
+        return sgt.id === currentValue
       });
       if(found){
         selectedSuggestions.value = [found];
@@ -2182,6 +2181,11 @@ const initializeExisting = ()=>{
     }
   }
 };
+watch(()=>props.modelValue, (newValue)=>{
+  if(newValue) {
+    initializeExisting(newValue);
+  }
+});
 
 return (_ctx, _cache) => {
   return (unref(id))
@@ -3681,7 +3685,7 @@ var script$j = {
   'files',
   'phones',
   'numbers',
-  'customComponent','modalTitle','class','successMessage'],
+  'customComponent','modalTitle','class','successMessage', 'modalId'],
   emits: ['success','fieldChanged','formSubmitted','formError','modalId'],
   setup(__props, { emit: __emit }) {
 
@@ -3689,12 +3693,12 @@ const props = __props;
 const emit = __emit;
 ref(props);
 let btnClass=props.class;
-const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2);
+const realModalId = props.modalId ?? 'rand' + (Math.random() + 1).toString(36).substring(2);
 const success = (res)=>{
   emit('success',res);
 };
 onMounted(()=>{
-  emit('modalId',modalId);
+  emit('modalId',realModalId);
 });
 
 const fieldChanged = (field, value)=>{
@@ -3713,25 +3717,26 @@ return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
     createElementVNode("a", {
       class: normalizeClass(unref(btnClass)),
-      href: '#' + modalId,
+      href: '#' + unref(realModalId),
       "data-bs-toggle": "modal"
     }, [
       renderSlot(_ctx.$slots, "default")
     ], 10 /* CLASS, PROPS */, _hoisted_1$g),
     createVNode(script$k, {
-      "modal-id": modalId,
+      "modal-id": unref(realModalId),
       "modal-title": __props.modalTitle
     }, {
       default: withCtx(() => [
-        createVNode(script$m, mergeProps({
+        (openBlock(), createBlock(script$m, mergeProps({
           onSuccess: success,
           onFieldChanged: fieldChanged,
           onFormSubmitted: formSubmitted,
-          onFormError: formError
-        }, props), null, 16 /* FULL_PROPS */)
+          onFormError: formError,
+          key: JSON.stringify(__props.currentData ?? {})
+        }, props), null, 16 /* FULL_PROPS */))
       ]),
       _: 1 /* STABLE */
-    }, 8 /* PROPS */, ["modal-title"])
+    }, 8 /* PROPS */, ["modal-id", "modal-title"])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -4884,7 +4889,16 @@ const __default__ = {
     },
     replaceLinkUrl: function (path, obj){
       if (typeof path === 'object') {
-        path = path.link ?? path.url;
+       // check path,link or url
+        if (path.link) {
+          path = path.link;
+        } else if (path.url) {
+          path = path.url;
+        } else if(path.path){
+          path = path.path;
+        } else {
+          path = '';
+        }
       }
       var matches = path.match(/\{(.*?)\}/g);
       matches && matches.forEach(key => {

@@ -17,16 +17,16 @@ const props = defineProps(['action',
   'files',
   'phones',
   'numbers',
-  'customComponent','modalTitle','class','successMessage'])
+  'customComponent','modalTitle','class','successMessage', 'modalId'])
 const emit = defineEmits(['success','fieldChanged','formSubmitted','formError','modalId'])
 const formProps = ref(props)
 let btnClass=props.class
-const modalId = 'rand' + (Math.random() + 1).toString(36).substring(2)
+const realModalId = props.modalId ?? 'rand' + (Math.random() + 1).toString(36).substring(2)
 const success = (res)=>{
   emit('success',res)
 }
 onMounted(()=>{
-  emit('modalId',modalId)
+  emit('modalId',realModalId)
 })
 
 const fieldChanged = (field, value)=>{
@@ -42,15 +42,16 @@ const formError = (res)=>{
 }
 </script>
 <template>
-  <a :class="btnClass" :href="'#' + modalId" data-bs-toggle="modal">
+  <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal">
     <slot></slot>
   </a>
-  <sh-modal :modal-id="modalId" :modal-title="modalTitle">
+  <sh-modal :modal-id="realModalId" :modal-title="modalTitle">
     <sh-auto-form
         @success="success"
         @field-changed="fieldChanged"
         @form-submitted="formSubmitted"
         @form-error="formError"
+        :key="JSON.stringify(currentData ?? {})"
         v-bind="props"/>
   </sh-modal>
 </template>
