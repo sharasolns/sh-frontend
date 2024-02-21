@@ -25,6 +25,7 @@ const ShFrontend = {
     const swalPosition = options.swalPosition ?? 'top-end'
     const loginEndpoint = options.loginEndpoint ?? 'auth/login'
     const registerEndpoint = options.registerEndpoint ?? 'auth/register'
+    const forgotEndpoint = options.forgotEndpoint ?? 'auth/forgot-password'
     const registerTitle = options.registerTitle ?? 'Create a new account'
     const registerSubTitle = options.registerSubTitle ?? `It's quick and easy`
     const logoutApiEndpoint = options.logoutApiEndpoint ?? `auth/logout`
@@ -47,6 +48,7 @@ const ShFrontend = {
     app.provide('loginUrl', loginUrl)
     app.provide('shFormElementClasses',defaultFormElementClasses)
     app.provide('noRecordsComponent',noRecordsComponent)
+    app.provide('forgotEndpoint',forgotEndpoint)
     window.swalPosition = swalPosition
     if(options.router) {
       options.router.addRoute({
