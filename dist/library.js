@@ -2151,7 +2151,7 @@ const fetchRemoteData = ()=>{
   };
   shApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data;
-    initializeExisting();
+    initializeExisting(props.modelValue);
   }).catch(res => {
     console.log(res);
   });
@@ -2170,12 +2170,11 @@ const hideDropDown = ()=>{
   }
 };
 
-const initializeExisting = ()=>{
-  console.log(props);
-  if(props.modelValue && suggestions.value){
+const initializeExisting = (currentValue)=>{
+  if(currentValue && suggestions.value){
     if(props.allowMultiple){
       let selected = [];
-      props.modelValue.forEach(id=>{
+      currentValue.forEach(id=>{
         let found = suggestions.value.find(sgt=>{
           return sgt.id === id
         });
@@ -2186,7 +2185,7 @@ const initializeExisting = ()=>{
       selectedSuggestions.value = selected;
     } else {
       let found = suggestions.value.find(sgt=>{
-        return sgt.id === props.modelValue
+        return sgt.id === currentValue
       });
       if(found){
         selectedSuggestions.value = [found];
@@ -2194,6 +2193,11 @@ const initializeExisting = ()=>{
     }
   }
 };
+vue.watch(()=>props.modelValue, (newValue)=>{
+  if(newValue) {
+    initializeExisting(newValue);
+  }
+});
 
 return (_ctx, _cache) => {
   return (vue.unref(id))

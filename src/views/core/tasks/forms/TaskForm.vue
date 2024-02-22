@@ -57,7 +57,8 @@ const fields = [
   {
     field: 'phone',
     label: 'Phone',
-    type: 'text',
+    type: 'phone',
+    disabled: true
 
   }
 ]

@@ -3,7 +3,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { Modal, Offcanvas } from 'bootstrap';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, watch, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
+import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, watch, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, inject, mergeProps, normalizeStyle, renderSlot, createVNode, normalizeProps, guardReactiveProps, withCtx, vModelCheckbox, shallowRef, pushScopeId, popScopeId, markRaw, computed, isRef } from 'vue';
 import _ from 'lodash';
 import { defineStore, storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
@@ -2139,7 +2139,7 @@ const fetchRemoteData = ()=>{
   };
   shApis.doGet(props.url, data).then(res => {
     suggestions.value = res.data.data ?? res.data;
-    initializeExisting();
+    initializeExisting(props.modelValue);
   }).catch(res => {
     console.log(res);
   });
@@ -2158,12 +2158,11 @@ const hideDropDown = ()=>{
   }
 };
 
-const initializeExisting = ()=>{
-  console.log(props);
-  if(props.modelValue && suggestions.value){
+const initializeExisting = (currentValue)=>{
+  if(currentValue && suggestions.value){
     if(props.allowMultiple){
       let selected = [];
-      props.modelValue.forEach(id=>{
+      currentValue.forEach(id=>{
         let found = suggestions.value.find(sgt=>{
           return sgt.id === id
         });
@@ -2174,7 +2173,7 @@ const initializeExisting = ()=>{
       selectedSuggestions.value = selected;
     } else {
       let found = suggestions.value.find(sgt=>{
-        return sgt.id === props.modelValue
+        return sgt.id === currentValue
       });
       if(found){
         selectedSuggestions.value = [found];
@@ -2182,6 +2181,11 @@ const initializeExisting = ()=>{
     }
   }
 };
+watch(()=>props.modelValue, (newValue)=>{
+  if(newValue) {
+    initializeExisting(newValue);
+  }
+});
 
 return (_ctx, _cache) => {
   return (unref(id))

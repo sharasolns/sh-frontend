@@ -1,34 +1,34 @@
 
-.sh-phone{
-  display: flex;
-  width: 100%;
-  align-items: center;
-  padding: 0 0.25rem;
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
 }
-.phone-country{
-  width: 2rem;
-  border: none;
-  align-self: center;
-  outline: none !important;
-  padding: 0.4rem;
-  border-right: 1px solid #0003;
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
 }
-.phone-number{
-  width: calc(100% - 2.2rem);
-  border: none;
-  align-self: center;
-  outline: none;
-  margin-bottom: 0;
-  padding: 0.4rem;
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
 }
-.sh-phone img{
-  padding: 0.125rem;
-  width: 2rem;
-  height: 2rem;
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
 }
-.phone-number::placeholder{
-  font-weight: 300;
-  opacity: 0.5;
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
 }
 
 .permissions-main {
@@ -63,36 +63,36 @@
   flex-grow: 1;
 }
 
-.colored-toast.swal2-icon-success {
-  background-color: #a5dc86 !important;
+.sh-phone{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0 0.25rem;
 }
-
-.colored-toast.swal2-icon-error {
-  background-color: #f27474 !important;
+.phone-country{
+  width: 2rem;
+  border: none;
+  align-self: center;
+  outline: none !important;
+  padding: 0.4rem;
+  border-right: 1px solid #0003;
 }
-
-.colored-toast.swal2-icon-warning {
-  background-color: #f8bb86 !important;
+.phone-number{
+  width: calc(100% - 2.2rem);
+  border: none;
+  align-self: center;
+  outline: none;
+  margin-bottom: 0;
+  padding: 0.4rem;
 }
-
-.colored-toast.swal2-icon-info {
-  background-color: #3fc3ee !important;
+.sh-phone img{
+  padding: 0.125rem;
+  width: 2rem;
+  height: 2rem;
 }
-
-.colored-toast.swal2-icon-question {
-  background-color: #87adbd !important;
-}
-
-.colored-toast .swal2-title {
-  color: white;
-}
-
-.colored-toast .swal2-close {
-  color: white;
-}
-
-.colored-toast .swal2-html-container {
-  color: white;
+.phone-number::placeholder{
+  font-weight: 300;
+  opacity: 0.5;
 }
 
 .sh-selected-item{

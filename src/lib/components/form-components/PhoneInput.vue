@@ -7,7 +7,7 @@
       <select @change="updateValue" v-model="selectedCountry" class="phone-country">
         <option v-for="country in countries" :value="country" :key="country.dialCode">{{ country.name + '(' + country.dialCode + ')' }}</option>
       </select>
-      <input type="number" class="phone-number" data-cy="phone_input" @input="updateValue" placeholder="712345678" v-model="input">
+      <input type="number" class="phone-number" :disabled="disabled" data-cy="phone_input" @input="updateValue" placeholder="712345678" v-model="input">
     </div>
 </template>
 
@@ -15,7 +15,7 @@
 import countries from '../../repo/helpers/countries.js'
 export default {
   name: 'PhoneInput',
-  props: ['modelValue', 'country_code'],
+  props: ['modelValue', 'country_code','disabled'],
   data () {
     return {
       input: this.modelValue,
