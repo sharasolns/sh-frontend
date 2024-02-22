@@ -27,7 +27,7 @@ const props = defineProps([
   'phones', 'numbers', 'selects', 'dates', 'gqlMutation',
     'required'
 ])
-const emit = defineEmits(['success', 'fieldChanged', 'formSubmitted', 'formError'])
+const emit = defineEmits(['success','preSubmit', 'fieldChanged', 'formSubmitted', 'formError'])
 const formFields = ref([])
 const getFieldComponent = (fieldObj) => {
   if (fieldObj.component) {
@@ -143,6 +143,7 @@ const submitForm = e => {
     if (args == '()') {
       args = ''
     }
+    emit('preSubmit', data)
     const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`
     shApis.graphQlMutate(mutation).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason))
   } else {
