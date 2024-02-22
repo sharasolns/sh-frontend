@@ -1930,7 +1930,7 @@ const countries = [
 
 var script$w = {
   name: 'PhoneInput',
-  props: ['modelValue', 'country_code'],
+  props: ['modelValue', 'country_code','disabled'],
   data () {
     return {
       input: this.modelValue,
@@ -2005,6 +2005,7 @@ const _hoisted_2$e = {
 };
 const _hoisted_3$d = ["src"];
 const _hoisted_4$d = ["value"];
+const _hoisted_5$b = ["disabled"];
 
 function render$3(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$o, [
@@ -2031,11 +2032,12 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
     vue.withDirectives(vue.createElementVNode("input", {
       type: "number",
       class: "phone-number",
+      disabled: $props.disabled,
       "data-cy": "phone_input",
       onInput: _cache[2] || (_cache[2] = (...args) => ($options.updateValue && $options.updateValue(...args))),
       placeholder: "712345678",
       "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => (($data.input) = $event))
-    }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [
+    }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_5$b), [
       [vue.vModelText, $data.input]
     ])
   ]))
