@@ -3238,7 +3238,7 @@ var script$m = {
   'phones', 'numbers', 'selects', 'dates', 'gqlMutation',
     'required'
 ],
-  emits: ['success', 'fieldChanged', 'formSubmitted', 'formError'],
+  emits: ['success','preSubmit', 'fieldChanged', 'formSubmitted', 'formError'],
   setup(__props, { emit: __emit }) {
 
 const props = __props;
@@ -3357,6 +3357,7 @@ const submitForm = e => {
     if (args == '()') {
       args = '';
     }
+    emit('preSubmit', data);
     const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`;
     shApis.graphQlMutate(mutation).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason));
   } else {
