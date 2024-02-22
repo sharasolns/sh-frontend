@@ -40,6 +40,7 @@ app.use(ShFrontend,{
   defaultRange: 'This Month',
   loginUrl: '/sh-auth',
   logoutApiEndpoint: 'auth/logout',
+  redirectLogin: '/dashboard',
   router: router,
   registerTitle: 'Welcome, create a new account',
   tablePaginationStyle: 'table', //loadMore,table

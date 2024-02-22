@@ -21,11 +21,8 @@ const {user} = storeToRefs(useUserStore())
       </button>
     </div>
     <div class="row" v-if="!hideSearch">
-      <div class="col-12 mb-3 d-flex justify-content-start">
-        <div v-if="hasRange" class="sh-range-selector">
-          <sh-range @range-selected="rangeChanged"/>
-        </div>
-        <div class="sh-search-bar input-group" :class="hasRange ? 'ms-2':''">
+      <div class="col-12 mb-3 d-flex justify-content-between flex-column flex-md-row flex-lg-row">
+        <div class="sh-search-bar input-group" :class="hasRange ? 'me-2':''">
           <input @keydown="userTyping" @keyup="userTyping" type="search" v-on:change="reloadData(1)"
                  v-model="filter_value"
                  :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'"
@@ -33,6 +30,9 @@ const {user} = storeToRefs(useUserStore())
           <span class="input-group-text exact_checkbox" v-if="filter_value.length > 1">
                     <input @change="reloadData" :value="true" v-model="exactMatch" type="checkbox"/><span class="ms-1">Exact</span>
                   </span>
+        </div>
+        <div v-if="hasRange" class="sh-range-selector">
+          <sh-range @range-selected="rangeChanged"/>
         </div>
       </div>
     </div>
@@ -416,7 +416,16 @@ export default {
     },
     replaceLinkUrl: function (path, obj){
       if (typeof path === 'object') {
-        path = path.link ?? path.url
+       // check path,link or url
+        if (path.link) {
+          path = path.link
+        } else if (path.url) {
+          path = path.url
+        } else if(path.path){
+          path = path.path
+        } else {
+          path = ''
+        }
       }
       var matches = path.match(/\{(.*?)\}/g)
       matches && matches.forEach(key => {
