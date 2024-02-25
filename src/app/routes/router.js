@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../../views/Home.vue'
 import tasks from '@/app/routes/tasks/tasks.js'
 import notes from "@/app/routes/notes/notes";
-
 let routes = [
   {
     path: '/',

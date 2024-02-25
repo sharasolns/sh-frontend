@@ -163,7 +163,7 @@ onMounted(() => {
             </li>
 
             <li>
-              <router-link to="/user/profile" class="dropdown-item d-flex align-items-center">
+              <router-link to="/sh-user-profile" class="dropdown-item d-flex align-items-center">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </router-link>

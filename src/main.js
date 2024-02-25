@@ -35,6 +35,20 @@ const shFormComponents = {
   // number: SampleComponent,
   password: PasswordInput,
 }
+const UserdetailsColumns = [
+  {
+    name: 'name',
+    label: 'Name'
+  },
+  {
+    name: 'email',
+    label: 'Email'
+  },
+  {
+    name: 'phone',
+    label: 'Phone'
+  }
+]
 app.use(ShFrontend,{
   sessionTimeout: 400,
   defaultRange: 'This Month',
@@ -48,7 +62,8 @@ app.use(ShFrontend,{
   tablePerPage: 3,
   shFormElementClasses,
   toastTimer: 4000,
-  shFormComponents
+  shFormComponents,
+  UserdetailsColumns
 })
 
 //popups
