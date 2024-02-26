@@ -1,4 +1,5 @@
 <script setup>
+import ShForm from '../../../components/ShForm.vue'
 import ShModalForm from '../../../components/ShModalForm.vue'
 import ShCardLayout from '../../../components/ShCardLayout.vue'
 import {useUserStore} from '../../../repo/stores/ShUser.js'

@@ -4,6 +4,7 @@ import ShModal from './ShModal.vue'
 import ShAutoForm from './ShAutoForm.vue'
 const props = defineProps(['action',
   'classes',
+  'method',
   'hasTerms',
   'country_code',
   'submitBtnClass',

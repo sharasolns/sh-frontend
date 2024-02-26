@@ -63,6 +63,7 @@ export default {
   props: [
       'action',
     'classes',
+      'method',
     'hasTerms',
     'country_code',
     'submitBtnClass',
@@ -263,7 +264,8 @@ export default {
       Object.keys(this.form_files).forEach(key => {
         data.append(key, this.form_files[key].value)
       })
-      apis.doPost(this.action, data).then(res => {
+      const method = this.method =='put' ? apis.doPut: (this.method == 'delete' ? apis.doDelete: apis.doPost);
+      method(this.action, data).then(res => {
         // console.log(res)
         this.form_status = 2
         Object.keys(this.form_elements).forEach(key => {
