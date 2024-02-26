@@ -56,7 +56,7 @@ export const useUserStore = defineStore('user-store', {
             } else {
               permissions = this.permissions
             }
-            return permissions.includes(slug)
+            return !!permissions[slug]
           }
           return false
         }
