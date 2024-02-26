@@ -1,4 +1,6 @@
-export const data = JSON.parse("{\"key\":\"v-53551194\",\"path\":\"/guide/helpers/\",\"title\":\"Helpers\",\"lang\":\"en-US\",\"frontmatter\":{},\"excerpt\":\"\",\"headers\":[],\"git\":{\"updatedTime\":1657169450000,\"contributors\":[{\"name\":\"Hosea Kibet\",\"email\":\"kibethosea8@gmail.com\",\"commits\":2}]},\"filePathRelative\":\"guide/helpers/README.md\"}")
+import comp from "/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/index.html.vue"
+const data = JSON.parse("{\"path\":\"/guide/helpers/\",\"title\":\"Helpers\",\"lang\":\"en-US\",\"frontmatter\":{},\"headers\":[],\"git\":{\"updatedTime\":1657169450000,\"contributors\":[{\"name\":\"Hosea Kibet\",\"email\":\"kibethosea8@gmail.com\",\"commits\":2}]},\"filePathRelative\":\"guide/helpers/README.md\"}")
+export { comp, data }
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()

@@ -150,7 +150,6 @@ const submitForm = e => {
     shApis.graphQlMutate(mutation).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason))
   } else {
     const method = props.method =='put' ? shApis.doPut: ( props.method == 'delete' ? shApis.doDelete: shApis.doPost);
-    alert(props.method)
     method(props.action, data).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason))
   }
   return false
