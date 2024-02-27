@@ -3932,7 +3932,7 @@ const useUserStore = pinia.defineStore('user-store', {
             } else {
               permissions = this.permissions;
             }
-            return !!permissions[slug]
+            return permissions.includes(slug)
           }
           return false
         };
@@ -3958,7 +3958,7 @@ const useUserStore = pinia.defineStore('user-store', {
             } else {
               permissions = this.permissions;
             }
-            return !!permissions[slug]
+            return permissions.includes(slug)
           }
           return false
         };

@@ -30,7 +30,7 @@ export const useUserStore = defineStore('user-store', {
             } else {
               permissions = this.permissions
             }
-            return !!permissions[slug]
+            return permissions.includes(slug)
           }
           return false
         }
@@ -56,7 +56,7 @@ export const useUserStore = defineStore('user-store', {
             } else {
               permissions = this.permissions
             }
-            return !!permissions[slug]
+            return permissions.includes(slug)
           }
           return false
         }
