@@ -3606,9 +3606,9 @@ return (_ctx, _cache) => {
 script$l.__file = "src/lib/components/ShDropDownForm.vue";
 
 const _hoisted_1$h = ["id"];
-const _hoisted_2$9 = { class: "modal-content" };
+const _hoisted_2$9 = { class: "modal-content sh-modal-content" };
 const _hoisted_3$9 = { class: "modal-header" };
-const _hoisted_4$9 = { class: "modal-title" };
+const _hoisted_4$9 = { class: "modal-title flex-fill" };
 const _hoisted_5$7 = /*#__PURE__*/vue.createElementVNode("button", {
   class: "btn btn-danger btn-sm",
   "data-bs-dismiss": "modal",
@@ -3654,12 +3654,12 @@ vue.onMounted(() => {
 
 return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock("div", {
-    class: "modal fade",
+    class: "modal sh-modal fade",
     id: __props.modalId,
     "aria-hidden": "true"
   }, [
     vue.createElementVNode("div", {
-      class: vue.normalizeClass(["modal-dialog", `modal-${__props.modalSize}`])
+      class: vue.normalizeClass(["modal-dialog sh-modal-dialog", `modal-${__props.modalSize}`])
     }, [
       vue.createElementVNode("div", _hoisted_2$9, [
         vue.createElementVNode("div", _hoisted_3$9, [
@@ -3932,7 +3932,7 @@ const useUserStore = pinia.defineStore('user-store', {
             } else {
               permissions = this.permissions;
             }
-            return permissions.includes(slug)
+            return !!permissions[slug]
           }
           return false
         };
@@ -3958,7 +3958,7 @@ const useUserStore = pinia.defineStore('user-store', {
             } else {
               permissions = this.permissions;
             }
-            return permissions.includes(slug)
+            return !!permissions[slug]
           }
           return false
         };
