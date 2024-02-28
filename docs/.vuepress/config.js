@@ -17,7 +17,7 @@ export default defineUserConfig({
         navbar: [
             {
                 text: 'Documentation',
-                link: '/guide'
+                link: '/guide/'
             },
             {
                 text: 'Backend Docs',

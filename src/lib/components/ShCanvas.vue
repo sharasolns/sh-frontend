@@ -17,6 +17,9 @@ const props = defineProps({
   },
   side: {
     type: String
+  },
+  scrollable: {
+    type: Boolean
   }
 })
 const pos = ref(props.position ?? props.side)
@@ -30,7 +33,7 @@ onMounted(()=>{
 })
 </script>
 <template>
-  <div class="offcanvas" :class="canvasSide +' '+ canvasSize + ''" data-bs-scroll="true" tabindex="-1" :id="canvasId" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas" :class="canvasSide +' '+ canvasSize + ''" :data-bs-scroll="scrollable" tabindex="-1" :id="canvasId" aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">{{ canvasTitle}}</h5>
       <button type="button" ref="closecanvas" @click="offcanvasClosed" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>

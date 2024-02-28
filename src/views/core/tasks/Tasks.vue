@@ -1,10 +1,14 @@
 <script setup>
 
+import ShDynamicTabs from '@/lib/components/ShDynamicTabs.vue'
+import ShForm from '@/lib/components/ShForm.vue'
 import ShTable from '@/lib/components/ShTable.vue'
 import ShRange from '@/lib/components/ShRange.vue'
 import shRepo from '@/lib/repo/helpers/ShRepo'
 import ShModalForm from '@/lib/components/ShModalForm.vue'
 import NoRecords from '@/lib/components/others/NoRecords.vue'
+import TabOne from '@/tabs/TabOne.vue'
+import TabTwo from '@/tabs/TabTwo.vue'
 const query = `{
   tasks (id:{gt: 4}) {
       name
@@ -36,15 +40,45 @@ const deleteTask = item=>{
     res.isConfirmed && shRepo.showToast('Task deleted')
   })
 }
+const taskAdded = ()=>{
+  shRepo.showToast('Task added')
+}
 </script>
 <template>
-<h5>All Tasks</h5>
-  <div class="card">
-    <div class="card-body">
-      <sh-modal-form
-          :fields="['service_id','commission_type','commission']"
-          :action="'/services/providers/store?user_id='"
-          :fill-selects="{
+
+  <sh-form
+      :fields="['na','state','user_id']"
+      :action="'/tasks/store'"
+      class="btn btn-info"
+      :success-callback="taskAdded"
+      :fill-selects="{
+          user_id: {
+            url: 'tasks/lists/any?all=1',
+            column: 'created_at',
+            value: 'created_at',
+        }
+      }"
+  />
+  <div class="d-none">
+    <sh-dynamic-tabs
+        currentTab='Tab Two'
+        :tabs="[
+      {
+    label: 'Tab One',
+    component: TabOne,
+    },
+    {
+    label: 'Tab Two',
+    component: TabTwo
+    }
+  ]"
+    /><h5>All Tasks</h5>
+    <div class="card">
+      <div class="card-body">
+        <sh-modal-form
+            :fields="['service_id','commission_type','commission']"
+            :action="'/services/providers/store?user_id='"
+            :fill-selects="{
                   service_id: {
                   url: '/services/list?all=1',
                   suggest: true
@@ -63,17 +97,17 @@ const deleteTask = item=>{
                  }
 
             }"
-          class="btn btn-info ms-auto bi-plus"
-      > Add Provider
-      </sh-modal-form>
-      <router-link to="/tasks/form" class="btn btn-info btn-sm"><i class="bi-plus"></i> Add Task</router-link>
-      <router-link to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store" class="btn btn-info btn-sm ms-2"><i class="bi-plus"></i> PopupQuery Form</router-link>
-      <sh-range @range-selected="rangeSelected"/>
-      <sh-table
-          :headers="['id',showUser,'name','description','phone','created_at']"
-          cache-key="tasks"
-          :query="query"
-          :actions="{
+            class="btn btn-info ms-auto bi-plus"
+        > Add Provider
+        </sh-modal-form>
+        <router-link to="/tasks/form" class="btn btn-info btn-sm"><i class="bi-plus"></i> Add Task</router-link>
+        <router-link to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store" class="btn btn-info btn-sm ms-2"><i class="bi-plus"></i> PopupQuery Form</router-link>
+        <sh-range @range-selected="rangeSelected"/>
+        <sh-table
+            :headers="['id',showUser,'name','description','phone','created_at']"
+            cache-key="tasks"
+            :query="query"
+            :actions="{
             label: '...',
             actions: [
                 {
@@ -95,22 +129,23 @@ const deleteTask = item=>{
               }
             ]
           }"
-      >
-      </sh-table>
+        >
+        </sh-table>
 
-      <sh-modal-form
-          modal-id="addPayment"
-          modal-title="Add Payment"
-          :fields="['payment_account','amount', 'reference' ]"
-          :required="['payment_account','amount', 'reference' ]"
-          :action="`invoices/payments/store`"
-          :fill-selects="{
+        <sh-modal-form
+            modal-id="addPayment"
+            modal-title="Add Payment"
+            :fields="['payment_account','amount', 'reference' ]"
+            :required="['payment_account','amount', 'reference' ]"
+            :action="`invoices/payments/store`"
+            :fill-selects="{
                                     payment_account: {
                                         url: `accounts/payment-accounts/list/any`,
                                         suggests: true
                                     }
                                 }" class="btn btn-primary btn-sm me-2">
-        <i class="bi bi-cash"></i>  Mark Paid  </sh-modal-form>
+          <i class="bi bi-cash"></i>  Mark Paid  </sh-modal-form>
+      </div>
     </div>
   </div>
 </template>

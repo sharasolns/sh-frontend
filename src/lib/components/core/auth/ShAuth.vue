@@ -15,6 +15,7 @@ const forgotEndpoint = inject('forgotEndpoint')
 const loginEndpoint = inject('loginEndpoint')
 const registrationFields = inject('registrationFields')
 const registerTitle = inject('registerTitle')
+const loginTitle = inject('loginTitle')
 const registerSubTitle = inject('registerSubTitle')
 const redirectRegister = inject('redirectRegister')
 const redirectLogin = inject('redirectLogin')
@@ -66,6 +67,7 @@ const forgotSuccessful = ()=>{
       </div>
     </div>
     <div class="sh-login-section" v-if="section === 'login'">
+      <h3 v-if="loginTitle" class="sh-login-title">{{ loginTitle }}</h3>
       <sh-form class="sh-login-form"
           :fields="['email','password']"
           action-label="Login"

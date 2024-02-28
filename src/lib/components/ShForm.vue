@@ -25,7 +25,12 @@
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
          <textarea :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'textarea'" class="form-control"></textarea>
          <select :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'select'" class="form-control">
-           <option v-for="item in selectData[field]" :key="item.id"  :value="item.id">{{item.name}}</option>
+           <option v-for="item in selectData[field]"
+                   :key="fillSelects[field].value ? item[fillSelects[field].value]:item.id"
+                   :value="fillSelects[field].value ? item[fillSelects[field].value]:item.id"
+           >{{
+             fillSelects[field].column ? item[fillSelects[field].column]:item.name
+             }}</option>
          </select>
          <div v-if="form_errors[field] != null " class="invalid-feedback">
            {{ form_errors[field][0]  }}

@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted,ref,shallowRef} from 'vue'
 import shRepo from '../repo/helpers/ShRepo.js'
-const props = defineProps(['tabs','data','classes'])
+const props = defineProps(['tabs','data','classes','currentTab'])
 const tabs = props.tabs
 let currentTab = shallowRef(null)
 const generatedId = ref(null)
@@ -9,7 +9,11 @@ const isResponsive = ref(null)
 onMounted(()=>{
   generatedId.value =  'tab' + Math.random().toString(36).slice(2)
   if(tabs.length > 0) {
-    currentTab.value = tabs[0]
+   if (props.currentTab) {
+      currentTab.value = tabs.find(tab=>tab.label === props.currentTab)
+   } else {
+     currentTab.value = tabs[0]
+   }
   }
 })
 
