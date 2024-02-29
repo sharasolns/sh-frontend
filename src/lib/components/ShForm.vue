@@ -35,6 +35,33 @@
          <div v-if="form_errors[field] != null " class="invalid-feedback">
            {{ form_errors[field][0]  }}
          </div>
+         <div :class="checkBoxes?.display ? (checkBoxes.display =='row' ? 'd-flex': '' ) : ''  ">
+           <div class="form-check me-1"  v-for="item in checkboxData[field]">
+             <input
+                 class="form-check-input"
+                 type="checkbox"
+                 :value="item.id"
+                 :disabled="item.disabled"
+                 :checked="item.checked"
+                 >
+             <label class="form-check-label" >
+               {{ item.label }}
+             </label>
+           </div>
+         </div>
+         <div :class="radioBoxes?.display ? (radioBoxes.display =='row' ? 'd-flex': '' ) : ''  ">
+           <div class="form-check me-1"  v-for="item in radioboxData[field]">
+             <input
+                 class="form-check-input"
+                 type="radio"
+                 :name="field"
+                 :value="item.value"
+                 >
+             <label class="form-check-label" >
+               {{ item.label }}
+             </label>
+           </div>
+         </div>
        </div>
     </div>
     </div>
@@ -68,7 +95,10 @@ export default {
   props: [
       'action',
     'classes',
-      'method',
+    'checkBoxes',
+    'radioBoxes',
+     'passwords',
+    'method',
     'hasTerms',
     'country_code',
     'submitBtnClass',
@@ -96,6 +126,8 @@ export default {
       form_files: {},
       exiting_fields: [],
       selectData: {},
+      checkboxData: {},
+      radioboxData: {},
       users: [],
       allPlaceHolders: {},
       user: null,
@@ -146,6 +178,12 @@ export default {
       }
       if(this.files && this.files.includes(field)){
         return 'file'
+      }
+      if(this.phones && this.phones.includes(field)){
+        return 'phone'
+      }
+      if (this.passwords && this.passwords.includes(field)) {
+        return 'password'
       }
       if(this.fillSelects && this.fillSelects[field]){
         return 'select';
@@ -370,7 +408,20 @@ export default {
           })
         }
       })
-      console.log(selectData)
+    }
+    const checkboxData = {}
+    if (this.checkBoxes) {
+      Object.keys(this.checkBoxes).forEach(key => {
+        checkboxData[key] = this.checkBoxes[key]
+      })
+      this.checkboxData = checkboxData
+    }
+    const radioboxData = {}
+    if (this.radioBoxes) {
+      Object.keys(this.radioBoxes).forEach(key => {
+        radioboxData[key] = this.radioBoxes[key]
+      })
+      this.radioboxData = radioboxData
     }
   },
   created: function () {

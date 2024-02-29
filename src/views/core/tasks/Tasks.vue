@@ -47,9 +47,39 @@ const taskAdded = ()=>{
 <template>
 
   <sh-form
-      :fields="['na','state','user_id']"
+      :fields="['na','state','user_id','accept','allow']"
       :action="'/tasks/store'"
       class="btn btn-info"
+      :files="['state']"
+      :submitBtnClass="'btn btn-danger'"
+      :actionLabel="'Add Task'"
+      :check-boxes="{
+          allow: [
+              {
+                label: 'Accept',
+                value: 1,
+                disabled: true,
+                checked: true
+              },
+              {
+                label: 'Reject',
+                value: 0
+              }
+          ]
+      }" :radioBoxes="{
+          display: 'row',
+          accept: [
+              {
+                label: 'Accept',
+                value: 1,
+
+              },
+              {
+                label: 'Reject',
+                value: 0
+              }
+          ]
+      }"
       :success-callback="taskAdded"
       :fill-selects="{
           user_id: {
@@ -139,11 +169,11 @@ const taskAdded = ()=>{
             :required="['payment_account','amount', 'reference' ]"
             :action="`invoices/payments/store`"
             :fill-selects="{
-                                    payment_account: {
-                                        url: `accounts/payment-accounts/list/any`,
-                                        suggests: true
-                                    }
-                                }" class="btn btn-primary btn-sm me-2">
+                payment_account: {
+                    url: `accounts/payment-accounts/list/any`,
+                    suggests: true
+                }
+            }" class="btn btn-primary btn-sm me-2">
           <i class="bi bi-cash"></i>  Mark Paid  </sh-modal-form>
       </div>
     </div>

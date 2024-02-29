@@ -4,7 +4,8 @@ It will help you generate forms with fields, select, textarea, radio, checkbox e
 It will also help you fill select elements with data from the backend</p>
 <p>Make sure you have .env file with the following variables</p>
 <div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>VITE_APP_API_URL=http://localhost:8000/api/
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>This will be the base url of the api backend where the form will send request</p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>make sure to change(http://localhost:8000/api/)  to your api backend url
+This will be the base url of the api backend where the form will send request</p>
 <h3 id="importing" tabindex="-1"><a class="header-anchor" href="#importing"><span>Importing</span></a></h3>
 <h4 id="import-the-component" tabindex="-1"><a class="header-anchor" href="#import-the-component"><span>Import the component</span></a></h4>
 <div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> ShForm <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span>
@@ -30,7 +31,7 @@ It will also help you fill select elements with data from the backend</p>
 <li>
 <p>Details:</p>
 <p>These are the form files, like inputs, select etc</p>
-<pre><code>Example: ```['name','email','password']```
+<pre><code>Example: :fields=&quot;['name','email','password']&quot;
 </code></pre>
 </li>
 </ul>
@@ -72,7 +73,7 @@ It will also help you fill select elements with data from the backend</p>
 </li>
 <li>
 <p>Details:</p>
-<p>This is the method of the request</p>
+<p>This is the method of the request. By default, the method is post</p>
 <pre><code>Example: :method=&quot;put&quot;
 </code></pre>
 </li>
@@ -176,24 +177,11 @@ of using prebuilt</p>
 <p>Import First</p>
 <div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> CkEditor <span class="token keyword">from</span> <span class="token string">'@/lib/components/form-components/CkEditor.vue'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Use it this way in your sh-form, key is the name of</p>
-<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sh-form</span>
-        <span class="token attr-name">:fields</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>['mail','name']<span class="token punctuation">"</span></span>
-        <span class="token attr-name">:custom-component</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{
-    mail: CkEditor
-      }<span class="token punctuation">"</span></span>
-        <span class="token attr-name">:current-data</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{
-        email: 'jack@gmail.com'
-      }<span class="token punctuation">"</span></span>
-        <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>auth/register<span class="token punctuation">"</span></span>
-<span class="token punctuation">/></span></span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>Above form will generate a form with 3 fields</p>
-<ul>
-<li>name field</li>
-<li>email field</li>
-<li>password field</li>
-</ul>
-<p>Form component will automatically set password field to be input type password</p>
-<h3 id="current-data" tabindex="-1"><a class="header-anchor" href="#current-data"><span>current-data</span></a></h3>
+<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code>Example:
+    :customComponent="{
+        description: CkEditor
+    }"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="current-data" tabindex="-1"><a class="header-anchor" href="#current-data"><span>current-data</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>object</code></p>
@@ -214,6 +202,267 @@ autofilled with data from this object. Key of the array is the input field</p>
 <div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>:current-data="{
     email:'johnss@gmail.com'
  }"
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="placeholders" tabindex="-1"><a class="header-anchor" href="#placeholders"><span>placeholders</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>object</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add placeholders to the form fields. Key of the object is the name of the input field and value is the placeholder of the input field displayed on the form</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :placeholders="{
+        password: 'Enter your password'
+       }"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="phones" tabindex="-1"><a class="header-anchor" href="#phones"><span>phones</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add phone number input fields to the form. The array will contain the name of the input fields that will be phone number input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :phones="['phone']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="emails" tabindex="-1"><a class="header-anchor" href="#emails"><span>emails</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add email input fields to the form. The array will contain the name of the input fields that will be email input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :emails="['email']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="dates" tabindex="-1"><a class="header-anchor" href="#dates"><span>dates</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add date input fields to the form. The array will contain the name of the input fields that will be date input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :dates="['dob']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="textareas" tabindex="-1"><a class="header-anchor" href="#textareas"><span>textareas</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add textarea input fields to the form. The array will contain the name of the input fields that will be textarea input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :textareas="['description']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="radios" tabindex="-1"><a class="header-anchor" href="#radios"><span>radios</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add radio input fields to the form. The array will contain the name of the input fields that will be radio input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+        :radioBoxes="{
+              display: 'row',
+              accept: [
+                  {
+                    label: 'Accept',
+                    value: 1
+                  },
+                  {
+                    label: 'Reject',
+                    value: 0
+                  }
+              ]
+      }"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>Explanation of the attributes</p>
+<ul>
+<li><code v-pre>display</code>: This will be the display of the radio input fields. It can be <code v-pre>row</code> default is <code v-pre>column</code></li>
+<li><code v-pre>accept</code>: The form fields that will be radio input fields</li>
+<li><code v-pre>label</code>: This will be the label of the radio input field</li>
+<li><code v-pre>value</code>: This will be the value of the radio input field</li>
+</ul>
+<h3 id="checkboxes" tabindex="-1"><a class="header-anchor" href="#checkboxes"><span>checkboxes</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add checkbox input fields to the form. The array will contain the name of the input fields that will be checkbox input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+        :checkboxes="{
+              display: 'row',
+              accept: [
+                  {
+                    label: 'Accept',
+                    value: 1,
+                     disabled: true,
+                      checked: true
+                  },
+                  {
+                    label: 'Reject',
+                    value: 0
+                  }
+              ]
+      }"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>Explanation of the attributes</p>
+<ul>
+<li><code v-pre>display</code>: This will be the display of the checkbox input fields. It can be <code v-pre>row</code> default is <code v-pre>column</code></li>
+<li><code v-pre>accept</code>: The form fields that will be checkbox input fields</li>
+<li><code v-pre>label</code>: This will be the label of the checkbox input field</li>
+<li><code v-pre>value</code>: This will be the value of the checkbox input field</li>
+<li><code v-pre>checked</code>: This will be the value of the checkbox input field that will be checked by default</li>
+<li><code v-pre>disabled</code>: This will be the value of the checkbox input field that will be disabled</li>
+<li><code v-pre>required</code>: This will be the value of the checkbox input field that will be required</li>
+</ul>
+<h3 id="password" tabindex="-1"><a class="header-anchor" href="#password"><span>password</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add password input fields to the form. The array will contain the name of the input fields that will be password input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :passwords="['password']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="numbers" tabindex="-1"><a class="header-anchor" href="#numbers"><span>numbers</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add number input fields to the form. The array will contain the name of the input fields that will be number input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :numbers="['age']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="files" tabindex="-1"><a class="header-anchor" href="#files"><span>files</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>array</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>null</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will help you add file input fields to the form. The array will contain the name of the input fields that will be file input fields</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :files="['avatar']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="submitbtnclass" tabindex="-1"><a class="header-anchor" href="#submitbtnclass"><span>submitBtnClass</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>string</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>btn btn-primary</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will be the class of the submit button</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :submitBtnClass="btn btn-danger"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="actionlabel" tabindex="-1"><a class="header-anchor" href="#actionlabel"><span>actionLabel</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>string</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>Submit</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details:</p>
+<p>This will be the label of the submit button</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
+     :actionLabel="Save"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
 
 
