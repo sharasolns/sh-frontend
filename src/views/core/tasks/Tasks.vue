@@ -47,7 +47,7 @@ const taskAdded = ()=>{
 </script>
 <template>
   <a href="#exampleModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</a>
-  <sh-modal modal-id="exampleModal" modal-title="My Example Modal" :static="true">
+  <sh-modal modal-id="exampleModal" modal-title="My Example Modal" :static="true" :centered="true">
     <h5>Model content here</h5>
   </sh-modal>
 
