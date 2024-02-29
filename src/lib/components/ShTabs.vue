@@ -112,7 +112,6 @@ const activetab = (tab) => {
       <router-link @click="setTab(tab)" :active-class="activetab(tab)" class="nav-link text-capitalize"
                    :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">
         {{ tab.replace(/_/g, ' ') }}
-
       </router-link>
     </li>
   </ul>

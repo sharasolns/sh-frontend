@@ -1,5 +1,6 @@
 <script setup>
 
+import ShConfirmAction from '@/lib/components/ShConfirmAction.vue'
 import ShDynamicTabs from '@/lib/components/ShDynamicTabs.vue'
 import ShForm from '@/lib/components/ShForm.vue'
 import ShModal from '@/lib/components/ShModal.vue'
@@ -47,10 +48,10 @@ const taskAdded = ()=>{
 }
 </script>
 <template>
-  <sh-tabs
-      :tabs="['tasks','tab']"
-      :baseUrl="`/tasks`"
-       />
+
+  <sh-confirm-action url="tasks/delete/1" title="Delete Task" message="Are you sure you want to delete this task?">
+    <button class="btn btn-danger">Delete</button>
+  </sh-confirm-action>
   <div class="d-none">
     <sh-dynamic-tabs
         currentTab='Tab Two'

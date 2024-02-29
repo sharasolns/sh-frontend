@@ -1,6 +1,5 @@
 import Tasks from '@/views/core/tasks/Tasks.vue'
 import TaskForm from '@/views/core/tasks/forms/TaskForm.vue'
-import tab from '@/views/core/tasks/Tabs.vue'
 export default [
     {
         path: '/tasks',
@@ -15,9 +14,5 @@ export default [
                 }
             }
         ]
-    },
-    {
-        path: '/tasks/tab/:tab',
-        component: tab,
     }
 ]

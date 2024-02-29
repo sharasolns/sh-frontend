@@ -51,10 +51,10 @@ export default defineUserConfig({
                     children: [
                         "/guide/components/shmodal",
                         "/guide/components/shcanvas",
+                        "/guide/components/shconfirmationaction",
                         "/guide/components/shroutes",
                         "/guide/components/shtabs",
                         "/guide/components/shdynamictabs",
-
                         "/guide/components/shform",
                        "/guide/components/shtable",
                         "/guide/components/",

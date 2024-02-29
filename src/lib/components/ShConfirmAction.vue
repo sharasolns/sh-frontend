@@ -14,7 +14,7 @@ const props = defineProps({
   },
   loadingMessage: {
     type: String,
-    default: 'Processing'
+    default: 'Processing...'
   },
   successMessage: {
     type: String,
