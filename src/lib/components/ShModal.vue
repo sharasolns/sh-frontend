@@ -13,7 +13,7 @@ const props = defineProps({
     modalSize: {
         type: String
     },
-    Static: {
+    static: {
         type: Boolean,
         default: false
     },
@@ -30,7 +30,7 @@ onMounted(() => {
 })
 </script>
 <template>
-    <div class="modal fade" :id="modalId" aria-hidden="true">
+    <div class="modal fade" :id="modalId" aria-hidden="true" :data-bs-backdrop="static? 'static': 'none'">
         <div class="modal-dialog" :class="`modal-${modalSize}`">
             <div class="modal-content">
                 <div class="modal-header">

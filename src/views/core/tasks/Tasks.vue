@@ -2,6 +2,7 @@
 
 import ShDynamicTabs from '@/lib/components/ShDynamicTabs.vue'
 import ShForm from '@/lib/components/ShForm.vue'
+import ShModal from '@/lib/components/ShModal.vue'
 import ShTable from '@/lib/components/ShTable.vue'
 import ShRange from '@/lib/components/ShRange.vue'
 import shRepo from '@/lib/repo/helpers/ShRepo'
@@ -45,6 +46,10 @@ const taskAdded = ()=>{
 }
 </script>
 <template>
+  <a href="#exampleModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</a>
+  <sh-modal modal-id="exampleModal" modal-title="My Example Modal" :static="true">
+    <h5>Model content here</h5>
+  </sh-modal>
 
   <sh-form
       :fields="['na','state','user_id','accept','allow']"
