@@ -7,6 +7,10 @@ A sidebar component that can be toggled by clicking a button or by an action. It
 ```javascript
 import { ShCanvas } from '@iankibetsh/shframework'
 ```
+make sure to add the canvas trigger anchor tag or button with the following attributes to trigger the canvas
+```html
+  <button  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Toggle canvas</button>
+```
 
 ## Example Usage
 ```html

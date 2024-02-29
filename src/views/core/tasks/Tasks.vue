@@ -5,6 +5,7 @@ import ShForm from '@/lib/components/ShForm.vue'
 import ShModal from '@/lib/components/ShModal.vue'
 import ShTable from '@/lib/components/ShTable.vue'
 import ShRange from '@/lib/components/ShRange.vue'
+import ShTabs from '@/lib/components/ShTabs.vue'
 import shRepo from '@/lib/repo/helpers/ShRepo'
 import ShModalForm from '@/lib/components/ShModalForm.vue'
 import NoRecords from '@/lib/components/others/NoRecords.vue'
@@ -46,54 +47,10 @@ const taskAdded = ()=>{
 }
 </script>
 <template>
-  <a href="#exampleModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</a>
-  <sh-modal modal-id="exampleModal" modal-title="My Example Modal" :static="true" :centered="true">
-    <h5>Model content here</h5>
-  </sh-modal>
-
-  <sh-form
-      :fields="['na','state','user_id','accept','allow']"
-      :action="'/tasks/store'"
-      class="btn btn-info"
-      :files="['state']"
-      :submitBtnClass="'btn btn-danger'"
-      :actionLabel="'Add Task'"
-      :check-boxes="{
-          allow: [
-              {
-                label: 'Accept',
-                value: 1,
-                disabled: true,
-                checked: true
-              },
-              {
-                label: 'Reject',
-                value: 0
-              }
-          ]
-      }" :radioBoxes="{
-          display: 'row',
-          accept: [
-              {
-                label: 'Accept',
-                value: 1,
-
-              },
-              {
-                label: 'Reject',
-                value: 0
-              }
-          ]
-      }"
-      :success-callback="taskAdded"
-      :fill-selects="{
-          user_id: {
-            url: 'tasks/lists/any?all=1',
-            column: 'created_at',
-            value: 'created_at',
-        }
-      }"
-  />
+  <sh-tabs
+      :tabs="['tasks','tab']"
+      :baseUrl="`/tasks`"
+       />
   <div class="d-none">
     <sh-dynamic-tabs
         currentTab='Tab Two'

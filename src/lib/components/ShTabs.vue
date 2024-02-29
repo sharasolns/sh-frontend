@@ -16,6 +16,9 @@ const props = defineProps({
   sharedData: {
     type: Object
   },
+  activeTab: {
+    type: String
+  },
   tabCounts: {
     type: Object
   },
@@ -97,11 +100,16 @@ const setCounts = (res) => {
     }
   })
 }
+const activetab = (tab) => {
+  if (props.activeTab) {
+    return props.activeTab === tab ? 'active' : 'active'
+  }
+}
 </script>
 <template>
   <ul class="nav nav-tabs sh-tabs" :class="classes ?? shRepo.getShConfig('tabsClass','sh-tabs nav-tabs-bordered')">
     <li class="nav-item" v-for="tab in tabs" :key="tab">
-      <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
+      <router-link @click="setTab(tab)" :active-class="activetab(tab)" class="nav-link text-capitalize"
                    :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">
         {{ tab.replace(/_/g, ' ') }}
 

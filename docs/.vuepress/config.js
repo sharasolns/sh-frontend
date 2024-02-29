@@ -49,12 +49,13 @@ export default defineUserConfig({
                     text:'Components',
                     collapsible: false,
                     children: [
-                       "/guide/components/shcardlayout",
-                       "/guide/components/shform",
-                       "/guide/components/shtabs",
-                       "/guide/components/shdynamictabs",
-                       "/guide/components/shmodal",
-                       "/guide/components/shcanvas",
+                        "/guide/components/shmodal",
+                        "/guide/components/shcanvas",
+                        "/guide/components/shroutes",
+                        "/guide/components/shtabs",
+                        "/guide/components/shdynamictabs",
+
+                        "/guide/components/shform",
                        "/guide/components/shtable",
                         "/guide/components/",
 

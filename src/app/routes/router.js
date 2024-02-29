@@ -6,7 +6,7 @@ let routes = [
   {
     path: '/',
     component: Home
-  }
+  },
 ]
 routes = routes.concat(tasks,notes)
 const router = createRouter({
