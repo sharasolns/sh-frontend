@@ -62,3 +62,13 @@ import {ShModal} from '@iankibetsh/shframework'
 ```
     Example: :static='true'
 ```
+### centered
+- Type: `boolean`
+- Default: `false`
+- Required: `false`
+- Details
+
+    This is the centered attribute of the modal
+```
+    Example: :centered='true'
+```

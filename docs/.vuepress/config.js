@@ -17,7 +17,7 @@ export default defineUserConfig({
         navbar: [
             {
                 text: 'Documentation',
-                link: '/guide/'
+                link: '/guide/introduction'
             },
             {
                 text: 'Backend Docs',
@@ -31,35 +31,52 @@ export default defineUserConfig({
         sidebar: {
             '/guide':[
                 {
-                    text:'Introduction',
-                    // collapsible: false,
+                    text:'Guide',
+                     collapsible: false,
                     children: [
-                        "/guide/",
-                        "/guide/installation"
+                        "/guide/introduction",
+                    ]
+                },
+                {
+                    text:'Layouts',
+                    collapsible: false,
+                    children: [
+                       "/guide/components/shcardlayout",
+
                     ]
                 },
                 {
                     text:'Components',
                     collapsible: false,
                     children: [
-                       "/guide/components/",
+                       "/guide/components/shcardlayout",
                        "/guide/components/shform",
                        "/guide/components/shtabs",
                        "/guide/components/shdynamictabs",
                        "/guide/components/shmodal",
                        "/guide/components/shcanvas",
-                       "/guide/components/shtable"
+                       "/guide/components/shtable",
+                        "/guide/components/",
+
                     ]
                 },
                 {
                     text:'Helpers',
-                    collapsible: false,
+                    collapsible: true,
                     children: [
                        "/guide/helpers/",
                        "/guide/helpers/shuser/",
                        "/guide/helpers/shapi/",
                        "/guide/helpers/shrepo/"
                     ]
+                },
+                {
+                    text:'About',
+                    collapsible: false,
+                    children: [
+                       "/guide/about/overview",
+                       "/guide/about/team"
+                        ]
                 }
             ]
         }

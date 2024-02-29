@@ -1,11 +1,10 @@
 ---
 home: true
-heroImage: https://sharasms.co.ke/assets/img/logo.png
 heroText: Sh Frontend Documentation
 tagLine: Here we go
 actions:
 - text: Get Started
-  link: /guide/
+  link: /guide/introduction
   type: primary
 - text: Github
   link: https://github.com/sharasolns/sh-frontend

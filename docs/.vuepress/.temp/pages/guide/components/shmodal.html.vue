@@ -81,6 +81,23 @@ It is a simple modal that can be used to display content in a modal.</p>
 </li>
 </ul>
 <div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: :static='true'
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="centered" tabindex="-1"><a class="header-anchor" href="#centered"><span>centered</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>boolean</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details</p>
+<p>This is the centered attribute of the modal</p>
+</li>
+</ul>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: :centered='true'
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 
