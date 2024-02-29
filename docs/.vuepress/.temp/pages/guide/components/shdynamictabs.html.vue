@@ -29,7 +29,7 @@ It takes an array of tabs and renders them</p>
 This will be the array of tabs to be rendered</li>
 <li>Example:</li>
 </ul>
-<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code> [{label: 'Tab One', component: TabOne},{label: 'Tab Two', component: TabTwo}] 
+<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code> :tabs="[{label: 'Tab One', component: TabOne},{label: 'Tab Two', component: TabTwo}]"
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>Explanation of the attributes
 <ul>

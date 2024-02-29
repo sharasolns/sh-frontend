@@ -4,6 +4,7 @@ import ShConfirmAction from '@/lib/components/ShConfirmAction.vue'
 import ShDynamicTabs from '@/lib/components/ShDynamicTabs.vue'
 import ShForm from '@/lib/components/ShForm.vue'
 import ShModal from '@/lib/components/ShModal.vue'
+import ShModalBtn from '@/lib/components/ShModalBtn.vue'
 import ShTable from '@/lib/components/ShTable.vue'
 import ShRange from '@/lib/components/ShRange.vue'
 import ShTabs from '@/lib/components/ShTabs.vue'
@@ -48,24 +49,7 @@ const taskAdded = ()=>{
 }
 </script>
 <template>
-
-  <sh-confirm-action url="tasks/delete/1" title="Delete Task" message="Are you sure you want to delete this task?">
-    <button class="btn btn-danger">Delete</button>
-  </sh-confirm-action>
-  <div class="d-none">
-    <sh-dynamic-tabs
-        currentTab='Tab Two'
-        :tabs="[
-      {
-    label: 'Tab One',
-    component: TabOne,
-    },
-    {
-    label: 'Tab Two',
-    component: TabTwo
-    }
-  ]"
-    /><h5>All Tasks</h5>
+  <div >
     <div class="card">
       <div class="card-body">
         <sh-modal-form

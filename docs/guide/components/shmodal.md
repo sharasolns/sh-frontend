@@ -17,6 +17,15 @@ make sure to add the modal trigger anchor tag or button with the following attri
     <h5>Model content here</h5>
 </sh-modal>
 ```
+However, you can also use the sh-modal-btn component to trigger the modal
+
+```html
+<sh-modal-btn modal-id="exampleModal" class="btn btn-info">Launch demo modal</sh-modal-btn>
+```
+make sure to import the sh-modal-btn component
+```javascript 
+import {ShModalBtn} from '@iankibetsh/shframework'
+```
 
 ## Attributes
 

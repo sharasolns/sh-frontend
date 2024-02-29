@@ -8,7 +8,11 @@
 <div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sh-canvas</span> <span class="token attr-name">canvas-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>myCanvas<span class="token punctuation">"</span></span> <span class="token attr-name">canvas-title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Canvas Title<span class="token punctuation">"</span></span> <span class="token attr-name">position</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>start<span class="token punctuation">"</span></span> <span class="token attr-name">scrollable</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>lg<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>Canvas content will appear in slot here<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sh-canvas</span><span class="token punctuation">></span></span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="attributes" tabindex="-1"><a class="header-anchor" href="#attributes"><span>Attributes</span></a></h2>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>However, you can also use the sh-canvas-btn component to trigger the canvas</p>
+<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sh-canvas-btn</span> <span class="token attr-name">canvas-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>myCanvas<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>btn btn-info<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Toggle canvas<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sh-canvas-btn</span><span class="token punctuation">></span></span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>make sure to import the sh-canvas-btn component</p>
+<div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>ShCanvasBtn<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="attributes" tabindex="-1"><a class="header-anchor" href="#attributes"><span>Attributes</span></a></h2>
 <h3 id="canvas-id" tabindex="-1"><a class="header-anchor" href="#canvas-id"><span><code v-pre>canvas-id</code></span></a></h3>
 <ul>
 <li>
@@ -23,9 +27,7 @@
 <li>
 <p>Details</p>
 <p>This will be the id of the canvas</p>
-</li>
-<li>
-<p>Example: <code v-pre>myCanvas</code></p>
+<p>Example: canvas-id=&quot;myCanvas&quot;</p>
 </li>
 </ul>
 <h3 id="position" tabindex="-1"><a class="header-anchor" href="#position"><span><code v-pre>position</code></span></a></h3>
@@ -38,9 +40,8 @@
 <li>Details</li>
 </ul>
 <p>This will be the position of the canvas, bootstrap 5 canvas positions are used</p>
-<ul>
-<li>Example: <code v-pre>start</code></li>
-</ul>
+<pre><code>Example: position=&quot;start&quot;
+</code></pre>
 <h3 id="canvas-title" tabindex="-1"><a class="header-anchor" href="#canvas-title"><span><code v-pre>canvas-title</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>string</code></li>
@@ -49,9 +50,8 @@
 <li>Details</li>
 </ul>
 <p>Title of the canvas that will be displayed on the header of the canvas</p>
-<ul>
-<li>Example: <code v-pre>Canvas Title</code></li>
-</ul>
+<pre><code>Example: canvas-title=&quot;Canvas Title&quot;
+</code></pre>
 <h3 id="canvas-size" tabindex="-1"><a class="header-anchor" href="#canvas-size"><span><code v-pre>canvas-size</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>string</code></li>
@@ -61,9 +61,8 @@
 <li>Details</li>
 </ul>
 <p>This will be the size of the canvas, bootstrap 5 canvas sizes are used</p>
-<ul>
-<li>Example: <code v-pre>md</code></li>
-</ul>
+<pre><code>Example: size=&quot;lg&quot;
+</code></pre>
 <h3 id="scrollable" tabindex="-1"><a class="header-anchor" href="#scrollable"><span><code v-pre>scrollable</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>boolean</code></li>
@@ -72,6 +71,8 @@
 <li>Details</li>
 </ul>
 <p>This will be the scrollable state of the canvas, element is disabled when an offcanvas and its backdrop are visible.</p>
+<pre><code>    Example: scrollable=&quot;true&quot;
+</code></pre>
 </div></template>
 
 

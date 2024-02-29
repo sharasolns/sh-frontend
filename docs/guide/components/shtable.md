@@ -1,5 +1,11 @@
 # Sh Table
 
+sh-table is a component that generates a table. It's a wrapper around the bootstrap table. 
+Using this component makes your work easier and faster.
+To generate a table, you need to pass the headers, and the end-point of the table data. This will populate the table with the data from the end-point.
+Sounds cool right?
+Let's see how to use it.
+
 ## importing
 
 ```javascript
@@ -24,8 +30,10 @@ import {ShTable} from '@iankibetsh/shframework'
 - Required: `true`
 - Details
 
-    These are table headers for the table that will be generated
-- Example: `['id','name','description']`
+    These are table headers for the table that will be generated 
+   
+      Example: `['id','name','description']`
+
 ### `end-point`
 
 - Type: `string`
@@ -34,7 +42,30 @@ import {ShTable} from '@iankibetsh/shframework'
 - Details
 
     It's the endpoint of table data, usually it's the backend api url
-- Example: `tasks/list`
+
+      Example: `tasks/list`
+
+### links
+- Type: `object`
+- Required: `false`,
+- Default: `none`
+- Details 
+
+    In case you want to add links to table data you can use this attribute. 
+     It's an object with the following properties
+
+Example Usage
+
+```
+:links="{
+  id: {
+    url: '/tasks/{id}/details',
+     target: '_blank'
+  }
+}"
+```
+The above will add a link to the id column with the url `/tasks/{id}/details` and the open in a new tab
+
 
 ### actions
 - Type: `object`

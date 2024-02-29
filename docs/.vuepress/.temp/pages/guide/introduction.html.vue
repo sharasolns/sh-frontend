@@ -1,5 +1,9 @@
 <template><div><h1 id="introduction" tabindex="-1"><a class="header-anchor" href="#introduction"><span>Introduction</span></a></h1>
-<p>Welcome to sh frontend documentation. This is a collection of components and utilities that can be used to build web applications. The components are built using Vue 3 and Vite.
+<p>Introducing Shfrontend: Your Instant Vue.js Development Framework</p>
+<p>Are you a developer staring at a blank screen, wondering how on earth you'll summon the courage to start yet another Vue.js project from scratch.
+Are you Feeling like you've hit the &quot;refresh&quot; button on your creative energy just a
+few too many times? Well, dust off that old wizard hat and grab your enchanted mouse, because Shfrontend is here to grant your development wishes faster than you can say &quot;abracadabra&quot;!</p>
+<p>Welcome to Shfrontend, your ultimate solution for accelerating Vue.js development projects with ease! Shfrontend is a powerful framework designed to streamline the creation of stunning web applications by leveraging Bootstrap components and a collection of essential features.
 It uses Bootstrap 5 for styling and is designed to be used with Vue 3 applications.</p>
 <h2 id="getting-started" tabindex="-1"><a class="header-anchor" href="#getting-started"><span>Getting Started</span></a></h2>
 <p>To get started, make sure you have a Vue 3 application set up using Vite. If you don't have one, you can set up a new Vue 3 application using Vite by running the following command.</p>

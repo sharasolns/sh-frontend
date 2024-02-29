@@ -38,7 +38,7 @@ import TabTwo from '@/tabs/TabTwo.vue'
 - Example:
 
 ```html 
- [{label: 'Tab One', component: TabOne},{label: 'Tab Two', component: TabTwo}] 
+ :tabs="[{label: 'Tab One', component: TabOne},{label: 'Tab Two', component: TabTwo}]"
  ```
 - Explanation of the attributes 
     - `label`: This will be the label of the tab

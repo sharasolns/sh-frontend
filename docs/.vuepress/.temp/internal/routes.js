@@ -12,6 +12,7 @@ export const routes = Object.fromEntries([
   ["/guide/components/shdynamictabs.html", { loader: () => import(/* webpackChunkName: "shdynamictabs.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shdynamictabs.html.js"), meta: {"title":"Sh Dynamic Tabs"} }],
   ["/guide/components/shform.html", { loader: () => import(/* webpackChunkName: "shform.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shform.html.js"), meta: {"title":"Sh Form"} }],
   ["/guide/components/shmodal.html", { loader: () => import(/* webpackChunkName: "shmodal.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shmodal.html.js"), meta: {"title":"ShModal"} }],
+  ["/guide/components/shmodalform.html", { loader: () => import(/* webpackChunkName: "shmodalform.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shmodalform.html.js"), meta: {"title":"Sh modal Form"} }],
   ["/guide/components/shroutes.html", { loader: () => import(/* webpackChunkName: "shroutes.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shroutes.html.js"), meta: {"title":"Routes"} }],
   ["/guide/components/shtable.html", { loader: () => import(/* webpackChunkName: "shtable.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shtable.html.js"), meta: {"title":"Sh Table"} }],
   ["/guide/components/shtabs.html", { loader: () => import(/* webpackChunkName: "shtabs.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/components/shtabs.html.js"), meta: {"title":"Sh Tabs"} }],
@@ -19,8 +20,8 @@ export const routes = Object.fromEntries([
   ["/guide/about/", { loader: () => import(/* webpackChunkName: "index.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/about/index.html.js"), meta: {"title":"About"} }],
   ["/guide/about/overview.html", { loader: () => import(/* webpackChunkName: "overview.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/about/overview.html.js"), meta: {"title":"Overview"} }],
   ["/guide/about/team.html", { loader: () => import(/* webpackChunkName: "team.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/about/team.html.js"), meta: {"title":"Team"} }],
-  ["/guide/helpers/shrepo/", { loader: () => import(/* webpackChunkName: "index.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shrepo/index.html.js"), meta: {"title":"shRepo"} }],
   ["/guide/helpers/shapi/", { loader: () => import(/* webpackChunkName: "index.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shapi/index.html.js"), meta: {"title":"shApi"} }],
+  ["/guide/helpers/shrepo/", { loader: () => import(/* webpackChunkName: "index.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shrepo/index.html.js"), meta: {"title":"shRepo"} }],
   ["/guide/helpers/shuser/", { loader: () => import(/* webpackChunkName: "index.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/helpers/shuser/index.html.js"), meta: {"title":"shUser"} }],
   ["/404.html", { loader: () => import(/* webpackChunkName: "404.html" */"/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/404.html.js"), meta: {"title":""} }],
 ]);

@@ -50,6 +50,7 @@ export default defineUserConfig({
                     collapsible: false,
                     children: [
                         "/guide/components/shmodal",
+                        "/guide/components/shmodalform",
                         "/guide/components/shcanvas",
                         "/guide/components/shconfirmationaction",
                         "/guide/components/shroutes",
@@ -57,7 +58,6 @@ export default defineUserConfig({
                         "/guide/components/shdynamictabs",
                         "/guide/components/shform",
                        "/guide/components/shtable",
-                        "/guide/components/",
 
                     ]
                 },
