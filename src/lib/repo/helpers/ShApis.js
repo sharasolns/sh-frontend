@@ -50,6 +50,53 @@ function doPost (endPoint, data, extraConfig) {
     config
   )
 }
+function doDelete (endPoint, data, extraConfig) {
+  ShSession()
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + shstorage.getItem('access_token')
+    }
+  }
+    if (extraConfig) {
+        Object.assign(config, extraConfig)
+    }
+  return axios.delete(endPoint,
+    data,
+    config
+  )
+}
+function doPut (endPoint, data, extraConfig) {
+    ShSession()
+    const config = {
+        headers: {
+        Authorization: 'Bearer ' + shstorage.getItem('access_token')
+        }
+    }
+        if (extraConfig) {
+            Object.assign(config, extraConfig)
+        }
+    return axios.put(endPoint,
+        data,
+        config
+    )
+
+}
+function doPatch (endPoint, data, extraConfig) {
+    ShSession()
+    const config = {
+        headers: {
+        Authorization: 'Bearer ' + shstorage.getItem('access_token')
+        }
+    }
+        if (extraConfig) {
+            Object.assign(config, extraConfig)
+        }
+    return axios.patch(endPoint,
+        data,
+        config
+    )
+
+}
 function graphQlQuery(query) {
   const data = {
     query
@@ -67,5 +114,8 @@ export default {
   doGet,
   doPost,
   graphQlQuery,
+    doDelete,
+    doPut,
+    doPatch,
   graphQlMutate
 }

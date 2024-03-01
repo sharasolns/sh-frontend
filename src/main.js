@@ -35,6 +35,20 @@ const shFormComponents = {
   // number: SampleComponent,
   password: PasswordInput,
 }
+const UserdetailsColumns = [
+  {
+    name: 'name',
+    label: 'Name'
+  },
+  {
+    name: 'email',
+    label: 'Email'
+  },
+  {
+    name: 'phone',
+    label: 'Phone'
+  }
+]
 app.use(ShFrontend,{
   sessionTimeout: 400,
   defaultRange: 'This Month',
@@ -43,12 +57,15 @@ app.use(ShFrontend,{
   redirectLogin: '/dashboard',
   router: router,
   registerTitle: 'Welcome, create a new account',
+  registerSubTitle: 'Create a new account to access the system',
+  loginTitle: 'login to your account',
   tablePaginationStyle: 'table', //loadMore,table
   noRecordsComponent: NoRecords,
   tablePerPage: 3,
   shFormElementClasses,
   toastTimer: 4000,
-  shFormComponents
+  shFormComponents,
+  UserdetailsColumns
 })
 
 //popups

@@ -1,6 +1,5 @@
 import Tasks from '@/views/core/tasks/Tasks.vue'
 import TaskForm from '@/views/core/tasks/forms/TaskForm.vue'
-
 export default [
     {
         path: '/tasks',

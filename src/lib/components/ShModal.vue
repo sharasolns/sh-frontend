@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted} from 'vue'
+import {computed, onMounted} from 'vue'
 
 const emit = defineEmits(['modalClosed'])
 const props = defineProps({
@@ -13,11 +13,15 @@ const props = defineProps({
     modalSize: {
         type: String
     },
-    Static: {
+    static: {
         type: Boolean,
         default: false
     },
     bsKeyboard: {
+        type: Boolean,
+        default: true
+    },
+    centered: {
         type: Boolean,
         default: true
     }
@@ -28,11 +32,21 @@ onMounted(() => {
         event.target.id == props.modalId && emit('modalClosed')
     })
 })
+const modalClasses = computed(() => {
+    let classes = 'modal-dialog'
+    if (props.modalSize) {
+        classes += ' modal-' + props.modalSize
+    }
+    if (props.centered) {
+        classes += ' modal-dialog-centered'
+    }
+    return classes
+})
 </script>
 <template>
-    <div class="modal sh-modal fade" :id="modalId" aria-hidden="true">
-        <div class="modal-dialog sh-modal-dialog" :class="`modal-${modalSize}`">
-            <div class="modal-content sh-modal-content">
+    <div class="modal fade" :id="modalId" aria-hidden="true" :data-bs-backdrop="static? 'static': 'none'">
+        <div class="modal-dialog"  :class="modalClasses"  >
+            <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title flex-fill">{{ modalTitle }}</h3>
                     <button class="btn btn-danger btn-sm" data-bs-dismiss="modal" data-dismiss="modal">&times;</button>

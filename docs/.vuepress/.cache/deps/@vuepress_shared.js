@@ -1,41 +1,44 @@
-import {
-  isArray,
-  isFunction,
-  isString
-} from "./chunk-VNKCJBW6.js";
-import "./chunk-FEFTYQ2P.js";
-
 // node_modules/@vuepress/shared/dist/index.js
-var resolveHeadIdentifier = ([
-  tag,
-  attrs,
-  content
-]) => {
+var TAGS_ALLOWED = ["link", "meta", "script", "style", "noscript", "template"];
+var TAGS_UNIQUE = ["title", "base"];
+var resolveHeadIdentifier = ([tag, attrs, content]) => {
+  if (TAGS_UNIQUE.includes(tag)) {
+    return tag;
+  }
+  if (!TAGS_ALLOWED.includes(tag)) {
+    return null;
+  }
   if (tag === "meta" && attrs.name) {
     return `${tag}.${attrs.name}`;
-  }
-  if (["title", "base"].includes(tag)) {
-    return tag;
   }
   if (tag === "template" && attrs.id) {
     return `${tag}.${attrs.id}`;
   }
-  return JSON.stringify([tag, attrs, content]);
+  return JSON.stringify([
+    tag,
+    Object.entries(attrs).map(([key, value]) => {
+      if (typeof value === "boolean") {
+        return value ? [key, ""] : null;
+      }
+      return [key, value];
+    }).filter((item) => item != null).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
+    content
+  ]);
 };
 var dedupeHead = (head) => {
   const identifierSet = /* @__PURE__ */ new Set();
   const result = [];
   head.forEach((item) => {
     const identifier = resolveHeadIdentifier(item);
-    if (!identifierSet.has(identifier)) {
+    if (identifier && !identifierSet.has(identifier)) {
       identifierSet.add(identifier);
       result.push(item);
     }
   });
   return result;
 };
-var ensureLeadingSlash = (str) => str.replace(/^\/?/, "/");
-var ensureEndingSlash = (str) => /(\.html|\/)$/.test(str) ? str : str + "/";
+var ensureLeadingSlash = (str) => str[0] === "/" ? str : `/${str}`;
+var ensureEndingSlash = (str) => str[str.length - 1] === "/" || str.endsWith(".html") ? str : `${str}/`;
 var formatDateString = (str, defaultDateString = "") => {
   const dateMatch = str.match(/\b(\d{4})-(\d{1,2})-(\d{1,2})\b/);
   if (dateMatch === null) {
@@ -44,34 +47,10 @@ var formatDateString = (str, defaultDateString = "") => {
   const [, yearStr, monthStr, dayStr] = dateMatch;
   return [yearStr, monthStr.padStart(2, "0"), dayStr.padStart(2, "0")].join("-");
 };
-var htmlEscapeMap = {
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  "'": "&#39;",
-  '"': "&quot;"
-};
-var htmlEscapeRegexp = /[&<>'"]/g;
-var htmlEscape = (str) => str.replace(htmlEscapeRegexp, (char) => htmlEscapeMap[char]);
-var htmlUnescapeMap = {
-  "&amp;": "&",
-  "&#38;": "&",
-  "&lt;": "<",
-  "&#60;": "<",
-  "&gt;": ">",
-  "&#62;": ">",
-  "&apos;": "'",
-  "&#39;": "'",
-  "&quot;": '"',
-  "&#34;": '"'
-};
-var htmlUnescapeRegexp = /&(amp|#38|lt|#60|gt|#62|apos|#39|quot|#34);/g;
-var htmlUnescape = (str) => str.replace(htmlUnescapeRegexp, (char) => htmlUnescapeMap[char]);
-var isLinkFtp = (link) => link.startsWith("ftp://");
 var isLinkHttp = (link) => /^(https?:)?\/\//.test(link);
 var markdownLinkRegexp = /.md((\?|#).*)?$/;
 var isLinkExternal = (link, base = "/") => {
-  if (isLinkHttp(link) || isLinkFtp(link)) {
+  if (isLinkHttp(link)) {
     return true;
   }
   if (link.startsWith("/") && !link.startsWith(base) && !markdownLinkRegexp.test(link)) {
@@ -79,11 +58,32 @@ var isLinkExternal = (link, base = "/") => {
   }
   return false;
 };
-var isLinkMailto = (link) => /^mailto:/.test(link);
-var isLinkTel = (link) => /^tel:/.test(link);
+var isLinkWithProtocol = (link) => /^[a-z][a-z0-9+.-]*:/.test(link);
 var isPlainObject = (val) => Object.prototype.toString.call(val) === "[object Object]";
-var removeEndingSlash = (str) => str.replace(/\/$/, "");
-var removeLeadingSlash = (str) => str.replace(/^\//, "");
+var normalizeRoutePath = (path) => {
+  const [pathname, ...queryAndHash] = path.split(/(\?|#)/);
+  if (!pathname || pathname.endsWith("/"))
+    return path;
+  let routePath = pathname.replace(/(^|\/)README.md$/i, "$1index.html");
+  if (routePath.endsWith(".md")) {
+    routePath = routePath.substring(0, routePath.length - 3) + ".html";
+  } else if (!routePath.endsWith(".html")) {
+    routePath = routePath + ".html";
+  }
+  if (routePath.endsWith("/index.html")) {
+    routePath = routePath.substring(0, routePath.length - 10);
+  }
+  return routePath + queryAndHash.join("");
+};
+var omit = (obj, ...keys) => {
+  const result = { ...obj };
+  for (const key of keys) {
+    delete result[key];
+  }
+  return result;
+};
+var removeEndingSlash = (str) => str[str.length - 1] === "/" ? str.slice(0, -1) : str;
+var removeLeadingSlash = (str) => str[0] === "/" ? str.slice(1) : str;
 var resolveLocalePath = (locales, routePath) => {
   const localePaths = Object.keys(locales).sort((a, b) => {
     const levelDelta = b.split("/").length - a.split("/").length;
@@ -99,23 +99,25 @@ var resolveLocalePath = (locales, routePath) => {
   }
   return "/";
 };
-var resolveRoutePathFromUrl = (url, base = "/") => url.replace(/^(https?:)?\/\/[^/]*/, "").replace(new RegExp(`^${base}`), "/");
+var resolveRoutePathFromUrl = (url, base = "/") => {
+  const pathname = url.replace(/^(https?:)?\/\/[^/]*/, "");
+  return pathname.startsWith(base) ? `/${pathname.slice(base.length)}` : pathname;
+};
+var isFunction = (val) => typeof val === "function";
+var isString = (val) => typeof val === "string";
 export {
   dedupeHead,
   ensureEndingSlash,
   ensureLeadingSlash,
   formatDateString,
-  htmlEscape,
-  htmlUnescape,
-  isArray,
   isFunction,
   isLinkExternal,
-  isLinkFtp,
   isLinkHttp,
-  isLinkMailto,
-  isLinkTel,
+  isLinkWithProtocol,
   isPlainObject,
   isString,
+  normalizeRoutePath,
+  omit,
   removeEndingSlash,
   removeLeadingSlash,
   resolveHeadIdentifier,

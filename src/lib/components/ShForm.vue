@@ -25,10 +25,42 @@
          <input :disabled="isDisabled(field)" :placeholder="field === 'phone_number' ? 'e.g 0712 345 678':''" :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'text'" type="text" class="form-control">
          <textarea :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'textarea'" class="form-control"></textarea>
          <select :name="field" @focus="removeErrors(field)" :class="form_errors[field] == null ? ' field_' + field:'is-invalid ' + field" v-model="form_elements[field]" v-if="getFieldType(field) === 'select'" class="form-control">
-           <option v-for="item in selectData[field]" :key="item.id"  :value="item.id">{{item.name}}</option>
+           <option v-for="item in selectData[field]"
+                   :key="fillSelects[field].value ? item[fillSelects[field].value]:item.id"
+                   :value="fillSelects[field].value ? item[fillSelects[field].value]:item.id"
+           >{{
+             fillSelects[field].column ? item[fillSelects[field].column]:item.name
+             }}</option>
          </select>
          <div v-if="form_errors[field] != null " class="invalid-feedback">
            {{ form_errors[field][0]  }}
+         </div>
+         <div :class="checkBoxes?.display ? (checkBoxes.display =='row' ? 'd-flex': '' ) : ''  ">
+           <div class="form-check me-1"  v-for="item in checkboxData[field]">
+             <input
+                 class="form-check-input"
+                 type="checkbox"
+                 :value="item.id"
+                 :disabled="item.disabled"
+                 :checked="item.checked"
+                 >
+             <label class="form-check-label" >
+               {{ item.label }}
+             </label>
+           </div>
+         </div>
+         <div :class="radioBoxes?.display ? (radioBoxes.display =='row' ? 'd-flex': '' ) : ''  ">
+           <div class="form-check me-1"  v-for="item in radioboxData[field]">
+             <input
+                 class="form-check-input"
+                 type="radio"
+                 :name="field"
+                 :value="item.value"
+                 >
+             <label class="form-check-label" >
+               {{ item.label }}
+             </label>
+           </div>
          </div>
        </div>
     </div>
@@ -63,6 +95,10 @@ export default {
   props: [
       'action',
     'classes',
+    'checkBoxes',
+    'radioBoxes',
+     'passwords',
+    'method',
     'hasTerms',
     'country_code',
     'submitBtnClass',
@@ -90,6 +126,8 @@ export default {
       form_files: {},
       exiting_fields: [],
       selectData: {},
+      checkboxData: {},
+      radioboxData: {},
       users: [],
       allPlaceHolders: {},
       user: null,
@@ -140,6 +178,12 @@ export default {
       }
       if(this.files && this.files.includes(field)){
         return 'file'
+      }
+      if(this.phones && this.phones.includes(field)){
+        return 'phone'
+      }
+      if (this.passwords && this.passwords.includes(field)) {
+        return 'password'
       }
       if(this.fillSelects && this.fillSelects[field]){
         return 'select';
@@ -263,7 +307,8 @@ export default {
       Object.keys(this.form_files).forEach(key => {
         data.append(key, this.form_files[key].value)
       })
-      apis.doPost(this.action, data).then(res => {
+      const method = this.method =='put' ? apis.doPut: (this.method == 'delete' ? apis.doDelete: apis.doPost);
+      method(this.action, data).then(res => {
         // console.log(res)
         this.form_status = 2
         Object.keys(this.form_elements).forEach(key => {
@@ -363,7 +408,20 @@ export default {
           })
         }
       })
-      console.log(selectData)
+    }
+    const checkboxData = {}
+    if (this.checkBoxes) {
+      Object.keys(this.checkBoxes).forEach(key => {
+        checkboxData[key] = this.checkBoxes[key]
+      })
+      this.checkboxData = checkboxData
+    }
+    const radioboxData = {}
+    if (this.radioBoxes) {
+      Object.keys(this.radioBoxes).forEach(key => {
+        radioboxData[key] = this.radioBoxes[key]
+      })
+      this.radioboxData = radioboxData
     }
   },
   created: function () {

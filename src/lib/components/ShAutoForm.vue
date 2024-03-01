@@ -1,4 +1,5 @@
 <script setup>
+import apis from '@/lib/repo/helpers/ShApis.js'
 import { inject, onMounted, ref, watch } from 'vue'
 import _ from 'lodash'
 import shApis from '../repo/helpers/ShApis.js'
@@ -24,6 +25,7 @@ const props = defineProps([
   'textAreas',
   'currentData',
   'emails',
+  'method',
   'phones', 'numbers', 'selects', 'dates', 'gqlMutation',
     'required'
 ])
@@ -140,14 +142,15 @@ const submitForm = e => {
     })
     args += `)`
     args = args.replace(',)', ')')
-    if (args == '()') {
+    if (args === '()') {
       args = ''
     }
     emit('preSubmit', data)
     const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`
     shApis.graphQlMutate(mutation).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason))
   } else {
-    shApis.doPost(props.action, data).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason))
+    const method = props.method ==='put' ? shApis.doPut: ( props.method === 'delete' ? shApis.doDelete: shApis.doPost);
+    method(props.action, data).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason))
   }
   return false
 }

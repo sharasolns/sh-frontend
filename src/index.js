@@ -16,6 +16,7 @@ import ShCanvasBtn from './lib/components/ShCanvasBtn.vue'
 import ManagePermissions from './lib/components/core/Departments/department/ManagePermissions.vue'
 import ShRoutePopups from './lib/components/popups/ShRoutePopups.vue'
 import ShQueryPopups from './lib/components/popups/ShQueryPopups.vue'
+import ShCardLayout from './lib/components/ShCardLayout.vue'
 import ShRange from './lib/components/ShRange.vue'
 import ShSuggest from './lib/components/form-components/ShSuggest.vue'
 import { useUserStore } from './lib/repo/stores/ShUser.js'
@@ -54,5 +55,6 @@ export {
     ShRoutePopups,
     ShQueryPopups,
     ShRange,
-    shGql
+    shGql,
+  ShCardLayout
 }

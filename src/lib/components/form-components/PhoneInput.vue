@@ -1,5 +1,5 @@
 <template>
-    <div class="sh-phone mb-3">
+    <div class="sh-phone mb-3" style="display: flex;">
       <div v-if="selectedCountry" style="display: contents;">
         <img :src="flag">
         {{ selectedCountry.dialCode }}

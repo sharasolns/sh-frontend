@@ -119,7 +119,6 @@ const signOutUser = () => {
 
 
 function getShConfig(key = null, def = ''){
-
     const config = ShStorage.getItem('ShConfig') ?? {}
     if (key) {
         return config[key] ?? def
