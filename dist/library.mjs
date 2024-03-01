@@ -5793,11 +5793,6 @@ const setCounts = (res) => {
     }
   });
 };
-const activetab = (tab) => {
-  if (props.activeTab) {
-    return props.activeTab === tab ? 'active' : 'active'
-  }
-};
 
 return (_ctx, _cache) => {
   const _component_router_link = resolveComponent("router-link");
@@ -5814,7 +5809,7 @@ return (_ctx, _cache) => {
         }, [
           createVNode(_component_router_link, {
             onClick: $event => (setTab(tab)),
-            "active-class": activetab(tab),
+            "active-class": 'active',
             class: normalizeClass(["nav-link text-capitalize", 'sh_tab_' + tab]),
             to: __props.baseUrl+'/tab/'+tab,
             role: "tab"
@@ -5823,7 +5818,7 @@ return (_ctx, _cache) => {
               createTextVNode(toDisplayString(tab.replace(/_/g, ' ')), 1 /* TEXT */)
             ]),
             _: 2 /* DYNAMIC */
-          }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onClick", "active-class", "to", "class"])
+          }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onClick", "to", "class"])
         ]))
       }), 128 /* KEYED_FRAGMENT */))
     ], 2 /* CLASS */),
