@@ -30,7 +30,11 @@ This is a normal vue route with a meta property. The component is the component 
 
     This is the popup attribute that will be used to open the route in a modal
  
-      Example: `popup: 'modal'`
+    
+Example : 
+```
+popup: 'modal'
+```
 
 ### title
 - Type: `string`
@@ -40,7 +44,10 @@ This is a normal vue route with a meta property. The component is the component 
 
     This is the title of the modal
 
-      Example: `title: 'Task Form'`
+Example : 
+``
+title: 'Task Form'
+```
 
 ### size 
 - Type: `string`
@@ -51,7 +58,12 @@ This is a normal vue route with a meta property. The component is the component 
 
     This is the size of the modal
 
-      Example: `size: 'md'`
+      
+Example :
+
+```
+size: 'md'
+```
 
 ### popup query form
 - Type: `string`
@@ -62,8 +74,10 @@ This is a normal vue route with a meta property. The component is the component 
 - Details
          
  This is the popup attribute that will be used to open the route in a modal
+ 
+Example :
 ```html
-Example: <router-link 
+ <router-link 
                      to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store"
                      class="btn btn-info btn-sm ms-2">
                     Popup 

@@ -29,7 +29,10 @@ department.value = dept
         <div class="card sh-departments-card shadow">
           <div class="card-body">
             <a @click="editDepartment(null)" data-bs-toggle="modal" ref="addDeptBtn" href="#sh_department_modal" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> ADD DEPARTMENT</a>
-            <sh-table :reload="reload" :headers="['id','name','description', 'created_at']" end-point="sh-departments/list" :actions="{
+            <sh-table :reload="reload" :headers="['id','name','description', 'created_at']"
+                      end-point="sh-departments/list"
+
+                      :actions="{
       label: 'Action',
       actions: [
         {

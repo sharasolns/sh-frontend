@@ -32,11 +32,11 @@ This is to help you open a modal or off-canvas from the url</p>
 <li>
 <p>Details</p>
 <p>This is the popup attribute that will be used to open the route in a modal</p>
-<pre><code>Example: `popup: 'modal'`
-</code></pre>
 </li>
 </ul>
-<h3 id="title" tabindex="-1"><a class="header-anchor" href="#title"><span>title</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>popup: 'modal'
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="title" tabindex="-1"><a class="header-anchor" href="#title"><span>title</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -50,47 +50,44 @@ This is to help you open a modal or off-canvas from the url</p>
 <li>
 <p>Details</p>
 <p>This is the title of the modal</p>
-<pre><code>Example: `title: 'Task Form'`
-</code></pre>
 </li>
 </ul>
-<h3 id="size" tabindex="-1"><a class="header-anchor" href="#size"><span>size</span></a></h3>
-<ul>
-<li>
-<p>Type: <code v-pre>string</code></p>
-</li>
-<li>
-<p>Default: <code v-pre>md</code></p>
-</li>
-<li>
-<p>Required: <code v-pre>false</code></p>
-</li>
-<li>
-<p>Options: <code v-pre>sm</code>, <code v-pre>md</code>, <code v-pre>lg</code>, <code v-pre>xl</code></p>
-</li>
-<li>
-<p>Details</p>
-<p>This is the size of the modal</p>
-<pre><code>Example: `size: 'md'`
-</code></pre>
-</li>
-</ul>
-<h3 id="popup-query-form" tabindex="-1"><a class="header-anchor" href="#popup-query-form"><span>popup query form</span></a></h3>
-<ul>
-<li>Type: <code v-pre>string</code></li>
-<li>Default: <code v-pre>none</code></li>
-<li>Required: <code v-pre>false</code></li>
-<li>Details</li>
-<li>Options: <code v-pre>modal</code>, <code v-pre>canvas</code></li>
-<li>Details</li>
-</ul>
-<p>This is the popup attribute that will be used to open the route in a modal</p>
-<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code>Example: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>router-link</span> 
-                     <span class="token attr-name">to</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/tasks?popup=modal&amp;title=New Task&amp;comp=ShQueryForm&amp;fields=name,email,phone&amp;action=tasks/store<span class="token punctuation">"</span></span>
-                     <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>btn btn-info btn-sm ms-2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<p>Example :
+``
+title: 'Task Form'</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>
+### size 
+- Type: `string`
+- Default: `md`
+- Required: `false`
+- Options: `sm`, `md`, `lg`, `xl`
+- Details
+
+    This is the size of the modal
+
+      
+Example :
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>size: 'md'</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>
+### popup query form
+- Type: `string`
+- Default: `none`
+- Required: `false`
+- Details
+- Options: `modal`, `canvas`
+- Details
+         
+ This is the popup attribute that will be used to open the route in a modal
+ 
+Example :
+```html
+ &lt;router-link 
+                     to="/tasks?popup=modal&amp;title=New Task&amp;comp=ShQueryForm&amp;fields=name,email,phone&amp;action=tasks/store"
+                     class="btn btn-info btn-sm ms-2">
                     Popup 
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>router-link</span><span class="token punctuation">></span></span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="pagecount" tabindex="-1"><a class="header-anchor" href="#pagecount"><span>pageCount</span></a></h4>
+        &lt;/router-link>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="pagecount" tabindex="-1"><a class="header-anchor" href="#pagecount"><span>pageCount</span></a></h4>
 <ul>
 <li>
 <p>Type: <code v-pre>number</code></p>
