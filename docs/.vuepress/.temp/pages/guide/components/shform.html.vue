@@ -425,9 +425,9 @@ autofilled with data from this object. Key of the array is the input field</p>
 <p>This will help you add file input fields to the form. The array will contain the name of the input fields that will be file input fields</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
-     :files="['avatar']"
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="submitbtnclass" tabindex="-1"><a class="header-anchor" href="#submitbtnclass"><span>submitBtnClass</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>     :files="['avatar']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="submitbtnclass" tabindex="-1"><a class="header-anchor" href="#submitbtnclass"><span>submitBtnClass</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -443,9 +443,9 @@ autofilled with data from this object. Key of the array is the input field</p>
 <p>This will be the class of the submit button</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
-     :submitBtnClass="btn btn-danger"
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="actionlabel" tabindex="-1"><a class="header-anchor" href="#actionlabel"><span>actionLabel</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>     :submitBtnClass="btn btn-danger"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="actionlabel" tabindex="-1"><a class="header-anchor" href="#actionlabel"><span>actionLabel</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -461,8 +461,8 @@ autofilled with data from this object. Key of the array is the input field</p>
 <p>This will be the label of the submit button</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>Example:
-     :actionLabel="Save"
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>     :actionLabel="Save"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 

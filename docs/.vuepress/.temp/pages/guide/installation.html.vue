@@ -3,7 +3,14 @@
 using vite</p>
 <div class="language-bash line-numbers-mode" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> @iankibetsh/shframework
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>In main.js or the entry file for vue js, import and use <code v-pre>ShFrontend</code></p>
-<div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>ShFrontend<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span>
+<h3 id="boostrap-5" tabindex="-1"><a class="header-anchor" href="#boostrap-5"><span>Boostrap 5</span></a></h3>
+<p>Since this package uses bootstrap 5, install it in your project using the following command</p>
+<div class="language-bash line-numbers-mode" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> bootstrap@5.2.3
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Then import it in your main.js or the entry file for your vue js application</p>
+<div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code>
+<span class="token keyword">import</span> <span class="token string">'bootstrap/dist/css/bootstrap.min.css'</span>
+<span class="token keyword">import</span> <span class="token string">'bootstrap'</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>ShFrontend<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Then use it this way.</p>
 <div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code>app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>ShFrontend<span class="token punctuation">,</span><span class="token punctuation">{</span>
     <span class="token literal-property property">sessionTimeout</span><span class="token operator">:</span> <span class="token number">400</span><span class="token punctuation">,</span>

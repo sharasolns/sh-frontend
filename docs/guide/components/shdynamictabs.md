@@ -35,16 +35,26 @@ import TabTwo from '@/tabs/TabTwo.vue'
 - Required: `true`
 - Details
     This will be the array of tabs to be rendered
-- Example:
 
-```html 
+Example :
+
+``` 
  :tabs="[{label: 'Tab One', component: TabOne},{label: 'Tab Two', component: TabTwo}]"
  ```
 - Explanation of the attributes 
     - `label`: This will be the label of the tab
-    -     Example: `Tab One`
+
+Example :
+```
+label: 'Tab One'
+```
+  
     - `component`: This will be the component to be rendered when the tab is clicked make sure to import the component
-    -     Example: `TabOne
+
+Example :
+```
+component: TabOne
+```
 
 ### `currentTab`
 - Type: `string`
@@ -52,5 +62,10 @@ import TabTwo from '@/tabs/TabTwo.vue'
 - Required: `false`
 - Explanation of the attributes 
     - `currentTab`: This will be the label of the tab that will be active when the component is rendered
-    -     Example: `Tab Two`
+
+
+Example :
 ```
+currentTab='Tab Two'
+```
+

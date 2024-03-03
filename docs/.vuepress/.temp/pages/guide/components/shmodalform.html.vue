@@ -68,7 +68,8 @@ The action will be appended to the base url of the api backend defined in the .e
 <li>Details:
 This is the method of the request. By default, the method is post</li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: :method="put"
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code> :method="put"
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="success-callback" tabindex="-1"><a class="header-anchor" href="#success-callback"><span><code v-pre>success-callback</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>function/method</code></li>
@@ -77,7 +78,8 @@ This is the method of the request. By default, the method is post</li>
 <li>Details:
 This is the method that will be called after the request is successful</li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: :successCallback="taskAdded"
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>   :successCallback="taskAdded"
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="success-message" tabindex="-1"><a class="header-anchor" href="#success-message"><span><code v-pre>success-message</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>string</code></li>
@@ -86,7 +88,8 @@ This is the method that will be called after the request is successful</li>
 <li>Details
 This is the message that will appear on the confirmation dialog</li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: success-message="Task added successfully"
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>   success-message="Task added successfully"
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 

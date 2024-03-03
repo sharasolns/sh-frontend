@@ -37,8 +37,11 @@ import {ShModalBtn} from '@iankibetsh/shframework'
 - Details
   
     This is the modal attribute id that will be attached or triggered by a button later on
+
+Example :
+
 ``` 
- Example: modal-id='exampleModal'
+  modal-id='exampleModal'
 ```
 ### modal-title
 
@@ -48,8 +51,11 @@ import {ShModalBtn} from '@iankibetsh/shframework'
 - Details
 
     This is the title of the modal
+
+Example :
+
 ```
-    Example: modal-title='My Example Modal'
+     modal-title='My Example Modal'
 ``` 
 ### modal-size
 - Type: `string`
@@ -59,8 +65,11 @@ import {ShModalBtn} from '@iankibetsh/shframework'
 - Details
 
     This is the size of the modal
+
+Example :
+
 ```
-    Example: modal-size='md'
+    modal-size='md'
 ```
 
 ### Static
@@ -70,8 +79,11 @@ import {ShModalBtn} from '@iankibetsh/shframework'
 - Details
 
     This is the static attribute of the modal
+
+Example :
+
 ```
-    Example: :static='true'
+   :static='true'
 ```
 ### centered
 - Type: `boolean`
@@ -80,6 +92,8 @@ import {ShModalBtn} from '@iankibetsh/shframework'
 - Details
 
     This is the centered attribute of the modal
+
+Example :
 ```
-    Example: :centered='true'
+   :centered='true'
 ```

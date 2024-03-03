@@ -82,6 +82,7 @@ const taskAdded = ()=>{
         <sh-range @range-selected="rangeSelected"/>
         <sh-table
             :headers="['id',showUser,'name','description','phone','created_at']"
+            :end-point="'tasks/list/any'"
             cache-key="tasks"
             :query="query"
             :actions="{

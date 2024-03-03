@@ -26,7 +26,7 @@ shApis.doGet('users', { role: 'admin' }).then(res => {
 - Example: `users`
 - Details: 
 
-    This is the backend enpoint for the GET request
+    This is the backend endpoint for the GET request
 ##### `data`
 
 - Type: `object`
@@ -63,18 +63,18 @@ shApis.doPost('users/add', {
 - Example: `users/add`
 - Details:
 
-  This is the backend enpoint to post the POST request
+  This is the backend endpoint to post the POST request
 ##### `data`
 
 - Type: `object`
 - Required: `false`
 - Example
 ```
-{
+data"{
   name: 'John',
   email: 'john@example.com',
   age: 12
-}
+}"
 ```
 
 - Details

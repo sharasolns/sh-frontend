@@ -338,8 +338,10 @@ Example:
 - Details:
 
   This will help you add file input fields to the form. The array will contain the name of the input fields that will be file input fields
+
+Example :
+
 ```
-Example:
      :files="['avatar']"
 ```
 
@@ -351,8 +353,8 @@ Example:
 
   This will be the class of the submit button
 
+Example :
 ```
-Example:
      :submitBtnClass="btn btn-danger"
 ```
 
@@ -363,8 +365,9 @@ Example:
 - Details:
 
   This will be the label of the submit button
+ 
+Example :
 
 ```
-Example:
      :actionLabel="Save"
 ```

@@ -27,20 +27,25 @@ It is useful for creating a tabbed interface.</p>
 <p>Details</p>
 <p>These are the actual tabs</p>
 </li>
+</ul>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>:tabs="['pending','completed','archived']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="base-url" tabindex="-1"><a class="header-anchor" href="#base-url"><span>base-url</span></a></h3>
+<ul>
 <li>
-<p>Example: <code v-pre>['pending','completed','archived']</code></p>
+<p>Type: <code v-pre>string</code></p>
+</li>
+<li>
+<p>Default: <code v-pre>none</code></p>
+</li>
+<li>
+<p>Details</p>
+<p>This is the base url, tab urls will be appended to this</p>
 </li>
 </ul>
-<h3 id="base-url" tabindex="-1"><a class="header-anchor" href="#base-url"><span>base-url</span></a></h3>
-<ul>
-<li>Type: <code v-pre>string</code></li>
-<li>Default: <code v-pre>none</code></li>
-<li>Details</li>
-</ul>
-<p>This is the base url, tab urls will be appended to this</p>
-<pre><code> Example: base-url=&quot;/admin/tasks&quot;
-</code></pre>
-<p>Do not forget to always start with <code v-pre>/</code></p>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>base-url="/admin/tasks"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Do not forget to always start with <code v-pre>/</code></p>
 <h3 id="tabs-count" tabindex="-1"><a class="header-anchor" href="#tabs-count"><span>tabs-count</span></a></h3>
 <ul>
 <li>
@@ -52,14 +57,14 @@ It is useful for creating a tabbed interface.</p>
 <li>
 <p>Details</p>
 <p>This is the count that will appear on top of the tab. It is an object with the tab name as the key and the count as the value</p>
-<pre><code>Example: :tab-counts=&quot;{
-  tasks: 2,
-  tab: 3
-}&quot;
-</code></pre>
 </li>
 </ul>
-<h3 id="active-tab" tabindex="-1"><a class="header-anchor" href="#active-tab"><span>active-tab</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>:tab-counts="{
+        tasks: 2,
+        tab: 3
+      }"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="active-tab" tabindex="-1"><a class="header-anchor" href="#active-tab"><span>active-tab</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -70,11 +75,10 @@ It is useful for creating a tabbed interface.</p>
 <li>
 <p>Details</p>
 <p>This is the active tab. It is the tab that will be active by default</p>
-<pre><code>Example: active-tab=&quot;completed&quot;
-</code></pre>
 </li>
-<li></li>
 </ul>
-</div></template>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>active-tab="completed"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 

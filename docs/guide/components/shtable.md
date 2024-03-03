@@ -31,8 +31,11 @@ import {ShTable} from '@iankibetsh/shframework'
 - Details
 
     These are table headers for the table that will be generated 
-   
-      Example: `['id','name','description']`
+
+Example :
+```
+ headers="['id','name','description']"
+```
 
 ### `end-point`
 
@@ -43,7 +46,10 @@ import {ShTable} from '@iankibetsh/shframework'
 
     It's the endpoint of table data, usually it's the backend api url
 
-      Example: `tasks/list`
+Example :
+``` 
+end-point="tasks/list"
+```
 
 ### links
 - Type: `object`
@@ -54,7 +60,7 @@ import {ShTable} from '@iankibetsh/shframework'
     In case you want to add links to table data you can use this attribute. 
      It's an object with the following properties
 
-Example Usage
+Example :
 
 ```
 :links="{
@@ -66,6 +72,40 @@ Example Usage
 ```
 The above will add a link to the id column with the url `/tasks/{id}/details` and the open in a new tab
 
+### cache-key
+- Type: `string`
+- Required: `false`,
+- Default: `none`
+- Details
+
+    This is the cache key for the table data. It's used to cache the table data in the local storage. 
+    This is useful when you want to cache the table data for a certain period of time. 
+    The cache key is used to store the data in the local storage. 
+    When the table is loaded, it checks if the data is in the local storage, if it's there, it uses it, if not, it fetches the data from the end-point and stores it in the local storage using the cache key. 
+    The next time the table is loaded, it checks if the data is in the local storage, if it's there, it uses it, if not, it fetches the data from the end-point and stores it in the local storage using the cache key.
+
+Example :
+
+```
+cache-key="tasks"
+```
+#### hideSearch
+- Type: `boolean`
+- Required: `false`,
+- Default: `false`
+- Details
+
+    This is used to hide the search input in the table. 
+    When set to true, the search input will not be displayed in the table. 
+    When set to false, the search input will be displayed in the table. 
+    The search input is used to search the table data. 
+    It filters the table data based on the search input value.
+
+Example
+
+```
+  hideSearch="true"
+```
 
 ### actions
 - Type: `object`

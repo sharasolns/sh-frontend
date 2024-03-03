@@ -78,8 +78,11 @@ import { ShModalForm } from '@iankibetsh/shframework'
 - Options: `post`, `put`, `patch`, `delete`
 - Details:
   This is the method of the request. By default, the method is post
+
+Example :
+
 ```
-    Example: :method="put"
+ :method="put"
 ```
 
 ### `success-callback`
@@ -88,8 +91,11 @@ import { ShModalForm } from '@iankibetsh/shframework'
 - Required: `false`
 - Details:
   This is the method that will be called after the request is successful
+
+Example :
+
 ```
-    Example: :successCallback="taskAdded"
+   :successCallback="taskAdded"
 ```
 
 
@@ -99,8 +105,11 @@ import { ShModalForm } from '@iankibetsh/shframework'
 - Required: `false`
 - Details
   This is the message that will appear on the confirmation dialog
+
+Example :
+
 ```
-    Example: success-message="Task added successfully"
+   success-message="Task added successfully"
 ```
 
 

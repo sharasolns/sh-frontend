@@ -42,8 +42,11 @@ import {ShCanvasBtn} from '@iankibetsh/shframework'
    
    This will be the id of the canvas 
     
-    Example: canvas-id="myCanvas"
-
+    
+Example : 
+```
+canvas-id="myCanvas"
+```
 ### `position`
 
 - Type: `string`
@@ -55,7 +58,10 @@ import {ShCanvasBtn} from '@iankibetsh/shframework'
 
 This will be the position of the canvas, bootstrap 5 canvas positions are used 
 
-    Example: position="start"
+Example :
+``` 
+ position="start"
+ ```
 
 ### `canvas-title`
 - Type: `string`
@@ -65,7 +71,10 @@ This will be the position of the canvas, bootstrap 5 canvas positions are used
 
  Title of the canvas that will be displayed on the header of the canvas 
  
-    Example: canvas-title="Canvas Title"
+Example :
+```
+canvas-title="Canvas Title"
+```
 
 ### `canvas-size`
 - Type: `string`
@@ -77,7 +86,11 @@ This will be the position of the canvas, bootstrap 5 canvas positions are used
 
  This will be the size of the canvas, bootstrap 5 canvas sizes are used 
 
-    Example: size="lg"
+    
+Example : 
+```
+size="lg"
+```
 
 ### `scrollable`
 - Type: `boolean`
@@ -87,5 +100,8 @@ This will be the position of the canvas, bootstrap 5 canvas positions are used
 
  This will be the scrollable state of the canvas, element is disabled when an offcanvas and its backdrop are visible. 
     
-        Example: scrollable="true"
+Example : 
+```
+scrollable="true"
+```
 

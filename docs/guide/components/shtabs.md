@@ -30,18 +30,26 @@ Above will create nav tab with 3 nav tab items
 - Details
 
     These are the actual tabs
-- Example: `['pending','completed','archived']`
+
+Example : 
+```
+:tabs="['pending','completed','archived']"
+```
 
 ### base-url
 
 - Type: `string`
 - Default: `none`
-- Details
+- Details 
+    
+   This is the base url, tab urls will be appended to this
 
 
-This is the base url, tab urls will be appended to this
+Example : 
 
-     Example: base-url="/admin/tasks"
+```
+base-url="/admin/tasks"
+```
 
 Do not forget to always start with `/`
 
@@ -52,10 +60,13 @@ Do not forget to always start with `/`
 
     This is the count that will appear on top of the tab. It is an object with the tab name as the key and the count as the value
 
-      Example: :tab-counts="{
+Example : 
+```
+:tab-counts="{
         tasks: 2,
         tab: 3
       }"
+```
 
 ### active-tab
 - Type: `string`
@@ -63,6 +74,8 @@ Do not forget to always start with `/`
 - Details
 
     This is the active tab. It is the tab that will be active by default
-
-      Example: active-tab="completed"
-- 
+ 
+Example :
+```
+active-tab="completed"
+ ```

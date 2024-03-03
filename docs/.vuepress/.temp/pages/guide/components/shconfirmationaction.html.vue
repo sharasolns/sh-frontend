@@ -20,11 +20,11 @@ it is used to confirm an action before it is executed.</p>
 <li>
 <p>Details</p>
 <p>This is the url that will be called when the action is confirmed</p>
-<pre><code>Example: url=&quot;tasks/delete/1&quot;
-</code></pre>
 </li>
 </ul>
-<h3 id="title" tabindex="-1"><a class="header-anchor" href="#title"><span>title</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>url="tasks/delete/1"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="title" tabindex="-1"><a class="header-anchor" href="#title"><span>title</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -35,11 +35,11 @@ it is used to confirm an action before it is executed.</p>
 <li>
 <p>Details</p>
 <p>This is the title that will appear on the confirmation dialog</p>
-<pre><code>Example: title=&quot;Delete Task&quot;
-</code></pre>
 </li>
 </ul>
-<h3 id="message" tabindex="-1"><a class="header-anchor" href="#message"><span>message</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>title="Delete Task"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="message" tabindex="-1"><a class="header-anchor" href="#message"><span>message</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -50,11 +50,11 @@ it is used to confirm an action before it is executed.</p>
 <li>
 <p>Details</p>
 <p>This is the message that will appear on the confirmation dialog</p>
-<pre><code>Example: message=&quot;Are you sure you want to delete this task?&quot;
-</code></pre>
 </li>
 </ul>
-<h3 id="success-message" tabindex="-1"><a class="header-anchor" href="#success-message"><span>success-message</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>message="Are you sure you want to delete this task?"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="success-message" tabindex="-1"><a class="header-anchor" href="#success-message"><span>success-message</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -65,11 +65,11 @@ it is used to confirm an action before it is executed.</p>
 <li>
 <p>Details</p>
 <p>This is the message that will appear on the confirmation dialog</p>
-<pre><code>Example: success-message=&quot;Task deleted successfully&quot;
-</code></pre>
 </li>
 </ul>
-<h3 id="loading-message" tabindex="-1"><a class="header-anchor" href="#loading-message"><span>loading-message</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>success-message="Task deleted successfully"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="loading-message" tabindex="-1"><a class="header-anchor" href="#loading-message"><span>loading-message</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -80,10 +80,10 @@ it is used to confirm an action before it is executed.</p>
 <li>
 <p>Details</p>
 <p>This is the message that will appear on submit button when the action is being processed</p>
-<pre><code>Example: loading-message=&quot;Deleting Task...&quot;
-</code></pre>
 </li>
 </ul>
-</div></template>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>loading-message="Deleting Task..."
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 

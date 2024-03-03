@@ -27,26 +27,23 @@ It takes an array of tabs and renders them</p>
 <li>Required: <code v-pre>true</code></li>
 <li>Details
 This will be the array of tabs to be rendered</li>
-<li>Example:</li>
 </ul>
-<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code> :tabs="[{label: 'Tab One', component: TabOne},{label: 'Tab Two', component: TabTwo}]"
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code> :tabs="[{label: 'Tab One', component: TabOne},{label: 'Tab Two', component: TabTwo}]"
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>Explanation of the attributes
 <ul>
 <li><code v-pre>label</code>: This will be the label of the tab</li>
-<li>
-<pre><code>Example: `Tab One`
-</code></pre>
-</li>
-<li><code v-pre>component</code>: This will be the component to be rendered when the tab is clicked make sure to import the component</li>
-<li>
-<pre><code>Example: `TabOne
-</code></pre>
-</li>
 </ul>
 </li>
 </ul>
-<h3 id="currenttab" tabindex="-1"><a class="header-anchor" href="#currenttab"><span><code v-pre>currentTab</code></span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>label: 'Tab One'
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><pre><code>- `component`: This will be the component to be rendered when the tab is clicked make sure to import the component
+</code></pre>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>component: TabOne
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="currenttab" tabindex="-1"><a class="header-anchor" href="#currenttab"><span><code v-pre>currentTab</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>string</code></li>
 <li>Default: <code v-pre>none</code></li>
@@ -54,13 +51,11 @@ This will be the array of tabs to be rendered</li>
 <li>Explanation of the attributes
 <ul>
 <li><code v-pre>currentTab</code>: This will be the label of the tab that will be active when the component is rendered</li>
-<li>
-<pre><code>Example: `Tab Two`
-</code></pre>
-</li>
 </ul>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code></code></pre><div class="line-numbers" aria-hidden="true"></div></div></div></template>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>currentTab='Tab Two'
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 

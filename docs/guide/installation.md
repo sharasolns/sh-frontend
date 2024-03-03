@@ -9,6 +9,22 @@ npm install @iankibetsh/shframework
 
 In main.js or the entry file for vue js, import and use ``ShFrontend``
 
+
+### Boostrap 5
+Since this package uses bootstrap 5, install it in your project using the following command
+
+```shell
+npm install bootstrap@5.2.3
+```
+
+Then import it in your main.js or the entry file for your vue js application
+
+```javascript
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
+``` 
+
 ```javascript
 import {ShFrontend} from '@iankibetsh/shframework'
 ```
@@ -45,3 +61,5 @@ I will try to explain everything here.
 8. tablePaginationStyle: This is the style of pagination that will be used in the table. It can be either 'loadMore' or 'pagination'
 9. tablePerPage: This is the number of items that will be displayed per page in the table.
 10. toastTimer: This is the time in milliseconds that the toast will be displayed.
+
+

@@ -22,7 +22,7 @@
 </li>
 <li>
 <p>Details:</p>
-<p>This is the backend enpoint for the GET request</p>
+<p>This is the backend endpoint for the GET request</p>
 </li>
 </ul>
 <h5 id="data" tabindex="-1"><a class="header-anchor" href="#data"><span><code v-pre>data</code></span></a></h5>
@@ -62,7 +62,7 @@
 </li>
 <li>
 <p>Details:</p>
-<p>This is the backend enpoint to post the POST request</p>
+<p>This is the backend endpoint to post the POST request</p>
 </li>
 </ul>
 <h5 id="data-1" tabindex="-1"><a class="header-anchor" href="#data-1"><span><code v-pre>data</code></span></a></h5>
@@ -71,11 +71,11 @@
 <li>Required: <code v-pre>false</code></li>
 <li>Example</li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>{
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>data"{
   name: 'John',
   email: 'john@example.com',
   age: 12
-}
+}"
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>
 <p>Details</p>

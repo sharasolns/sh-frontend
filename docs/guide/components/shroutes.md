@@ -1,7 +1,7 @@
 # Routes 
 
 This is a guide to the routes component. 
-Its the normal vue router component with a few extra features. 
+It's the normal vue router component with a few extra features. 
 
 ## Modal or off-canvas
 We have added a modal or off-canvas feature to the routes. 
@@ -53,3 +53,90 @@ This is a normal vue route with a meta property. The component is the component 
 
       Example: `size: 'md'`
 
+### popup query form
+- Type: `string`
+- Default: `none`
+- Required: `false`
+- Details
+- Options: `modal`, `canvas`
+- Details
+         
+ This is the popup attribute that will be used to open the route in a modal
+```html
+Example: <router-link 
+                     to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store"
+                     class="btn btn-info btn-sm ms-2">
+                    Popup 
+        </router-link>
+```
+
+#### pageCount
+- Type: `number`
+- Default: `10`
+- Required: `false`
+- Details
+
+    This is the number of items that will be displayed per page in the table.
+
+Example :
+```
+pageCount: 10
+```
+
+#### hideCount
+- Type: `boolean`
+- Default: `false`
+- Required: `false`
+- Details
+
+    This is the attribute that will be used to hide the count of the table
+
+
+Example : 
+
+```
+hideCount: true
+```
+
+#### hideLoadMore
+- Type: `boolean`
+- Default: `false`
+- Required: `false`
+- Details
+
+    This is the attribute that will be used to hide the load more button
+
+  
+Example : 
+```
+hideLoadMore: true
+```
+
+#### reload
+- Type: `number`
+- Default: `0`
+- Required: `false`
+- Details
+
+    This is the attribute that will be used to reload the table
+
+   
+Example : 
+```
+reload= "1"
+```
+
+
+
+#### Explanation
+This is a normal router link with a query string.
+
+The query string has the popup attribute set to modal to indicate that the route should be opened in a modal.
+
+The title attribute is the title of the modal.
+
+The comp attribute is the component that will be displayed in the modal. 
+
+The fields attribute is the fields that will be displayed in the form.
+
+The action attribute is the action that will be called when the form is submitted.

@@ -31,7 +31,8 @@ It is a simple modal that can be used to display content in a modal.</p>
 <p>This is the modal attribute id that will be attached or triggered by a button later on</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code> Example: modal-id='exampleModal'
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>  modal-id='exampleModal'
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="modal-title" tabindex="-1"><a class="header-anchor" href="#modal-title"><span>modal-title</span></a></h3>
 <ul>
 <li>
@@ -48,7 +49,8 @@ It is a simple modal that can be used to display content in a modal.</p>
 <p>This is the title of the modal</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: modal-title='My Example Modal'
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>     modal-title='My Example Modal'
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="modal-size" tabindex="-1"><a class="header-anchor" href="#modal-size"><span>modal-size</span></a></h3>
 <ul>
 <li>
@@ -68,7 +70,8 @@ It is a simple modal that can be used to display content in a modal.</p>
 <p>This is the size of the modal</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: modal-size='md'
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    modal-size='md'
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="static" tabindex="-1"><a class="header-anchor" href="#static"><span>Static</span></a></h3>
 <ul>
 <li>
@@ -85,7 +88,8 @@ It is a simple modal that can be used to display content in a modal.</p>
 <p>This is the static attribute of the modal</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: :static='true'
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>   :static='true'
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="centered" tabindex="-1"><a class="header-anchor" href="#centered"><span>centered</span></a></h3>
 <ul>
 <li>
@@ -102,7 +106,8 @@ It is a simple modal that can be used to display content in a modal.</p>
 <p>This is the centered attribute of the modal</p>
 </li>
 </ul>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>    Example: :centered='true'
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>   :centered='true'
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 

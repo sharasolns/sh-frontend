@@ -27,10 +27,11 @@
 <li>
 <p>Details</p>
 <p>This will be the id of the canvas</p>
-<p>Example: canvas-id=&quot;myCanvas&quot;</p>
 </li>
 </ul>
-<h3 id="position" tabindex="-1"><a class="header-anchor" href="#position"><span><code v-pre>position</code></span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>canvas-id="myCanvas"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="position" tabindex="-1"><a class="header-anchor" href="#position"><span><code v-pre>position</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>string</code></li>
 <li>Default: <code v-pre>start</code></li>
@@ -40,9 +41,9 @@
 <li>Details</li>
 </ul>
 <p>This will be the position of the canvas, bootstrap 5 canvas positions are used</p>
-<pre><code>Example: position=&quot;start&quot;
-</code></pre>
-<h3 id="canvas-title" tabindex="-1"><a class="header-anchor" href="#canvas-title"><span><code v-pre>canvas-title</code></span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code> position="start"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="canvas-title" tabindex="-1"><a class="header-anchor" href="#canvas-title"><span><code v-pre>canvas-title</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>string</code></li>
 <li>Default: <code v-pre>none</code></li>
@@ -50,9 +51,9 @@
 <li>Details</li>
 </ul>
 <p>Title of the canvas that will be displayed on the header of the canvas</p>
-<pre><code>Example: canvas-title=&quot;Canvas Title&quot;
-</code></pre>
-<h3 id="canvas-size" tabindex="-1"><a class="header-anchor" href="#canvas-size"><span><code v-pre>canvas-size</code></span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>canvas-title="Canvas Title"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="canvas-size" tabindex="-1"><a class="header-anchor" href="#canvas-size"><span><code v-pre>canvas-size</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>string</code></li>
 <li>Default: <code v-pre>md</code></li>
@@ -61,9 +62,9 @@
 <li>Details</li>
 </ul>
 <p>This will be the size of the canvas, bootstrap 5 canvas sizes are used</p>
-<pre><code>Example: size=&quot;lg&quot;
-</code></pre>
-<h3 id="scrollable" tabindex="-1"><a class="header-anchor" href="#scrollable"><span><code v-pre>scrollable</code></span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>size="lg"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="scrollable" tabindex="-1"><a class="header-anchor" href="#scrollable"><span><code v-pre>scrollable</code></span></a></h3>
 <ul>
 <li>Type: <code v-pre>boolean</code></li>
 <li>Default: <code v-pre>false</code></li>
@@ -71,8 +72,8 @@
 <li>Details</li>
 </ul>
 <p>This will be the scrollable state of the canvas, element is disabled when an offcanvas and its backdrop are visible.</p>
-<pre><code>    Example: scrollable=&quot;true&quot;
-</code></pre>
-</div></template>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>scrollable="true"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></div></template>
 
 

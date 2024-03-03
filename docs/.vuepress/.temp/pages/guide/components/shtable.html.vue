@@ -26,11 +26,11 @@ Let's see how to use it.</p>
 <li>
 <p>Details</p>
 <p>These are table headers for the table that will be generated</p>
-<pre><code>Example: `['id','name','description']`
-</code></pre>
 </li>
 </ul>
-<h3 id="end-point" tabindex="-1"><a class="header-anchor" href="#end-point"><span><code v-pre>end-point</code></span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code> headers="['id','name','description']"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="end-point" tabindex="-1"><a class="header-anchor" href="#end-point"><span><code v-pre>end-point</code></span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>string</code></p>
@@ -44,11 +44,11 @@ Let's see how to use it.</p>
 <li>
 <p>Details</p>
 <p>It's the endpoint of table data, usually it's the backend api url</p>
-<pre><code>Example: `tasks/list`
-</code></pre>
 </li>
 </ul>
-<h3 id="links" tabindex="-1"><a class="header-anchor" href="#links"><span>links</span></a></h3>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>end-point="tasks/list"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="links" tabindex="-1"><a class="header-anchor" href="#links"><span>links</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>object</code></p>
@@ -65,7 +65,7 @@ Let's see how to use it.</p>
 It's an object with the following properties</p>
 </li>
 </ul>
-<p>Example Usage</p>
+<p>Example :</p>
 <div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>:links="{
   id: {
     url: '/tasks/{id}/details',
@@ -73,7 +73,51 @@ It's an object with the following properties</p>
   }
 }"
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>The above will add a link to the id column with the url <code v-pre>/tasks/{id}/details</code> and the open in a new tab</p>
-<h3 id="actions" tabindex="-1"><a class="header-anchor" href="#actions"><span>actions</span></a></h3>
+<h3 id="cache-key" tabindex="-1"><a class="header-anchor" href="#cache-key"><span>cache-key</span></a></h3>
+<ul>
+<li>
+<p>Type: <code v-pre>string</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code>,</p>
+</li>
+<li>
+<p>Default: <code v-pre>none</code></p>
+</li>
+<li>
+<p>Details</p>
+<p>This is the cache key for the table data. It's used to cache the table data in the local storage.
+This is useful when you want to cache the table data for a certain period of time.
+The cache key is used to store the data in the local storage.
+When the table is loaded, it checks if the data is in the local storage, if it's there, it uses it, if not, it fetches the data from the end-point and stores it in the local storage using the cache key.
+The next time the table is loaded, it checks if the data is in the local storage, if it's there, it uses it, if not, it fetches the data from the end-point and stores it in the local storage using the cache key.</p>
+</li>
+</ul>
+<p>Example :</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>cache-key="tasks"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="hidesearch" tabindex="-1"><a class="header-anchor" href="#hidesearch"><span>hideSearch</span></a></h4>
+<ul>
+<li>
+<p>Type: <code v-pre>boolean</code></p>
+</li>
+<li>
+<p>Required: <code v-pre>false</code>,</p>
+</li>
+<li>
+<p>Default: <code v-pre>false</code></p>
+</li>
+<li>
+<p>Details</p>
+<p>This is used to hide the search input in the table.
+When set to true, the search input will not be displayed in the table.
+When set to false, the search input will be displayed in the table.
+The search input is used to search the table data.
+It filters the table data based on the search input value.</p>
+</li>
+</ul>
+<p>Example</p>
+<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>  hideSearch="true"
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="actions" tabindex="-1"><a class="header-anchor" href="#actions"><span>actions</span></a></h3>
 <ul>
 <li>
 <p>Type: <code v-pre>object</code></p>

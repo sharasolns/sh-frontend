@@ -25,7 +25,10 @@ import { ShConfirmationAction } from '@iankibetsh/shframework'
 
     This is the url that will be called when the action is confirmed
 
-      Example: url="tasks/delete/1"
+Example :
+```
+url="tasks/delete/1"
+```
 
 ### title
 - Type: `string`
@@ -34,8 +37,10 @@ import { ShConfirmationAction } from '@iankibetsh/shframework'
 
     This is the title that will appear on the confirmation dialog
 
-      Example: title="Delete Task"
-
+Example : 
+```
+title="Delete Task"
+```
 ### message
 - Type: `string`
 - Default: `none`
@@ -43,7 +48,11 @@ import { ShConfirmationAction } from '@iankibetsh/shframework'
 
     This is the message that will appear on the confirmation dialog
 
-      Example: message="Are you sure you want to delete this task?"
+      
+Example :
+```
+message="Are you sure you want to delete this task?"
+```
 
 ### success-message
 - Type: `string`
@@ -52,7 +61,10 @@ import { ShConfirmationAction } from '@iankibetsh/shframework'
 
     This is the message that will appear on the confirmation dialog
 
-      Example: success-message="Task deleted successfully"
+Example : 
+```
+success-message="Task deleted successfully"
+```
 
 ### loading-message
 - Type: `string`
@@ -61,5 +73,8 @@ import { ShConfirmationAction } from '@iankibetsh/shframework'
 
     This is the message that will appear on submit button when the action is being processed
 
-      Example: loading-message="Deleting Task..."
+Example : 
+```
+loading-message="Deleting Task..."
+```
 
