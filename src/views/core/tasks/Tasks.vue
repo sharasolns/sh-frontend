@@ -1,5 +1,6 @@
 <script setup>
 
+import ShAutoForm from '@/lib/components/ShAutoForm.vue'
 import ShConfirmAction from '@/lib/components/ShConfirmAction.vue'
 import ShDynamicTabs from '@/lib/components/ShDynamicTabs.vue'
 import ShForm from '@/lib/components/ShForm.vue'
@@ -52,6 +53,15 @@ const taskAdded = ()=>{
   <div >
     <div class="card">
       <div class="card-body">
+        <sh-auto-form
+            :fields="['name','description','phone','user_id',{
+        field:'task_ID',
+        type: 'suggest',
+        suggests: true,
+        url: 'accounts/account-types/list/any?all=1'
+        },]"
+            :action="'/tasks/store'"
+            @success="taskAdded" class="btn btn-info"> Add Task</sh-auto-form>
         <sh-modal-form
             :fields="['service_id','commission_type','commission']"
             :action="'/services/providers/store?user_id='"

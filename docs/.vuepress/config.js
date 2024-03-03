@@ -57,6 +57,7 @@ export default defineUserConfig({
                         "/guide/components/shtabs",
                         "/guide/components/shdynamictabs",
                         "/guide/components/shform",
+                        "/guide/components/shautoform",
                        "/guide/components/shtable",
 
                     ]
