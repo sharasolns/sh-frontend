@@ -66,7 +66,6 @@ export default defineUserConfig({
                     text:'Helpers',
                     collapsible: true,
                     children: [
-                       "/guide/helpers/",
                        "/guide/helpers/shuser/",
                        "/guide/helpers/shapi/",
                        "/guide/helpers/shrepo/"

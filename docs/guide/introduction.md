@@ -30,6 +30,21 @@ or
 yarn add @iankibetsh/shframework
 ```
 
+### Boostrap 5
+Since this package uses bootstrap 5, install it in your project using the following command
+
+```shell
+npm install bootstrap@5.2.3
+```
+
+Then import it in your main.js or the entry file for your vue js application
+
+```javascript
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
+``` 
+
 ## usage
 Import and use the package in your main.js or the entry file for your Vue 3 application.
 

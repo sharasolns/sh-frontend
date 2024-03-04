@@ -13,7 +13,14 @@ It uses Bootstrap 5 for styling and is designed to be used with Vue 3 applicatio
 <div class="language-bash line-numbers-mode" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> @iankibetsh/shframework
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>or</p>
 <div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>yarn add @iankibetsh/shframework
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="usage" tabindex="-1"><a class="header-anchor" href="#usage"><span>usage</span></a></h2>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="boostrap-5" tabindex="-1"><a class="header-anchor" href="#boostrap-5"><span>Boostrap 5</span></a></h3>
+<p>Since this package uses bootstrap 5, install it in your project using the following command</p>
+<div class="language-bash line-numbers-mode" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> bootstrap@5.2.3
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Then import it in your main.js or the entry file for your vue js application</p>
+<div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code>
+<span class="token keyword">import</span> <span class="token string">'bootstrap/dist/css/bootstrap.min.css'</span>
+<span class="token keyword">import</span> <span class="token string">'bootstrap'</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="usage" tabindex="-1"><a class="header-anchor" href="#usage"><span>usage</span></a></h2>
 <p>Import and use the package in your main.js or the entry file for your Vue 3 application.</p>
 <div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>ShFrontend<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Then use it this way.</p>
