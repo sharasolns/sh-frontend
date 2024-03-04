@@ -1,5 +1,5 @@
 import comp from "/private/var/www/html/shara/sh-frontend/docs/.vuepress/.temp/pages/guide/about/overview.html.vue"
-const data = JSON.parse("{\"path\":\"/guide/about/overview.html\",\"title\":\"Overview\",\"lang\":\"en-US\",\"frontmatter\":{},\"headers\":[{\"level\":2,\"title\":\"Features\",\"slug\":\"features\",\"link\":\"#features\",\"children\":[]}],\"git\":{\"updatedTime\":1709191059000,\"contributors\":[{\"name\":\"silah\",\"email\":\"silakosy@gmail.com\",\"commits\":1}]},\"filePathRelative\":\"guide/about/overview.md\"}")
+const data = JSON.parse("{\"path\":\"/guide/about/overview.html\",\"title\":\"Overview\",\"lang\":\"en-US\",\"frontmatter\":{},\"headers\":[{\"level\":2,\"title\":\"Features\",\"slug\":\"features\",\"link\":\"#features\",\"children\":[]}],\"git\":{\"updatedTime\":1709537255000,\"contributors\":[{\"name\":\"silah\",\"email\":\"silakosy@gmail.com\",\"commits\":2}]},\"filePathRelative\":\"guide/about/overview.md\"}")
 export { comp, data }
 
 if (import.meta.webpackHot) {
