@@ -1,6 +1,7 @@
 import shApis from '../helpers/ShApis'
 import shStorage from '../repositories/ShStorage'
 import { onMounted, ref } from 'vue'
+import shRepo from '../helpers/ShRepo'
 
 /**
  * useShFetch is a custom hook for fetching data from a given URL and caching it.
@@ -48,6 +49,7 @@ const useShFetch = (url, path, cacheKey) => {
                 .catch(res => {
                     status.value = 'error'
                     error.value = res.message ? res.message : (res.error ? res.error : 'An unexpected error occurred')
+                    shRepo.showToast(error.value, 'error')
                 })
                 .finally(() => {
                     loading.value = false
