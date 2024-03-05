@@ -13,6 +13,7 @@ import ShModalForm from '@/lib/components/ShModalForm.vue'
 import NoRecords from '@/lib/components/others/NoRecords.vue'
 import TabOne from '@/tabs/TabOne.vue'
 import TabTwo from '@/tabs/TabTwo.vue'
+import useShFetch from '@/lib/repo/composables/useShFetch'
 const query = `{
   tasks (id:{gt: 4}) {
       name
@@ -47,11 +48,16 @@ const deleteTask = item=>{
 const taskAdded = ()=>{
   shRepo.showToast('Task added')
 }
+const {data: userName, loading,error,status} = useShFetch('auth/users','name')
 </script>
 <template>
   <div >
     <div class="card">
       <div class="card-body">
+        {{ loading }}
+        {{ userName }}
+        {{ error }}
+        {{ status }}
         <sh-modal-form
             :fields="['service_id','commission_type','commission']"
             :action="'/services/providers/store?user_id='"
