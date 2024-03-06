@@ -256,6 +256,16 @@ const hideModal = modalId => {
     modal.hide();
 };
 
+const showOffCanvas = offCanvasId => {
+    const offCanvas = new Offcanvas(document.getElementById(offCanvasId));
+    offCanvas.show();
+};
+
+const hideOffCanvas = offCanvasId => {
+    const offCanvas = new Offcanvas(document.getElementById(offCanvasId));
+    offCanvas.hide();
+};
+
 var shRepo = {
     swalSuccess,
     swalError,
@@ -272,7 +282,9 @@ var shRepo = {
     formatNumber,
     signOutUser,
     showModal,
-    hideModal
+    hideModal,
+    showOffCanvas,
+    hideOffCanvas
 };
 
 startSession();
