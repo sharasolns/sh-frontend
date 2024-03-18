@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import apis from './ShApis.js'
 import moment from 'moment'
 import shApis from './ShApis.js'
-import { Modal } from 'bootstrap'
+import { Modal,Offcanvas } from 'bootstrap'
 
 function swalSuccess(message){
     Swal.fire('Success!', message, 'success')
@@ -229,6 +229,16 @@ const hideModal = modalId => {
     modal.hide()
 }
 
+const showOffCanvas = offCanvasId => {
+    const offCanvas = new Offcanvas(document.getElementById(offCanvasId))
+    offCanvas.show()
+}
+
+const hideOffCanvas = offCanvasId => {
+    const offCanvas = new Offcanvas(document.getElementById(offCanvasId))
+    offCanvas.hide()
+}
+
 export default {
     swalSuccess,
     swalError,
@@ -245,5 +255,7 @@ export default {
     formatNumber,
     signOutUser,
     showModal,
-    hideModal
+    hideModal,
+    showOffCanvas,
+    hideOffCanvas
 }

@@ -27,24 +27,26 @@ import shStorage from './lib/repo/repositories/ShStorage.js'
 import ShFrontend from './lib/plugins/ShFrontend.js'
 import Countries from './lib/repo/helpers/countries.js'
 import shGql from './lib/repo/graphql/shGql.js'
+import useShFetch from './lib/repo/composables/useShFetch'
+
 export {
-  ShForm,
-  ShCanvas,
-  ShModal,
-  ShPhone,
-  ShTable,
+    ShForm,
+    ShCanvas,
+    ShModal,
+    ShPhone,
+    ShTable,
     ShSuggest,
-  ShTabs,
+    ShTabs,
     ShDynamicTabs,
-  useUserStore,
+    useUserStore,
     useAppStore,
     shRepo,
     shApis,
     shStorage,
     ShFrontend,
-  ShDropDownForm,
-  ShModalForm,
-  ShSilentAction,
+    ShDropDownForm,
+    ShModalForm,
+    ShSilentAction,
     ShConfirmAction,
     ShAutoForm,
     Countries,
@@ -56,5 +58,6 @@ export {
     ShQueryPopups,
     ShRange,
     shGql,
-  ShCardLayout
+    ShCardLayout,
+    useShFetch
 }

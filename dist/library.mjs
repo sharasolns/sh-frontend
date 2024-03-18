@@ -26,7 +26,7 @@ function getItem (key) {
 function removeItem (key) {
   return localStorage.removeItem(key)
 }
-var ShStorage = {
+var shStorage = {
   setItem,
   getItem,
   removeItem
@@ -132,21 +132,21 @@ const signOutUser = () => {
     const logoutApiEndPoint = getShConfig('logoutApiEndpoint', 'auth/logout');
     console.log(loginUrl, logoutApiEndPoint);
     shApis.doPost(logoutApiEndPoint).then(res => {
-        ShStorage.removeItem('access_token');
-        ShStorage.removeItem('user');
-        ShStorage.removeItem('last_activity');
+        shStorage.removeItem('access_token');
+        shStorage.removeItem('user');
+        shStorage.removeItem('last_activity');
         window.location.href = loginUrl;
     }).catch(ex => {
-        ShStorage.removeItem('access_token');
-        ShStorage.removeItem('user');
-        ShStorage.removeItem('last_activity');
+        shStorage.removeItem('access_token');
+        shStorage.removeItem('user');
+        shStorage.removeItem('last_activity');
         window.location.href = loginUrl;
     });
 };
 
 
 function getShConfig(key = null, def = ''){
-    const config = ShStorage.getItem('ShConfig') ?? {};
+    const config = shStorage.getItem('ShConfig') ?? {};
     if (key) {
         return config[key] ?? def
     }
@@ -256,6 +256,16 @@ const hideModal = modalId => {
     modal.hide();
 };
 
+const showOffCanvas = offCanvasId => {
+    const offCanvas = new Offcanvas(document.getElementById(offCanvasId));
+    offCanvas.show();
+};
+
+const hideOffCanvas = offCanvasId => {
+    const offCanvas = new Offcanvas(document.getElementById(offCanvasId));
+    offCanvas.hide();
+};
+
 var shRepo = {
     swalSuccess,
     swalError,
@@ -272,7 +282,9 @@ var shRepo = {
     formatNumber,
     signOutUser,
     showModal,
-    hideModal
+    hideModal,
+    showOffCanvas,
+    hideOffCanvas
 };
 
 startSession();
@@ -284,17 +296,17 @@ function logoutUser(){
   }
 }
 function sessionRestored(){
-  const timeout = ShStorage.getItem('sessionTimeout') * 60;
-  const last_activity = ShStorage.getItem('last_activity');
+  const timeout = shStorage.getItem('sessionTimeout') * 60;
+  const last_activity = shStorage.getItem('last_activity');
   const pastSeconds = moment().diff(last_activity, 'seconds');
-  if(!ShStorage.getItem('access_token'))
+  if(!shStorage.getItem('access_token'))
     return false
   return pastSeconds < timeout
 }
 const checkSession = function (isCheking) {
-  const timeout = ShStorage.getItem('sessionTimeout');
-  const last_activity = ShStorage.getItem('last_activity');
-  if (ShStorage.getItem('access_token')) {
+  const timeout = shStorage.getItem('sessionTimeout');
+  const last_activity = shStorage.getItem('last_activity');
+  if (shStorage.getItem('access_token')) {
     const pastMinutes = moment().diff(last_activity, 'minutes');
     const pastSeconds = moment().diff(last_activity, 'seconds');
     if(pastMinutes >= timeout) {
@@ -352,17 +364,17 @@ async function shSwalLogout (seconds = 30) {
       window.ShConfirmation = null;
       clearInterval(window.shInterval);
       const timeNow = moment().toISOString();
-      ShStorage.setItem('last_activity', timeNow);
+      shStorage.setItem('last_activity', timeNow);
       startSession();
     }
   })
 }
 function startSession () {
   const timeNow = moment().toISOString();
-  const accessToken = ShStorage.getItem('access_token');
+  const accessToken = shStorage.getItem('access_token');
   if (accessToken) {
-    ShStorage.setItem('last_activity', timeNow);
-    const timout =  ShStorage.getItem('sessionTimeout');
+    shStorage.setItem('last_activity', timeNow);
+    const timout =  shStorage.getItem('sessionTimeout');
     const interval = (timout * 60 *1000) / 3;
     window.shInterval = setInterval(()=>{
       checkSession();
@@ -374,7 +386,7 @@ const updateSession = () =>{
     startSession();
   }
   const timeNow = moment().toISOString();
-  ShStorage.setItem('last_activity', timeNow);
+  shStorage.setItem('last_activity', timeNow);
 };
 
 const graphQlEndpoint = 'sh-ql';
@@ -395,7 +407,7 @@ function doGet (endPoint, data,extraConfig) {
   updateSession();
   let config = {
     headers: {
-      Authorization: 'Bearer ' + ShStorage.getItem('access_token')
+      Authorization: 'Bearer ' + shStorage.getItem('access_token')
     }
   };
     if (extraConfig) {
@@ -411,7 +423,7 @@ function doPost (endPoint, data, extraConfig) {
   updateSession();
   const config = {
     headers: {
-      Authorization: 'Bearer ' + ShStorage.getItem('access_token')
+      Authorization: 'Bearer ' + shStorage.getItem('access_token')
     }
   };
     if (extraConfig) {
@@ -426,7 +438,7 @@ function doDelete (endPoint, data, extraConfig) {
   updateSession();
   const config = {
     headers: {
-      Authorization: 'Bearer ' + ShStorage.getItem('access_token')
+      Authorization: 'Bearer ' + shStorage.getItem('access_token')
     }
   };
     if (extraConfig) {
@@ -441,7 +453,7 @@ function doPut (endPoint, data, extraConfig) {
     updateSession();
     const config = {
         headers: {
-        Authorization: 'Bearer ' + ShStorage.getItem('access_token')
+        Authorization: 'Bearer ' + shStorage.getItem('access_token')
         }
     };
         if (extraConfig) {
@@ -457,7 +469,7 @@ function doPatch (endPoint, data, extraConfig) {
     updateSession();
     const config = {
         headers: {
-        Authorization: 'Bearer ' + ShStorage.getItem('access_token')
+        Authorization: 'Bearer ' + shStorage.getItem('access_token')
         }
     };
         if (extraConfig) {
@@ -4042,7 +4054,7 @@ const useUserStore = defineStore('user-store', {
     setUser (){
       let user = null;
       try {
-         user = ShStorage.getItem('user') ? ShStorage.getItem('user') : null;
+         user = shStorage.getItem('user') ? shStorage.getItem('user') : null;
       } catch (error) {
         user= null;
       }
@@ -4066,7 +4078,7 @@ const useUserStore = defineStore('user-store', {
         if (typeof(user) === 'undefined') {
            user = res.data;
         }
-        ShStorage.setItem('user',user);
+        shStorage.setItem('user',user);
         user.signOut = this.signOut;
         user.logout = this.signOut;
         user.logOut = this.signOut;
@@ -4089,7 +4101,7 @@ const useUserStore = defineStore('user-store', {
       }).catch((reason) => {
         if (reason.response && reason.response.status) {
           if(reason.response.status === 401) {
-            ShStorage.setItem('user',null);
+            shStorage.setItem('user',null);
             this.user = null;
           }
           this.loggedOut = true;
@@ -4103,7 +4115,7 @@ const useUserStore = defineStore('user-store', {
         }
       }
       const timeNow = moment().toISOString();
-      ShStorage.setItem('session_start',timeNow);
+      shStorage.setItem('session_start',timeNow);
     },
     signOut () {
       shRepo.signOutUser();
@@ -4115,7 +4127,7 @@ const useUserStore = defineStore('user-store', {
       this.setUser();
     },
     setAccessToken (accessToken) {
-      ShStorage.setItem('access_token', accessToken);
+      shStorage.setItem('access_token', accessToken);
       this.setUser();
     }
   },
@@ -5085,7 +5097,7 @@ const __default__ = {
     },
     setCachedData: function (){
       if (this.cacheKey) {
-        this.records = ShStorage.getItem('sh_table_cache_' + this.cacheKey, null);
+        this.records = shStorage.getItem('sh_table_cache_' + this.cacheKey, null);
       }
     },
     reloadData: function (page, append){
@@ -5124,7 +5136,7 @@ const __default__ = {
         const response = req.data.data;
         this.$emit('dataLoaded', response);
         if (this.page < 2 && this.cacheKey) {
-          ShStorage.setItem('sh_table_cache_' + this.cacheKey, response.data);
+          shStorage.setItem('sh_table_cache_' + this.cacheKey, response.data);
         }
         this.pagination_data = {
           current: response.current_page,
@@ -7127,7 +7139,7 @@ const ShFrontend = {
   install: (app, options) => {
     if(options.sessionTimeout){
       app.provide('sessionTimeout',options.sessionTimeout);
-      ShStorage.setItem('sessionTimeout',options.sessionTimeout);
+      shStorage.setItem('sessionTimeout',options.sessionTimeout);
     }
     const shFormElements = options.shFormElementClasses ?? {};
 
@@ -7195,7 +7207,7 @@ const ShFrontend = {
     const allowKeys = [];
     Object.keys(options).map(key=> ((!['string','integer','number'].includes(typeof options[key]) && !allowKeys.includes(key)) || removeKeys.includes(key)) && delete options[key]);
 
-    ShStorage.setItem('ShConfig',options);
+    shStorage.setItem('ShConfig',options);
   }
 };
 
@@ -7212,4 +7224,67 @@ var shGql = {
     mutate
 };
 
-export { countries as Countries, script$8 as ManagePermissions, script$o as ShAutoForm, script$j as ShCanvas, script$9 as ShCanvasBtn, script$4 as ShCardLayout, script$g as ShConfirmAction, script$n as ShDropDownForm, script$b as ShDynamicTabs, script$w as ShForm, ShFrontend, script$m as ShModal, script$a as ShModalBtn, script$l as ShModalForm, script$k as ShModalFormAuto, script$y as ShPhone, script$5 as ShQueryPopups, script$e as ShRange, script$7 as ShRoutePopups, script$f as ShSilentAction, script$x as ShSuggest, script$d as ShTable, script$c as ShTabs, shApis, shGql, shRepo, ShStorage as shStorage, useAppStore, useUserStore };
+/**
+ * useShFetch is a custom hook for fetching data from a given URL and caching it.
+ * @param {string} url - The URL to fetch data from.
+ * @param {string} path - The path to drill down to the data in the response.
+ * @param {string} cacheKey - The key to use when caching the data.
+ * @returns {object} An object containing the status, loading state, error, data, and a function to refetch the data.
+ */
+const useShFetch = (url, path, cacheKey) => {
+    const status = ref('pending');
+    const loading = ref(false);
+    const error = ref(null);
+    const data = ref(null);
+
+    onMounted(() => {
+        reFetchData();
+    });
+
+    /**
+     * Fetches data from the given URL and updates the status, loading state, error, and data refs.
+     * If a cacheKey is provided and there is cached data for that key, the cached data is used instead of fetching.
+     */
+    const reFetchData = () => {
+        loading.value = true;
+        status.value = 'loading';
+        if (cacheKey && shStorage.getItem(cacheKey)) {
+            data.value = shStorage.getItem(cacheKey);
+            status.value = 'success';
+            loading.value = false;
+        } else {
+            shApis.doGet(url).then(response => {
+                status.value = 'success';
+                let res = response.data;
+                if (path) {
+                    let pathArr = path.split('.');
+                    for (let i = 0; i < pathArr.length; i++) {
+                        res = res[pathArr[i]];
+                    }
+                }
+                data.value = res;
+                if (cacheKey) {
+                    shStorage.setItem(cacheKey, res);
+                }
+            })
+                .catch(res => {
+                    status.value = 'error';
+                    error.value = res.message ? res.message : (res.error ? res.error : 'An unexpected error occurred');
+                    shRepo.showToast(error.value, 'error');
+                })
+                .finally(() => {
+                    loading.value = false;
+                });
+        }
+    };
+
+    return {
+        status,
+        loading,
+        error,
+        data,
+        reFetchData
+    }
+};
+
+export { countries as Countries, script$8 as ManagePermissions, script$o as ShAutoForm, script$j as ShCanvas, script$9 as ShCanvasBtn, script$4 as ShCardLayout, script$g as ShConfirmAction, script$n as ShDropDownForm, script$b as ShDynamicTabs, script$w as ShForm, ShFrontend, script$m as ShModal, script$a as ShModalBtn, script$l as ShModalForm, script$k as ShModalFormAuto, script$y as ShPhone, script$5 as ShQueryPopups, script$e as ShRange, script$7 as ShRoutePopups, script$f as ShSilentAction, script$x as ShSuggest, script$d as ShTable, script$c as ShTabs, shApis, shGql, shRepo, shStorage, useAppStore, useShFetch, useUserStore };
