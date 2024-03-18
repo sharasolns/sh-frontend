@@ -3745,7 +3745,7 @@ var script$m = {
     },
     centered: {
         type: Boolean,
-        default: true
+        default: false
     }
 },
   emits: ['modalClosed'],
