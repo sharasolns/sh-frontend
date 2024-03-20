@@ -6,7 +6,7 @@ export default defineUserConfig({
     bundler: viteBundler(),
     lang: 'en-US',
     title: 'Sh Frontend!',
-    description: 'This is my first VuePress site',
+    description: 'SH frontend documentation!',
     sidebar: 'auto',
     themeConfig: {
         sidebar: 'auto'
@@ -63,12 +63,20 @@ export default defineUserConfig({
                     ]
                 },
                 {
+                    text:'Graph Ql',
+                    collapsible: true,
+                    children: [
+                       "/guide/graphql/",
+                    ]
+                },
+                {
                     text:'Helpers',
                     collapsible: true,
                     children: [
                        "/guide/helpers/shuser/",
                        "/guide/helpers/shapi/",
-                       "/guide/helpers/shrepo/"
+                       "/guide/helpers/shrepo/",
+                       "/guide/helpers/shfetch/"
                     ]
                 },
                 {
