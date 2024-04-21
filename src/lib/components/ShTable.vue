@@ -6,6 +6,7 @@ import { useUserStore } from './../repo/stores/ShUser.js'
 const noRecordsComponent = inject('noRecordsComponent', NoRecords)
 
 const {user} = storeToRefs(useUserStore())
+
 </script>
 <template>
   <div class="auto-table mt-2">

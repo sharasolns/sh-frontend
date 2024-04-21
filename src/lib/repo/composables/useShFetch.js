@@ -24,7 +24,7 @@ const useShFetch = (url, path, cacheKey) => {
      * Fetches data from the given URL and updates the status, loading state, error, and data refs.
      * If a cacheKey is provided and there is cached data for that key, the cached data is used instead of fetching.
      */
-    const reFetchData = () => {
+    const reFetchData = (dataUrl) => {
         loading.value = true
         status.value = 'loading'
         if (cacheKey && shStorage.getItem(cacheKey)) {
@@ -32,7 +32,7 @@ const useShFetch = (url, path, cacheKey) => {
             status.value = 'success'
             loading.value = false
         } else {
-            shApis.doGet(url).then(response => {
+            shApis.doGet(dataUrl ?? url).then(response => {
                 status.value = 'success'
                 let res = response.data
                 if (path) {
