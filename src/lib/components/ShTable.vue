@@ -33,7 +33,7 @@ const {user} = storeToRefs(useUserStore())
                   </span>
         </div>
         <div v-if="hasRange" class="sh-range-selector">
-          <sh-range @range-selected="rangeChanged"/>
+          <sh-range @range-selected="rangeChanged" :selected="selectedRange"/>
         </div>
       </div>
     </div>
@@ -272,7 +272,7 @@ import shStorage from '../repo/repositories/ShStorage'
 
 export default {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','noRecordsMessage'],
+  props: ['endPoint', 'headers', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
   data(){
     return {
       order_by: '',

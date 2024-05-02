@@ -1,8 +1,10 @@
 <script setup>
 import {onMounted, ref} from 'vue'
-import ShForm from './ShForm.vue'
+import ShModal from './ShModal.vue'
+import ShAutoForm from './ShAutoForm.vue'
 const props = defineProps(['action',
   'classes',
+  'method',
   'hasTerms',
   'country_code',
   'submitBtnClass',
@@ -11,16 +13,34 @@ const props = defineProps(['action',
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
   'datePickers',
+  'required',
   'textAreas',
   'files',
   'phones',
   'numbers',
-  'customComponent','modalTitle','class'])
-
+  'customComponent','modalTitle','class','successMessage', 'modalId'])
+const emit = defineEmits(['success','fieldChanged','formSubmitted','formError','modalId'])
 const formProps = ref(props)
 let btnClass=props.class
-const dropdownId = 'rand' + (Math.random() + 1).toString(36).substring(2)
+const realModalId = props.modalId ?? 'rand' + (Math.random() + 1).toString(36).substring(2)
+const success = (res)=>{
+  emit('success',res)
+}
+onMounted(()=>{
+  emit('modalId',realModalId)
+})
 
+const fieldChanged = (field, value)=>{
+  emit('fieldChanged',field, value)
+}
+
+const formSubmitted = (res)=>{
+  emit('formSubmitted',res)
+}
+
+const formError = (res)=>{
+  emit('formError',res)
+}
 </script>
 <template>
   <h5 class="d-none">To prevent default class</h5>
@@ -29,7 +49,13 @@ const dropdownId = 'rand' + (Math.random() + 1).toString(36).substring(2)
       <slot></slot>
     </a>
     <div class="dropdown-menu px-2 py-1" :aria-labelledby="dropdownId">
-        <sh-form v-bind="props"/>
+      <sh-auto-form
+          @success="success"
+          @field-changed="fieldChanged"
+          @form-submitted="formSubmitted"
+          @form-error="formError"
+          :key="JSON.stringify(currentData ?? {})"
+          v-bind="props"/>
     </div>
   </div>
 </template>

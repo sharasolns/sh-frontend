@@ -14,6 +14,7 @@ import NoRecords from '@/lib/components/others/NoRecords.vue'
 import TabOne from '@/tabs/TabOne.vue'
 import TabTwo from '@/tabs/TabTwo.vue'
 import useShFetch from '@/lib/repo/composables/useShFetch'
+import { ShDropDownForm } from '@'
 const query = `{
   tasks (id:{gt: 4}) {
       name
@@ -115,7 +116,7 @@ const {data: userName, loading,error,status} = useShFetch('auth/users','name')
         >
         </sh-table>
 
-        <sh-modal-form
+        <sh-drop-down-form
             modal-id="addPayment"
             modal-title="Add Payment"
             :fields="['payment_account','amount', 'reference' ]"
@@ -127,7 +128,7 @@ const {data: userName, loading,error,status} = useShFetch('auth/users','name')
                     suggests: true
                 }
             }" class="btn btn-primary btn-sm me-2">
-          <i class="bi bi-cash"></i>  Mark Paid  </sh-modal-form>
+          <i class="bi bi-cash"></i>  Mark Paid  </sh-drop-down-form>
       </div>
     </div>
   </div>
