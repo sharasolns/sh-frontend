@@ -41,6 +41,7 @@ const actionFailed = reason =>{
   processing.value = false
   reason.actionType = 'silentAction'
   emit('actionFailed', reason)
+  emit('failed', reason)
   shRepo.showToast(reason.value.error.message ?? props.failMessage,'error')
 }
 function runAction () {
