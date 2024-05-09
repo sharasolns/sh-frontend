@@ -27,7 +27,7 @@ const props = defineProps({
 })
 
 const processing = ref(false)
-const emit = defineEmits(['actionSuccessful', 'actionFailed','success','actionCanceled'])
+const emit = defineEmits(['actionSuccessful', 'actionFailed','success','failed','canceled','actionCanceled'])
 const actionSuccessful = (res)=>{
   processing.value = false
   res.actionType = 'silentAction'
@@ -56,6 +56,7 @@ function runAction () {
       }
     } else {
       emit('actionCanceled')
+      emit('canceled')
       processing.value = false
     }
   }).catch(ex => {

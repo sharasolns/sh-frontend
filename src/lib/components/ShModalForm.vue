@@ -41,9 +41,13 @@ const formSubmitted = (res)=>{
 const formError = (res)=>{
   emit('formError',res)
 }
+
+const emitClick = ()=>{
+  emit('click')
+}
 </script>
 <template>
-  <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal">
+  <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal" @click="emitClick">
     <slot></slot>
   </a>
   <sh-modal :modal-id="realModalId" :modal-title="modalTitle">

@@ -3888,12 +3888,17 @@ const formError = (res)=>{
   emit('formError',res);
 };
 
+const emitClick = ()=>{
+  emit('click');
+};
+
 return (_ctx, _cache) => {
   return (openBlock(), createElementBlock(Fragment, null, [
     createElementVNode("a", {
       class: normalizeClass(unref(btnClass)),
       href: '#' + unref(realModalId),
-      "data-bs-toggle": "modal"
+      "data-bs-toggle": "modal",
+      onClick: emitClick
     }, [
       renderSlot(_ctx.$slots, "default")
     ], 10 /* CLASS, PROPS */, _hoisted_1$i),
@@ -4404,7 +4409,7 @@ var script$g = {
     default: 'Action failed'
   }
 },
-  emits: ['actionSuccessful', 'actionFailed','success','actionCanceled'],
+  emits: ['actionSuccessful', 'actionFailed','success','failed','canceled','actionCanceled'],
   setup(__props, { emit: __emit }) {
 
 const props = __props;
@@ -4424,6 +4429,7 @@ const actionFailed = reason =>{
   processing.value = false;
   reason.actionType = 'silentAction';
   emit('actionFailed', reason);
+  emit('failed', reason);
   shRepo.showToast(reason.value.error.message ?? props.failMessage,'error');
 };
 function runAction () {
@@ -4438,6 +4444,7 @@ function runAction () {
       }
     } else {
       emit('actionCanceled');
+      emit('canceled');
       processing.value = false;
     }
   }).catch(ex => {
