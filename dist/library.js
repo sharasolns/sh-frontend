@@ -3948,6 +3948,7 @@ var script$k = {
   'submitBtnClass',
   'fields',
   'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
+  'modalSize',
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
   'datePickers',
@@ -3980,13 +3981,14 @@ return (_ctx, _cache) => {
     ], 10 /* CLASS, PROPS */, _hoisted_1$h),
     vue.createVNode(script$n, {
       "modal-id": modalId,
-      "modal-title": __props.modalTitle
+      "modal-title": __props.modalTitle,
+      "modal-size": __props.modalSize
     }, {
       default: vue.withCtx(() => [
         vue.createVNode(script$o, vue.mergeProps({ onSuccess: success }, props), null, 16 /* FULL_PROPS */)
       ]),
       _: 1 /* STABLE */
-    }, 8 /* PROPS */, ["modal-title"])
+    }, 8 /* PROPS */, ["modal-title", "modal-size"])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
