@@ -9,6 +9,7 @@ const props = defineProps(['action',
   'country_code',
   'submitBtnClass',
   'fields',
+  'modalSize',
   'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
@@ -50,7 +51,7 @@ const emitClick = ()=>{
   <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal" @click="emitClick">
     <slot></slot>
   </a>
-  <sh-modal :modal-id="realModalId" :modal-title="modalTitle">
+  <sh-modal :modal-size="modalSize" :modal-id="realModalId" :modal-title="modalTitle">
     <sh-auto-form
         @success="success"
         @field-changed="fieldChanged"

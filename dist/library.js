@@ -3863,6 +3863,7 @@ var script$l = {
   'country_code',
   'submitBtnClass',
   'fields',
+  'modalSize',
   'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
@@ -3915,6 +3916,7 @@ return (_ctx, _cache) => {
       vue.renderSlot(_ctx.$slots, "default")
     ], 10 /* CLASS, PROPS */, _hoisted_1$i),
     vue.createVNode(script$n, {
+      "modal-size": __props.modalSize,
       "modal-id": vue.unref(realModalId),
       "modal-title": __props.modalTitle
     }, {
@@ -3928,7 +3930,7 @@ return (_ctx, _cache) => {
         }, props), null, 16 /* FULL_PROPS */))
       ]),
       _: 1 /* STABLE */
-    }, 8 /* PROPS */, ["modal-id", "modal-title"])
+    }, 8 /* PROPS */, ["modal-size", "modal-id", "modal-title"])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
