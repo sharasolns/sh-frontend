@@ -6,8 +6,13 @@ import ManagePermissions from '../components/core/Departments/department/ManageP
 import ShAuth from '../components/core/auth/ShAuth.vue'
 import TextInput from '../components/form-components/TextInput.vue'
 import NoRecords from '../components/others/NoRecords.vue'
+import isAllowedTo from '../custom-directives/isAllowedTo.js'
 const ShFrontend = {
   install: (app, options) => {
+
+    // add user-can directive
+    app.directive('if-user-can', isAllowedTo)
+
     if(options.sessionTimeout){
       app.provide('sessionTimeout',options.sessionTimeout)
       ShStorage.setItem('sessionTimeout',options.sessionTimeout)

@@ -1,10 +1,9 @@
 <script setup>
-
 import ShTable from "@/lib/components/ShTable.vue";
 </script>
 <template>
     <div class="max-2">
-        <h5>Notes</h5>
+        <h5 v-if-user-can="'notes.deleted'">Notes</h5>
         <div class="card shadow rounded">
             <div class="card-body">
               <sh-table :end-point="`notes/list`" no-records-message="No notes">

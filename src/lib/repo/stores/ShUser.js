@@ -60,6 +60,7 @@ export const useUserStore = defineStore('user-store', {
           }
           return false
         }
+        user.can = user.isAllowedTo
         this.user = user
       }).catch((reason) => {
         if (reason.response && reason.response.status) {
