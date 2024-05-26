@@ -9,6 +9,7 @@ const props = defineProps(['action',
   'submitBtnClass',
   'fields',
   'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
+  'modalSize',
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
   'datePickers',
@@ -30,7 +31,7 @@ delete formProps.class
   <a :class="btnClass" :href="'#' + modalId" data-bs-toggle="modal">
     <slot></slot>
   </a>
-  <sh-modal :modal-id="modalId" :modal-title="modalTitle">
+  <sh-modal :modal-id="modalId" :modal-title="modalTitle" :modal-size="modalSize">
     <sh-auto-form @success="success" v-bind="props"/>
   </sh-modal>
 </template>

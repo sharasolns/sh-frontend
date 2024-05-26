@@ -3863,6 +3863,7 @@ var script$l = {
   'country_code',
   'submitBtnClass',
   'fields',
+  'modalSize',
   'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
@@ -3900,16 +3901,22 @@ const formError = (res)=>{
   emit('formError',res);
 };
 
+const emitClick = ()=>{
+  emit('click');
+};
+
 return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
     vue.createElementVNode("a", {
       class: vue.normalizeClass(vue.unref(btnClass)),
       href: '#' + vue.unref(realModalId),
-      "data-bs-toggle": "modal"
+      "data-bs-toggle": "modal",
+      onClick: emitClick
     }, [
       vue.renderSlot(_ctx.$slots, "default")
     ], 10 /* CLASS, PROPS */, _hoisted_1$i),
     vue.createVNode(script$n, {
+      "modal-size": __props.modalSize,
       "modal-id": vue.unref(realModalId),
       "modal-title": __props.modalTitle
     }, {
@@ -3923,7 +3930,7 @@ return (_ctx, _cache) => {
         }, props), null, 16 /* FULL_PROPS */))
       ]),
       _: 1 /* STABLE */
-    }, 8 /* PROPS */, ["modal-id", "modal-title"])
+    }, 8 /* PROPS */, ["modal-size", "modal-id", "modal-title"])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -3943,6 +3950,7 @@ var script$k = {
   'submitBtnClass',
   'fields',
   'columns', 'placeholders', 'field_permissions', 'retainDataAfterSubmission',
+  'modalSize',
   'currentData', 'actionLabel', 'fillSelects', 'phones', 'successCallback',
   'failedCallback', 'labels', 'editors',
   'datePickers',
@@ -3975,13 +3983,14 @@ return (_ctx, _cache) => {
     ], 10 /* CLASS, PROPS */, _hoisted_1$h),
     vue.createVNode(script$n, {
       "modal-id": modalId,
-      "modal-title": __props.modalTitle
+      "modal-title": __props.modalTitle,
+      "modal-size": __props.modalSize
     }, {
       default: vue.withCtx(() => [
         vue.createVNode(script$o, vue.mergeProps({ onSuccess: success }, props), null, 16 /* FULL_PROPS */)
       ]),
       _: 1 /* STABLE */
-    }, 8 /* PROPS */, ["modal-title"])
+    }, 8 /* PROPS */, ["modal-title", "modal-size"])
   ], 64 /* STABLE_FRAGMENT */))
 }
 }
@@ -4416,7 +4425,7 @@ var script$g = {
     default: 'Action failed'
   }
 },
-  emits: ['actionSuccessful', 'actionFailed','success','actionCanceled'],
+  emits: ['actionSuccessful', 'actionFailed','success','failed','canceled','actionCanceled'],
   setup(__props, { emit: __emit }) {
 
 const props = __props;
@@ -4436,6 +4445,7 @@ const actionFailed = reason =>{
   processing.value = false;
   reason.actionType = 'silentAction';
   emit('actionFailed', reason);
+  emit('failed', reason);
   shRepo.showToast(reason.value.error.message ?? props.failMessage,'error');
 };
 function runAction () {
@@ -4450,6 +4460,7 @@ function runAction () {
       }
     } else {
       emit('actionCanceled');
+      emit('canceled');
       processing.value = false;
     }
   }).catch(ex => {
