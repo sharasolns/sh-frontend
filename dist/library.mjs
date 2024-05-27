@@ -3601,7 +3601,7 @@ return (_ctx, _cache) => {
                         : createCommentVNode("v-if", true)
                     ], 2 /* CLASS */))
                   : createCommentVNode("v-if", true),
-                (openBlock(), createBlock(resolveDynamicComponent(getFieldComponent(field)), mergeProps(getComponentProps(field), {
+                (openBlock(), createBlock(resolveDynamicComponent(getFieldComponent(field)), mergeProps({ ref_for: true }, getComponentProps(field), {
                   isInvalid: typeof validationErrors.value[field.field] !== 'undefined',
                   onClick: $event => (fieldChanged(field.field)),
                   "onUpdate:modelValue": [$event => (fieldChanged(field.field)), $event => ((formFields.value[index].value) = $event)],
@@ -4134,6 +4134,7 @@ const useUserStore = defineStore('user-store', {
           }
           return false
         };
+        user.can = user.isAllowedTo;
         this.user = user;
       }).catch((reason) => {
         if (reason.response && reason.response.status) {
@@ -5729,7 +5730,8 @@ return (_ctx, _cache) => {
                     (_ctx.selectedRecord)
                       ? (openBlock(), createBlock(resolveDynamicComponent(action.canvasComponent), mergeProps({
                           key: 0,
-                          onRecordUpdated: _ctx.reloadData
+                          onRecordUpdated: _ctx.reloadData,
+                          ref_for: true
                         }, _ctx.cleanCanvasProps(action), { record: _ctx.selectedRecord }), null, 16 /* FULL_PROPS */, ["onRecordUpdated", "record"]))
                       : createCommentVNode("v-if", true)
                   ]),
@@ -7178,8 +7180,22 @@ return (_ctx, _cache) => {
 script.__scopeId = "data-v-2911509a";
 script.__file = "src/lib/components/core/auth/ShAuth.vue";
 
+var isAllowedTo = {
+    mounted(el, binding) {
+        const {user} = storeToRefs(useUserStore());
+        if(!user.value.isAllowedTo(binding.value)){
+            // delete element
+            el.remove();
+        }
+    }
+};
+
 const ShFrontend = {
   install: (app, options) => {
+
+    // add user-can directive
+    app.directive('if-user-can', isAllowedTo);
+
     if(options.sessionTimeout){
       app.provide('sessionTimeout',options.sessionTimeout);
       shStorage.setItem('sessionTimeout',options.sessionTimeout);
