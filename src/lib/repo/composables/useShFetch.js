@@ -29,32 +29,29 @@ const useShFetch = (url, path, cacheKey) => {
         status.value = 'loading'
         if (cacheKey && shStorage.getItem(cacheKey)) {
             data.value = shStorage.getItem(cacheKey)
-            status.value = 'success'
-            loading.value = false
-        } else {
-            shApis.doGet(dataUrl ?? url).then(response => {
-                status.value = 'success'
-                let res = response.data
-                if (path) {
-                    let pathArr = path.split('.')
-                    for (let i = 0; i < pathArr.length; i++) {
-                        res = res[pathArr[i]]
-                    }
-                }
-                data.value = res
-                if (cacheKey) {
-                    shStorage.setItem(cacheKey, res)
-                }
-            })
-                .catch(res => {
-                    status.value = 'error'
-                    error.value = res.message ? res.message : (res.error ? res.error : 'An unexpected error occurred')
-                    shRepo.showToast(error.value, 'error')
-                })
-                .finally(() => {
-                    loading.value = false
-                })
         }
+        shApis.doGet(dataUrl ?? url).then(response => {
+            status.value = 'success'
+            let res = response.data
+            if (path) {
+                let pathArr = path.split('.')
+                for (let i = 0; i < pathArr.length; i++) {
+                    res = res[pathArr[i]]
+                }
+            }
+            data.value = res
+            if (cacheKey) {
+                shStorage.setItem(cacheKey, res)
+            }
+        })
+            .catch(res => {
+                status.value = 'error'
+                error.value = res.message ? res.message : (res.error ? res.error : 'An unexpected error occurred')
+                shRepo.showToast(error.value, 'error')
+            })
+            .finally(() => {
+                loading.value = false
+            })
     }
 
     return {
