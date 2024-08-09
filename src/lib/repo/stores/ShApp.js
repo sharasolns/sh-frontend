@@ -21,6 +21,12 @@ export const useAppStore = defineStore('sh-app',{
         reload () {
             this.refreshKey++
             return true
-        }
+        },
+        setItem (key,value) {
+            this.appData[key] = value
+        },
+        getItem (key) {
+            return this.appData[key]
+        },
     }
 })
