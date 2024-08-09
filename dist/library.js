@@ -6266,13 +6266,15 @@ const useAppStore = pinia.defineStore('sh-app',{
         }
     },
     actions: {
-        refreshPage () {
-            this.refreshKey++;
+        refreshPage (timeout=0) {
+            setTimeout(()=>{
+                this.refreshKey++;
+            },timeout);
+
             return true
         },
-        refresh () {
-            this.refreshKey++;
-            return true
+        refresh (timeout=0) {
+            this.refreshPage(timeout);
         },
         reload () {
             this.refreshKey++;
