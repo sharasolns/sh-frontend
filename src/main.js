@@ -58,7 +58,7 @@ app.use(ShFrontend,{
   router: router,
   registerTitle: 'Welcome, create a new account',
   registerSubTitle: 'Create a new account to access the system',
-  loginTitle: 'login to your account',
+  loginTitle: 'Login to your account',
   tablePaginationStyle: 'table', //loadMore,table
   noRecordsComponent: NoRecords,
   tablePerPage: 3,
