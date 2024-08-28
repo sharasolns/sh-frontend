@@ -5,15 +5,16 @@ Its the normal vue router component with a few extra features.</p>
 <p>We have added a modal or off-canvas feature to the routes.
 This is to help you open a modal or off-canvas from the url</p>
 <h2 id="example-usage" tabindex="-1"><a class="header-anchor" href="#example-usage"><span>Example Usage</span></a></h2>
-<div class="language-html line-numbers-mode" data-ext="html" data-title="html"><pre v-pre class="language-html"><code>{
-        path: '/tasks',
-        component: tab,
-        meta: {
-            popup: 'modal',
-            title: 'Task Form'
-        }
-    }
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>This is a normal vue route with a meta property. The component is the component that will be displayed in the modal. The popup property is set to modal to indicate that the route should be opened in a modal. The title property is the title of the modal.</p>
+<div class="language-html line-numbers-mode" data-highlighter="prismjs" data-ext="html" data-title="html"><pre v-pre><code><span class="line">{</span>
+<span class="line">        path: '/tasks',</span>
+<span class="line">        component: tab,</span>
+<span class="line">        meta: {</span>
+<span class="line">            popup: 'modal',</span>
+<span class="line">            title: 'Task Form'</span>
+<span class="line">        }</span>
+<span class="line">    }</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>This is a normal vue route with a meta property. The component is the component that will be displayed in the modal. The popup property is set to modal to indicate that the route should be opened in a modal. The title property is the title of the modal.</p>
 <h2 id="attributes" tabindex="-1"><a class="header-anchor" href="#attributes"><span>Attributes</span></a></h2>
 <h3 id="popup" tabindex="-1"><a class="header-anchor" href="#popup"><span>popup</span></a></h3>
 <ul>

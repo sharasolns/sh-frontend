@@ -7,32 +7,37 @@ few too many times? Well, dust off that old wizard hat and grab your enchanted m
 It uses Bootstrap 5 for styling and is designed to be used with Vue 3 applications.</p>
 <h2 id="getting-started" tabindex="-1"><a class="header-anchor" href="#getting-started"><span>Getting Started</span></a></h2>
 <p>To get started, make sure you have a Vue 3 application set up using Vite. If you don't have one, you can set up a new Vue 3 application using Vite by running the following command.</p>
-<div class="language-bash line-numbers-mode" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="token function">npm</span> init vite@latest
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="installation" tabindex="-1"><a class="header-anchor" href="#installation"><span>Installation</span></a></h2>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre v-pre><code><span class="line"><span class="token function">npm</span> init vite@latest</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><h2 id="installation" tabindex="-1"><a class="header-anchor" href="#installation"><span>Installation</span></a></h2>
 <p>Install this package in your existing or freshly installed vue 3 framework using vite</p>
-<div class="language-bash line-numbers-mode" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> @iankibetsh/shframework
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>or</p>
-<div class="language-text line-numbers-mode" data-ext="text" data-title="text"><pre v-pre class="language-text"><code>yarn add @iankibetsh/shframework
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="usage" tabindex="-1"><a class="header-anchor" href="#usage"><span>usage</span></a></h2>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre v-pre><code><span class="line"><span class="token function">npm</span> <span class="token function">install</span> @iankibetsh/shframework</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>or</p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre v-pre><code><span class="line">yarn add @iankibetsh/shframework</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><h2 id="usage" tabindex="-1"><a class="header-anchor" href="#usage"><span>usage</span></a></h2>
 <p>Import and use the package in your main.js or the entry file for your Vue 3 application.</p>
-<div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>ShFrontend<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Then use it this way.</p>
-<div class="language-javascript line-numbers-mode" data-ext="js" data-title="js"><pre v-pre class="language-javascript"><code>app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>ShFrontend<span class="token punctuation">,</span><span class="token punctuation">{</span>
-    <span class="token literal-property property">sessionTimeout</span><span class="token operator">:</span> <span class="token number">400</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">loginUrl</span><span class="token operator">:</span> <span class="token string">'/sh-auth'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">registerEndpoint</span><span class="token operator">:</span> <span class="token string">'auth/register'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">forgotEndpoint</span><span class="token operator">:</span> <span class="token string">'auth/forgot'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">logoutApiEndpoint</span><span class="token operator">:</span> <span class="token string">'auth/logout'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">registerTitle</span><span class="token operator">:</span> <span class="token string">'Welcome, create a new account'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">registerSubTitle</span><span class="token operator">:</span> <span class="token string">'Create a new account to access the system'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">redirectRegister</span><span class="token operator">:</span> <span class="token string">'/login'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">loginTitle</span><span class="token operator">:</span> <span class="token string">'Login to your account'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">redirectLogin</span><span class="token operator">:</span> <span class="token string">'/dashboard'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">tablePaginationStyle</span><span class="token operator">:</span> <span class="token string">'loadMore'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">tablePerPage</span><span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">toastTimer</span><span class="token operator">:</span> <span class="token number">5000</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>Here is the explanation.</p>
+<div class="language-javascript line-numbers-mode" data-highlighter="prismjs" data-ext="js" data-title="js"><pre v-pre><code><span class="line"><span class="token keyword">import</span> <span class="token punctuation">{</span>ShFrontend<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@iankibetsh/shframework'</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>Then use it this way.</p>
+<div class="language-javascript line-numbers-mode" data-highlighter="prismjs" data-ext="js" data-title="js"><pre v-pre><code><span class="line">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>ShFrontend<span class="token punctuation">,</span><span class="token punctuation">{</span></span>
+<span class="line">    <span class="token literal-property property">sessionTimeout</span><span class="token operator">:</span> <span class="token number">400</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">loginUrl</span><span class="token operator">:</span> <span class="token string">'/sh-auth'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">registerEndpoint</span><span class="token operator">:</span> <span class="token string">'auth/register'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">forgotEndpoint</span><span class="token operator">:</span> <span class="token string">'auth/forgot'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">logoutApiEndpoint</span><span class="token operator">:</span> <span class="token string">'auth/logout'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">registerTitle</span><span class="token operator">:</span> <span class="token string">'Welcome, create a new account'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">registerSubTitle</span><span class="token operator">:</span> <span class="token string">'Create a new account to access the system'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">redirectRegister</span><span class="token operator">:</span> <span class="token string">'/login'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">loginTitle</span><span class="token operator">:</span> <span class="token string">'Login to your account'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">redirectLogin</span><span class="token operator">:</span> <span class="token string">'/dashboard'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">tablePaginationStyle</span><span class="token operator">:</span> <span class="token string">'loadMore'</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">tablePerPage</span><span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token literal-property property">toastTimer</span><span class="token operator">:</span> <span class="token number">5000</span></span>
+<span class="line"><span class="token punctuation">}</span><span class="token punctuation">)</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>Here is the explanation.</p>
 <ol>
 <li>sessionTimeout: This is the time in minutes that the user will be logged out if inactive.</li>
 <li>LoginUrl: This is the url that the user will be redirected to when they are not logged in.</li>

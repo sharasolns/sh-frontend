@@ -7258,6 +7258,7 @@ const ShFrontend = {
     const forgotEndpoint = options.forgotEndpoint ?? 'auth/forgot-password';
     const registerTitle = options.registerTitle ?? 'Create a new account';
     const registerSubTitle = options.registerSubTitle ?? `It's quick and easy`;
+    const loginTitle = options.loginTitle ?? `Login to your account`;
     const logoutApiEndpoint = options.logoutApiEndpoint ?? `auth/logout`;
     options.formTextInput ?? script$t;
     const loginUrl = options.loginUrl ?? `/login`;
@@ -7272,6 +7273,7 @@ const ShFrontend = {
     app.provide('registerTitle', registerTitle);
     app.provide('registerSubTitle', registerSubTitle);
     app.provide('redirectLogin', redirectLogin);
+    app.provide('loginTitle', loginTitle);
     app.provide('redirectRegister', redirectRegister);
     app.provide('logoutApiEndpoint', logoutApiEndpoint);
     app.provide('formComponents', options.shFormComponents ?? {});
