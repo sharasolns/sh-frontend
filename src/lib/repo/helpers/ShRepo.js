@@ -200,6 +200,25 @@ async function runPlainRequest(url, message, title, data){
         allowOutsideClick: () => !Swal.isLoading()
     })
 }
+async function confirmAction(callback,title,message){
+    if (typeof title === 'undefined') {
+        title = null
+    }
+    return Swal.fire({
+        title: title !== null ? title : 'Are you sure?',
+        html: message,
+        showCancelButton: true,
+        confirmButtonColor: '#32c787',
+        cancelButtonText: 'No, cancel',
+        confirmButtonText: 'Yes, Proceed!',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            return callback()
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+}
 
 function formatDate(date, format){
     if (!format) {
@@ -243,6 +262,7 @@ export default {
     swalSuccess,
     swalError,
     runPlainRequest,
+    confirmAction,
     getMenuCount,
     setTabCounts,
     getShConfig,
