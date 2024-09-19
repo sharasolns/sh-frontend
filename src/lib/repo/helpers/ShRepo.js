@@ -200,7 +200,7 @@ async function runPlainRequest(url, message, title, data){
         allowOutsideClick: () => !Swal.isLoading()
     })
 }
-async function confirmAction(callback,title,message){
+async function confirmAction(title,message){
     if (typeof title === 'undefined') {
         title = null
     }
@@ -213,9 +213,6 @@ async function confirmAction(callback,title,message){
         confirmButtonText: 'Yes, Proceed!',
         reverseButtons: true,
         showLoaderOnConfirm: true,
-        preConfirm: () => {
-            return callback()
-        },
         allowOutsideClick: () => !Swal.isLoading()
     })
 }
