@@ -1,5 +1,12 @@
 <script setup>
 import ShTable from "@/lib/components/ShTable.vue";
+import FormatTitle from '@/views/core/notes/FormatTitle.vue'
+import { ref } from 'vue'
+
+const selected = ref([])
+const rowSelected = row=>{
+  selected.value.push(row)
+}
 </script>
 <template>
     <div class="max-2">
@@ -12,7 +19,13 @@ import ShTable from "@/lib/components/ShTable.vue";
                   <h3>{{ records }}</h3>
                 </template>
               </sh-table>
-                <sh-table :has-range="true" :end-point="`notes/list`" :headers="['id','title','note','created_at']"/>
+              {{ selected}}
+                <sh-table @rowSelected="rowSelected" :disable-mobile-responsive="true" :has-range="true" :end-point="`notes/list`" :headers="['id',{
+                  label:'Summary',
+                  key:'title',
+                  component: FormatTitle,
+                  sortable:true
+                },'title','note','created_at']"/>
             </div>
         </div>
     </div>

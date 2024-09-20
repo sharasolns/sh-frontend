@@ -72,12 +72,14 @@ const {user} = storeToRefs(useUserStore())
         <slot name="records" :records="records"></slot>
       </template>
     </template>
-    <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700">
+    <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700 || disableMobileResponsive">
       <thead class="sh-thead">
       <tr>
         <th v-for="title in tableHeaders" :key="title">
           <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
              v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
+          <a class="text-capitalize" v-on:click="changeKey('order_by',title.key)"
+             v-if="typeof title === 'object'">{{ title.label ?? title.key.replace(/_/g, ' ') }}</a>
           <a class="text-capitalize" v-on:click="changeKey('order_by',title(null))"
              v-else-if="typeof title === 'function'">{{ title(null).replace(/_/g, ' ') }}</a>
           <a class="text-capitalize" v-else-if="typeof title !== 'undefined'"
@@ -122,6 +124,8 @@ const {user} = storeToRefs(useUserStore())
           <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
           <span v-else-if="typeof key === 'string'" v-html="record[key]"></span>
           <span v-else-if="typeof key === 'function'" v-html="key(record, index)"></span>
+          <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record"></component>
+          <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"></span>
           <span v-else v-html="record[key[0]]"></span>
         </td>
         <td v-if="actions" style="white-space:nowrap;">
@@ -195,6 +199,9 @@ const {user} = storeToRefs(useUserStore())
               <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
                  v-else-if="typeof key === 'function'">
                 {{ key(null).replace(/_/g, ' ') }}</p>
+              <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
+                 v-else-if="typeof key === 'object'">
+                {{ key.label ?? key.key.replace(/_/g, ' ') }}</p>
               <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else>{{
                   key[1].replace(/_/g, ' ')
                 }}</p>
@@ -207,6 +214,8 @@ const {user} = storeToRefs(useUserStore())
                       class="text-primary fw-bold">KES {{ Intl.NumberFormat().format(record[key]) }}</span>
                 <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
                 <span v-else-if="typeof key    === 'string'" v-html="record[key]"></span>
+                <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record"></component>
+                <span v-else-if="typeof key    === 'object'" v-html="record[key.key ?? key.field]"></span>
                 <span v-else-if="typeof key === 'function'" v-html="key(record, index )"></span>
                 <span v-else v-html="record[key[0]]"></span>
               </span>
@@ -272,7 +281,7 @@ import shStorage from '../repo/repositories/ShStorage'
 
 export default {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
+  props: ['endPoint', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
   data(){
     return {
       order_by: '',
