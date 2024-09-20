@@ -4,16 +4,11 @@ import FormatTitle from '@/views/core/notes/FormatTitle.vue'
 import { ref } from 'vue'
 
 const selected = ref([])
-const rowSelected = row=>{
+const rowSelected = row=> {
   selected.value.push(row)
-import shRepo from '@/lib/repo/helpers/ShRepo'
-
-const deleteItem = item=>{
-  shRepo.confirmAction(()=>{
-    console.log('Deleting item',item)
-    return 'deleted'
-  },'Wee?','ii imeenda')
 }
+
+
 </script>
 <template>
     <div class="max-2">
