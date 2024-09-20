@@ -264,6 +264,8 @@ onMounted((ev) => {
         </div>
       </template>
     </div>
+    <slot/>
+
     <div :class="getElementClass('formGroup')">
       <button :style="{width: submitBtnWidth}" ref="submitBtn" :disabled="loading"
               :class="getElementClass('actionBtn')">
@@ -273,6 +275,5 @@ onMounted((ev) => {
         <span v-if="!loading">Submit</span>
       </button>
     </div>
-    <slot/>
   </form>
 </template>

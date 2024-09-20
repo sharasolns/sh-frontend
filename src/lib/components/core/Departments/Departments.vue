@@ -45,7 +45,7 @@ department.value = dept
       ]
     }"></sh-table>
             <sh-modal modal-id="sh_department_modal" modal-title="Department Form">
-              <sh-form success-callback="departmentAdded" :current-data="department" @departmentAdded="departmentAdded" action="admin/departments/store" :fields="['name','description']"></sh-form>
+              <sh-form success-callback="departmentAdded" :current-data="department" @departmentAdded="departmentAdded" action="sh-departments" :fields="['name','description']"></sh-form>
             </sh-modal>
           </div>
         </div>

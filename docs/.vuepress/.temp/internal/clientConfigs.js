@@ -1,12 +1,12 @@
-import clientConfig0 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/plugin-active-header-links/lib/client/config.js'
-import clientConfig1 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/plugin-back-to-top/lib/client/config.js'
-import clientConfig2 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/plugin-copy-code/lib/client/config.js'
-import clientConfig3 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/plugin-external-link-icon/lib/client/config.js'
-import clientConfig4 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/plugin-medium-zoom/lib/client/config.js'
-import clientConfig5 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/plugin-nprogress/lib/client/config.js'
-import clientConfig6 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/plugin-theme-data/lib/client/config.js'
-import clientConfig7 from '/private/var/dev/front-end/sh-frontend/node_modules/@vuepress/theme-default/lib/client/config.js'
-import clientConfig8 from '/private/var/dev/front-end/sh-frontend/docs/.vuepress/client.js'
+import * as clientConfig0 from '/Users/iankibet/www/front-end/sh-frontend/node_modules/@vuepress/plugin-active-header-links/lib/client/config.js'
+import * as clientConfig1 from '/Users/iankibet/www/front-end/sh-frontend/node_modules/@vuepress/plugin-back-to-top/lib/client/config.js'
+import * as clientConfig2 from '/Users/iankibet/www/front-end/sh-frontend/node_modules/@vuepress/plugin-copy-code/lib/client/config.js'
+import * as clientConfig3 from '/Users/iankibet/www/front-end/sh-frontend/node_modules/@vuepress/plugin-medium-zoom/lib/client/config.js'
+import * as clientConfig4 from '/Users/iankibet/www/front-end/sh-frontend/node_modules/@vuepress/plugin-nprogress/lib/client/config.js'
+import * as clientConfig5 from '/Users/iankibet/www/front-end/sh-frontend/docs/.vuepress/.temp/prismjs/config.js'
+import * as clientConfig6 from '/Users/iankibet/www/front-end/sh-frontend/node_modules/@vuepress/plugin-theme-data/lib/client/config.js'
+import * as clientConfig7 from '/Users/iankibet/www/front-end/sh-frontend/node_modules/@vuepress/theme-default/lib/client/config.js'
+import * as clientConfig8 from '/Users/iankibet/www/front-end/sh-frontend/docs/.vuepress/client.js'
 
 export const clientConfigs = [
   clientConfig0,
@@ -18,4 +18,4 @@ export const clientConfigs = [
   clientConfig6,
   clientConfig7,
   clientConfig8,
-]
+].map((m) => m.default).filter(Boolean)

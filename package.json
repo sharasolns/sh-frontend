@@ -1,6 +1,6 @@
 {
   "name": "@iankibetsh/shframework",
-  "version": "4.7.2",
+  "version": "4.7.9",
   "description": "Vue library for handling laravel backend",
   "main": "dist/library.js",
   "module": "dist/library.mjs",

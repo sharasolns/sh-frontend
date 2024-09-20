@@ -6,11 +6,19 @@ import { ref } from 'vue'
 const selected = ref([])
 const rowSelected = row=>{
   selected.value.push(row)
+import shRepo from '@/lib/repo/helpers/ShRepo'
+
+const deleteItem = item=>{
+  shRepo.confirmAction(()=>{
+    console.log('Deleting item',item)
+    return 'deleted'
+  },'Wee?','ii imeenda')
 }
 </script>
 <template>
     <div class="max-2">
       <h5 v-if="false">false</h5>
+      <button v-if="true" @click="deleteItem({id:1})">Delete</button>
         <h5 v-if-user-can="'notes'">Notes</h5>
         <div class="card shadow rounded">
             <div class="card-body">
