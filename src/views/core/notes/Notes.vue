@@ -7,8 +7,6 @@ const selected = ref([])
 const rowSelected = row=> {
   selected.value.push(row)
 }
-
-
 </script>
 <template>
     <div class="max-2">

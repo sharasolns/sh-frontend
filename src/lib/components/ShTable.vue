@@ -79,7 +79,7 @@ const {user} = storeToRefs(useUserStore())
           <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
              v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
           <a class="text-capitalize" v-on:click="changeKey('order_by',title.key)"
-             v-if="typeof title === 'object'">{{ title.label ?? title.key.replace(/_/g, ' ') }}</a>
+             v-else-if="typeof title === 'object'">{{ title.label ?? title.key.replace(/_/g, ' ') }}</a>
           <a class="text-capitalize" v-on:click="changeKey('order_by',title(null))"
              v-else-if="typeof title === 'function'">{{ title(null).replace(/_/g, ' ') }}</a>
           <a class="text-capitalize" v-else-if="typeof title !== 'undefined'"
