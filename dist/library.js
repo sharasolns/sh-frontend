@@ -239,6 +239,22 @@ async function runPlainRequest(url, message, title, data){
         allowOutsideClick: () => !Swal__default["default"].isLoading()
     })
 }
+async function confirmAction(title,message){
+    if (typeof title === 'undefined') {
+        title = null;
+    }
+    return Swal__default["default"].fire({
+        title: title !== null ? title : 'Are you sure?',
+        html: message,
+        showCancelButton: true,
+        confirmButtonColor: '#32c787',
+        cancelButtonText: 'No, cancel',
+        confirmButtonText: 'Yes, Proceed!',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        allowOutsideClick: () => !Swal__default["default"].isLoading()
+    })
+}
 
 function formatDate(date, format){
     if (!format) {
@@ -282,6 +298,7 @@ var shRepo = {
     swalSuccess,
     swalError,
     runPlainRequest,
+    confirmAction,
     getMenuCount,
     setTabCounts,
     getShConfig,
@@ -3613,7 +3630,7 @@ return (_ctx, _cache) => {
                         : vue.createCommentVNode("v-if", true)
                     ], 2 /* CLASS */))
                   : vue.createCommentVNode("v-if", true),
-                (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(getFieldComponent(field)), vue.mergeProps({ ref_for: true }, getComponentProps(field), {
+                (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(getFieldComponent(field)), vue.mergeProps(getComponentProps(field), {
                   isInvalid: typeof validationErrors.value[field.field] !== 'undefined',
                   onClick: $event => (fieldChanged(field.field)),
                   "onUpdate:modelValue": [$event => (fieldChanged(field.field)), $event => ((formFields.value[index].value) = $event)],
@@ -3646,6 +3663,7 @@ return (_ctx, _cache) => {
               ], 64 /* STABLE_FRAGMENT */))
         ], 2 /* CLASS */))
       }), 128 /* KEYED_FRAGMENT */)),
+      vue.renderSlot(_ctx.$slots, "default"),
       vue.createElementVNode("div", {
         class: vue.normalizeClass(getElementClass('formGroup'))
       }, [
@@ -3663,8 +3681,7 @@ return (_ctx, _cache) => {
             ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_14$3, "Submit"))
             : vue.createCommentVNode("v-if", true)
         ], 14 /* CLASS, STYLE, PROPS */, _hoisted_12$5)
-      ], 2 /* CLASS */),
-      vue.renderSlot(_ctx.$slots, "default")
+      ], 2 /* CLASS */)
     ], 34 /* CLASS, NEED_HYDRATION */)
   ], 64 /* STABLE_FRAGMENT */))
 }
@@ -3720,7 +3737,7 @@ const emit = __emit;
 const props = __props;
 vue.onMounted(() => {
     const modal = document.getElementById(props.modalId);
-    modal.addEventListener('hidden.bs.modal', event => {
+    modal && modal.addEventListener('hidden.bs.modal', event => {
         event.target.id == props.modalId && emit('modalClosed');
     });
 });
@@ -4849,17 +4866,18 @@ const _hoisted_22 = { class: "sh-thead" };
 const _hoisted_23 = ["onClick"];
 const _hoisted_24 = ["onClick"];
 const _hoisted_25 = ["onClick"];
-const _hoisted_26 = {
+const _hoisted_26 = ["onClick"];
+const _hoisted_27 = {
   key: 0,
   class: "text-capitalize"
 };
-const _hoisted_27 = { class: "sh-tbody" };
-const _hoisted_28 = {
+const _hoisted_28 = { class: "sh-tbody" };
+const _hoisted_29 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_29 = ["colspan"];
-const _hoisted_30 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
+const _hoisted_30 = ["colspan"];
+const _hoisted_31 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/vue.createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -4867,42 +4885,43 @@ const _hoisted_30 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-ce
     /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_31 = [
-  _hoisted_30
+const _hoisted_32 = [
+  _hoisted_31
 ];
-const _hoisted_32 = {
+const _hoisted_33 = {
   key: 1,
   class: "text-center alert alert-danger"
 };
-const _hoisted_33 = ["colspan"];
-const _hoisted_34 = {
+const _hoisted_34 = ["colspan"];
+const _hoisted_35 = {
   key: 2,
   class: "text-center alert alert-info no_records"
 };
-const _hoisted_35 = ["colspan"];
-const _hoisted_36 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
-const _hoisted_37 = ["onClick"];
-const _hoisted_38 = { key: 1 };
-const _hoisted_39 = {
+const _hoisted_36 = ["colspan"];
+const _hoisted_37 = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
+const _hoisted_38 = ["onClick"];
+const _hoisted_39 = { key: 1 };
+const _hoisted_40 = {
   key: 2,
   class: "text-success fw-bold"
 };
-const _hoisted_40 = { key: 3 };
-const _hoisted_41 = ["innerHTML"];
+const _hoisted_41 = { key: 3 };
 const _hoisted_42 = ["innerHTML"];
 const _hoisted_43 = ["innerHTML"];
-const _hoisted_44 = {
+const _hoisted_44 = ["innerHTML"];
+const _hoisted_45 = ["innerHTML"];
+const _hoisted_46 = {
   key: 0,
   style: {"white-space":"nowrap"}
 };
-const _hoisted_45 = ["href"];
-const _hoisted_46 = ["title", "onClick"];
-const _hoisted_47 = { key: 5 };
-const _hoisted_48 = {
+const _hoisted_47 = ["href"];
+const _hoisted_48 = ["title", "onClick"];
+const _hoisted_49 = { key: 5 };
+const _hoisted_50 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_49 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
+const _hoisted_51 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/vue.createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -4910,44 +4929,49 @@ const _hoisted_49 = /*#__PURE__*/vue.createElementVNode("div", { class: "text-ce
     /*#__PURE__*/vue.createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_50 = [
-  _hoisted_49
+const _hoisted_52 = [
+  _hoisted_51
 ];
-const _hoisted_51 = { key: 1 };
-const _hoisted_52 = {
+const _hoisted_53 = { key: 1 };
+const _hoisted_54 = {
   key: 2,
   class: "mobile-list-items"
 };
-const _hoisted_53 = ["onClick"];
-const _hoisted_54 = {
+const _hoisted_55 = ["onClick"];
+const _hoisted_56 = {
   key: 0,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_55 = {
+const _hoisted_57 = {
   key: 1,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_56 = {
+const _hoisted_58 = {
   key: 2,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_57 = { key: 1 };
-const _hoisted_58 = {
+const _hoisted_59 = {
+  key: 3,
+  class: "mb-1 font-weight-bold text-capitalize profile-form-title"
+};
+const _hoisted_60 = { key: 1 };
+const _hoisted_61 = {
   key: 2,
   class: "text-primary fw-bold"
 };
-const _hoisted_59 = { key: 3 };
-const _hoisted_60 = ["innerHTML"];
-const _hoisted_61 = ["innerHTML"];
-const _hoisted_62 = ["innerHTML"];
-const _hoisted_63 = /*#__PURE__*/vue.createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
-const _hoisted_64 = { key: 0 };
-const _hoisted_65 = ["href"];
-const _hoisted_66 = ["title", "onClick"];
+const _hoisted_62 = { key: 3 };
+const _hoisted_63 = ["innerHTML"];
+const _hoisted_64 = ["innerHTML"];
+const _hoisted_65 = ["innerHTML"];
+const _hoisted_66 = ["innerHTML"];
+const _hoisted_67 = /*#__PURE__*/vue.createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
+const _hoisted_68 = { key: 0 };
+const _hoisted_69 = ["href"];
+const _hoisted_70 = ["title", "onClick"];
 
 const __default__ = {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
+  props: ['endPoint', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
   data(){
     return {
       order_by: '',
@@ -5374,7 +5398,7 @@ return (_ctx, _cache) => {
                 ], 64 /* STABLE_FRAGMENT */))
               : vue.createCommentVNode("v-if", true)
           ], 64 /* STABLE_FRAGMENT */))
-        : (_ctx.windowWidth > 700)
+        : (_ctx.windowWidth > 700 || __props.disableMobileResponsive)
           ? (vue.openBlock(), vue.createElementBlock("table", {
               key: 4,
               class: vue.normalizeClass(["table sh-table", __props.tableHover ? 'table-hover':''])
@@ -5389,47 +5413,53 @@ return (_ctx, _cache) => {
                             class: "text-capitalize",
                             onClick: $event => (_ctx.changeKey('order_by',title))
                           }, vue.toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_23))
-                        : (typeof title === 'function')
+                        : (typeof title === 'object')
                           ? (vue.openBlock(), vue.createElementBlock("a", {
                               key: 1,
                               class: "text-capitalize",
-                              onClick: $event => (_ctx.changeKey('order_by',title(null)))
-                            }, vue.toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
-                          : (typeof title !== 'undefined')
+                              onClick: $event => (_ctx.changeKey('order_by',title.key))
+                            }, vue.toDisplayString(title.label ?? title.key.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
+                          : (typeof title === 'function')
                             ? (vue.openBlock(), vue.createElementBlock("a", {
                                 key: 2,
                                 class: "text-capitalize",
-                                onClick: $event => (_ctx.changeKey('order_by',title))
-                              }, vue.toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
-                            : vue.createCommentVNode("v-if", true)
+                                onClick: $event => (_ctx.changeKey('order_by',title(null)))
+                              }, vue.toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
+                            : (typeof title !== 'undefined')
+                              ? (vue.openBlock(), vue.createElementBlock("a", {
+                                  key: 3,
+                                  class: "text-capitalize",
+                                  onClick: $event => (_ctx.changeKey('order_by',title))
+                                }, vue.toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_26))
+                              : vue.createCommentVNode("v-if", true)
                     ]))
                   }), 128 /* KEYED_FRAGMENT */)),
                   (__props.actions)
-                    ? (vue.openBlock(), vue.createElementBlock("th", _hoisted_26, vue.toDisplayString(__props.actions.label), 1 /* TEXT */))
+                    ? (vue.openBlock(), vue.createElementBlock("th", _hoisted_27, vue.toDisplayString(__props.actions.label), 1 /* TEXT */))
                     : vue.createCommentVNode("v-if", true)
                 ])
               ]),
-              vue.createElementVNode("tbody", _hoisted_27, [
+              vue.createElementVNode("tbody", _hoisted_28, [
                 (_ctx.loading === 'loading')
-                  ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_28, [
+                  ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_29, [
                       vue.createElementVNode("td", {
                         colspan: _ctx.tableHeaders.length
-                      }, [..._hoisted_31], 8 /* PROPS */, _hoisted_29)
+                      }, [..._hoisted_32], 8 /* PROPS */, _hoisted_30)
                     ]))
                   : (_ctx.loading === 'error')
-                    ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_32, [
+                    ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_33, [
                         vue.createElementVNode("td", {
                           colspan: _ctx.tableHeaders.length
-                        }, vue.toDisplayString(_ctx.loading_error), 9 /* TEXT, PROPS */, _hoisted_33)
+                        }, vue.toDisplayString(_ctx.loading_error), 9 /* TEXT, PROPS */, _hoisted_34)
                       ]))
                     : (_ctx.records.length === 0)
-                      ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_34, [
+                      ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_35, [
                           vue.createElementVNode("td", {
                             colspan: __props.actions ? _ctx.tableHeaders.length + 1 : _ctx.tableHeaders.length
                           }, [
-                            _hoisted_36,
+                            _hoisted_37,
                             vue.createTextVNode(" No records found ")
-                          ], 8 /* PROPS */, _hoisted_35)
+                          ], 8 /* PROPS */, _hoisted_36)
                         ]))
                       : (_ctx.loading === 'done')
                         ? (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 3 }, vue.renderList(_ctx.records, (record, index) => {
@@ -5449,29 +5479,39 @@ return (_ctx, _cache) => {
                                         innerHTML: record[key]
                                       }, null, 8 /* PROPS */, ["target", "to", "class", "innerHTML"]))
                                     : (_ctx.getFieldType(key) === 'numeric')
-                                      ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_38, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_39, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : (_ctx.getFieldType(key) === 'money')
-                                        ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_39, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                        ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_40, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                         : (_ctx.getFieldType(key) === 'date')
-                                          ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_40, vue.toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
+                                          ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_41, vue.toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
                                           : (typeof key === 'string')
                                             ? (vue.openBlock(), vue.createElementBlock("span", {
                                                 key: 4,
                                                 innerHTML: record[key]
-                                              }, null, 8 /* PROPS */, _hoisted_41))
+                                              }, null, 8 /* PROPS */, _hoisted_42))
                                             : (typeof key === 'function')
                                               ? (vue.openBlock(), vue.createElementBlock("span", {
                                                   key: 5,
                                                   innerHTML: key(record, index)
-                                                }, null, 8 /* PROPS */, _hoisted_42))
-                                              : (vue.openBlock(), vue.createElementBlock("span", {
-                                                  key: 6,
-                                                  innerHTML: record[key[0]]
                                                 }, null, 8 /* PROPS */, _hoisted_43))
+                                              : (typeof key === 'object' && key.component)
+                                                ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(key.component), {
+                                                    key: 6,
+                                                    item: record
+                                                  }, null, 8 /* PROPS */, ["item"]))
+                                                : (typeof key === 'object')
+                                                  ? (vue.openBlock(), vue.createElementBlock("span", {
+                                                      key: 7,
+                                                      innerHTML: record[key.key ?? key.field]
+                                                    }, null, 8 /* PROPS */, _hoisted_44))
+                                                  : (vue.openBlock(), vue.createElementBlock("span", {
+                                                      key: 8,
+                                                      innerHTML: record[key[0]]
+                                                    }, null, 8 /* PROPS */, _hoisted_45))
                                 ]))
                               }), 128 /* KEYED_FRAGMENT */)),
                               (__props.actions)
-                                ? (vue.openBlock(), vue.createElementBlock("td", _hoisted_44, [
+                                ? (vue.openBlock(), vue.createElementBlock("td", _hoisted_46, [
                                     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(__props.actions.actions, (act) => {
                                       return (vue.openBlock(), vue.createElementBlock(vue.Fragment, {
                                         key: act.path
@@ -5536,7 +5576,7 @@ return (_ctx, _cache) => {
                                                                   }, null, 2 /* CLASS */))
                                                                 : vue.createCommentVNode("v-if", true),
                                                               vue.createTextVNode(" " + vue.toDisplayString(act.label), 1 /* TEXT */)
-                                                            ], 10 /* CLASS, PROPS */, _hoisted_45))
+                                                            ], 10 /* CLASS, PROPS */, _hoisted_47))
                                                           : (act.emits)
                                                             ? (vue.openBlock(), vue.createElementBlock("button", {
                                                                 key: 3,
@@ -5551,7 +5591,7 @@ return (_ctx, _cache) => {
                                                                     }, null, 2 /* CLASS */))
                                                                   : vue.createCommentVNode("v-if", true),
                                                                 vue.createTextVNode(" " + vue.toDisplayString(act.label), 1 /* TEXT */)
-                                                              ], 10 /* CLASS, PROPS */, _hoisted_46))
+                                                              ], 10 /* CLASS, PROPS */, _hoisted_48))
                                                             : (!act.emits)
                                                               ? (vue.openBlock(), vue.createBlock(_component_router_link, {
                                                                   key: 4,
@@ -5579,20 +5619,20 @@ return (_ctx, _cache) => {
                                     }), 128 /* KEYED_FRAGMENT */))
                                   ]))
                                 : vue.createCommentVNode("v-if", true)
-                            ], 10 /* CLASS, PROPS */, _hoisted_37))
+                            ], 10 /* CLASS, PROPS */, _hoisted_38))
                           }), 128 /* KEYED_FRAGMENT */))
                         : vue.createCommentVNode("v-if", true)
               ])
             ], 2 /* CLASS */))
-          : (vue.openBlock(), vue.createElementBlock("div", _hoisted_47, [
+          : (vue.openBlock(), vue.createElementBlock("div", _hoisted_49, [
               (_ctx.loading === 'loading')
-                ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_48, [..._hoisted_50]))
+                ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_50, [..._hoisted_52]))
                 : (_ctx.loading === 'error')
-                  ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_51, [
+                  ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_53, [
                       vue.createElementVNode("span", null, vue.toDisplayString(_ctx.loading_error), 1 /* TEXT */)
                     ]))
                   : (_ctx.loading === 'done')
-                    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_52, [
+                    ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_54, [
                         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.records, (record, index) => {
                           return (vue.openBlock(), vue.createElementBlock("div", {
                             key: record.id,
@@ -5604,10 +5644,12 @@ return (_ctx, _cache) => {
                                 key: key[0]
                               }, [
                                 (typeof key === 'string' )
-                                  ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_54, vue.toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                  ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_56, vue.toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
                                   : (typeof key === 'function')
-                                    ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_55, vue.toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
-                                    : (vue.openBlock(), vue.createElementBlock("p", _hoisted_56, vue.toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
+                                    ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_57, vue.toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
+                                    : (typeof key === 'object')
+                                      ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_58, vue.toDisplayString(key.label ?? key.key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                      : (vue.openBlock(), vue.createElementBlock("p", _hoisted_59, vue.toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
                                 vue.createElementVNode("span", null, [
                                   (typeof key === 'string' && __props.links && __props.links[key])
                                     ? (vue.openBlock(), vue.createBlock(_component_router_link, {
@@ -5617,31 +5659,41 @@ return (_ctx, _cache) => {
                                         innerHTML: record[key]
                                       }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
                                     : (_ctx.getFieldType(key) === 'numeric')
-                                      ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_57, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_60, vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : (_ctx.getFieldType(key) === 'money')
-                                        ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_58, "KES " + vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                        ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_61, "KES " + vue.toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                         : (_ctx.getFieldType(key) === 'date')
-                                          ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_59, vue.toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
+                                          ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_62, vue.toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
                                           : (typeof key    === 'string')
                                             ? (vue.openBlock(), vue.createElementBlock("span", {
                                                 key: 4,
                                                 innerHTML: record[key]
-                                              }, null, 8 /* PROPS */, _hoisted_60))
-                                            : (typeof key === 'function')
-                                              ? (vue.openBlock(), vue.createElementBlock("span", {
+                                              }, null, 8 /* PROPS */, _hoisted_63))
+                                            : (typeof key === 'object' && key.component)
+                                              ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(key.component), {
                                                   key: 5,
-                                                  innerHTML: key(record, index )
-                                                }, null, 8 /* PROPS */, _hoisted_61))
-                                              : (vue.openBlock(), vue.createElementBlock("span", {
-                                                  key: 6,
-                                                  innerHTML: record[key[0]]
-                                                }, null, 8 /* PROPS */, _hoisted_62))
+                                                  item: record
+                                                }, null, 8 /* PROPS */, ["item"]))
+                                              : (typeof key    === 'object')
+                                                ? (vue.openBlock(), vue.createElementBlock("span", {
+                                                    key: 6,
+                                                    innerHTML: record[key.key ?? key.field]
+                                                  }, null, 8 /* PROPS */, _hoisted_64))
+                                                : (typeof key === 'function')
+                                                  ? (vue.openBlock(), vue.createElementBlock("span", {
+                                                      key: 7,
+                                                      innerHTML: key(record, index )
+                                                    }, null, 8 /* PROPS */, _hoisted_65))
+                                                  : (vue.openBlock(), vue.createElementBlock("span", {
+                                                      key: 8,
+                                                      innerHTML: record[key[0]]
+                                                    }, null, 8 /* PROPS */, _hoisted_66))
                                 ]),
-                                _hoisted_63
+                                _hoisted_67
                               ], 64 /* STABLE_FRAGMENT */))
                             }), 128 /* KEYED_FRAGMENT */)),
                             (__props.actions)
-                              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_64, [
+                              ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_68, [
                                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(__props.actions.actions, (act) => {
                                     return (vue.openBlock(), vue.createElementBlock(vue.Fragment, {
                                       key: act.path
@@ -5664,7 +5716,7 @@ return (_ctx, _cache) => {
                                                             }, null, 2 /* CLASS */))
                                                           : vue.createCommentVNode("v-if", true),
                                                         vue.createTextVNode(" " + vue.toDisplayString(act.label), 1 /* TEXT */)
-                                                      ], 10 /* CLASS, PROPS */, _hoisted_65))
+                                                      ], 10 /* CLASS, PROPS */, _hoisted_69))
                                                     : (act.emits)
                                                       ? (vue.openBlock(), vue.createElementBlock("button", {
                                                           key: 1,
@@ -5679,7 +5731,7 @@ return (_ctx, _cache) => {
                                                               }, null, 2 /* CLASS */))
                                                             : vue.createCommentVNode("v-if", true),
                                                           vue.createTextVNode(" " + vue.toDisplayString(act.label), 1 /* TEXT */)
-                                                        ], 10 /* CLASS, PROPS */, _hoisted_66))
+                                                        ], 10 /* CLASS, PROPS */, _hoisted_70))
                                                       : (!act.emits)
                                                         ? (vue.openBlock(), vue.createBlock(_component_router_link, {
                                                             key: 2,
@@ -5707,7 +5759,7 @@ return (_ctx, _cache) => {
                                   }), 128 /* KEYED_FRAGMENT */))
                                 ]))
                               : vue.createCommentVNode("v-if", true)
-                          ], 8 /* PROPS */, _hoisted_53))
+                          ], 8 /* PROPS */, _hoisted_55))
                         }), 128 /* KEYED_FRAGMENT */))
                       ]))
                     : vue.createCommentVNode("v-if", true)
@@ -5742,8 +5794,7 @@ return (_ctx, _cache) => {
                     (_ctx.selectedRecord)
                       ? (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(action.canvasComponent), vue.mergeProps({
                           key: 0,
-                          onRecordUpdated: _ctx.reloadData,
-                          ref_for: true
+                          onRecordUpdated: _ctx.reloadData
                         }, _ctx.cleanCanvasProps(action), { record: _ctx.selectedRecord }), null, 16 /* FULL_PROPS */, ["onRecordUpdated", "record"]))
                       : vue.createCommentVNode("v-if", true)
                   ]),
@@ -6811,7 +6862,7 @@ return (_ctx, _cache) => {
               "success-callback": "departmentAdded",
               "current-data": department.value,
               onDepartmentAdded: departmentAdded,
-              action: "admin/departments/store",
+              action: "sh-departments",
               fields: ['name','description']
             }, null, 8 /* PROPS */, ["current-data"])
           ]),

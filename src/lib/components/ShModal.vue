@@ -28,7 +28,7 @@ const props = defineProps({
 })
 onMounted(() => {
     const modal = document.getElementById(props.modalId)
-    modal.addEventListener('hidden.bs.modal', event => {
+    modal && modal.addEventListener('hidden.bs.modal', event => {
         event.target.id == props.modalId && emit('modalClosed')
     })
 })

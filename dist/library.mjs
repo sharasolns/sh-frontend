@@ -3,7 +3,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { Modal, Offcanvas } from 'bootstrap';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, watch, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, inject, mergeProps, normalizeStyle, renderSlot, computed, createVNode, withCtx, vModelCheckbox, shallowRef, normalizeProps, pushScopeId, popScopeId, markRaw, isRef } from 'vue';
+import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, watch, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, inject, mergeProps, renderSlot, normalizeStyle, computed, createVNode, withCtx, vModelCheckbox, shallowRef, normalizeProps, pushScopeId, popScopeId, markRaw, isRef } from 'vue';
 import _ from 'lodash';
 import { defineStore, storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
@@ -227,6 +227,22 @@ async function runPlainRequest(url, message, title, data){
         allowOutsideClick: () => !Swal.isLoading()
     })
 }
+async function confirmAction(title,message){
+    if (typeof title === 'undefined') {
+        title = null;
+    }
+    return Swal.fire({
+        title: title !== null ? title : 'Are you sure?',
+        html: message,
+        showCancelButton: true,
+        confirmButtonColor: '#32c787',
+        cancelButtonText: 'No, cancel',
+        confirmButtonText: 'Yes, Proceed!',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+}
 
 function formatDate(date, format){
     if (!format) {
@@ -270,6 +286,7 @@ var shRepo = {
     swalSuccess,
     swalError,
     runPlainRequest,
+    confirmAction,
     getMenuCount,
     setTabCounts,
     getShConfig,
@@ -3601,7 +3618,7 @@ return (_ctx, _cache) => {
                         : createCommentVNode("v-if", true)
                     ], 2 /* CLASS */))
                   : createCommentVNode("v-if", true),
-                (openBlock(), createBlock(resolveDynamicComponent(getFieldComponent(field)), mergeProps({ ref_for: true }, getComponentProps(field), {
+                (openBlock(), createBlock(resolveDynamicComponent(getFieldComponent(field)), mergeProps(getComponentProps(field), {
                   isInvalid: typeof validationErrors.value[field.field] !== 'undefined',
                   onClick: $event => (fieldChanged(field.field)),
                   "onUpdate:modelValue": [$event => (fieldChanged(field.field)), $event => ((formFields.value[index].value) = $event)],
@@ -3634,6 +3651,7 @@ return (_ctx, _cache) => {
               ], 64 /* STABLE_FRAGMENT */))
         ], 2 /* CLASS */))
       }), 128 /* KEYED_FRAGMENT */)),
+      renderSlot(_ctx.$slots, "default"),
       createElementVNode("div", {
         class: normalizeClass(getElementClass('formGroup'))
       }, [
@@ -3651,8 +3669,7 @@ return (_ctx, _cache) => {
             ? (openBlock(), createElementBlock("span", _hoisted_14$3, "Submit"))
             : createCommentVNode("v-if", true)
         ], 14 /* CLASS, STYLE, PROPS */, _hoisted_12$5)
-      ], 2 /* CLASS */),
-      renderSlot(_ctx.$slots, "default")
+      ], 2 /* CLASS */)
     ], 34 /* CLASS, NEED_HYDRATION */)
   ], 64 /* STABLE_FRAGMENT */))
 }
@@ -3708,7 +3725,7 @@ const emit = __emit;
 const props = __props;
 onMounted(() => {
     const modal = document.getElementById(props.modalId);
-    modal.addEventListener('hidden.bs.modal', event => {
+    modal && modal.addEventListener('hidden.bs.modal', event => {
         event.target.id == props.modalId && emit('modalClosed');
     });
 });
@@ -4837,17 +4854,18 @@ const _hoisted_22 = { class: "sh-thead" };
 const _hoisted_23 = ["onClick"];
 const _hoisted_24 = ["onClick"];
 const _hoisted_25 = ["onClick"];
-const _hoisted_26 = {
+const _hoisted_26 = ["onClick"];
+const _hoisted_27 = {
   key: 0,
   class: "text-capitalize"
 };
-const _hoisted_27 = { class: "sh-tbody" };
-const _hoisted_28 = {
+const _hoisted_28 = { class: "sh-tbody" };
+const _hoisted_29 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_29 = ["colspan"];
-const _hoisted_30 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
+const _hoisted_30 = ["colspan"];
+const _hoisted_31 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -4855,42 +4873,43 @@ const _hoisted_30 = /*#__PURE__*/createElementVNode("div", { class: "text-center
     /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_31 = [
-  _hoisted_30
+const _hoisted_32 = [
+  _hoisted_31
 ];
-const _hoisted_32 = {
+const _hoisted_33 = {
   key: 1,
   class: "text-center alert alert-danger"
 };
-const _hoisted_33 = ["colspan"];
-const _hoisted_34 = {
+const _hoisted_34 = ["colspan"];
+const _hoisted_35 = {
   key: 2,
   class: "text-center alert alert-info no_records"
 };
-const _hoisted_35 = ["colspan"];
-const _hoisted_36 = /*#__PURE__*/createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
-const _hoisted_37 = ["onClick"];
-const _hoisted_38 = { key: 1 };
-const _hoisted_39 = {
+const _hoisted_36 = ["colspan"];
+const _hoisted_37 = /*#__PURE__*/createElementVNode("i", { class: "bi-info-circle" }, null, -1 /* HOISTED */);
+const _hoisted_38 = ["onClick"];
+const _hoisted_39 = { key: 1 };
+const _hoisted_40 = {
   key: 2,
   class: "text-success fw-bold"
 };
-const _hoisted_40 = { key: 3 };
-const _hoisted_41 = ["innerHTML"];
+const _hoisted_41 = { key: 3 };
 const _hoisted_42 = ["innerHTML"];
 const _hoisted_43 = ["innerHTML"];
-const _hoisted_44 = {
+const _hoisted_44 = ["innerHTML"];
+const _hoisted_45 = ["innerHTML"];
+const _hoisted_46 = {
   key: 0,
   style: {"white-space":"nowrap"}
 };
-const _hoisted_45 = ["href"];
-const _hoisted_46 = ["title", "onClick"];
-const _hoisted_47 = { key: 5 };
-const _hoisted_48 = {
+const _hoisted_47 = ["href"];
+const _hoisted_48 = ["title", "onClick"];
+const _hoisted_49 = { key: 5 };
+const _hoisted_50 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_49 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
+const _hoisted_51 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -4898,44 +4917,49 @@ const _hoisted_49 = /*#__PURE__*/createElementVNode("div", { class: "text-center
     /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_50 = [
-  _hoisted_49
+const _hoisted_52 = [
+  _hoisted_51
 ];
-const _hoisted_51 = { key: 1 };
-const _hoisted_52 = {
+const _hoisted_53 = { key: 1 };
+const _hoisted_54 = {
   key: 2,
   class: "mobile-list-items"
 };
-const _hoisted_53 = ["onClick"];
-const _hoisted_54 = {
+const _hoisted_55 = ["onClick"];
+const _hoisted_56 = {
   key: 0,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_55 = {
+const _hoisted_57 = {
   key: 1,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_56 = {
+const _hoisted_58 = {
   key: 2,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_57 = { key: 1 };
-const _hoisted_58 = {
+const _hoisted_59 = {
+  key: 3,
+  class: "mb-1 font-weight-bold text-capitalize profile-form-title"
+};
+const _hoisted_60 = { key: 1 };
+const _hoisted_61 = {
   key: 2,
   class: "text-primary fw-bold"
 };
-const _hoisted_59 = { key: 3 };
-const _hoisted_60 = ["innerHTML"];
-const _hoisted_61 = ["innerHTML"];
-const _hoisted_62 = ["innerHTML"];
-const _hoisted_63 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
-const _hoisted_64 = { key: 0 };
-const _hoisted_65 = ["href"];
-const _hoisted_66 = ["title", "onClick"];
+const _hoisted_62 = { key: 3 };
+const _hoisted_63 = ["innerHTML"];
+const _hoisted_64 = ["innerHTML"];
+const _hoisted_65 = ["innerHTML"];
+const _hoisted_66 = ["innerHTML"];
+const _hoisted_67 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
+const _hoisted_68 = { key: 0 };
+const _hoisted_69 = ["href"];
+const _hoisted_70 = ["title", "onClick"];
 
 const __default__ = {
   name: 'sh-table',
-  props: ['endPoint', 'headers', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
+  props: ['endPoint', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
   data(){
     return {
       order_by: '',
@@ -5362,7 +5386,7 @@ return (_ctx, _cache) => {
                 ], 64 /* STABLE_FRAGMENT */))
               : createCommentVNode("v-if", true)
           ], 64 /* STABLE_FRAGMENT */))
-        : (_ctx.windowWidth > 700)
+        : (_ctx.windowWidth > 700 || __props.disableMobileResponsive)
           ? (openBlock(), createElementBlock("table", {
               key: 4,
               class: normalizeClass(["table sh-table", __props.tableHover ? 'table-hover':''])
@@ -5377,47 +5401,53 @@ return (_ctx, _cache) => {
                             class: "text-capitalize",
                             onClick: $event => (_ctx.changeKey('order_by',title))
                           }, toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_23))
-                        : (typeof title === 'function')
+                        : (typeof title === 'object')
                           ? (openBlock(), createElementBlock("a", {
                               key: 1,
                               class: "text-capitalize",
-                              onClick: $event => (_ctx.changeKey('order_by',title(null)))
-                            }, toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
-                          : (typeof title !== 'undefined')
+                              onClick: $event => (_ctx.changeKey('order_by',title.key))
+                            }, toDisplayString(title.label ?? title.key.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_24))
+                          : (typeof title === 'function')
                             ? (openBlock(), createElementBlock("a", {
                                 key: 2,
                                 class: "text-capitalize",
-                                onClick: $event => (_ctx.changeKey('order_by',title))
-                              }, toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
-                            : createCommentVNode("v-if", true)
+                                onClick: $event => (_ctx.changeKey('order_by',title(null)))
+                              }, toDisplayString(title(null).replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_25))
+                            : (typeof title !== 'undefined')
+                              ? (openBlock(), createElementBlock("a", {
+                                  key: 3,
+                                  class: "text-capitalize",
+                                  onClick: $event => (_ctx.changeKey('order_by',title))
+                                }, toDisplayString(title.replace(/_/g, ' ')), 9 /* TEXT, PROPS */, _hoisted_26))
+                              : createCommentVNode("v-if", true)
                     ]))
                   }), 128 /* KEYED_FRAGMENT */)),
                   (__props.actions)
-                    ? (openBlock(), createElementBlock("th", _hoisted_26, toDisplayString(__props.actions.label), 1 /* TEXT */))
+                    ? (openBlock(), createElementBlock("th", _hoisted_27, toDisplayString(__props.actions.label), 1 /* TEXT */))
                     : createCommentVNode("v-if", true)
                 ])
               ]),
-              createElementVNode("tbody", _hoisted_27, [
+              createElementVNode("tbody", _hoisted_28, [
                 (_ctx.loading === 'loading')
-                  ? (openBlock(), createElementBlock("tr", _hoisted_28, [
+                  ? (openBlock(), createElementBlock("tr", _hoisted_29, [
                       createElementVNode("td", {
                         colspan: _ctx.tableHeaders.length
-                      }, [..._hoisted_31], 8 /* PROPS */, _hoisted_29)
+                      }, [..._hoisted_32], 8 /* PROPS */, _hoisted_30)
                     ]))
                   : (_ctx.loading === 'error')
-                    ? (openBlock(), createElementBlock("tr", _hoisted_32, [
+                    ? (openBlock(), createElementBlock("tr", _hoisted_33, [
                         createElementVNode("td", {
                           colspan: _ctx.tableHeaders.length
-                        }, toDisplayString(_ctx.loading_error), 9 /* TEXT, PROPS */, _hoisted_33)
+                        }, toDisplayString(_ctx.loading_error), 9 /* TEXT, PROPS */, _hoisted_34)
                       ]))
                     : (_ctx.records.length === 0)
-                      ? (openBlock(), createElementBlock("tr", _hoisted_34, [
+                      ? (openBlock(), createElementBlock("tr", _hoisted_35, [
                           createElementVNode("td", {
                             colspan: __props.actions ? _ctx.tableHeaders.length + 1 : _ctx.tableHeaders.length
                           }, [
-                            _hoisted_36,
+                            _hoisted_37,
                             createTextVNode(" No records found ")
-                          ], 8 /* PROPS */, _hoisted_35)
+                          ], 8 /* PROPS */, _hoisted_36)
                         ]))
                       : (_ctx.loading === 'done')
                         ? (openBlock(true), createElementBlock(Fragment, { key: 3 }, renderList(_ctx.records, (record, index) => {
@@ -5437,29 +5467,39 @@ return (_ctx, _cache) => {
                                         innerHTML: record[key]
                                       }, null, 8 /* PROPS */, ["target", "to", "class", "innerHTML"]))
                                     : (_ctx.getFieldType(key) === 'numeric')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_38, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (openBlock(), createElementBlock("span", _hoisted_39, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : (_ctx.getFieldType(key) === 'money')
-                                        ? (openBlock(), createElementBlock("span", _hoisted_39, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                        ? (openBlock(), createElementBlock("span", _hoisted_40, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                         : (_ctx.getFieldType(key) === 'date')
-                                          ? (openBlock(), createElementBlock("span", _hoisted_40, toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
+                                          ? (openBlock(), createElementBlock("span", _hoisted_41, toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
                                           : (typeof key === 'string')
                                             ? (openBlock(), createElementBlock("span", {
                                                 key: 4,
                                                 innerHTML: record[key]
-                                              }, null, 8 /* PROPS */, _hoisted_41))
+                                              }, null, 8 /* PROPS */, _hoisted_42))
                                             : (typeof key === 'function')
                                               ? (openBlock(), createElementBlock("span", {
                                                   key: 5,
                                                   innerHTML: key(record, index)
-                                                }, null, 8 /* PROPS */, _hoisted_42))
-                                              : (openBlock(), createElementBlock("span", {
-                                                  key: 6,
-                                                  innerHTML: record[key[0]]
                                                 }, null, 8 /* PROPS */, _hoisted_43))
+                                              : (typeof key === 'object' && key.component)
+                                                ? (openBlock(), createBlock(resolveDynamicComponent(key.component), {
+                                                    key: 6,
+                                                    item: record
+                                                  }, null, 8 /* PROPS */, ["item"]))
+                                                : (typeof key === 'object')
+                                                  ? (openBlock(), createElementBlock("span", {
+                                                      key: 7,
+                                                      innerHTML: record[key.key ?? key.field]
+                                                    }, null, 8 /* PROPS */, _hoisted_44))
+                                                  : (openBlock(), createElementBlock("span", {
+                                                      key: 8,
+                                                      innerHTML: record[key[0]]
+                                                    }, null, 8 /* PROPS */, _hoisted_45))
                                 ]))
                               }), 128 /* KEYED_FRAGMENT */)),
                               (__props.actions)
-                                ? (openBlock(), createElementBlock("td", _hoisted_44, [
+                                ? (openBlock(), createElementBlock("td", _hoisted_46, [
                                     (openBlock(true), createElementBlock(Fragment, null, renderList(__props.actions.actions, (act) => {
                                       return (openBlock(), createElementBlock(Fragment, {
                                         key: act.path
@@ -5524,7 +5564,7 @@ return (_ctx, _cache) => {
                                                                   }, null, 2 /* CLASS */))
                                                                 : createCommentVNode("v-if", true),
                                                               createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                            ], 10 /* CLASS, PROPS */, _hoisted_45))
+                                                            ], 10 /* CLASS, PROPS */, _hoisted_47))
                                                           : (act.emits)
                                                             ? (openBlock(), createElementBlock("button", {
                                                                 key: 3,
@@ -5539,7 +5579,7 @@ return (_ctx, _cache) => {
                                                                     }, null, 2 /* CLASS */))
                                                                   : createCommentVNode("v-if", true),
                                                                 createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                              ], 10 /* CLASS, PROPS */, _hoisted_46))
+                                                              ], 10 /* CLASS, PROPS */, _hoisted_48))
                                                             : (!act.emits)
                                                               ? (openBlock(), createBlock(_component_router_link, {
                                                                   key: 4,
@@ -5567,20 +5607,20 @@ return (_ctx, _cache) => {
                                     }), 128 /* KEYED_FRAGMENT */))
                                   ]))
                                 : createCommentVNode("v-if", true)
-                            ], 10 /* CLASS, PROPS */, _hoisted_37))
+                            ], 10 /* CLASS, PROPS */, _hoisted_38))
                           }), 128 /* KEYED_FRAGMENT */))
                         : createCommentVNode("v-if", true)
               ])
             ], 2 /* CLASS */))
-          : (openBlock(), createElementBlock("div", _hoisted_47, [
+          : (openBlock(), createElementBlock("div", _hoisted_49, [
               (_ctx.loading === 'loading')
-                ? (openBlock(), createElementBlock("div", _hoisted_48, [..._hoisted_50]))
+                ? (openBlock(), createElementBlock("div", _hoisted_50, [..._hoisted_52]))
                 : (_ctx.loading === 'error')
-                  ? (openBlock(), createElementBlock("div", _hoisted_51, [
+                  ? (openBlock(), createElementBlock("div", _hoisted_53, [
                       createElementVNode("span", null, toDisplayString(_ctx.loading_error), 1 /* TEXT */)
                     ]))
                   : (_ctx.loading === 'done')
-                    ? (openBlock(), createElementBlock("div", _hoisted_52, [
+                    ? (openBlock(), createElementBlock("div", _hoisted_54, [
                         (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.records, (record, index) => {
                           return (openBlock(), createElementBlock("div", {
                             key: record.id,
@@ -5592,10 +5632,12 @@ return (_ctx, _cache) => {
                                 key: key[0]
                               }, [
                                 (typeof key === 'string' )
-                                  ? (openBlock(), createElementBlock("p", _hoisted_54, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                  ? (openBlock(), createElementBlock("p", _hoisted_56, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
                                   : (typeof key === 'function')
-                                    ? (openBlock(), createElementBlock("p", _hoisted_55, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
-                                    : (openBlock(), createElementBlock("p", _hoisted_56, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
+                                    ? (openBlock(), createElementBlock("p", _hoisted_57, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
+                                    : (typeof key === 'object')
+                                      ? (openBlock(), createElementBlock("p", _hoisted_58, toDisplayString(key.label ?? key.key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                      : (openBlock(), createElementBlock("p", _hoisted_59, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
                                 createElementVNode("span", null, [
                                   (typeof key === 'string' && __props.links && __props.links[key])
                                     ? (openBlock(), createBlock(_component_router_link, {
@@ -5605,31 +5647,41 @@ return (_ctx, _cache) => {
                                         innerHTML: record[key]
                                       }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
                                     : (_ctx.getFieldType(key) === 'numeric')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_57, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (openBlock(), createElementBlock("span", _hoisted_60, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : (_ctx.getFieldType(key) === 'money')
-                                        ? (openBlock(), createElementBlock("span", _hoisted_58, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                        ? (openBlock(), createElementBlock("span", _hoisted_61, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                         : (_ctx.getFieldType(key) === 'date')
-                                          ? (openBlock(), createElementBlock("span", _hoisted_59, toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
+                                          ? (openBlock(), createElementBlock("span", _hoisted_62, toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
                                           : (typeof key    === 'string')
                                             ? (openBlock(), createElementBlock("span", {
                                                 key: 4,
                                                 innerHTML: record[key]
-                                              }, null, 8 /* PROPS */, _hoisted_60))
-                                            : (typeof key === 'function')
-                                              ? (openBlock(), createElementBlock("span", {
+                                              }, null, 8 /* PROPS */, _hoisted_63))
+                                            : (typeof key === 'object' && key.component)
+                                              ? (openBlock(), createBlock(resolveDynamicComponent(key.component), {
                                                   key: 5,
-                                                  innerHTML: key(record, index )
-                                                }, null, 8 /* PROPS */, _hoisted_61))
-                                              : (openBlock(), createElementBlock("span", {
-                                                  key: 6,
-                                                  innerHTML: record[key[0]]
-                                                }, null, 8 /* PROPS */, _hoisted_62))
+                                                  item: record
+                                                }, null, 8 /* PROPS */, ["item"]))
+                                              : (typeof key    === 'object')
+                                                ? (openBlock(), createElementBlock("span", {
+                                                    key: 6,
+                                                    innerHTML: record[key.key ?? key.field]
+                                                  }, null, 8 /* PROPS */, _hoisted_64))
+                                                : (typeof key === 'function')
+                                                  ? (openBlock(), createElementBlock("span", {
+                                                      key: 7,
+                                                      innerHTML: key(record, index )
+                                                    }, null, 8 /* PROPS */, _hoisted_65))
+                                                  : (openBlock(), createElementBlock("span", {
+                                                      key: 8,
+                                                      innerHTML: record[key[0]]
+                                                    }, null, 8 /* PROPS */, _hoisted_66))
                                 ]),
-                                _hoisted_63
+                                _hoisted_67
                               ], 64 /* STABLE_FRAGMENT */))
                             }), 128 /* KEYED_FRAGMENT */)),
                             (__props.actions)
-                              ? (openBlock(), createElementBlock("div", _hoisted_64, [
+                              ? (openBlock(), createElementBlock("div", _hoisted_68, [
                                   (openBlock(true), createElementBlock(Fragment, null, renderList(__props.actions.actions, (act) => {
                                     return (openBlock(), createElementBlock(Fragment, {
                                       key: act.path
@@ -5652,7 +5704,7 @@ return (_ctx, _cache) => {
                                                             }, null, 2 /* CLASS */))
                                                           : createCommentVNode("v-if", true),
                                                         createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                      ], 10 /* CLASS, PROPS */, _hoisted_65))
+                                                      ], 10 /* CLASS, PROPS */, _hoisted_69))
                                                     : (act.emits)
                                                       ? (openBlock(), createElementBlock("button", {
                                                           key: 1,
@@ -5667,7 +5719,7 @@ return (_ctx, _cache) => {
                                                               }, null, 2 /* CLASS */))
                                                             : createCommentVNode("v-if", true),
                                                           createTextVNode(" " + toDisplayString(act.label), 1 /* TEXT */)
-                                                        ], 10 /* CLASS, PROPS */, _hoisted_66))
+                                                        ], 10 /* CLASS, PROPS */, _hoisted_70))
                                                       : (!act.emits)
                                                         ? (openBlock(), createBlock(_component_router_link, {
                                                             key: 2,
@@ -5695,7 +5747,7 @@ return (_ctx, _cache) => {
                                   }), 128 /* KEYED_FRAGMENT */))
                                 ]))
                               : createCommentVNode("v-if", true)
-                          ], 8 /* PROPS */, _hoisted_53))
+                          ], 8 /* PROPS */, _hoisted_55))
                         }), 128 /* KEYED_FRAGMENT */))
                       ]))
                     : createCommentVNode("v-if", true)
@@ -5730,8 +5782,7 @@ return (_ctx, _cache) => {
                     (_ctx.selectedRecord)
                       ? (openBlock(), createBlock(resolveDynamicComponent(action.canvasComponent), mergeProps({
                           key: 0,
-                          onRecordUpdated: _ctx.reloadData,
-                          ref_for: true
+                          onRecordUpdated: _ctx.reloadData
                         }, _ctx.cleanCanvasProps(action), { record: _ctx.selectedRecord }), null, 16 /* FULL_PROPS */, ["onRecordUpdated", "record"]))
                       : createCommentVNode("v-if", true)
                   ]),
@@ -6799,7 +6850,7 @@ return (_ctx, _cache) => {
               "success-callback": "departmentAdded",
               "current-data": department.value,
               onDepartmentAdded: departmentAdded,
-              action: "admin/departments/store",
+              action: "sh-departments",
               fields: ['name','description']
             }, null, 8 /* PROPS */, ["current-data"])
           ]),
