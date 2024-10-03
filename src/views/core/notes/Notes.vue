@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 const selected = ref([])
 const rowSelected = row=> {
-  selected.value.push(row)
+  // selected.value.push(row)
 }
 </script>
 <template>
@@ -21,12 +21,30 @@ const rowSelected = row=> {
                 </template>
               </sh-table>
               {{ selected}}
-                <sh-table @rowSelected="rowSelected" :disable-mobile-responsive="true" :has-range="true" :end-point="`notes/list`" :headers="['id',{
+                <sh-table :disable-mobile-responsive="true" :has-range="false" :end-point="`notes/list`" :headers="['id',{
                   label:'Summary',
                   key:'title',
                   component: FormatTitle,
                   sortable:true
-                },'title','note','created_at']"/>
+                },'title','note','created_at']"
+                :actions="{
+                  label: '&nbsp;',
+                  type: 'dropdown',
+                  actions:[
+                      {
+                          label: 'Edit',
+                          icon: 'edit',
+                          emits: 'edit'
+                      },
+                      {
+                          label: 'Delete',
+                          icon: 'delete',
+                          class: 'text-danger btn',
+                          emits: 'delete'
+                      }
+                  ]
+                }"
+                />
             </div>
         </div>
     </div>

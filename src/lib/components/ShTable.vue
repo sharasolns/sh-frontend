@@ -3,6 +3,7 @@ import { inject } from 'vue'
 import NoRecords from './others/NoRecords.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from './../repo/stores/ShUser.js'
+import TableActions from '@/lib/components/table/TableActions.vue'
 const noRecordsComponent = inject('noRecordsComponent', NoRecords)
 
 const {user} = storeToRefs(useUserStore())
@@ -129,49 +130,7 @@ const {user} = storeToRefs(useUserStore())
           <span v-else v-html="record[key[0]]"></span>
         </td>
         <td v-if="actions" style="white-space:nowrap;">
-          <template v-for="act in actions.actions" :key="act.path">
-            <template v-if="!act.permission || user.isAllowedTo(act.permission)">
-              <template v-if="!act.validator || act.validator(record)">
-                <sh-confirm-action
-                    v-if="['confirmAction','confirmaction','confirm-action','confirm'].includes(act.type)"
-                    @actionSuccessful="doEmitAction('actionSuccessful',record)"
-                    @actionFailed="doEmitAction('actionFailed',record)"
-                    @actionCanceled="doEmitAction('actionCanceled',record)"
-                    :loading-message="act.label"
-                    :class="act.class" :url="replaceActionUrl(act.url,record)">
-                  <span v-if="act.icon" :class="act.icon"></span>
-                  {{ act.label }}
-                </sh-confirm-action>
-                <sh-silent-action
-                    v-else-if="['silentAction','silentaction','silent-action','silent'].includes(act.type)"
-                    @actionSuccessful="doEmitAction('actionSuccessful',record)"
-                    @actionFailed="doEmitAction('actionFailed',record)"
-                    @actionCanceled="doEmitAction('actionCanceled',record)"
-                    :loading-message="act.label"
-                    :class="act.class" :url="replaceActionUrl(act.url,record)">
-                  <span v-if="act.icon" :class="act.icon"></span>
-                  {{ act.label }}
-                </sh-silent-action>
-                <a v-else-if="act.canvasId || act.type === 'offcanvas'" :href="'#' + act.canvasId"
-                   data-bs-toggle="offcanvas" :class="act.class">
-                  <span v-if="act.icon" :class="act.icon"></span>
-                  {{ act.label }}
-                </a>
-                <button :title="act.title" :class="act.class ? act.class:'btn btn-default'"
-                        v-else-if="act.emits"
-                        @click="doEmitAction(act.emits,record)">
-                  <span v-if="act.icon" :class="act.icon"></span>
-                  {{ act.label }}
-                </button>
-                <router-link v-else-if="!act.emits" :title="act.title"
-                             :to="replaceActionUrl(act.path,record)"
-                             :class="act.class">
-                  <span v-if="act.icon" :class="act.icon"></span>
-                  {{ act.label }}
-                </router-link>
-              </template>
-            </template>
-          </template>
+          <table-actions :actions="actions" :record="record"/>
         </td>
       </tr>
       </tbody>
@@ -222,29 +181,7 @@ const {user} = storeToRefs(useUserStore())
               <hr class="my-2">
             </template>
             <div v-if="actions">
-              <template v-for="act in actions.actions" :key="act.path">
-                <template v-if="!act.permission || user.isAllowedTo(act.permission)">
-                  <template v-if="!act.validator || act.validator(record)">
-                    <a v-if="act.canvasId" :href="'#' + act.canvasId" data-bs-toggle="offcanvas"
-                       :class="act.class">
-                      <span v-if="act.icon" :class="act.icon"></span>
-                      {{ act.label }}
-                    </a>
-                    <button :title="act.title" :class="act.class ? act.class:'btn btn-default'"
-                            v-else-if="act.emits"
-                            @click="doEmitAction(act.emits,record)">
-                      <span v-if="act.icon" :class="act.icon"></span>
-                      {{ act.label }}
-                    </button>
-                    <router-link v-else-if="!act.emits" :title="act.title"
-                                 :to="replaceActionUrl(act.path,record)"
-                                 :class="act.class">
-                      <span v-if="act.icon" :class="act.icon"></span>
-                      {{ act.label }}
-                    </router-link>
-                  </template>
-                </template>
-              </template>
+              <table-actions :actions="actions" :record="record"/>
             </div>
           </div>
         </template>
