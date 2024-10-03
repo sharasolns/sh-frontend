@@ -3,8 +3,8 @@ import { onMounted, ref } from 'vue'
 
 const props = defineProps(['action','record'])
 
-import ShConfirmAction from './../ShConfirmAction.vue'
-import ShSilentAction from './../ShSilentAction.vue'
+import ShConfirmAction from '../ShConfirmAction.vue'
+import ShSilentAction from '../ShSilentAction.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '../../repo/stores/ShUser'
 

@@ -1,5 +1,5 @@
 <script setup>
-import SingleAction from '@/lib/components/table/SingleAction.vue'
+import SingleAction from './SingleAction.vue'
 
 const props = defineProps(['actions','record'])
 
@@ -8,7 +8,7 @@ const type = props.actions.type // dropdown, button
 </script>
 
 <template>
-  <template v-if="type.includes('dropdown')">
+  <template v-if="type && type.includes('dropdown')">
     <div class="dropdown">
       <strong class="sh-table-dropdown" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-three-dots" v-if="type === 'dropdown-horizontal'"></i>

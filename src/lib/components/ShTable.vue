@@ -3,7 +3,7 @@ import { inject } from 'vue'
 import NoRecords from './others/NoRecords.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from './../repo/stores/ShUser.js'
-import TableActions from '@/lib/components/table/TableActions.vue'
+import TableActions from './table/TableActions.vue'
 const noRecordsComponent = inject('noRecordsComponent', NoRecords)
 
 const {user} = storeToRefs(useUserStore())
