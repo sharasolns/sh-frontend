@@ -4405,7 +4405,7 @@ const _hoisted_2$b = ["title"];
 
 var script$h = {
   __name: 'SingleAction',
-  props: ['action','record'],
+  props: ['action','record','actionClass'],
   emits: ['actionSuccessful','actionFailed','actionCanceled'],
   setup(__props, { emit: __emit }) {
 
@@ -4446,7 +4446,7 @@ return (_ctx, _cache) => {
                     onActionFailed: _cache[1] || (_cache[1] = $event => (doEmitAction('actionFailed',__props.record))),
                     onActionCanceled: _cache[2] || (_cache[2] = $event => (doEmitAction('actionCanceled',__props.record))),
                     "loading-message": __props.action.label,
-                    class: vue.normalizeClass(__props.action.class),
+                    class: vue.normalizeClass(__props.action.class + __props.actionClass),
                     url: url.value
                   }, {
                     default: vue.withCtx(() => [
@@ -4467,7 +4467,7 @@ return (_ctx, _cache) => {
                       onActionFailed: _cache[4] || (_cache[4] = $event => (doEmitAction('actionFailed',__props.record))),
                       onActionCanceled: _cache[5] || (_cache[5] = $event => (doEmitAction('actionCanceled',__props.record))),
                       "loading-message": __props.action.label,
-                      class: vue.normalizeClass(__props.action.class),
+                      class: vue.normalizeClass(__props.action.class + __props.actionClass),
                       url: url.value
                     }, {
                       default: vue.withCtx(() => [
@@ -4486,7 +4486,7 @@ return (_ctx, _cache) => {
                         key: 2,
                         href: '#' + __props.action.canvasId,
                         "data-bs-toggle": "offcanvas",
-                        class: vue.normalizeClass(__props.action.class)
+                        class: vue.normalizeClass(__props.action.class  + __props.actionClass)
                       }, [
                         (__props.action.icon)
                           ? (vue.openBlock(), vue.createElementBlock("span", {
@@ -4500,7 +4500,7 @@ return (_ctx, _cache) => {
                       ? (vue.openBlock(), vue.createElementBlock("button", {
                           key: 3,
                           title: __props.action.title,
-                          class: vue.normalizeClass(__props.action.class ? __props.action.class:'btn btn-default'),
+                          class: vue.normalizeClass(__props.action.class ? __props.action.class:'btn btn-default' + __props.actionClass),
                           onClick: _cache[6] || (_cache[6] = $event => (doEmitAction(__props.action.emits,__props.record)))
                         }, [
                           (__props.action.icon)
@@ -4516,7 +4516,7 @@ return (_ctx, _cache) => {
                             key: 4,
                             title: __props.action.title,
                             to: url.value,
-                            class: vue.normalizeClass(__props.action.class)
+                            class: vue.normalizeClass(__props.action.class + __props.actionClass)
                           }, {
                             default: vue.withCtx(() => [
                               (__props.action.icon)
@@ -4543,10 +4543,10 @@ script$h.__file = "src/lib/components/table/SingleAction.vue";
 
 const _hoisted_1$d = {
   key: 0,
-  class: "dropdown"
+  class: "dropdown sh-table-dropdown"
 };
 const _hoisted_2$a = {
-  class: "sh-table-dropdown",
+  class: "sh-table-dropdown-btn",
   type: "button",
   "data-bs-toggle": "dropdown",
   "aria-expanded": "false"
@@ -4586,6 +4586,7 @@ return (_ctx, _cache) => {
               key: act.label
             }, [
               vue.createVNode(script$h, {
+                "action-class": " dropdown-item",
                 class: vue.normalizeClass(act.class),
                 action: act,
                 record: __props.record

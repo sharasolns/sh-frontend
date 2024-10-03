@@ -9,14 +9,14 @@ const type = props.actions.type // dropdown, button
 
 <template>
   <template v-if="type && type.includes('dropdown')">
-    <div class="dropdown">
-      <strong class="sh-table-dropdown" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="dropdown sh-table-dropdown">
+      <strong class="sh-table-dropdown-btn" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-three-dots" v-if="type === 'dropdown-horizontal'"></i>
         <i class="bi bi-three-dots-vertical" v-else></i>
       </strong>
       <ul class="dropdown-menu">
         <li v-for="act in actionItems" :key="act.label">
-          <single-action :class="act.class" :action="act" :record="record"/>
+          <single-action action-class=" dropdown-item" :class="act.class" :action="act" :record="record"/>
         </li>
       </ul>
     </div>
