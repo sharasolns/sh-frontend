@@ -7,6 +7,14 @@ const selected = ref([])
 const rowSelected = row=> {
   // selected.value.push(row)
 }
+
+const edit = item=>{
+  alert('Edit')
+}
+
+const deleteItem = item=>{
+  alert('Delete')
+}
 </script>
 <template>
     <div class="max-2">
@@ -34,13 +42,13 @@ const rowSelected = row=> {
                       {
                           label: 'Edit',
                           icon: 'edit',
-                          emits: 'edit'
+                          emits: edit
                       },
                       {
                           label: 'Delete',
                           icon: 'delete',
                           class: 'text-danger btn',
-                          emits: 'delete'
+                          emits: deleteItem
                       }
                   ]
                 }"
