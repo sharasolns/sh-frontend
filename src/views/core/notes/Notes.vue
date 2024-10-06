@@ -19,6 +19,10 @@ const deleteItem = item=>{
 const viewItem = item=>{
   alert('View')
 }
+
+const formatTitle = row=>{
+  return `<h3>${row.title}</h3>`
+}
 </script>
 <template>
     <div class="max-2">
@@ -36,7 +40,7 @@ const viewItem = item=>{
                 <sh-table :disable-mobile-responsive="true" :has-range="false" :end-point="`notes/list`" :headers="['id',{
                   label:'Summary',
                   key:'title',
-                  component: FormatTitle,
+                  callback:formatTitle,
                   sortable:true
                 },'title','note','created_at']"
                           :onViewItem="viewItem"

@@ -133,6 +133,8 @@ const cleanColumn = col=>{
           <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
           <span v-else-if="typeof key === 'string'" v-html="record[key]"></span>
           <span v-else-if="typeof key === 'function'" v-html="key(record, index)"></span>
+          <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"></span>
+          <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"></span>
           <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="cleanColumn(key)"></component>
           <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"></span>
           <span v-else v-html="record[key[0]]"></span>
@@ -181,6 +183,8 @@ const cleanColumn = col=>{
                       class="text-primary fw-bold">KES {{ Intl.NumberFormat().format(record[key]) }}</span>
                 <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
                 <span v-else-if="typeof key    === 'string'" v-html="record[key]"></span>
+                <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"></span>
+                <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"></span>
                 <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="cleanColumn(key)"></component>
                 <span v-else-if="typeof key    === 'object'" v-html="record[key.key ?? key.field]"></span>
                 <span v-else-if="typeof key === 'function'" v-html="key(record, index )"></span>
