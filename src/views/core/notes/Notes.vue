@@ -47,6 +47,7 @@ const formatTitle = row=>{
                 :actions="{
                   label: '&nbsp;',
                   type: 'dropdown',
+                  icon: 'bi-person',
                   actions:[
                       {
                           label: 'Edit',

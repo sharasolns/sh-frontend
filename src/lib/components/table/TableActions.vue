@@ -5,13 +5,15 @@ const props = defineProps(['actions','record','emitAction'])
 
 const actionItems = props.actions.actions
 const type = props.actions.type // dropdown, button
+const icon = props.actions.icon
 </script>
 
 <template>
   <template v-if="type && type.includes('dropdown')">
     <div class="dropdown sh-table-dropdown">
       <strong class="sh-table-dropdown-btn" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-three-dots" v-if="type === 'dropdown-horizontal'"></i>
+        <span v-if="icon" :class="icon"></span>
+        <i class="bi bi-three-dots" v-else-if="type === 'dropdown-horizontal'"></i>
         <i class="bi bi-three-dots-vertical" v-else></i>
       </strong>
       <ul class="dropdown-menu">
