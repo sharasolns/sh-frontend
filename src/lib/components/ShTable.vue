@@ -125,7 +125,7 @@ const {user} = storeToRefs(useUserStore())
           <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
           <span v-else-if="typeof key === 'string'" v-html="record[key]"></span>
           <span v-else-if="typeof key === 'function'" v-html="key(record, index)"></span>
-          <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record"></component>
+          <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="key"></component>
           <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"></span>
           <span v-else v-html="record[key[0]]"></span>
         </td>
@@ -173,7 +173,7 @@ const {user} = storeToRefs(useUserStore())
                       class="text-primary fw-bold">KES {{ Intl.NumberFormat().format(record[key]) }}</span>
                 <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
                 <span v-else-if="typeof key    === 'string'" v-html="record[key]"></span>
-                <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record"></component>
+                <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="key"></component>
                 <span v-else-if="typeof key    === 'object'" v-html="record[key.key ?? key.field]"></span>
                 <span v-else-if="typeof key === 'function'" v-html="key(record, index )"></span>
                 <span v-else v-html="record[key[0]]"></span>
