@@ -27,6 +27,15 @@ onMounted(()=>{
   })
 })
 
+
+const actionClicked = callBack=>{
+  if(typeof callBack === 'function'){
+    callBack(props.record)
+  } else {
+    doEmitAction(callBack,props.record)
+  }
+}
+
 const {user} = storeToRefs(useUserStore())
 </script>
 
@@ -60,7 +69,7 @@ const {user} = storeToRefs(useUserStore())
   </a>
   <button :title="action.title" :class="action.class ? action.class:'btn btn-default' + actionClass"
           v-else-if="action.emits"
-          @click="doEmitAction(action.emits,record)">
+          @click="actionClicked(action.emits)">
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </button>
