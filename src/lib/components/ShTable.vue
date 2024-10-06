@@ -130,7 +130,7 @@ const {user} = storeToRefs(useUserStore())
           <span v-else v-html="record[key[0]]"></span>
         </td>
         <td v-if="actions" style="white-space:nowrap;">
-          <table-actions :actions="actions" :record="record"/>
+          <table-actions :emitAction="doEmitAction" :actions="actions" :record="record"/>
         </td>
       </tr>
       </tbody>
@@ -181,7 +181,7 @@ const {user} = storeToRefs(useUserStore())
               <hr class="my-2">
             </template>
             <div v-if="actions">
-              <table-actions :actions="actions" :record="record"/>
+              <table-actions :emitAction="doEmitAction" :actions="actions" :record="record"/>
             </div>
           </div>
         </template>

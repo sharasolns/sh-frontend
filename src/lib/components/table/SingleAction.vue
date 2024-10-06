@@ -1,14 +1,14 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-
-const props = defineProps(['action','record','actionClass'])
-
 import ShConfirmAction from '../ShConfirmAction.vue'
 import ShSilentAction from '../ShSilentAction.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '../../repo/stores/ShUser'
 
-const doEmitAction = defineEmits(['actionSuccessful','actionFailed','actionCanceled'])
+const props = defineProps(['action','record','actionClass','emitAction'])
+
+
+
 
 const url = ref(props.action.path || props.action.url || props.action.link)
 
@@ -28,11 +28,13 @@ onMounted(()=>{
 })
 
 
-const actionClicked = callBack=>{
+
+
+const doEmitAction = (callBack,item)=>{
   if(typeof callBack === 'function'){
     callBack(props.record)
   } else {
-    doEmitAction(callBack,props.record)
+    props.emitAction(callBack,item)
   }
 }
 
@@ -69,7 +71,7 @@ const {user} = storeToRefs(useUserStore())
   </a>
   <button :title="action.title" :class="action.class ? action.class:'btn btn-default' + actionClass"
           v-else-if="action.emits"
-          @click="actionClicked(action.emits)">
+          @click="doEmitAction(action.emits, record)">
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </button>

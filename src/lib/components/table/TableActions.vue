@@ -1,7 +1,7 @@
 <script setup>
 import SingleAction from './SingleAction.vue'
 
-const props = defineProps(['actions','record'])
+const props = defineProps(['actions','record','emitAction'])
 
 const actionItems = props.actions.actions
 const type = props.actions.type // dropdown, button
@@ -16,13 +16,13 @@ const type = props.actions.type // dropdown, button
       </strong>
       <ul class="dropdown-menu">
         <li v-for="act in actionItems" :key="act.label">
-          <single-action action-class=" dropdown-item" :class="act.class" :action="act" :record="record"/>
+          <single-action action-class=" dropdown-item" :emit-action="emitAction" :class="act.class" :action="act" :record="record"/>
         </li>
       </ul>
     </div>
   </template>
   <template v-else>
-    <single-action v-for="act in actionItems" :key="act.label" :action="act" :record="record"/>
+    <single-action v-for="act in actionItems" :key="act.label" :emit-action="emitAction" :action="act" :record="record"/>
   </template>
 </template>
 

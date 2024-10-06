@@ -15,6 +15,10 @@ const edit = item=>{
 const deleteItem = item=>{
   alert('Delete')
 }
+
+const viewItem = item=>{
+  alert('View')
+}
 </script>
 <template>
     <div class="max-2">
@@ -35,6 +39,7 @@ const deleteItem = item=>{
                   component: FormatTitle,
                   sortable:true
                 },'title','note','created_at']"
+                          :onViewItem="viewItem"
                 :actions="{
                   label: '&nbsp;',
                   type: 'dropdown',
@@ -49,6 +54,12 @@ const deleteItem = item=>{
                           icon: 'delete',
                           class: 'text-danger btn',
                           emits: deleteItem
+                      },
+                      {
+                          label: 'View',
+                          icon: 'view',
+                          class: 'text-primary btn',
+                          emits: 'viewItem'
                       }
                   ]
                 }"
