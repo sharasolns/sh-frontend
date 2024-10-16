@@ -24,7 +24,7 @@ const icon = props.actions.icon
     </div>
   </template>
   <template v-else>
-    <single-action v-for="act in actionItems" :key="act.label" :emit-action="emitAction" :action="act" :record="record"/>
+    <single-action action-class=" " v-for="act in actionItems" :key="act.label" :emit-action="emitAction" :action="act" :record="record"/>
   </template>
 </template>
 

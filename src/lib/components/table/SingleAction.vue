@@ -60,16 +60,16 @@ const {user} = storeToRefs(useUserStore())
       @actionFailed="doEmitAction('actionFailed',record)"
       @actionCanceled="doEmitAction('actionCanceled',record)"
       :loading-message="action.label"
-      :class="action.class + actionClass" :url="url">
+      :class="action.class +' '+ actionClass" :url="url">
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </sh-silent-action>
   <a v-else-if="action.canvasId || action.type === 'offcanvas'" :href="'#' + action.canvasId"
-     data-bs-toggle="offcanvas" :class="action.class  + actionClass">
+     data-bs-toggle="offcanvas" :class="action.class + ' '  + actionClass">
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </a>
-  <button :title="action.title" :class="action.class ? action.class:'btn btn-default' + actionClass"
+  <button :title="action.title" :class="action.class ? action.class:'btn btn-default ' + actionClass"
           v-else-if="action.emits"
           @click="doEmitAction(action.emits, record)">
     <span v-if="action.icon" :class="action.icon"></span>
@@ -77,7 +77,7 @@ const {user} = storeToRefs(useUserStore())
   </button>
   <router-link v-else-if="!action.emits" :title="action.title"
                :to="url"
-               :class="action.class + actionClass">
+               :class="action.class +' '+ actionClass">
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </router-link>
