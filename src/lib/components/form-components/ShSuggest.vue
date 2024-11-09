@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import ShApis from '../../repo/helpers/ShApis.js'
 
-const props = defineProps(['data','allowMultiple','url','modelValue','optionTemplate'])
+const props = defineProps(['data','allowMultiple','url','modelValue','optionTemplate','allowUserInput'])
 const emit = defineEmits(['update:modelValue'])
 let id = ref(null)
 let filterValue = ref(null)
@@ -38,7 +38,12 @@ function addSuggestion(sgn){
 function updateModelValue(){
   let selectedItems = selectedSuggestions.value
   if(selectedItems.length === 0) {
-    emit('update:modelValue', null)
+    if(props.allowUserInput){
+      emit('update:modelValue', searchText.value)
+      console.log(searchText.value)
+    } else {
+      emit('update:modelValue', null)
+    }
   }  else if (!props.allowMultiple) {
     emit('update:modelValue', selectedItems[0].id)
   } else {
@@ -64,12 +69,14 @@ function filterData(e){
   searchText.value = filterValue
   if (props.url) {
     fetchRemoteData()
+    updateModelValue()
   } else if(props.data) {
     suggestions.value = props.data.filter(item=>{
       if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
         return item
       }
     })
+    updateModelValue()
   } else {
     console.log("Error: no data or url provided");
   }
@@ -141,7 +148,7 @@ watch(()=>props.modelValue, (newValue)=>{
       </div>
       <div :id="'input_' + id" contenteditable="true" @input="filterData" @change="filterData" class="flex-fill h-100 sh-suggestion-input"></div>
     </div>
-    <ul class="dropdown-menu w-100" :id="'dropwdown_section' + id" :aria-labelledby="id">
+    <ul :class="(!suggestions || suggestions.length === 0) ? 'no-sh-suggestions':'sh-found-suggestions'"  class="dropdown-menu w-100" :id="'dropwdown_section' + id" :aria-labelledby="id">
       <template v-if="suggestions && suggestions.length > 0" v-for="suggestion in suggestions" :key="suggestion.id">
         <li v-if="suggestion.name" @click="addSuggestion(suggestion)">
           <component  v-if="optionTemplate" :is="optionTemplate" :option="suggestion" />

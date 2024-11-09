@@ -19,5 +19,12 @@ export default [
         label: 'Notes',
         icon: 'bi-list',
         path: '/notes',
+    },
+    {
+        slug: 'notes',
+        type: 'single',
+        label: 'Forms',
+        icon: 'bi-list',
+        path: '/forms',
     }
 ]
