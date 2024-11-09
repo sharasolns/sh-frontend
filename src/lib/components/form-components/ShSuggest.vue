@@ -40,7 +40,7 @@ function updateModelValue(){
   if(selectedItems.length === 0) {
     if(props.allowUserInput){
       emit('update:modelValue', searchText.value)
-      console.log(searchText.value)
+      return
     } else {
       emit('update:modelValue', null)
     }
@@ -67,16 +67,15 @@ function filterData(e){
   showDropDown()
   let filterValue = e.target.innerText
   searchText.value = filterValue
+  updateModelValue()
   if (props.url) {
     fetchRemoteData()
-    updateModelValue()
   } else if(props.data) {
     suggestions.value = props.data.filter(item=>{
       if(item.name.toLowerCase().includes(filterValue.toLowerCase())){
         return item
       }
     })
-    updateModelValue()
   } else {
     console.log("Error: no data or url provided");
   }
