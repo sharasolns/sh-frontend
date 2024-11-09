@@ -31,6 +31,22 @@
   opacity: 0.5;
 }
 
+.sh-selected-item{
+  line-height: unset!important;
+}
+.sh-suggestion-input{
+  padding: 0.375rem 0.75rem;
+}
+.sh-suggest{
+  margin-bottom: 1rem;
+  padding: 0rem 0rem;
+}
+.sh-suggest-control::after{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 0.255em;
+}
+
 .colored-toast.swal2-icon-success {
   background-color: #a5dc86 !important;
 }
@@ -93,22 +109,6 @@
   cursor: pointer;
   height: 100%;
   flex-grow: 1;
-}
-
-.sh-selected-item{
-  line-height: unset!important;
-}
-.sh-suggestion-input{
-  padding: 0.375rem 0.75rem;
-}
-.sh-suggest{
-  margin-bottom: 1rem;
-  padding: 0rem 0rem;
-}
-.sh-suggest-control::after{
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-right: 0.255em;
 }
 
 .callout{

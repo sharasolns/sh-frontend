@@ -40,6 +40,7 @@ function updateModelValue(){
   if(selectedItems.length === 0) {
     if(props.allowUserInput){
       emit('update:modelValue', searchText.value)
+      showDropDown()
       return
     } else {
       emit('update:modelValue', null)

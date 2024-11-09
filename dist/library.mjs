@@ -3,7 +3,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { Modal, Offcanvas } from 'bootstrap';
 import NProgress from 'nprogress';
-import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, watch, unref, createBlock, resolveDynamicComponent, normalizeClass, resolveComponent, inject, mergeProps, renderSlot, normalizeStyle, computed, createVNode, withCtx, vModelCheckbox, shallowRef, normalizeProps, pushScopeId, popScopeId, markRaw, isRef } from 'vue';
+import { openBlock, createElementBlock, createElementVNode, createTextVNode, toDisplayString, createCommentVNode, withDirectives, Fragment, renderList, vModelSelect, vModelText, ref, onMounted, watch, unref, normalizeClass, createBlock, resolveDynamicComponent, resolveComponent, inject, mergeProps, renderSlot, normalizeStyle, computed, createVNode, withCtx, vModelCheckbox, shallowRef, normalizeProps, pushScopeId, popScopeId, markRaw, isRef } from 'vue';
 import _ from 'lodash';
 import { defineStore, storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
@@ -2138,7 +2138,7 @@ const _hoisted_10$8 = {
 
 var script$z = {
   __name: 'ShSuggest',
-  props: ['data','allowMultiple','url','modelValue','optionTemplate'],
+  props: ['data','allowMultiple','url','modelValue','optionTemplate','allowUserInput'],
   emits: ['update:modelValue'],
   setup(__props, { emit: __emit }) {
 
@@ -2178,7 +2178,13 @@ function addSuggestion(sgn){
 function updateModelValue(){
   let selectedItems = selectedSuggestions.value;
   if(selectedItems.length === 0) {
-    emit('update:modelValue', null);
+    if(props.allowUserInput){
+      emit('update:modelValue', searchText.value);
+      showDropDown();
+      return
+    } else {
+      emit('update:modelValue', null);
+    }
   }  else if (!props.allowMultiple) {
     emit('update:modelValue', selectedItems[0].id);
   } else {
@@ -2202,6 +2208,9 @@ function filterData(e){
   showDropDown();
   let filterValue = e.target.innerText;
   searchText.value = filterValue;
+  if(props.allowUserInput){
+    updateModelValue();
+  }
   if (props.url) {
     fetchRemoteData();
   } else if(props.data) {
@@ -2301,7 +2310,7 @@ return (_ctx, _cache) => {
           }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_6$a)
         ], 8 /* PROPS */, _hoisted_2$h),
         createElementVNode("ul", {
-          class: "dropdown-menu w-100",
+          class: normalizeClass([(!unref(suggestions) || unref(suggestions).length === 0) ? 'no-sh-suggestions':'sh-found-suggestions', "dropdown-menu w-100"]),
           id: 'dropwdown_section' + unref(id),
           "aria-labelledby": unref(id)
         }, [
@@ -2333,7 +2342,7 @@ return (_ctx, _cache) => {
             : (unref(searchText))
               ? (openBlock(), createElementBlock("li", _hoisted_9$8, " No results found "))
               : (openBlock(), createElementBlock("li", _hoisted_10$8, " Type to search... "))
-        ], 8 /* PROPS */, _hoisted_7$9)
+        ], 10 /* CLASS, PROPS */, _hoisted_7$9)
       ]))
     : createCommentVNode("v-if", true)
 }
@@ -4393,13 +4402,13 @@ const _hoisted_2$b = ["title"];
 
 var script$h = {
   __name: 'SingleAction',
-  props: ['action','record','actionClass'],
-  emits: ['actionSuccessful','actionFailed','actionCanceled'],
-  setup(__props, { emit: __emit }) {
+  props: ['action','record','actionClass','emitAction'],
+  setup(__props) {
 
 const props = __props;
 
-const doEmitAction = __emit;
+
+
 
 const url = ref(props.action.path || props.action.url || props.action.link);
 
@@ -4417,6 +4426,17 @@ onMounted(()=>{
     return props.record[key]
   });
 });
+
+
+
+
+const doEmitAction = (callBack,item)=>{
+  if(typeof callBack === 'function'){
+    callBack(props.record);
+  } else {
+    props.emitAction(callBack,item);
+  }
+};
 
 const {user} = storeToRefs(useUserStore());
 
@@ -4455,7 +4475,7 @@ return (_ctx, _cache) => {
                       onActionFailed: _cache[4] || (_cache[4] = $event => (doEmitAction('actionFailed',__props.record))),
                       onActionCanceled: _cache[5] || (_cache[5] = $event => (doEmitAction('actionCanceled',__props.record))),
                       "loading-message": __props.action.label,
-                      class: normalizeClass(__props.action.class + __props.actionClass),
+                      class: normalizeClass(__props.action.class +' '+ __props.actionClass),
                       url: url.value
                     }, {
                       default: withCtx(() => [
@@ -4474,7 +4494,7 @@ return (_ctx, _cache) => {
                         key: 2,
                         href: '#' + __props.action.canvasId,
                         "data-bs-toggle": "offcanvas",
-                        class: normalizeClass(__props.action.class  + __props.actionClass)
+                        class: normalizeClass(__props.action.class + ' '  + __props.actionClass)
                       }, [
                         (__props.action.icon)
                           ? (openBlock(), createElementBlock("span", {
@@ -4488,8 +4508,8 @@ return (_ctx, _cache) => {
                       ? (openBlock(), createElementBlock("button", {
                           key: 3,
                           title: __props.action.title,
-                          class: normalizeClass(__props.action.class ? __props.action.class:'btn btn-default' + __props.actionClass),
-                          onClick: _cache[6] || (_cache[6] = $event => (doEmitAction(__props.action.emits,__props.record)))
+                          class: normalizeClass(__props.action.class ? __props.action.class:'btn btn-default ' + __props.actionClass),
+                          onClick: _cache[6] || (_cache[6] = $event => (doEmitAction(__props.action.emits, __props.record)))
                         }, [
                           (__props.action.icon)
                             ? (openBlock(), createElementBlock("span", {
@@ -4504,7 +4524,7 @@ return (_ctx, _cache) => {
                             key: 4,
                             title: __props.action.title,
                             to: url.value,
-                            class: normalizeClass(__props.action.class + __props.actionClass)
+                            class: normalizeClass(__props.action.class +' '+ __props.actionClass)
                           }, {
                             default: withCtx(() => [
                               (__props.action.icon)
@@ -4540,11 +4560,11 @@ const _hoisted_2$a = {
   "aria-expanded": "false"
 };
 const _hoisted_3$9 = {
-  key: 0,
+  key: 1,
   class: "bi bi-three-dots"
 };
 const _hoisted_4$9 = {
-  key: 1,
+  key: 2,
   class: "bi bi-three-dots-vertical"
 };
 const _hoisted_5$8 = { class: "dropdown-menu" };
@@ -4552,21 +4572,27 @@ const _hoisted_5$8 = { class: "dropdown-menu" };
 
 var script$g = {
   __name: 'TableActions',
-  props: ['actions','record'],
+  props: ['actions','record','emitAction'],
   setup(__props) {
 
 const props = __props;
 
 const actionItems = props.actions.actions;
 const type = props.actions.type; // dropdown, button
+const icon = props.actions.icon;
 
 return (_ctx, _cache) => {
   return (unref(type) && unref(type).includes('dropdown'))
     ? (openBlock(), createElementBlock("div", _hoisted_1$d, [
         createElementVNode("strong", _hoisted_2$a, [
-          (unref(type) === 'dropdown-horizontal')
-            ? (openBlock(), createElementBlock("i", _hoisted_3$9))
-            : (openBlock(), createElementBlock("i", _hoisted_4$9))
+          (unref(icon))
+            ? (openBlock(), createElementBlock("span", {
+                key: 0,
+                class: normalizeClass(unref(icon))
+              }, null, 2 /* CLASS */))
+            : (unref(type) === 'dropdown-horizontal')
+              ? (openBlock(), createElementBlock("i", _hoisted_3$9))
+              : (openBlock(), createElementBlock("i", _hoisted_4$9))
         ]),
         createElementVNode("ul", _hoisted_5$8, [
           (openBlock(true), createElementBlock(Fragment, null, renderList(unref(actionItems), (act) => {
@@ -4575,20 +4601,23 @@ return (_ctx, _cache) => {
             }, [
               createVNode(script$h, {
                 "action-class": " dropdown-item",
+                "emit-action": __props.emitAction,
                 class: normalizeClass(act.class),
                 action: act,
                 record: __props.record
-              }, null, 8 /* PROPS */, ["class", "action", "record"])
+              }, null, 8 /* PROPS */, ["emit-action", "class", "action", "record"])
             ]))
           }), 128 /* KEYED_FRAGMENT */))
         ])
       ]))
     : (openBlock(true), createElementBlock(Fragment, { key: 1 }, renderList(unref(actionItems), (act) => {
         return (openBlock(), createBlock(script$h, {
+          "action-class": " ",
           key: act.label,
+          "emit-action": __props.emitAction,
           action: act,
           record: __props.record
-        }, null, 8 /* PROPS */, ["action", "record"]))
+        }, null, 8 /* PROPS */, ["emit-action", "action", "record"]))
       }), 128 /* KEYED_FRAGMENT */))
 }
 }
@@ -5108,16 +5137,18 @@ const _hoisted_42 = ["innerHTML"];
 const _hoisted_43 = ["innerHTML"];
 const _hoisted_44 = ["innerHTML"];
 const _hoisted_45 = ["innerHTML"];
-const _hoisted_46 = {
+const _hoisted_46 = ["innerHTML"];
+const _hoisted_47 = ["innerHTML"];
+const _hoisted_48 = {
   key: 0,
   style: {"white-space":"nowrap"}
 };
-const _hoisted_47 = { key: 5 };
-const _hoisted_48 = {
+const _hoisted_49 = { key: 5 };
+const _hoisted_50 = {
   key: 0,
   class: "text-center"
 };
-const _hoisted_49 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
+const _hoisted_51 = /*#__PURE__*/createElementVNode("div", { class: "text-center" }, [
   /*#__PURE__*/createElementVNode("div", {
     class: "spinner-border",
     role: "status"
@@ -5125,43 +5156,45 @@ const _hoisted_49 = /*#__PURE__*/createElementVNode("div", { class: "text-center
     /*#__PURE__*/createElementVNode("span", { class: "visually-hidden" }, "Loading...")
   ])
 ], -1 /* HOISTED */);
-const _hoisted_50 = [
-  _hoisted_49
+const _hoisted_52 = [
+  _hoisted_51
 ];
-const _hoisted_51 = { key: 1 };
-const _hoisted_52 = {
+const _hoisted_53 = { key: 1 };
+const _hoisted_54 = {
   key: 2,
   class: "mobile-list-items"
 };
-const _hoisted_53 = ["onClick"];
-const _hoisted_54 = {
+const _hoisted_55 = ["onClick"];
+const _hoisted_56 = {
   key: 0,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_55 = {
+const _hoisted_57 = {
   key: 1,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_56 = {
+const _hoisted_58 = {
   key: 2,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_57 = {
+const _hoisted_59 = {
   key: 3,
   class: "mb-1 font-weight-bold text-capitalize profile-form-title"
 };
-const _hoisted_58 = { key: 1 };
-const _hoisted_59 = {
+const _hoisted_60 = { key: 1 };
+const _hoisted_61 = {
   key: 2,
   class: "text-primary fw-bold"
 };
-const _hoisted_60 = { key: 3 };
-const _hoisted_61 = ["innerHTML"];
-const _hoisted_62 = ["innerHTML"];
+const _hoisted_62 = { key: 3 };
 const _hoisted_63 = ["innerHTML"];
 const _hoisted_64 = ["innerHTML"];
-const _hoisted_65 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
-const _hoisted_66 = { key: 0 };
+const _hoisted_65 = ["innerHTML"];
+const _hoisted_66 = ["innerHTML"];
+const _hoisted_67 = ["innerHTML"];
+const _hoisted_68 = ["innerHTML"];
+const _hoisted_69 = /*#__PURE__*/createElementVNode("hr", { class: "my-2" }, null, -1 /* HOISTED */);
+const _hoisted_70 = { key: 0 };
 
 const __default__ = {
   name: 'sh-table',
@@ -5484,6 +5517,14 @@ const noRecordsComponent = inject('noRecordsComponent', script$k);
 
 storeToRefs(useUserStore());
 
+const cleanColumn = col=>{
+  // remove col.component
+  const newCol = {...col};
+  delete newCol.component;
+  delete newCol.key;
+  return newCol
+};
+
 
 return (_ctx, _cache) => {
   const _component_router_link = resolveComponent("router-link");
@@ -5688,28 +5729,40 @@ return (_ctx, _cache) => {
                                                   key: 5,
                                                   innerHTML: key(record, index)
                                                 }, null, 8 /* PROPS */, _hoisted_43))
-                                              : (typeof key === 'object' && key.component)
-                                                ? (openBlock(), createBlock(resolveDynamicComponent(key.component), {
+                                              : (typeof key === 'object' && key.callBack)
+                                                ? (openBlock(), createElementBlock("span", {
                                                     key: 6,
-                                                    item: record
-                                                  }, null, 8 /* PROPS */, ["item"]))
-                                                : (typeof key === 'object')
+                                                    innerHTML: key.callBack(record, index)
+                                                  }, null, 8 /* PROPS */, _hoisted_44))
+                                                : (typeof key === 'object' && key.callback)
                                                   ? (openBlock(), createElementBlock("span", {
                                                       key: 7,
-                                                      innerHTML: record[key.key ?? key.field]
-                                                    }, null, 8 /* PROPS */, _hoisted_44))
-                                                  : (openBlock(), createElementBlock("span", {
-                                                      key: 8,
-                                                      innerHTML: record[key[0]]
+                                                      innerHTML: key.callback(record, index)
                                                     }, null, 8 /* PROPS */, _hoisted_45))
+                                                  : (typeof key === 'object' && key.component)
+                                                    ? (openBlock(), createBlock(resolveDynamicComponent(key.component), mergeProps({
+                                                        key: 8,
+                                                        item: record,
+                                                        ref_for: true
+                                                      }, cleanColumn(key)), null, 16 /* FULL_PROPS */, ["item"]))
+                                                    : (typeof key === 'object')
+                                                      ? (openBlock(), createElementBlock("span", {
+                                                          key: 9,
+                                                          innerHTML: record[key.key ?? key.field]
+                                                        }, null, 8 /* PROPS */, _hoisted_46))
+                                                      : (openBlock(), createElementBlock("span", {
+                                                          key: 10,
+                                                          innerHTML: record[key[0]]
+                                                        }, null, 8 /* PROPS */, _hoisted_47))
                                 ]))
                               }), 128 /* KEYED_FRAGMENT */)),
                               (__props.actions)
-                                ? (openBlock(), createElementBlock("td", _hoisted_46, [
+                                ? (openBlock(), createElementBlock("td", _hoisted_48, [
                                     createVNode(script$g, {
+                                      emitAction: _ctx.doEmitAction,
                                       actions: __props.actions,
                                       record: record
-                                    }, null, 8 /* PROPS */, ["actions", "record"])
+                                    }, null, 8 /* PROPS */, ["emitAction", "actions", "record"])
                                   ]))
                                 : createCommentVNode("v-if", true)
                             ], 10 /* CLASS, PROPS */, _hoisted_38))
@@ -5717,15 +5770,15 @@ return (_ctx, _cache) => {
                         : createCommentVNode("v-if", true)
               ])
             ], 2 /* CLASS */))
-          : (openBlock(), createElementBlock("div", _hoisted_47, [
+          : (openBlock(), createElementBlock("div", _hoisted_49, [
               (_ctx.loading === 'loading')
-                ? (openBlock(), createElementBlock("div", _hoisted_48, [..._hoisted_50]))
+                ? (openBlock(), createElementBlock("div", _hoisted_50, [..._hoisted_52]))
                 : (_ctx.loading === 'error')
-                  ? (openBlock(), createElementBlock("div", _hoisted_51, [
+                  ? (openBlock(), createElementBlock("div", _hoisted_53, [
                       createElementVNode("span", null, toDisplayString(_ctx.loading_error), 1 /* TEXT */)
                     ]))
                   : (_ctx.loading === 'done')
-                    ? (openBlock(), createElementBlock("div", _hoisted_52, [
+                    ? (openBlock(), createElementBlock("div", _hoisted_54, [
                         (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.records, (record, index) => {
                           return (openBlock(), createElementBlock("div", {
                             key: record.id,
@@ -5737,12 +5790,12 @@ return (_ctx, _cache) => {
                                 key: key[0]
                               }, [
                                 (typeof key === 'string' )
-                                  ? (openBlock(), createElementBlock("p", _hoisted_54, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                  ? (openBlock(), createElementBlock("p", _hoisted_56, toDisplayString(key.replace(/_/g, ' ')), 1 /* TEXT */))
                                   : (typeof key === 'function')
-                                    ? (openBlock(), createElementBlock("p", _hoisted_55, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
+                                    ? (openBlock(), createElementBlock("p", _hoisted_57, toDisplayString(key(null).replace(/_/g, ' ')), 1 /* TEXT */))
                                     : (typeof key === 'object')
-                                      ? (openBlock(), createElementBlock("p", _hoisted_56, toDisplayString(key.label ?? key.key.replace(/_/g, ' ')), 1 /* TEXT */))
-                                      : (openBlock(), createElementBlock("p", _hoisted_57, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
+                                      ? (openBlock(), createElementBlock("p", _hoisted_58, toDisplayString(key.label ?? key.key.replace(/_/g, ' ')), 1 /* TEXT */))
+                                      : (openBlock(), createElementBlock("p", _hoisted_59, toDisplayString(key[1].replace(/_/g, ' ')), 1 /* TEXT */)),
                                 createElementVNode("span", null, [
                                   (typeof key === 'string' && __props.links && __props.links[key])
                                     ? (openBlock(), createBlock(_component_router_link, {
@@ -5752,48 +5805,60 @@ return (_ctx, _cache) => {
                                         innerHTML: record[key]
                                       }, null, 8 /* PROPS */, ["to", "class", "innerHTML"]))
                                     : (_ctx.getFieldType(key) === 'numeric')
-                                      ? (openBlock(), createElementBlock("span", _hoisted_58, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                      ? (openBlock(), createElementBlock("span", _hoisted_60, toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                       : (_ctx.getFieldType(key) === 'money')
-                                        ? (openBlock(), createElementBlock("span", _hoisted_59, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
+                                        ? (openBlock(), createElementBlock("span", _hoisted_61, "KES " + toDisplayString(Intl.NumberFormat().format(record[key])), 1 /* TEXT */))
                                         : (_ctx.getFieldType(key) === 'date')
-                                          ? (openBlock(), createElementBlock("span", _hoisted_60, toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
+                                          ? (openBlock(), createElementBlock("span", _hoisted_62, toDisplayString(_ctx.formatDate(record[key])), 1 /* TEXT */))
                                           : (typeof key    === 'string')
                                             ? (openBlock(), createElementBlock("span", {
                                                 key: 4,
                                                 innerHTML: record[key]
-                                              }, null, 8 /* PROPS */, _hoisted_61))
-                                            : (typeof key === 'object' && key.component)
-                                              ? (openBlock(), createBlock(resolveDynamicComponent(key.component), {
+                                              }, null, 8 /* PROPS */, _hoisted_63))
+                                            : (typeof key === 'object' && key.callBack)
+                                              ? (openBlock(), createElementBlock("span", {
                                                   key: 5,
-                                                  item: record
-                                                }, null, 8 /* PROPS */, ["item"]))
-                                              : (typeof key    === 'object')
+                                                  innerHTML: key.callBack(record, index)
+                                                }, null, 8 /* PROPS */, _hoisted_64))
+                                              : (typeof key === 'object' && key.callback)
                                                 ? (openBlock(), createElementBlock("span", {
                                                     key: 6,
-                                                    innerHTML: record[key.key ?? key.field]
-                                                  }, null, 8 /* PROPS */, _hoisted_62))
-                                                : (typeof key === 'function')
-                                                  ? (openBlock(), createElementBlock("span", {
+                                                    innerHTML: key.callback(record, index)
+                                                  }, null, 8 /* PROPS */, _hoisted_65))
+                                                : (typeof key === 'object' && key.component)
+                                                  ? (openBlock(), createBlock(resolveDynamicComponent(key.component), mergeProps({
                                                       key: 7,
-                                                      innerHTML: key(record, index )
-                                                    }, null, 8 /* PROPS */, _hoisted_63))
-                                                  : (openBlock(), createElementBlock("span", {
-                                                      key: 8,
-                                                      innerHTML: record[key[0]]
-                                                    }, null, 8 /* PROPS */, _hoisted_64))
+                                                      item: record,
+                                                      ref_for: true
+                                                    }, cleanColumn(key)), null, 16 /* FULL_PROPS */, ["item"]))
+                                                  : (typeof key    === 'object')
+                                                    ? (openBlock(), createElementBlock("span", {
+                                                        key: 8,
+                                                        innerHTML: record[key.key ?? key.field]
+                                                      }, null, 8 /* PROPS */, _hoisted_66))
+                                                    : (typeof key === 'function')
+                                                      ? (openBlock(), createElementBlock("span", {
+                                                          key: 9,
+                                                          innerHTML: key(record, index )
+                                                        }, null, 8 /* PROPS */, _hoisted_67))
+                                                      : (openBlock(), createElementBlock("span", {
+                                                          key: 10,
+                                                          innerHTML: record[key[0]]
+                                                        }, null, 8 /* PROPS */, _hoisted_68))
                                 ]),
-                                _hoisted_65
+                                _hoisted_69
                               ], 64 /* STABLE_FRAGMENT */))
                             }), 128 /* KEYED_FRAGMENT */)),
                             (__props.actions)
-                              ? (openBlock(), createElementBlock("div", _hoisted_66, [
+                              ? (openBlock(), createElementBlock("div", _hoisted_70, [
                                   createVNode(script$g, {
+                                    emitAction: _ctx.doEmitAction,
                                     actions: __props.actions,
                                     record: record
-                                  }, null, 8 /* PROPS */, ["actions", "record"])
+                                  }, null, 8 /* PROPS */, ["emitAction", "actions", "record"])
                                 ]))
                               : createCommentVNode("v-if", true)
-                          ], 8 /* PROPS */, _hoisted_53))
+                          ], 8 /* PROPS */, _hoisted_55))
                         }), 128 /* KEYED_FRAGMENT */))
                       ]))
                     : createCommentVNode("v-if", true)

@@ -37,16 +37,3 @@ const fields = [
   </div>
 </div>
 </template>
-
-<style>
-.sh-suggest-no-input{
-  display: none;
-}
-.no-sh-suggestions{
-  display: none !important;
-}
-
-.sh-suggest-no-results{
-  display: none !important;
-}
-</style>
