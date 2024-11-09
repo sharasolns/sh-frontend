@@ -67,7 +67,9 @@ function filterData(e){
   showDropDown()
   let filterValue = e.target.innerText
   searchText.value = filterValue
-  updateModelValue()
+  if(props.allowUserInput){
+    updateModelValue()
+  }
   if (props.url) {
     fetchRemoteData()
   } else if(props.data) {
