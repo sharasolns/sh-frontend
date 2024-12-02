@@ -2,6 +2,8 @@
 import ShTable from "@/lib/components/ShTable.vue";
 import FormatTitle from '@/views/core/notes/FormatTitle.vue'
 import { ref } from 'vue'
+import shApis from '@/lib/repo/helpers/ShApis'
+import shRepo from '@/lib/repo/helpers/ShRepo'
 
 const selected = ref([])
 const rowSelected = row=> {
@@ -13,7 +15,11 @@ const edit = item=>{
 }
 
 const deleteItem = item=>{
-  alert('Delete')
+  shRepo.runPlainRequest('notes/delete', item).then(res=>{
+    shRepo.showToast('Note deleted')
+  }).catch(err=>{
+    shRepo.showToast(err.message, 'error')
+  })
 }
 
 const viewItem = item=>{

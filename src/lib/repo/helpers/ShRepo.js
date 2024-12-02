@@ -127,6 +127,9 @@ function getShConfig(key = null, def = ''){
 }
 
 function showToast(message, toastType, config){
+    if(!message){
+        return
+    }
     const mixinConfig = {
         toast: true,
         position: 'top-end',
@@ -183,22 +186,41 @@ async function runPlainRequest(url, message, title, data){
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-            return apis.doPost(url, data).then(function (response){
-                return {
-                    response: response.data,
-                    success: true
-                }
-            })
+            return apis.doPost(url, data)
+                .then(response => {
+                    return {
+                        response: response.data,
+                        success: true
+                    };
+                })
                 .catch(error => {
                     return {
                         success: false,
                         error: error,
                         message: error.message
-                    }
-                })
+                    };
+                });
         },
         allowOutsideClick: () => !Swal.isLoading()
-    })
+    }).then((result) => {
+        if (result.isDismissed) {
+            // Handle the cancel action
+            throw new Error();
+        }
+
+        // Continue processing on confirm
+        if (result.isConfirmed) {
+            const { success, response, error } = result.value;
+            if (!success) {
+                // Handle the API error
+                console.error('API error:', error);
+                throw new Error('API request failed: ' + error.message);
+            }
+            // Handle the successful response
+            return response;
+        }
+    });
+
 }
 async function confirmAction(title,message){
     if (typeof title === 'undefined') {
