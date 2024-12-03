@@ -26,5 +26,12 @@ export default [
         label: 'Forms',
         icon: 'bi-list',
         path: '/forms',
+    },
+    {
+        slug: 'notes',
+        type: 'single',
+        label: 'Tabs',
+        icon: 'bi-list',
+        path: '/tabs',
     }
 ]

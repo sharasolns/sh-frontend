@@ -49,6 +49,14 @@ watch(()=>props.tabCounts, () => {
   resetTabCounts()
 })
 
+watch(()=>route.path,()=>{
+  const arr = route.fullPath.split('/')
+  if (!tabExistsInUrl()) {
+    resetTabCounts()
+  }
+
+})
+
 watch(()=>route.path,(newPath)=>{
   path.value = newPath
 })
