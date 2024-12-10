@@ -166,6 +166,9 @@ function getShConfig(key = null, def = ''){
 }
 
 function showToast(message, toastType, config){
+    if(!message){
+        return
+    }
     const mixinConfig = {
         toast: true,
         position: 'top-end',
@@ -5972,6 +5975,14 @@ vue.onMounted(()=>{
 
 vue.watch(()=>props.tabCounts, () => {
   resetTabCounts();
+});
+
+vue.watch(()=>route.path,()=>{
+  route.fullPath.split('/');
+  if (!tabExistsInUrl()) {
+    resetTabCounts();
+  }
+
 });
 
 vue.watch(()=>route.path,(newPath)=>{

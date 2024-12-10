@@ -154,6 +154,9 @@ function getShConfig(key = null, def = ''){
 }
 
 function showToast(message, toastType, config){
+    if(!message){
+        return
+    }
     const mixinConfig = {
         toast: true,
         position: 'top-end',
@@ -5960,6 +5963,14 @@ onMounted(()=>{
 
 watch(()=>props.tabCounts, () => {
   resetTabCounts();
+});
+
+watch(()=>route.path,()=>{
+  route.fullPath.split('/');
+  if (!tabExistsInUrl()) {
+    resetTabCounts();
+  }
+
 });
 
 watch(()=>route.path,(newPath)=>{

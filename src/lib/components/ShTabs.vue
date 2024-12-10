@@ -78,7 +78,7 @@ const setTabCounts = (tabCounts) => {
 const resetTabCounts = () => {
   const arr = route.fullPath.split('/')
   if (!tabExistsInUrl()) {
-    router.push(route.fullPath + '/tab/' + props.tabs[0])
+    router.replace(route.fullPath + '/tab/' + props.tabs[0])
   } else {
     currentTab.value = arr[arr.length - 1]
   }
