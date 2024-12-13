@@ -230,11 +230,11 @@ import shStorage from '../repo/repositories/ShStorage'
 
 export default {
   name: 'sh-table',
-  props: ['endPoint', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
+  props: ['endPoint','orderBy','orderMethod', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
   data(){
     return {
-      order_by: '',
-      order_method: '',
+      order_by: this.orderBy,
+      order_method: this.orderMethod,
       per_page: this.pageCount ?? shRepo.getShConfig('tablePerPage', 10),
       page: 1,
       exactMatch: false,
@@ -445,7 +445,7 @@ export default {
       } else if (!append) {
         this.loading = 'loading'
       }
-      const data = {
+      let data = {
         order_by: this.order_by,
         order_method: this.order_method,
         per_page: this.per_page,
@@ -457,6 +457,12 @@ export default {
         period: this.period,
         exact: this.exactMatch
       }
+      // remove empty values
+      Object.keys(data).forEach(key => {
+        if (data[key] === null || data[key] === '') {
+          delete data[key]
+        }
+      })
       if (this.pagination_data) {
         this.pagination_data.loading = 1
       }
