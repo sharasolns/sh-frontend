@@ -4,6 +4,7 @@ import FormatTitle from '@/views/core/notes/FormatTitle.vue'
 import { ref } from 'vue'
 import shApis from '@/lib/repo/helpers/ShApis'
 import shRepo from '@/lib/repo/helpers/ShRepo'
+import { ShConfirmAction } from '@'
 
 const selected = ref([])
 const rowSelected = row=> {
@@ -16,7 +17,8 @@ const edit = item=>{
 
 const deleteItem = item=>{
   shRepo.runPlainRequest('notes/delete', item).then(res=>{
-    shRepo.showToast('Note deleted')
+    res.isConfirmed && res.value.success && shRepo.showToast('Note deleted')
+    res.isConfirmed && !res.value.success && shRepo.showToast(res.message, 'error')
   }).catch(err=>{
     shRepo.showToast(err.message, 'error')
   })
@@ -33,7 +35,8 @@ const formatTitle = row=>{
 <template>
     <div class="max-2">
       <h5 v-if="false">false</h5>
-      <button v-if="true" @click="deleteItem({id:1})">Delete</button>
+      <button v-if="true" @click="deleteItem({id:1})">Delete Plain</button>
+      <sh-confirm-action :url="'notes/note/delete/1'" :data="{id:1}" @success="res=>{console.log(res)}">Delete SH</sh-confirm-action>
         <h5 v-if-user-can="'notes'">Notes</h5>
         <div class="card shadow rounded">
             <div class="card-body">
