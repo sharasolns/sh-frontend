@@ -43,8 +43,8 @@ const actionFailed = reason =>{
   reason.actionType = 'silentAction'
   emit('actionFailed', reason)
   emit('failed', reason)
-  if (props.failMessage || reason.value?.message) {
-    shRepo.showToast(reason.value.message ?? props.failMessage,'error')
+  if (props.failMessage || reason.message) {
+    shRepo.showToast(reason.message ?? props.failMessage,'error')
   }
 }
 function runAction () {
