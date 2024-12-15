@@ -33,16 +33,19 @@ const actionSuccessful = (res)=>{
   res.actionType = 'silentAction'
   emit('actionSuccessful',res)
   emit('success',res)
-  shRepo.showToast(res.message ?? props.successMessage)
+  if(props.successMessage || res.message){
+    shRepo.showToast(res.message ?? props.successMessage)
+  }
 }
 
 const actionFailed = reason =>{
-  console.log(reason)
   processing.value = false
   reason.actionType = 'silentAction'
   emit('actionFailed', reason)
   emit('failed', reason)
-  shRepo.showToast(reason.value.error.message ?? props.failMessage,'error')
+  if (props.failMessage || reason.value?.message) {
+    shRepo.showToast(reason.value.message ?? props.failMessage,'error')
+  }
 }
 function runAction () {
   processing.value = true
