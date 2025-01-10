@@ -413,9 +413,16 @@ export default {
           headers.push(header)
         }
       })
+
       const data = {
         titles: headers,
-        export: 1
+        export: 1,
+        order_by: this.order_by,
+        order_method: this.order_method,
+        filter_value: this.filter_value,
+        from: this.from,
+        to: this.to,
+        period: this.period,
       }
       apis.doPost(this.endPoint, data).then(res => {
         this.downloading = false
