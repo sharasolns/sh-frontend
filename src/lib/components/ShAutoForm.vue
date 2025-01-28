@@ -109,7 +109,11 @@ const getElementClass = section => (props.formClasses && props.formClasses[secti
 const getPlaceholder = field => (props.placeHolders && props.placeHolders[field]) && props.placeHolders[field]
 const fieldChanged = field => {
   delete validationErrors.value[field]
-  emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value)
+  const data = {}
+  formFields.value.map(field => {
+    data[field.field] = field.value
+  })
+  emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value, data)
 }
 const getComponentProps = field => {
   const newField = {...field}
