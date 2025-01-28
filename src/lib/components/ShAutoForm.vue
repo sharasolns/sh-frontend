@@ -113,7 +113,9 @@ const fieldChanged = field => {
   formFields.value.map(field => {
     data[field.field] = field.value
   })
-  emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value, data)
+  setTimeout(() => {
+    emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value, data)
+  }, 300)
 }
 const getComponentProps = field => {
   const newField = {...field}
