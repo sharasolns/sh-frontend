@@ -17,7 +17,7 @@ const props = defineProps([
   'action', 'successCallback', 'retainDataAfterSubmission',
   'successMessage', 'fields', 'customComponents', 'placeHolders',
   'formClasses',
-  'helperTexts', 'labels', 'data',
+  'helperTexts', 'labels', 'data','preSubmitCallback',
   'fillSelects',
   'formClass',
   'actionLabel',
@@ -117,7 +117,7 @@ const fieldChanged = field => {
     emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value, data)
   }, 300)
 }
-const getComponentProps = field => {
+const getComponentProps =  (field) => {
   const newField = {...field}
   delete newField.component
   delete newField.value
@@ -128,7 +128,7 @@ const loading = ref(false)
 const submitBtn = ref(false)
 const validationErrors = ref({})
 const formError = ref(null)
-const submitForm = e => {
+const submitForm = async  (e) => {
   submitBtnWidth.value = submitBtn.value.getBoundingClientRect().width + 'px !important'
   validationErrors.value = {}
   e.preventDefault()
@@ -137,6 +137,13 @@ const submitForm = e => {
   formFields.value.map(field => {
     data[field.field] = field.value
   })
+  if (props.preSubmitCallback) {
+    const callbackkRes =  await props.preSubmitCallback(data)
+    if (callbackkRes !== true) {
+      loading.value = false
+      return false
+    }
+  }
   if (props.gqlMutation) {
     let args = `(`
     let selectFields = Object.keys(data)
@@ -151,6 +158,7 @@ const submitForm = e => {
       args = ''
     }
     emit('preSubmit', data)
+
     const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`
     shApis.graphQlMutate(mutation).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason))
   } else {

@@ -23,6 +23,11 @@ const fields = [
   }
 ]
 
+const recaptcha = data=>{
+  console.log(data)
+  console.log('Recaptcha')
+  return true
+}
 </script>
 
 <template>
@@ -31,7 +36,7 @@ const fields = [
     <div class="card">
       <div class="card-body">
         <h5>Sh Suggest Test</h5>
-        <sh-auto-form :fields="fields" />
+        <sh-auto-form :pre-submit-callback="recaptcha" :fields="fields" />
       </div>
     </div>
   </div>
