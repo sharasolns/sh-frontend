@@ -69,7 +69,7 @@ const {user} = storeToRefs(useUserStore())
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </a>
-  <button :title="action.title" :class="action.class ? action.class:'btn btn-default ' + actionClass"
+  <button :title="action.title" :class="action.class ? action.class+' btn':'btn btn-default ' + actionClass"
           v-else-if="action.emits"
           @click="doEmitAction(action.emits, record)">
     <span v-if="action.icon" :class="action.icon"></span>
