@@ -20,6 +20,10 @@ const fields = [
     //   {id: 9, name: 'John White'},
     //   {id: 10, name: 'Jane White'},
     // ]
+  },
+  {
+    field: 'user_id',
+    type: 'hidden'
   }
 ]
 

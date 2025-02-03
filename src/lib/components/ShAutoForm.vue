@@ -253,7 +253,7 @@ onMounted((ev) => {
 <template>
   <div/>
   <form :class="formClass" ref="shAutoForm" class="sh-auto-form" @submit="e => submitForm(e)">
-    <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup') + field.field">
+    <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup') + ' ' +field.field">
       <template v-if="field.type === 'hidden'">
         <input type="hidden" :name="field.field" v-model="formFields[index].value">
       </template>
