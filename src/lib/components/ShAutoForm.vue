@@ -253,9 +253,9 @@ onMounted((ev) => {
 <template>
   <div/>
   <form :class="formClass" ref="shAutoForm" class="sh-auto-form" @submit="e => submitForm(e)">
-    <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup')">
+    <div v-for="(field,index) in formFields" :key="field" :class="getElementClass('formGroup') + field.field">
       <template v-if="field.type === 'hidden'">
-        <input type="hidden" v-model="formFields[index].value">
+        <input type="hidden" :name="field.field" v-model="formFields[index].value">
       </template>
       <template v-else>
         <label v-if="!isFloating && field.label" :class="getElementClass('formLabel')">
