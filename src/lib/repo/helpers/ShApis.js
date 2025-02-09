@@ -37,12 +37,15 @@ function doPost (endPoint, data, extraConfig) {
     'auth/register/client',
     'auth/login'
   ]
-    const accessToken = shstorage.getItem('access_token')
+    let accessToken = shstorage.getItem('access_token')
+    if(accessToken === 'undefined' || accessToken === 'null'){
+        accessToken = null
+    }
     let config = {}
     if(accessToken){
          config = {
             headers: {
-                Authorization: 'Bearer ' + shstorage.getItem('access_token')
+                Authorization: 'Bearer ' + accessToken
             }
         }
     }
