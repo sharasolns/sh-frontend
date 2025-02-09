@@ -38,16 +38,14 @@ function doPost (endPoint, data, extraConfig) {
     'auth/login'
   ]
     const accessToken = shstorage.getItem('access_token')
+    let config = {}
     if(accessToken){
-        const config = {
+         config = {
             headers: {
                 Authorization: 'Bearer ' + shstorage.getItem('access_token')
             }
         }
-    } else {
-        const config = {}
     }
-
     if (extraConfig) {
         Object.assign(config, extraConfig)
     }
