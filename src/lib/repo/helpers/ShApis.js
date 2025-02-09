@@ -17,11 +17,18 @@ const axios = Axios.create({
 window.shAxionInstance = axios
 function doGet (endPoint, data,extraConfig) {
   ShSession()
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + shstorage.getItem('access_token')
+    let accessToken = shstorage.getItem('access_token')
+    if(accessToken === 'undefined' || accessToken === 'null'){
+        accessToken = null
     }
-  }
+    let config = {}
+    if(accessToken){
+        config = {
+            headers: {
+                Authorization: 'Bearer ' + accessToken
+            }
+        }
+    }
     if (extraConfig) {
         Object.assign(config, extraConfig)
     }
