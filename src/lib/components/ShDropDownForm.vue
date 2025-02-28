@@ -44,7 +44,7 @@ const formError = (res)=>{
 </script>
 <template>
   <h5 class="d-none">To prevent default class</h5>
-  <div class="dropdown">
+  <div class="dropdown sh-dropdown-form">
     <a :class="btnClass"  href="#" role="button" :id="dropdownId" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
       <slot></slot>
     </a>
