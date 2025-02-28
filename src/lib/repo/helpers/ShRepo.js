@@ -260,8 +260,14 @@ const showOffCanvas = offCanvasId => {
 }
 
 const hideOffCanvas = offCanvasId => {
-    const offCanvas = new Offcanvas(document.getElementById(offCanvasId))
-    offCanvas.hide()
+    const element = document.getElementById(offCanvasId)
+    const button = element.querySelector('.sh-offcanvas-close')
+    if(button){
+        button.click()
+    } else {
+        const offCanvas = new Offcanvas(element)
+        offCanvas.hide()
+    }
 }
 
 export default {

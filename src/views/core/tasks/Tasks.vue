@@ -14,7 +14,8 @@ import NoRecords from '@/lib/components/others/NoRecords.vue'
 import TabOne from '@/tabs/TabOne.vue'
 import TabTwo from '@/tabs/TabTwo.vue'
 import useShFetch from '@/lib/repo/composables/useShFetch'
-import { ShDropDownForm } from '@'
+import { ShCanvas, ShDropDownForm } from '@'
+import { onMounted } from 'vue'
 const query = `{
   tasks (id:{gt: 4}) {
       name
@@ -50,6 +51,14 @@ const taskAdded = ()=>{
   shRepo.showToast('Task added')
 }
 const {data: userName, loading,error,status} = useShFetch('auth/users','name')
+
+onMounted(()=>{
+  setTimeout(()=>{
+    shRepo.hideModal('testModal')
+    shRepo.hideOffCanvas('testCanvas')
+    console.log('Modal hidden')
+  },4000)
+})
 </script>
 <template>
   <div >
@@ -132,6 +141,14 @@ const {data: userName, loading,error,status} = useShFetch('auth/users','name')
       </div>
     </div>
   </div>
+<a href="#testModal" data-bs-toggle="modal">Open Modal</a>
+  <sh-modal modal-id="testModal">
+    Test Modal
+  </sh-modal>
+  <a href="#testCanvas" data-bs-toggle="offcanvas">Open Canvas</a>
+  <sh-canvas canvas-id="testCanvas">
+    Test Canvas
+  </sh-canvas>
 </template>
 
 <style scoped>

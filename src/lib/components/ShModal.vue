@@ -49,7 +49,7 @@ const modalClasses = computed(() => {
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title flex-fill">{{ modalTitle }}</h3>
-                    <button type="button" class="btn btn-danger btn-sm sh-modal-close" data-bs-dismiss="modal" data-dismiss="modal">&times;</button>
+                    <button type="button" class="btn-close sh-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="section">

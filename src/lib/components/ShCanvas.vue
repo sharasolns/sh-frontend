@@ -36,7 +36,7 @@ onMounted(()=>{
   <div class="offcanvas" :class="canvasSide +' '+ canvasSize + ''" :data-bs-scroll="scrollable" tabindex="-1" :id="canvasId" aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">{{ canvasTitle}}</h5>
-      <button type="button" ref="closecanvas" @click="offcanvasClosed" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" ref="closecanvas" class="btn-close sh-offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
       <slot></slot>
