@@ -244,8 +244,14 @@ const showModal = modalId => {
 }
 
 const hideModal = modalId => {
-    const modal = new Modal(document.getElementById(modalId))
-    modal.hide()
+    const modalElement = document.getElementById(modalId)
+    const button = modalElement.querySelector('.sh-modal-close')
+    if(button){
+        button.click()
+    } else {
+        const modal = new Modal(modalElement)
+        modal.hide()
+    }
 }
 
 const showOffCanvas = offCanvasId => {
