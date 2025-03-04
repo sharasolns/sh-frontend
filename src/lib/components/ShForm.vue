@@ -425,7 +425,7 @@ export default {
     }
   },
   created: function () {
-    console.log('created')
+    // console.log('created')
     if (this.labels) {
       this.allLabels = this.labels
     }

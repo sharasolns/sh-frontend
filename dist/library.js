@@ -283,8 +283,14 @@ const showModal = modalId => {
 };
 
 const hideModal = modalId => {
-    const modal = new bootstrap.Modal(document.getElementById(modalId));
-    modal.hide();
+    const modalElement = document.getElementById(modalId);
+    const button = modalElement.querySelector('.sh-modal-close');
+    if(button){
+        button.click();
+    } else {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.hide();
+    }
 };
 
 const showOffCanvas = offCanvasId => {
@@ -293,8 +299,14 @@ const showOffCanvas = offCanvasId => {
 };
 
 const hideOffCanvas = offCanvasId => {
-    const offCanvas = new bootstrap.Offcanvas(document.getElementById(offCanvasId));
-    offCanvas.hide();
+    const element = document.getElementById(offCanvasId);
+    const button = element.querySelector('.sh-offcanvas-close');
+    if(button){
+        button.click();
+    } else {
+        const offCanvas = new bootstrap.Offcanvas(element);
+        offCanvas.hide();
+    }
 };
 
 var shRepo = {
@@ -437,11 +449,18 @@ const axios = Axios__default["default"].create({
 window.shAxionInstance = axios;
 function doGet (endPoint, data,extraConfig) {
   updateSession();
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + shStorage.getItem('access_token')
+    let accessToken = shStorage.getItem('access_token');
+    if(accessToken === 'undefined' || accessToken === 'null'){
+        accessToken = null;
     }
-  };
+    let config = {};
+    if(accessToken){
+        config = {
+            headers: {
+                Authorization: 'Bearer ' + accessToken
+            }
+        };
+    }
     if (extraConfig) {
         Object.assign(config, extraConfig);
     }
@@ -453,11 +472,18 @@ function doGet (endPoint, data,extraConfig) {
 }
 function doPost (endPoint, data, extraConfig) {
   updateSession();
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + shStorage.getItem('access_token')
+    let accessToken = shStorage.getItem('access_token');
+    if(accessToken === 'undefined' || accessToken === 'null'){
+        accessToken = null;
     }
-  };
+    let config = {};
+    if(accessToken){
+         config = {
+            headers: {
+                Authorization: 'Bearer ' + accessToken
+            }
+        };
+    }
     if (extraConfig) {
         Object.assign(config, extraConfig);
     }
@@ -2089,7 +2115,7 @@ const _hoisted_2$i = {
 };
 const _hoisted_3$g = ["src"];
 const _hoisted_4$g = ["value"];
-const _hoisted_5$d = ["disabled"];
+const _hoisted_5$e = ["disabled"];
 
 function render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$s, [
@@ -2121,7 +2147,7 @@ function render$4(_ctx, _cache, $props, $setup, $data, $options) {
       onInput: _cache[2] || (_cache[2] = (...args) => ($options.updateValue && $options.updateValue(...args))),
       placeholder: "712345678",
       "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => (($data.input) = $event))
-    }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_5$d), [
+    }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_5$e), [
       [vue.vModelText, $data.input]
     ])
   ]))
@@ -2137,7 +2163,7 @@ const _hoisted_1$r = {
 const _hoisted_2$h = ["id"];
 const _hoisted_3$f = { class: "sh-suggestions-holder" };
 const _hoisted_4$f = { class: "badge bg-secondary m-1 sh-selected-item" };
-const _hoisted_5$c = ["onClick"];
+const _hoisted_5$d = ["onClick"];
 const _hoisted_6$a = ["id"];
 const _hoisted_7$9 = ["id", "aria-labelledby"];
 const _hoisted_8$8 = ["onClick"];
@@ -2312,7 +2338,7 @@ return (_ctx, _cache) => {
                   type: "button",
                   class: "btn-close border-start border-1 ms-1",
                   "aria-label": "Close"
-                }, null, 8 /* PROPS */, _hoisted_5$c)
+                }, null, 8 /* PROPS */, _hoisted_5$d)
               ]))
             }), 256 /* UNKEYED_FRAGMENT */))
           ]),
@@ -2733,7 +2759,7 @@ const _hoisted_3$e = {
   role: "alert"
 };
 const _hoisted_4$e = /*#__PURE__*/vue.createElementVNode("i", { class: "bi-exclamation-triangle-fill me-1" }, null, -1 /* HOISTED */);
-const _hoisted_5$b = { key: 0 };
+const _hoisted_5$c = { key: 0 };
 const _hoisted_6$9 = { key: 1 };
 const _hoisted_7$8 = { class: "row" };
 const _hoisted_8$7 = { class: "fg-label control-label text-capitalize control-bel col-md-12 request-form-label mb-2" };
@@ -2797,7 +2823,7 @@ function render$3(_ctx, _cache, $props, $setup, $data, $options) {
         ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$e, [
             _hoisted_4$e,
             (_ctx.errorText)
-              ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$b, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
+              ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_5$c, vue.toDisplayString(_ctx.errorText), 1 /* TEXT */))
               : (vue.openBlock(), vue.createElementBlock("span", _hoisted_6$9, "Unexpected Error Occurred")),
             vue.createCommentVNode("      <button @click=\"hideError\" type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>")
           ]))
@@ -3347,13 +3373,13 @@ return (_ctx, _cache) => {
 script$r.__file = "src/lib/components/form-components/DateInput.vue";
 
 const _hoisted_1$n = /*#__PURE__*/vue.createElementVNode("div", null, null, -1 /* HOISTED */);
-const _hoisted_2$f = ["onUpdate:modelValue"];
+const _hoisted_2$f = ["name", "onUpdate:modelValue"];
 const _hoisted_3$d = ["innerHTML"];
 const _hoisted_4$d = {
   key: 0,
   class: "text-danger sh-required"
 };
-const _hoisted_5$a = ["innerHTML"];
+const _hoisted_5$b = ["innerHTML"];
 const _hoisted_6$8 = {
   key: 2,
   class: "form-notch"
@@ -3383,7 +3409,7 @@ var script$q = {
   'action', 'successCallback', 'retainDataAfterSubmission',
   'successMessage', 'fields', 'customComponents', 'placeHolders',
   'formClasses',
-  'helperTexts', 'labels', 'data',
+  'helperTexts', 'labels', 'data','preSubmitCallback',
   'fillSelects',
   'formClass',
   'actionLabel',
@@ -3478,9 +3504,15 @@ const getElementClass = section => (props.formClasses && props.formClasses[secti
 const getPlaceholder = field => (props.placeHolders && props.placeHolders[field]) && props.placeHolders[field];
 const fieldChanged = field => {
   delete validationErrors.value[field];
-  emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value);
+  const data = {};
+  formFields.value.map(field => {
+    data[field.field] = field.value;
+  });
+  setTimeout(() => {
+    emit('fieldChanged', field, formFields.value.filter(f => f.field === field)[0].value, data);
+  }, 300);
 };
-const getComponentProps = field => {
+const getComponentProps =  (field) => {
   const newField = {...field};
   delete newField.component;
   delete newField.value;
@@ -3491,7 +3523,7 @@ const loading = vue.ref(false);
 const submitBtn = vue.ref(false);
 const validationErrors = vue.ref({});
 const formError = vue.ref(null);
-const submitForm = e => {
+const submitForm = async  (e) => {
   submitBtnWidth.value = submitBtn.value.getBoundingClientRect().width + 'px !important';
   validationErrors.value = {};
   e.preventDefault();
@@ -3500,6 +3532,13 @@ const submitForm = e => {
   formFields.value.map(field => {
     data[field.field] = field.value;
   });
+  if (props.preSubmitCallback) {
+    const callbackkRes =  await props.preSubmitCallback(data);
+    if (callbackkRes !== true) {
+      loading.value = false;
+      return false
+    }
+  }
   if (props.gqlMutation) {
     let args = `(`;
     let selectFields = Object.keys(data);
@@ -3514,6 +3553,7 @@ const submitForm = e => {
       args = '';
     }
     emit('preSubmit', data);
+
     const mutation = `{\n${props.gqlMutation} ${args} {\n${selectFields.join(`\n`)}\n}\n}`;
     shApis.graphQlMutate(mutation).then(res => handleSuccessRequest(res)).catch(reason => handlefailedRequest(reason));
   } else {
@@ -3547,7 +3587,7 @@ const handlefailedRequest = reason => {
 };
 const submitBtnWidth = vue.ref(null);
 const setExistingData = (existingData) => {
-  console.log(existingData,props);
+  // console.log(existingData,props)
   if (existingData) {
     const newFields = formFields.value.map(fl => {
       if (existingData[fl.field]) {
@@ -3566,7 +3606,7 @@ vue.watch(() => props.currentData, (newData) => {
   setExistingData(newData);
 });
 vue.onMounted((ev) => {
-  console.log(props);
+  // console.log(props)
   props.fields && props.fields.map(field => {
     let fieldObj = {};
     if (typeof field === 'object') {
@@ -3617,12 +3657,13 @@ return (_ctx, _cache) => {
       (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(formFields.value, (field, index) => {
         return (vue.openBlock(), vue.createElementBlock("div", {
           key: field,
-          class: vue.normalizeClass(getElementClass('formGroup'))
+          class: vue.normalizeClass(getElementClass('formGroup') + ' sh-field' + field.field)
         }, [
           (field.type === 'hidden')
             ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("input", {
                 key: 0,
                 type: "hidden",
+                name: field.field,
                 "onUpdate:modelValue": $event => ((formFields.value[index].value) = $event)
               }, null, 8 /* PROPS */, _hoisted_2$f)), [
                 [vue.vModelText, formFields.value[index].value]
@@ -3654,7 +3695,7 @@ return (_ctx, _cache) => {
                       key: 1,
                       class: vue.normalizeClass(getElementClass('formLabel')),
                       innerHTML: field.label
-                    }, null, 10 /* CLASS, PROPS */, _hoisted_5$a))
+                    }, null, 10 /* CLASS, PROPS */, _hoisted_5$b))
                   : vue.createCommentVNode("v-if", true),
                 (vue.unref(isFloating))
                   ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_6$8, [..._hoisted_10$6]))
@@ -3707,11 +3748,12 @@ const _hoisted_1$m = ["id", "data-bs-backdrop"];
 const _hoisted_2$e = { class: "modal-content" };
 const _hoisted_3$c = { class: "modal-header" };
 const _hoisted_4$c = { class: "modal-title flex-fill" };
-const _hoisted_5$9 = /*#__PURE__*/vue.createElementVNode("button", {
-  class: "btn btn-danger btn-sm",
+const _hoisted_5$a = /*#__PURE__*/vue.createElementVNode("button", {
+  type: "button",
+  class: "btn-close sh-modal-close",
   "data-bs-dismiss": "modal",
-  "data-dismiss": "modal"
-}, "×", -1 /* HOISTED */);
+  "aria-label": "Close"
+}, null, -1 /* HOISTED */);
 const _hoisted_6$7 = { class: "modal-body" };
 const _hoisted_7$6 = { class: "section" };
 
@@ -3777,7 +3819,7 @@ return (_ctx, _cache) => {
       vue.createElementVNode("div", _hoisted_2$e, [
         vue.createElementVNode("div", _hoisted_3$c, [
           vue.createElementVNode("h3", _hoisted_4$c, vue.toDisplayString(__props.modalTitle), 1 /* TEXT */),
-          _hoisted_5$9
+          _hoisted_5$a
         ]),
         vue.createElementVNode("div", _hoisted_6$7, [
           vue.createElementVNode("div", _hoisted_7$6, [
@@ -3795,7 +3837,7 @@ return (_ctx, _cache) => {
 script$p.__file = "src/lib/components/ShModal.vue";
 
 const _hoisted_1$l = /*#__PURE__*/vue.createElementVNode("h5", { class: "d-none" }, "To prevent default class", -1 /* HOISTED */);
-const _hoisted_2$d = { class: "dropdown" };
+const _hoisted_2$d = { class: "dropdown sh-dropdown-form" };
 const _hoisted_3$b = ["id"];
 const _hoisted_4$b = ["aria-labelledby"];
 
@@ -4034,7 +4076,14 @@ const _hoisted_3$a = {
   class: "offcanvas-title",
   id: "offcanvasScrollingLabel"
 };
-const _hoisted_4$a = { class: "offcanvas-body" };
+const _hoisted_4$a = {
+  type: "button",
+  ref: "closecanvas",
+  class: "btn-close sh-offcanvas-close",
+  "data-bs-dismiss": "offcanvas",
+  "aria-label": "Close"
+};
+const _hoisted_5$9 = { class: "offcanvas-body" };
 
 var script$l = {
   __name: 'ShCanvas',
@@ -4084,16 +4133,9 @@ return (_ctx, _cache) => {
   }, [
     vue.createElementVNode("div", _hoisted_2$c, [
       vue.createElementVNode("h5", _hoisted_3$a, vue.toDisplayString(__props.canvasTitle), 1 /* TEXT */),
-      vue.createElementVNode("button", {
-        type: "button",
-        ref: "closecanvas",
-        onClick: _cache[0] || (_cache[0] = (...args) => (_ctx.offcanvasClosed && _ctx.offcanvasClosed(...args))),
-        class: "btn-close text-reset",
-        "data-bs-dismiss": "offcanvas",
-        "aria-label": "Close"
-      }, null, 512 /* NEED_PATCH */)
+      vue.createElementVNode("button", _hoisted_4$a, null, 512 /* NEED_PATCH */)
     ]),
-    vue.createElementVNode("div", _hoisted_4$a, [
+    vue.createElementVNode("div", _hoisted_5$9, [
       vue.renderSlot(_ctx.$slots, "default")
     ])
   ], 10 /* CLASS, PROPS */, _hoisted_1$i))
@@ -4259,16 +4301,19 @@ const actionSuccessful = (res)=>{
   res.actionType = 'silentAction';
   emit('actionSuccessful',res);
   emit('success',res);
-  shRepo.showToast(res.message ?? props.successMessage);
+  if(props.successMessage || res.message){
+    shRepo.showToast(res.message ?? props.successMessage);
+  }
 };
 
 const actionFailed = reason =>{
-  console.log(reason);
   processing.value = false;
   reason.actionType = 'silentAction';
   emit('actionFailed', reason);
   emit('failed', reason);
-  shRepo.showToast(reason.value.error.message ?? props.failMessage,'error');
+  if (props.failMessage || reason.value?.message) {
+    shRepo.showToast(reason.value.message ?? props.failMessage,'error');
+  }
 };
 function runAction () {
   processing.value = true;
@@ -4523,7 +4568,7 @@ return (_ctx, _cache) => {
                       ? (vue.openBlock(), vue.createElementBlock("button", {
                           key: 3,
                           title: __props.action.title,
-                          class: vue.normalizeClass(__props.action.class ? __props.action.class:'btn btn-default ' + __props.actionClass),
+                          class: vue.normalizeClass(__props.action.class ? __props.action.class+' btn':'btn btn-default ' + __props.actionClass),
                           onClick: _cache[6] || (_cache[6] = $event => (doEmitAction(__props.action.emits, __props.record)))
                         }, [
                           (__props.action.icon)
@@ -5213,11 +5258,11 @@ const _hoisted_70 = { key: 0 };
 
 const __default__ = {
   name: 'sh-table',
-  props: ['endPoint', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
+  props: ['endPoint','orderBy','orderMethod', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
   data(){
     return {
-      order_by: '',
-      order_method: '',
+      order_by: this.orderBy,
+      order_method: this.orderMethod,
       per_page: this.pageCount ?? shRepo.getShConfig('tablePerPage', 10),
       page: 1,
       exactMatch: false,
@@ -5395,9 +5440,16 @@ const __default__ = {
           headers.push(header);
         }
       });
+
       const data = {
         titles: headers,
-        export: 1
+        export: 1,
+        order_by: this.order_by,
+        order_method: this.order_method,
+        filter_value: this.filter_value,
+        from: this.from,
+        to: this.to,
+        period: this.period,
       };
       shApis.doPost(this.endPoint, data).then(res => {
         this.downloading = false;
@@ -5427,7 +5479,7 @@ const __default__ = {
       } else if (!append) {
         this.loading = 'loading';
       }
-      const data = {
+      let data = {
         order_by: this.order_by,
         order_method: this.order_method,
         per_page: this.per_page,
@@ -5439,6 +5491,12 @@ const __default__ = {
         period: this.period,
         exact: this.exactMatch
       };
+      // remove empty values
+      Object.keys(data).forEach(key => {
+        if (data[key] === null || data[key] === '') {
+          delete data[key];
+        }
+      });
       if (this.pagination_data) {
         this.pagination_data.loading = 1;
       }
@@ -6006,7 +6064,7 @@ const setTabCounts = (tabCounts) => {
 const resetTabCounts = () => {
   const arr = route.fullPath.split('/');
   if (!tabExistsInUrl()) {
-    router.push(route.fullPath + '/tab/' + props.tabs[0]);
+    router.replace(route.fullPath + '/tab/' + props.tabs[0]);
   } else {
     currentTab.value = arr[arr.length - 1];
   }
