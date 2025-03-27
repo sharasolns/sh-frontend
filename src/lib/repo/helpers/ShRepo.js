@@ -65,7 +65,6 @@ function setTabCounts(url){
 }
 
 function formatHttpCatchError(reason){
-    console.log(reason)
     let error = ''
     if (typeof reason !== 'undefined') {
         if (typeof reason.response !== 'undefined') {
@@ -96,14 +95,12 @@ function formatHttpCatchError(reason){
 
 function getMenuCount(url){
     apis.doGet(url).then(res => {
-        console.log(res)
     })
 }
 
 const signOutUser = () => {
     const loginUrl = getShConfig('loginUrl', 'auth/login')
     const logoutApiEndPoint = getShConfig('logoutApiEndpoint', 'auth/logout')
-    console.log(loginUrl, logoutApiEndPoint)
     shApis.doPost(logoutApiEndPoint).then(res => {
         ShStorage.removeItem('access_token')
         ShStorage.removeItem('user')

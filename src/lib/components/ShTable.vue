@@ -16,6 +16,16 @@ const cleanColumn = col=>{
   return newCol
 }
 
+const showColumn = header=>{
+  if(typeof header === 'string'){
+    return true
+  }
+  if(typeof header === 'object' && header.validator) {
+    return header.validator()
+  }
+  return true
+}
+
 </script>
 <template>
   <div class="auto-table mt-2">
@@ -84,16 +94,18 @@ const cleanColumn = col=>{
     <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700 || disableMobileResponsive">
       <thead class="sh-thead">
       <tr>
-        <th v-for="title in tableHeaders" :key="title">
-          <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
-             v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
-          <a class="text-capitalize" v-on:click="changeKey('order_by',title.key)"
-             v-else-if="typeof title === 'object'">{{ title.label ?? title.key.replace(/_/g, ' ') }}</a>
-          <a class="text-capitalize" v-on:click="changeKey('order_by',title(null))"
-             v-else-if="typeof title === 'function'">{{ title(null).replace(/_/g, ' ') }}</a>
-          <a class="text-capitalize" v-else-if="typeof title !== 'undefined'"
-             v-on:click="changeKey('order_by',title)">{{ title.replace(/_/g, ' ') }}</a>
-        </th>
+        <template v-for="title in tableHeaders" :key="title">
+          <th v-if="showColumn(title)">
+            <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
+               v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
+            <a class="text-capitalize" v-on:click="changeKey('order_by',title.key)"
+               v-else-if="typeof title === 'object'">{{ title.label ?? title.key.replace(/_/g, ' ') }}</a>
+            <a class="text-capitalize" v-on:click="changeKey('order_by',title(null))"
+               v-else-if="typeof title === 'function'">{{ title(null).replace(/_/g, ' ') }}</a>
+            <a class="text-capitalize" v-else-if="typeof title !== 'undefined'"
+               v-on:click="changeKey('order_by',title)">{{ title.replace(/_/g, ' ') }}</a>
+          </th>
+        </template>
         <th v-if="actions" class="text-capitalize">
           {{ actions.label }}
         </th>
@@ -121,24 +133,27 @@ const cleanColumn = col=>{
       </tr>
       <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class"
           @click="rowSelected(record)">
-        <td v-for="key in tableHeaders" :key="key">
-          <router-link v-if="typeof key === 'string' && links && links[key]"
-                       :target="links[key].target ? '_blank':''" :to="replaceLinkUrl(links[key],record)"
-                       :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
-          <span v-else-if="getFieldType(key) === 'numeric'">{{
-              Intl.NumberFormat().format(record[key])
-            }}</span>
-          <span v-else-if="getFieldType(key) === 'money'"
-                class="text-success fw-bold">{{ Intl.NumberFormat().format(record[key]) }}</span>
-          <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
-          <span v-else-if="typeof key === 'string'" v-html="record[key]"></span>
-          <span v-else-if="typeof key === 'function'" v-html="key(record, index)"></span>
-          <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"></span>
-          <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"></span>
-          <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="cleanColumn(key)"></component>
-          <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"></span>
-          <span v-else v-html="record[key[0]]"></span>
-        </td>
+        <template v-for="key in tableHeaders" :key="key">
+          <td v-if="showColumn(key)">
+            <router-link v-if="typeof key === 'string' && links && links[key]"
+                         :target="links[key].target ? '_blank':''" :to="replaceLinkUrl(links[key],record)"
+                         :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
+            <span v-else-if="getFieldType(key) === 'numeric'">{{
+                Intl.NumberFormat().format(record[key])
+              }}</span>
+            <span v-else-if="getFieldType(key) === 'money'"
+                  class="text-success fw-bold">{{ Intl.NumberFormat().format(record[key]) }}</span>
+            <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
+            <span v-else-if="typeof key === 'string'" v-html="record[key]"></span>
+            <span v-else-if="typeof key === 'function'" v-html="key(record, index)"></span>
+            <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"></span>
+            <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"></span>
+            <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="cleanColumn(key)"></component>
+            <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"></span>
+            <span v-else v-html="record[key[0]]"></span>
+          </td>
+        </template>
+
         <td v-if="actions" style="white-space:nowrap;">
           <table-actions :emitAction="doEmitAction" :actions="actions" :record="record"/>
         </td>
@@ -162,19 +177,20 @@ const cleanColumn = col=>{
         <template v-for="(record,index) in records" :key="record.id">
           <div class="single-mobile-req bg-light p-3" @click="rowSelected(record)">
             <template v-for="key in tableHeaders" :key="key[0]">
-              <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
-                 v-if="typeof key === 'string' ">
-                {{ key.replace(/_/g, ' ') }}</p>
-              <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
-                 v-else-if="typeof key === 'function'">
-                {{ key(null).replace(/_/g, ' ') }}</p>
-              <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
-                 v-else-if="typeof key === 'object'">
-                {{ key.label ?? key.key.replace(/_/g, ' ') }}</p>
-              <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else>{{
-                  key[1].replace(/_/g, ' ')
-                }}</p>
-              <span>
+              <template v-if="showColumn(key)">
+                <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
+                   v-if="typeof key === 'string' ">
+                  {{ key.replace(/_/g, ' ') }}</p>
+                <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
+                   v-else-if="typeof key === 'function'">
+                  {{ key(null).replace(/_/g, ' ') }}</p>
+                <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
+                   v-else-if="typeof key === 'object'">
+                  {{ key.label ?? key.key.replace(/_/g, ' ') }}</p>
+                <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else>{{
+                    key[1].replace(/_/g, ' ')
+                  }}</p>
+                <span>
                 <router-link v-if="typeof key === 'string' && links && links[key]"
                              :to="replaceLinkUrl(links[key],record)" :class="getLinkClass(links[key])"
                              v-html="record[key]"></router-link>
@@ -190,6 +206,8 @@ const cleanColumn = col=>{
                 <span v-else-if="typeof key === 'function'" v-html="key(record, index )"></span>
                 <span v-else v-html="record[key[0]]"></span>
               </span>
+              </template>
+
               <hr class="my-2">
             </template>
             <div v-if="actions">

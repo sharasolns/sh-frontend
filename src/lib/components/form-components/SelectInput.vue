@@ -11,7 +11,6 @@ const modelValueUpdated = (e) => {
   emit('update:modelValue',inputModel)
 }
 onMounted(()=>{
-  console.log(props)
   props.modelValue && (inputModel.value = props.modelValue)
   const options = props.data ?? props.options
   if(options){

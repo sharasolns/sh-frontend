@@ -31,6 +31,11 @@ const viewItem = item=>{
 const formatTitle = row=>{
   return `<h3>${row.title}</h3>`
 }
+
+const status = ref('active')
+const allowSummary = row=>{
+  return status.value === 'active'
+}
 </script>
 <template>
     <div class="max-2">
@@ -46,10 +51,11 @@ const formatTitle = row=>{
                 </template>
               </sh-table>
               {{ selected}}
-                <sh-table :disable-mobile-responsive="true" :has-range="false" :end-point="`notes/list`" :headers="['id',{
+                <sh-table  :has-range="false" :end-point="`notes/list`" :headers="['id',{
                   label:'Summary',
                   key:'title',
                   callback:formatTitle,
+                  validator:allowSummary,
                   sortable:true
                 },'title','note','created_at']"
                           :onViewItem="viewItem"
