@@ -126,9 +126,11 @@ const showColumn = header=>{
           {{ loading_error }}
         </td>
       </tr>
-      <tr class="text-center alert alert-info no_records" v-else-if="records.length === 0">
+      <tr class="no_records" v-else-if="records.length === 0">
         <td :colspan="actions ? tableHeaders.length + 1 : tableHeaders.length">
-          <i class="bi-info-circle"></i> No records found
+          <div class="text-center bg-primary-light px-2 py-1 rounded no_records_div">
+            <i class="bi-info-circle"></i> No records found
+          </div>
         </td>
       </tr>
       <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class"
