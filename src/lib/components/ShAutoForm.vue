@@ -192,6 +192,10 @@ const handlefailedRequest = reason => {
 }
 const submitBtnWidth = ref(null)
 const setExistingData = (existingData) => {
+<<<<<<< HEAD
+=======
+  // console.log(existingData,props)
+>>>>>>> d4fc826c36f9a8f9b4323670e7fe93bad6cba1a1
   if (existingData) {
     const newFields = formFields.value.map(fl => {
       if (existingData[fl.field]) {
@@ -210,6 +214,10 @@ watch(() => props.currentData, (newData) => {
   setExistingData(newData)
 })
 onMounted((ev) => {
+<<<<<<< HEAD
+=======
+  // console.log(props)
+>>>>>>> d4fc826c36f9a8f9b4323670e7fe93bad6cba1a1
   props.fields && props.fields.map(field => {
     let fieldObj = {}
     if (typeof field === 'object') {
