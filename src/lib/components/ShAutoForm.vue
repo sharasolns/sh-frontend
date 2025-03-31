@@ -26,7 +26,7 @@ const props = defineProps([
   'emails',
   'method',
   'phones', 'numbers', 'selects', 'dates', 'gqlMutation',
-    'required'
+    'required','retainModal'
 ])
 const emit = defineEmits(['success','preSubmit', 'fieldChanged', 'formSubmitted', 'formError'])
 const formFields = ref([])
@@ -175,7 +175,7 @@ const handleSuccessRequest = res => {
   props.successMessage && shRepo.showToast(props.successMessage)
   props.successCallback && props.successCallback(res.data)
   !props.retainDataAfterSubmission && formFields.value.map(field => field.value = null)
-  closeModal()
+  !props.retainModal && closeModal()
 }
 
 const handlefailedRequest = reason => {
