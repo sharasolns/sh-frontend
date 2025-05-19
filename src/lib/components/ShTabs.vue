@@ -124,7 +124,7 @@ const activetab = (tab) => {
     </li>
   </ul>
   <div class="tab-content" :class="classTwo">
-    <router-view :currentTab="currentTab" :key="path" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
+    <router-view v-bind="$attrs" :currentTab="currentTab" :key="path" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
   </div>
 </template>
 
