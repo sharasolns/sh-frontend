@@ -51,13 +51,15 @@ const emitClick = ()=>{
   <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal" @click="emitClick">
     <slot></slot>
   </a>
-  <sh-modal :modal-size="modalSize" :modal-id="realModalId" :modal-title="modalTitle">
-    <sh-auto-form
-        @success="success"
-        @field-changed="fieldChanged"
-        @form-submitted="formSubmitted"
-        @form-error="formError"
-        :key="JSON.stringify(currentData ?? {})"
-        v-bind="props"/>
-  </sh-modal>
+  <teleport to="body">
+    <sh-modal :modal-size="modalSize" :modal-id="realModalId" :modal-title="modalTitle">
+      <sh-auto-form
+          @success="success"
+          @field-changed="fieldChanged"
+          @form-submitted="formSubmitted"
+          @form-error="formError"
+          :key="JSON.stringify(currentData ?? {})"
+          v-bind="props"/>
+    </sh-modal>
+  </teleport>
 </template>
