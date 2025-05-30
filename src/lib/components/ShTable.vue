@@ -276,7 +276,8 @@ export default {
       range: null,
       from: null,
       to: null,
-      period: null
+      period: null,
+      lastId: null
     }
   },
   mounted(){
@@ -443,6 +444,7 @@ export default {
         from: this.from,
         to: this.to,
         period: this.period,
+        lastId: this.lastId,
       }
       apis.doPost(this.endPoint, data).then(res => {
         this.downloading = false
@@ -482,7 +484,8 @@ export default {
         from: this.from,
         to: this.to,
         period: this.period,
-        exact: this.exactMatch
+        exact: this.exactMatch,
+        lastId: this.lastId
       }
       // remove empty values
       Object.keys(data).forEach(key => {
@@ -507,6 +510,7 @@ export default {
         if (this.page < 2 && this.cacheKey) {
           shStorage.setItem('sh_table_cache_' + this.cacheKey, response.data)
         }
+
         this.pagination_data = {
           current: response.current_page,
           start: response.from,
@@ -519,6 +523,8 @@ export default {
         if (!this.headers && response.total > 0) {
           this.tableHeaders = Object.keys(response.data[0])
         }
+        // get  id value of the last record
+        this.lastId = response.data.length > 0 ? response.data[response.data.length - 1].id : null
         if (append) {
           this.records.push(...response.data)
           let totalShown = response.total > response.per_page ? response.per_page * response.current_page : response.total
