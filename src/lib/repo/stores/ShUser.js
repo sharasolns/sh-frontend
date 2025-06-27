@@ -21,7 +21,10 @@ export const useUserStore = defineStore('user-store', {
       } catch (error) {
         user= null
       }
-      if (user) {
+      if(typeof user !== 'object'){
+        user = null
+      }
+      if (user ) {
         user.isAllowedTo = function (slug) {
           if (this.permissions) {
             let permissions = []
