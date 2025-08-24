@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import shRepo from '../repo/helpers/ShRepo.js'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '../repo/stores/ShUser'
+import { all } from 'axios'
 
 const props = defineProps({
   tabs: {
@@ -56,8 +57,10 @@ onMounted(()=>{
     }
     return tab
   })
-  resetTabCounts()
-  setTab(allowedTabs.value[0])
+  if(allowedTabs.value.length > 0){
+    resetTabCounts()
+    setTab(allowedTabs.value[0])
+  }
 })
 
 watch(()=>props.tabCounts, () => {
@@ -152,17 +155,26 @@ const getTabLabel = tab=>{
 }
 </script>
 <template>
-  <ul class="nav nav-tabs sh-tabs" :class="classes ?? shRepo.getShConfig('tabsClass','sh-tabs nav-tabs-bordered')">
-    <li class="nav-item" v-for="tab in tabs" :key="getTabKey(tab)" v-if-user-can="getTabPermission(tab)">
-      {{ getTabKey(tab) }}
-      <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
-                   :to="baseUrl+'/tab/'+getTabKey(tab)" role="tab" :class="'sh_tab_' + getTabKey(tab)">
-        {{ getTabLabel(tab) }}
-      </router-link>
-    </li>
-  </ul>
-  <div class="tab-content" :class="classTwo">
-    <router-view v-bind="$attrs" :currentTab="currentTab" :key="path" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
+  <template v-if="allowedTabs.length > 0">
+    <ul class="nav nav-tabs sh-tabs" :class="classes ?? shRepo.getShConfig('tabsClass','sh-tabs nav-tabs-bordered')">
+      <li class="nav-item" v-for="tab in allowedTabs" :key="getTabKey(tab)" v-if-user-can="getTabPermission(tab)">
+        <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
+                     :to="baseUrl+'/tab/'+getTabKey(tab)" role="tab" :class="'sh_tab_' + getTabKey(tab)">
+          {{ getTabLabel(tab) }}
+        </router-link>
+      </li>
+    </ul>
+    <div class="tab-content" :class="classTwo">
+      <router-view v-bind="$attrs" :currentTab="currentTab" :key="path" :sharedData="sharedData" :tabCounts="tabCounts"></router-view>
+    </div>
+  </template>
+  <div v-else class="alert alert-warning">
+    <div v-if="tabs.length">
+      403 Not Allowed
+    </div>
+    <div v-else>
+      No tabs found
+    </div>
   </div>
 </template>
 
