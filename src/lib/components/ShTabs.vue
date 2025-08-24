@@ -3,6 +3,8 @@ import { onMounted, ref, watch } from 'vue'
 import apis from '../repo/helpers/ShApis.js'
 import { useRoute, useRouter } from 'vue-router'
 import shRepo from '../repo/helpers/ShRepo.js'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '../repo/stores/ShUser'
 
 const props = defineProps({
   tabs: {
@@ -39,10 +41,23 @@ const route = useRoute()
 const router = useRouter()
 const currentTab = ref('')
 const path = ref(route.path)
-
+const allowedTabs = ref([])
+const {user} = storeToRefs(useUserStore())
 onMounted(()=>{
+  if(props.tabs.length === 0){
+    return;
+  }
+  allowedTabs.value = props.tabs.filter(tab=>{
+    if(typeof tab === 'object' && tab.permission){
+      if(user.value && user.value.isAllowedTo(tab.permission)){
+        return tab
+      }
+      return false
+    }
+    return tab
+  })
   resetTabCounts()
-  setTab(props.tabs[0])
+  setTab(allowedTabs.value[0])
 })
 
 watch(()=>props.tabCounts, () => {
@@ -62,8 +77,10 @@ watch(()=>route.path,(newPath)=>{
 })
 
 const setTab = (tab) => {
+
   if (tab) {
-    currentTab.value = tab.replace(/_/g, ' ')
+    const label = getTabLabel(tab)
+    currentTab.value = label.replace(/_/g, ' ')
   }
 }
 const setTabCounts = (tabCounts) => {
@@ -78,9 +95,9 @@ const setTabCounts = (tabCounts) => {
 const resetTabCounts = () => {
   const arr = route.fullPath.split('/')
   if (!tabExistsInUrl()) {
-    router.replace(route.fullPath + '/tab/' + props.tabs[0])
+    router.replace(route.fullPath + '/tab/' + getTabKey(allowedTabs.value[0]))
   } else {
-    currentTab.value = arr[arr.length - 1]
+    setTab(arr[arr.length - 1])
   }
   if (props.tabCounts) {
     setTabCounts(props.tabCounts)
@@ -89,7 +106,8 @@ const resetTabCounts = () => {
 const tabExistsInUrl = () => {
   let exists = false
   props.tabs.forEach(tab => {
-    if (route.fullPath.includes(`/${tab}`)) {
+    const tabKey = getTabKey(tab)
+    if (route.fullPath.includes(`/${tabKey}`)) {
       exists = true
     }
   })
@@ -108,18 +126,38 @@ const setCounts = (res) => {
     }
   })
 }
-const activetab = (tab) => {
-  if (props.activeTab) {
-    return props.activeTab === tab ? 'active' : 'active'
+
+const getTabKey = (tab)=>{
+  if(typeof tab === 'string') {
+    return tab
   }
+  return tab.name || tab.key
+}
+
+const getTabPermission = tab=>{
+  if (typeof tab === 'string') {
+    return ''
+  }
+  return tab.permission
+}
+
+const getTabLabel = tab=>{
+  let label = ''
+  if (typeof tab === 'string') {
+    label = tab
+  } else {
+    label = tab.label || tab.name || tab.key
+  }
+  return label.replace(/_/g, ' ')
 }
 </script>
 <template>
   <ul class="nav nav-tabs sh-tabs" :class="classes ?? shRepo.getShConfig('tabsClass','sh-tabs nav-tabs-bordered')">
-    <li class="nav-item" v-for="tab in tabs" :key="tab">
+    <li class="nav-item" v-for="tab in tabs" :key="getTabKey(tab)" v-if-user-can="getTabPermission(tab)">
+      {{ getTabKey(tab) }}
       <router-link @click="setTab(tab)" :active-class="'active'" class="nav-link text-capitalize"
-                   :to="baseUrl+'/tab/'+tab" role="tab" :class="'sh_tab_' + tab">
-        {{ tab.replace(/_/g, ' ') }}
+                   :to="baseUrl+'/tab/'+getTabKey(tab)" role="tab" :class="'sh_tab_' + getTabKey(tab)">
+        {{ getTabLabel(tab) }}
       </router-link>
     </li>
   </ul>
