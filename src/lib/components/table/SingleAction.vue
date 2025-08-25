@@ -69,12 +69,12 @@ const {user} = storeToRefs(useUserStore())
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </a>
-  <button :title="action.title" :class="action.class ? action.class+' btn':'btn btn-default ' + actionClass"
+  <span :title="action.title" :class="action.class ? action.class+' sh-dropdown-action dropdown-item':'sh-dropdown-action dropdown-item' + actionClass"
           v-else-if="action.emits"
           @click="doEmitAction(action.emits, record)">
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
-  </button>
+  </span>
   <router-link v-else-if="!action.emits" :title="action.title"
                :to="url"
                :class="action.class +' '+ actionClass">
@@ -85,6 +85,10 @@ const {user} = storeToRefs(useUserStore())
   </template>
 </template>
 
-<style scoped>
+<style >
+.sh-dropdown-action{
+  cursor: pointer;
+
+}
 
 </style>

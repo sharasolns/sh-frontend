@@ -16,6 +16,8 @@ import './views/assets/main.css'
 import PasswordInput from './lib/components/form-components/PasswordInput.vue'
 import ViewTaskPopup from './views/popups/ViewTaskPopup.vue'
 import NoRecords from './lib/components/others/NoRecords.vue'
+import {streamline} from '@iankibetsh/vue-streamline'
+
 const app = createApp(App)
 app.use(createPinia())
 const shFormElementClasses = {
@@ -51,7 +53,7 @@ const UserdetailsColumns = [
 ]
 app.use(ShFrontend,{
   sessionTimeout: 400,
-  defaultRange: 'This Month',
+  defaultRange: 'All Time',
   loginUrl: '/sh-auth',
   logoutApiEndpoint: 'auth/logout',
   redirectLogin: '/dashboard',
@@ -67,6 +69,17 @@ app.use(ShFrontend,{
   shFormComponents,
   UserdetailsColumns
 })
+
+app.use(streamline, {
+    streamlineHeaders: {
+        // 'Content-Type': 'application/json',
+        // 'Accept': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    },
+    streamlineUrl: import.meta.env.VITE_APP_API_URL + 'streamline',
+    enableCache: true,
+})
+
 
 //popups
 app.component('ViewTask', ViewTaskPopup)
