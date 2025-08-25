@@ -33,5 +33,44 @@ export default [
         label: 'Tabs',
         icon: 'bi-list',
         path: '/tabs',
-    }
+    },
+    {
+        path: '/billing',
+        label: 'Billing',
+        icon: 'bi-wallet2',
+        permission: 'billing',
+        type: 'many',
+        children: [
+            {
+                path: '/billing/bills',
+                label: 'Bills',
+                permission: 'bills',
+                type:'single',
+            },
+            {
+                path: '/billing/payments',
+                label: 'All Payments',
+                permission: 'payments',
+                type:'single',
+            },
+            {
+                path: '/billing/plans',
+                label: 'Plans',
+                permission: 'plans',
+                type:'single',
+            },
+            {
+                path: '/billing/features',
+                label: 'Billing Features',
+                permission: 'features',
+                type:'single',
+            },
+            {
+                path: '/billing/payment-methods',
+                label: 'Payment Methods',
+                permission: 'payment_methods',
+                type:'single',
+            }
+        ]
+    },
 ]
