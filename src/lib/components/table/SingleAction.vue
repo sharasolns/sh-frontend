@@ -5,7 +5,7 @@ import ShSilentAction from '../ShSilentAction.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '../../repo/stores/ShUser'
 
-const props = defineProps(['action','record','actionClass','emitAction'])
+const props = defineProps(['action','record','actionClass','emitAction', 'type'])
 
 
 
@@ -69,7 +69,14 @@ const {user} = storeToRefs(useUserStore())
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
   </a>
-  <span :title="action.title" :class="action.class ? action.class+' sh-dropdown-action dropdown-item':'sh-dropdown-action dropdown-item' + actionClass"
+  <span :title="action.title"
+        :class="[
+            action.class,
+            {
+              'sh-dropdown-action dropdown-item': type && type.includes('dropdown'),
+            },
+            actionClass
+        ]"
           v-else-if="action.emits"
           @click="doEmitAction(action.emits, record)">
     <span v-if="action.icon" :class="action.icon"></span>
@@ -80,6 +87,7 @@ const {user} = storeToRefs(useUserStore())
                :class="action.class +' '+ actionClass">
     <span v-if="action.icon" :class="action.icon"></span>
     {{ action.label }}
+
   </router-link>
     </template>
   </template>

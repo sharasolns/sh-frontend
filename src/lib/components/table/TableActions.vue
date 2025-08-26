@@ -18,13 +18,13 @@ const icon = props.actions.icon
       </strong>
       <ul class="dropdown-menu">
         <li v-for="act in actionItems" :key="act.label">
-          <single-action action-class=" dropdown-item" :emit-action="emitAction" :class="act.class" :action="act" :record="record"/>
+          <single-action action-class=" dropdown-item" :type="type" :emit-action="emitAction" :class="act.class" :action="act" :record="record"/>
         </li>
       </ul>
     </div>
   </template>
   <template v-else>
-    <single-action action-class=" " v-for="act in actionItems" :key="act.label" :emit-action="emitAction" :action="act" :record="record"/>
+    <single-action action-class=" " v-for="act in actionItems" :type="type" :key="act.label" :emit-action="emitAction" :action="act" :record="record"/>
   </template>
 </template>
 
