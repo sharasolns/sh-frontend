@@ -7,6 +7,7 @@ import ShAuth from '../components/core/auth/ShAuth.vue'
 import TextInput from '../components/form-components/TextInput.vue'
 import NoRecords from '../components/others/NoRecords.vue'
 import isAllowedTo from '../custom-directives/isAllowedTo.js'
+import { initApi } from '../repo/helpers/ShApis'
 const ShFrontend = {
   install: (app, options) => {
 
@@ -43,6 +44,7 @@ const ShFrontend = {
     const noRecordsComponent = options.noRecordsComponent ?? NoRecords
     const registrationFields = options.registrationFields ?? ['name','email','phone','password','password_confirmation']
     const AuthComponent = options.authComponent ?? ShAuth
+    const baseApiUrl = options.baseApiUrl ?? import.meta.env.VITE_APP_API_URL
     app.provide('loginEndpoint',loginEndpoint)
     app.provide('registerEndpoint', registerEndpoint)
     app.provide('registrationFields', registrationFields)
@@ -58,6 +60,7 @@ const ShFrontend = {
     app.provide('noRecordsComponent',noRecordsComponent)
     app.provide('forgotEndpoint',forgotEndpoint)
     window.swalPosition = swalPosition
+    initApi(baseApiUrl)
     if(options.router) {
       options.router.addRoute({
         path: '/sh-auth',

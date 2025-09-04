@@ -29,7 +29,8 @@ app.use(ShFrontend,{
     redirectLogin: '/dashboard',
     tablePaginationStyle: 'loadMore',
     tablePerPage: 20,
-    toastTimer: 5000
+    toastTimer: 5000,
+    // baseApiUrl: '/api/'
 })
 ```
 I will try to explain everything here. 
@@ -45,3 +46,4 @@ I will try to explain everything here.
 8. tablePaginationStyle: This is the style of pagination that will be used in the table. It can be either 'loadMore' or 'pagination'
 9. tablePerPage: This is the number of items that will be displayed per page in the table.
 10. toastTimer: This is the time in milliseconds that the toast will be displayed.
+11. baseApiUrl: This is the base api url that will be used when making all api requests

@@ -1,28 +1,28 @@
 import Axios from 'axios'
 import shstorage from '../repositories/ShStorage.js'
 import ShSession from './ShSession.js'
+
 const graphQlEndpoint = 'sh-ql'
-let apiUrl = import.meta.env.VITE_APP_API_URL
 // eslint-disable-next-line no-undef
-if (process.env.NODE_ENV === 'production') {
-  const productionUrl = import.meta.env.VITE_APP_API_PRODUCTION_URL
-  if(productionUrl){
-    apiUrl = productionUrl
-  }
+let axios
+
+
+export function initApi(baseApiUrl) {
+    axios = Axios.create({
+        baseURL: baseApiUrl ?? import.meta.env.VITE_APP_API_URL,
+    })
+    window.shAxionInstance = axios
 }
 
-const axios = Axios.create({
-  baseURL: apiUrl
-})
-window.shAxionInstance = axios
-function doGet (endPoint, data,extraConfig) {
-  ShSession()
+
+function doGet(endPoint, data, extraConfig) {
+    ShSession()
     let accessToken = shstorage.getItem('access_token')
-    if(accessToken === 'undefined' || accessToken === 'null'){
+    if (accessToken === 'undefined' || accessToken === 'null') {
         accessToken = null
     }
     let config = {}
-    if(accessToken){
+    if (accessToken) {
         config = {
             headers: {
                 Authorization: 'Bearer ' + accessToken
@@ -32,25 +32,26 @@ function doGet (endPoint, data,extraConfig) {
     if (extraConfig) {
         Object.assign(config, extraConfig)
     }
-  return axios.get(endPoint, {
-    params: data,
-    crossOrigin: true,
-    ...config
-  })
+    return axios.get(endPoint, {
+        params: data,
+        crossOrigin: true,
+        ...config
+    })
 }
-function doPost (endPoint, data, extraConfig) {
-  ShSession()
-  const freeEndpoints = [
-    'auth/register/client',
-    'auth/login'
-  ]
+
+function doPost(endPoint, data, extraConfig) {
+    ShSession()
+    const freeEndpoints = [
+        'auth/register/client',
+        'auth/login'
+    ]
     let accessToken = shstorage.getItem('access_token')
-    if(accessToken === 'undefined' || accessToken === 'null'){
+    if (accessToken === 'undefined' || accessToken === 'null') {
         accessToken = null
     }
     let config = {}
-    if(accessToken){
-         config = {
+    if (accessToken) {
+        config = {
             headers: {
                 Authorization: 'Bearer ' + accessToken
             }
@@ -59,77 +60,82 @@ function doPost (endPoint, data, extraConfig) {
     if (extraConfig) {
         Object.assign(config, extraConfig)
     }
-  return axios.post(endPoint,
-    data,
-    config
-  )
+    return axios.post(endPoint,
+        data,
+        config
+    )
 }
-function doDelete (endPoint, data, extraConfig) {
-  ShSession()
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + shstorage.getItem('access_token')
-    }
-  }
-    if (extraConfig) {
-        Object.assign(config, extraConfig)
-    }
-  return axios.delete(endPoint,
-    data,
-    config
-  )
-}
-function doPut (endPoint, data, extraConfig) {
+
+function doDelete(endPoint, data, extraConfig) {
     ShSession()
     const config = {
         headers: {
-        Authorization: 'Bearer ' + shstorage.getItem('access_token')
+            Authorization: 'Bearer ' + shstorage.getItem('access_token')
         }
     }
-        if (extraConfig) {
-            Object.assign(config, extraConfig)
+    if (extraConfig) {
+        Object.assign(config, extraConfig)
+    }
+    return axios.delete(endPoint,
+        data,
+        config
+    )
+}
+
+function doPut(endPoint, data, extraConfig) {
+    ShSession()
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + shstorage.getItem('access_token')
         }
+    }
+    if (extraConfig) {
+        Object.assign(config, extraConfig)
+    }
     return axios.put(endPoint,
         data,
         config
     )
 
 }
-function doPatch (endPoint, data, extraConfig) {
+
+function doPatch(endPoint, data, extraConfig) {
     ShSession()
     const config = {
         headers: {
-        Authorization: 'Bearer ' + shstorage.getItem('access_token')
+            Authorization: 'Bearer ' + shstorage.getItem('access_token')
         }
     }
-        if (extraConfig) {
-            Object.assign(config, extraConfig)
-        }
+    if (extraConfig) {
+        Object.assign(config, extraConfig)
+    }
     return axios.patch(endPoint,
         data,
         config
     )
 
 }
+
 function graphQlQuery(query) {
-  const data = {
-    query
-  }
-  return doGet(graphQlEndpoint,data)
+    const data = {
+        query
+    }
+    return doGet(graphQlEndpoint, data)
 }
+
 function graphQlMutate(mutation) {
-  const data = {
-    query: `mutation ${mutation}`
-  }
-  return doPost(graphQlEndpoint,data)
+    const data = {
+        query: `mutation ${mutation}`
+    }
+    return doPost(graphQlEndpoint, data)
 }
 
 export default {
-  doGet,
-  doPost,
-  graphQlQuery,
+    doGet,
+    doPost,
+    graphQlQuery,
     doDelete,
     doPut,
     doPatch,
-  graphQlMutate
+    graphQlMutate
 }
