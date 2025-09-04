@@ -67,7 +67,7 @@ app.use(ShFrontend,{
   shFormElementClasses,
   toastTimer: 4000,
   shFormComponents,
-  UserdetailsColumns
+  UserdetailsColumns,
 })
 
 app.use(streamline, {
