@@ -68,6 +68,7 @@ app.use(ShFrontend,{
   toastTimer: 4000,
   shFormComponents,
   UserdetailsColumns,
+  userEndpoint: 'auth/user'
 })
 
 app.use(streamline, {

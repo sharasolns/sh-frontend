@@ -30,7 +30,8 @@ app.use(ShFrontend,{
     tablePaginationStyle: 'loadMore',
     tablePerPage: 20,
     toastTimer: 5000,
-    // baseApiUrl: '/api/'
+    // baseApiUrl: '/api/',
+    // userEndpoint: 'auth/user'
 })
 ```
 I will try to explain everything here. 
@@ -47,3 +48,4 @@ I will try to explain everything here.
 9. tablePerPage: This is the number of items that will be displayed per page in the table.
 10. toastTimer: This is the time in milliseconds that the toast will be displayed.
 11. baseApiUrl: This is the base api url that will be used when making all api requests
+11. userEndpoint: This is the api url that logged in user will be fetched from, it should return an object of authenticated user

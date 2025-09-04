@@ -4,6 +4,7 @@ import apis from '../helpers/ShApis.js'
 import moment from 'moment'
 import ShStorage from '../repositories/ShStorage.js'
 import shRepo from '../helpers/ShRepo.js'
+import { inject } from 'vue'
 
 export const useUserStore = defineStore('user-store', {
   state: () => ({
@@ -39,7 +40,7 @@ export const useUserStore = defineStore('user-store', {
         }
       }
       this.user = user
-      apis.doGet('auth/user').then(res => {
+      apis.doGet(inject('userEndpoint')).then(res => {
         let user = res.data.user
         if (typeof(user) === 'undefined') {
            user = res.data
