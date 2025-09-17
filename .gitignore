@@ -2,3 +2,4 @@ node_modules
 src/views/components/*
 .env
 dist
+.idea
