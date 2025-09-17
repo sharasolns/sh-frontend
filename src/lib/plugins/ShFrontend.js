@@ -44,8 +44,8 @@ const ShFrontend = {
     const noRecordsComponent = options.noRecordsComponent ?? NoRecords
     const registrationFields = options.registrationFields ?? ['name','email','phone','password','password_confirmation']
     const AuthComponent = options.authComponent ?? ShAuth
-    const baseApiUrl = options.baseApiUrl ?? import.meta.env.VITE_APP_API_URL
     const userEndpoint = options.userEndpoint ?? 'auth/user'
+    const baseApiUrl = options.baseApiUrl ?? import.meta.env.VITE_APP_API_URL
     app.provide('loginEndpoint',loginEndpoint)
     app.provide('registerEndpoint', registerEndpoint)
     app.provide('registrationFields', registrationFields)

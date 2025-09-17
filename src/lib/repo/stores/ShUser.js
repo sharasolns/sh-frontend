@@ -40,7 +40,9 @@ export const useUserStore = defineStore('user-store', {
         }
       }
       this.user = user
-      apis.doGet(inject('userEndpoint')).then(res => {
+      const userEndpoint = inject('userEndpoint','auth/user') ?? 'auth/user?defaults=1'
+
+      apis.doGet(userEndpoint).then(res => {
         let user = res.data.user
         if (typeof(user) === 'undefined') {
            user = res.data

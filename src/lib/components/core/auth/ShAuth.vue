@@ -35,7 +35,7 @@ onMounted(()=>{
 function loginSuccessful(res){
   userStore.setAccessToken(res.token)
   userStore.setUser()
-  window.location.href = redirectLogin
+  // window.location.href = redirectLogin
 }
 function registrationSuccessful(res){
   userStore.setAccessToken(res.token)
