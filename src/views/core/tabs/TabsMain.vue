@@ -1,14 +1,10 @@
 <script setup>
 
 import ShTabs from '@/lib/components/ShTabs.vue'
-import { ref } from 'vue'
-const tabCounts = ref({
-  // active_tasks: 133
-})
 </script>
 
 <template>
-<sh-tabs :tab-counts="tabCounts" :tabs="[
+<sh-tabs :tabs="[
     {
      key: 'active_tasks',
      label: 'All Active Tasks',
