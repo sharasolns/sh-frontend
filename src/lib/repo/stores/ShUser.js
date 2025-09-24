@@ -15,7 +15,7 @@ export const useUserStore = defineStore('user-store', {
     loggedOut: false
   }),
   actions: {
-    setUser (defaultEndpoint = 'auth/user?defaults=1'){
+    setUser (defaultEndpoint) {
       let user = null
       try {
          user = shstorage.getItem('user') ? shstorage.getItem('user') : null
@@ -40,7 +40,7 @@ export const useUserStore = defineStore('user-store', {
         }
       }
       this.user = user
-      const userEndpoint = inject('userEndpoint','auth/user') ?? defaultEndpoint
+      const userEndpoint = defaultEndpoint ?? inject('userEndpoint','auth/user') ?? 'auth/user?defaults=1'
 
       apis.doGet(userEndpoint).then(res => {
         let user = res.data.user
