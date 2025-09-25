@@ -165,7 +165,7 @@ const getTabLabel = tab=>{
                      :to="baseUrl+'/tab/'+getTabKey(tab)" role="tab" :class="'sh_tab_' + getTabKey(tab)">
           {{ getTabLabel(tab) }}
           <sup class="sh_tab_count" v-if="realTabCounts[getTabKey(tab)] !== undefined && realTabCounts[getTabKey(tab)] > 0">
-            ({{ realTabCounts[getTabKey(tab)] }})
+            {{ realTabCounts[getTabKey(tab)] }}
           </sup>
         </router-link>
       </li>
