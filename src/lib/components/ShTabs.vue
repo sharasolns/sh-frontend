@@ -157,7 +157,6 @@ const getTabLabel = tab=>{
 }
 </script>
 <template>
-  {{ currentTab }}
   <template v-if="allowedTabs.length > 0">
     <ul class="nav nav-tabs sh-tabs" :class="classes ?? shRepo.getShConfig('tabsClass','sh-tabs nav-tabs-bordered')">
       <li class="nav-item" v-for="tab in allowedTabs" :key="getTabKey(tab)" v-if-user-can="getTabPermission(tab)">
