@@ -95,6 +95,10 @@ shFormElementClasses.value = inject('shFormElementClasses')
 const shAutoForm = ref(null)
 const closeModal = e => {
   setTimeout(() => {
+    if(!shAutoForm.value){
+      // when form not available, most probably after redirection
+      return
+    }
     const modal = shAutoForm.value.closest('.modal-dialog');
     if (modal) {
       const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]')
