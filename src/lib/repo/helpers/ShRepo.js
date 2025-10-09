@@ -241,13 +241,16 @@ const showModal = modalId => {
 }
 
 const hideModal = modalId => {
-    const modalElement = document.getElementById(modalId)
-    const button = modalElement.querySelector('.sh-modal-close')
-    if(button){
-        button.click()
-    } else {
-        const modal = new Modal(modalElement)
-        modal.hide()
+    const cleanedId = modalId.replace('#','')
+    const modalElement = document.getElementById(cleanedId)
+    if(modalElement){
+        const button = modalElement.querySelector('.sh-modal-close')
+        if(button){
+            button.click()
+        } else {
+            const modal = new Modal(modalElement)
+            modal.hide()
+        }
     }
 }
 
