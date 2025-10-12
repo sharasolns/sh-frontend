@@ -218,8 +218,8 @@ const loadMoreRecords = () => reloadData(page.value + 1, 1)
 
 const rangeChanged = (newRange) => {
   range.value = newRange
-  from.value = newRange.from.toFormat('mm/dd/yyyy')
-  to.value = newRange.to.toFormat('mm/dd/yyyy')
+  from.value = newRange.from.toFormat('LL/dd/yyyy')
+  to.value = newRange.to.toFormat('LL/dd/yyyy')
   period.value = newRange.period
   reloadData()
 }
