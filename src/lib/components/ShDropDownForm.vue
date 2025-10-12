@@ -41,6 +41,7 @@ const formSubmitted = (res)=>{
 const formError = (res)=>{
   emit('formError',res)
 }
+const dropdownId = 'dropdown' + (Math.random() + 1).toString(36).substring(2)
 </script>
 <template>
   <h5 class="d-none">To prevent default class</h5>

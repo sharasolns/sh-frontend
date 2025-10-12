@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import shstorage from '../repositories/ShStorage.js'
 import apis from '../helpers/ShApis.js'
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import ShStorage from '../repositories/ShStorage.js'
 import shRepo from '../helpers/ShRepo.js'
 import { inject } from 'vue'
@@ -84,7 +84,7 @@ export const useUserStore = defineStore('user-store', {
           this.permissions = this.user.permissions
         }
       }
-      const timeNow = moment().toISOString()
+      const timeNow = DateTime.now().toISO()
       ShStorage.setItem('session_start',timeNow)
     },
     signOut () {

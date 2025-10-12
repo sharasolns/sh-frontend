@@ -1,31 +1,377 @@
 <script setup>
-import { inject } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onBeforeUnmount, inject, useSlots } from 'vue'
 import NoRecords from './others/NoRecords.vue'
-import { storeToRefs } from 'pinia'
-import { useUserStore } from './../repo/stores/ShUser.js'
 import TableActions from './table/TableActions.vue'
+import ShCanvas from './ShCanvas.vue'
+import ShRange from './ShRange.vue'
+import pagination from './list_templates/Pagination.vue'
+import { DateTime } from 'luxon'
+
+import apis from '../repo/helpers/ShApis.js'
+import helpers from '../repo/helpers/ShRepo.js'
+import shRepo from '../repo/helpers/ShRepo.js'
+import shStorage from '../repo/repositories/ShStorage'
+
+// --- Props / Emits
+const props = defineProps({
+  endPoint: [String, null],
+  orderBy: String,
+  orderMethod: {type: String, default: 'desc'},
+  headers: [Array, null],
+  disableMobileResponsive: {type: Boolean, default: false},
+  cacheKey: [String, null],
+  query: [String, null],
+  pageCount: [Number, null],
+  actions: [Object, null],
+  hideCount: {type: Boolean, default: false},
+  hideLoadMore: {type: Boolean, default: false},
+  links: [Object, null],
+  reload: [Number, Boolean, String, null],
+  hideSearch: {type: Boolean, default: false},
+  sharedData: [Object, null],
+  searchPlaceholder: [String, null],
+  event: [String, null],
+  displayMore: [Boolean, null],
+  displayMoreBtnClass: [String, null],
+  moreDetailsColumns: [Array, null],
+  moreDetailsFields: [Array, null],
+  hasDownload: {type: Boolean, default: false},
+  downloadFields: [Array, null],
+  tableHover: {type: Boolean, default: false},
+  hideIds: {type: Array, default: () => []},
+  paginationStyle: [String, null],
+  hasRange: {type: Boolean, default: false},
+  selectedRange: [Object, null],
+  noRecordsMessage: [String, null]
+})
+
+const emit = defineEmits(['rowSelected', 'dataReloaded', 'dataLoaded'])
+
+// --- Injection
 const noRecordsComponent = inject('noRecordsComponent', NoRecords)
 
-const {user} = storeToRefs(useUserStore())
+// --- Local State
+const order_by = ref(props.orderBy)
+const order_method = ref(props.orderMethod)
+const per_page = ref(props.pageCount ?? shRepo.getShConfig('tablePerPage', 10))
+const page = ref(1)
+const exactMatch = ref(false)
+const filter_value = ref('')
+const loading = ref('loading') // 'loading' | 'done' | 'error'
+const loading_error = ref('')
+const records = ref([])
+const total = ref(0)
+const pagination_data = ref(null)
+const moreDetailsId = ref(null)
+const moreDetailsModel = ref(null)
+const downloading = ref(false)
+const appUrl = window?.VITE_APP_API_URL ?? import.meta?.env?.VITE_APP_API_URL ?? ''
+const hasCanvas = ref(0)
+const selectedRecord = ref(null)
+const timeOut = ref(null)
+const tableHeaders = ref([])
+const pageStyle = ref(props.paginationStyle ?? shRepo.getShConfig('tablePaginationStyle', 'loadMore'))
+const range = ref(null)
+const from = ref(null)
+const to = ref(null)
+const period = ref(null)
+const lastId = ref(null)
 
-const cleanColumn = col=>{
-  // remove col.component
+// Responsive width
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1024)
+const handleResize = () => (windowWidth.value = window.innerWidth)
+
+// --- Slots helpers
+const slots = useSlots()
+const hasDefaultSlot = computed(() => !!slots.default)
+const hasRecordsSlot = computed(() => !!slots.records)
+
+// --- Lifecycle
+onMounted(() => {
+  if (props.headers) tableHeaders.value = props.headers
+
+  if (props.actions?.actions) {
+    props.actions.actions.forEach(a => {
+      if (a.canvasComponent) hasCanvas.value = 1
+    })
+  }
+
+  if (props.cacheKey) setCachedData()
+
+  reloadData()
+
+  window.addEventListener('resize', handleResize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+  if (timeOut.value) clearTimeout(timeOut.value)
+})
+
+// --- Utils used in template
+const cleanColumn = (col) => {
   const newCol = {...col}
   delete newCol.component
   delete newCol.key
   return newCol
 }
 
-const showColumn = header=>{
-  if(typeof header === 'string'){
-    return true
-  }
-  if(typeof header === 'object' && header.validator) {
-    return header.validator()
-  }
+const showColumn = (header) => {
+  if (typeof header === 'string') return true
+  if (typeof header === 'object' && header.validator) return header.validator()
   return true
 }
 
+const cleanCanvasProps = (actions) => {
+  const replaced = {...actions}
+  replaced.class = null
+  return replaced
+}
+
+const canvasClosed = () => {
+  selectedRecord.value = null
+}
+
+const rowSelected = (row) => {
+  selectedRecord.value = null
+  setTimeout(() => {
+    selectedRecord.value = row
+    emit('rowSelected', row)
+  }, 100)
+}
+
+const changeKey = (key, value) => {
+  if (key === 'order_by') {
+    order_by.value = value
+    order_method.value = (order_method.value === 'desc') ? 'asc' : 'desc'
+  } else if (key === 'per_page') {
+    per_page.value = value
+    page.value = 1
+  } else {
+    // generic
+    // support pagination component passing keys like 'page'
+    if (key in stateProxy) {
+      stateProxy[key] = value
+    } else {
+      // fallback direct
+      if (key === 'page') page.value = value
+    }
+  }
+  reloadData()
+}
+
+const getLinkClass = (config) => (typeof config === 'object' ? (config.class || '') : '')
+
+const replaceActionUrl = (path, obj) => {
+  if (!path) return ''
+  const matches = path.match(/\{(.*?)\}/g)
+  try {
+    matches?.forEach(k => {
+      const key = k.replace('{', '').replace('}', '')
+      path = path.replace(`{${key}}`, obj[key])
+    })
+    return path
+  } catch (e) {
+    return path
+  }
+}
+
+const doEmitAction = (action, data) => {
+  if (typeof action === 'function') action(data)
+  else emit(action, data)
+}
+
+const getFieldType = (field) => {
+  const numbers = ['age', 'interest_rate_pa']
+  const moneys = ['amount', 'paid_amount', 'total_paid', 'total', 'monthly_fee', 'share_cost', 'min_contribution', 'min_membership_contribution']
+  const dates = ['invoice_date', 'free_tier_days', 'updated_at', 'created_at', 'end_time']
+  if (typeof field === 'string' && numbers.includes(field)) return 'numeric'
+  if (typeof field === 'string' && moneys.includes(field)) return 'money'
+  if (typeof field === 'string' && dates.includes(field)) return 'date'
+  return 'string'
+}
+
+const replaceLinkUrl = (p, obj) => {
+  let path = p
+  if (typeof path === 'object') {
+    if (path.link) path = path.link
+    else if (path.url) path = path.url
+    else if (path.path) path = path.path
+    else path = ''
+  }
+  const matches = path.match(/\{(.*?)\}/g)
+  matches?.forEach(k => {
+    const key = k.replace('{', '').replace('}', '')
+    path = path.replace(`{${key}}`, obj[key])
+  })
+  return path
+}
+
+const formatDate = (date) => DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED)
+
+const setMoreDetailsModel = (row) => {
+  moreDetailsModel.value = null
+  moreDetailsModel.value = row
+}
+
+const loadMoreRecords = () => reloadData(page.value + 1, 1)
+
+const rangeChanged = (newRange) => {
+  range.value = newRange
+  from.value = newRange.from.format('L')
+  to.value = newRange.to.format('L')
+  period.value = newRange.period
+  reloadData()
+}
+
+const userTyping = () => {
+  if (timeOut.value) clearTimeout(timeOut.value)
+  timeOut.value = setTimeout(() => reloadData(1), 800)
+}
+
+const exportData = () => {
+  downloading.value = true
+  const headers = []
+  const fields = props.downloadFields ? props.downloadFields : props.headers
+  fields?.forEach(header => {
+    if (typeof header === 'string') headers.push(header)
+  })
+
+  const data = {
+    titles: headers,
+    export: 1,
+    order_by: order_by.value,
+    order_method: order_method.value,
+    filter_value: filter_value.value,
+    from: from.value,
+    to: to.value,
+    period: period.value,
+    lastId: lastId.value
+  }
+
+  apis.doPost(props.endPoint, data).then(res => {
+    downloading.value = false
+    if (res.data.file) {
+      const url = appUrl + 'external-download?file=' + res.data.file + '&name=' + res.data.name
+      window.location.href = url
+    }
+  }).catch(reason => {
+    downloading.value = false
+    const error = (typeof reason.response === 'undefined')
+        ? 'Error getting data from backend'
+        : `${reason.response.status}:${reason.response.statusText}`
+    helpers.swalError('Error', error)
+  })
+}
+
+const setCachedData = () => {
+  if (props.cacheKey) {
+    records.value = shStorage.getItem('sh_table_cache_' + props.cacheKey, null)
+  }
+}
+
+const reloadNotifications = () => reloadData()
+
+// Main loader
+const reloadData = (newPage, append) => {
+  if (typeof newPage !== 'undefined') page.value = newPage
+
+  if (props.cacheKey && records.value !== null) {
+    loading.value = 'done'
+  } else if (!append) {
+    loading.value = 'loading'
+  }
+
+  let data = {
+    order_by: order_by.value,
+    order_method: order_method.value,
+    per_page: per_page.value,
+    page: page.value,
+    filter_value: filter_value.value,
+    paginated: true,
+    from: from.value,
+    to: to.value,
+    period: period.value,
+    exact: exactMatch.value,
+    lastId: lastId.value
+  }
+
+  // strip empty
+  Object.keys(data).forEach(k => {
+    if (data[k] === null || data[k] === '') delete data[k]
+  })
+
+  if (pagination_data.value) pagination_data.value.loading = 1
+
+  let endPoint = props.endPoint
+  if (!props.endPoint && props.query) {
+    endPoint = 'sh-ql'
+    data.query = props.query
+  }
+
+  apis.doGet(endPoint, data).then(req => {
+    emit('dataReloaded', pagination_data.value)
+    loading.value = 'done'
+
+    const response = req.data.data
+    emit('dataLoaded', response)
+
+    if (page.value < 2 && props.cacheKey) {
+      shStorage.setItem('sh_table_cache_' + props.cacheKey, response.data)
+    }
+
+    pagination_data.value = {
+      current: response.current_page,
+      start: response.from,
+      end: response.last_page,
+      record_count: response.total,
+      per_page: response.per_page,
+      loading: 0,
+      displayCount: response.total > response.per_page ? response.per_page : response.total
+    }
+
+    if (!props.headers && response.total > 0) {
+      tableHeaders.value = Object.keys(response.data[0])
+    }
+
+    lastId.value = response.data.length > 0 ? response.data[response.data.length - 1].id : null
+
+    if (append) {
+      records.value.push(...response.data)
+      let totalShown = response.total > response.per_page
+          ? response.per_page * response.current_page
+          : response.total
+      if (totalShown > response.total) totalShown = response.total
+      pagination_data.value.displayCount = totalShown
+
+      const scrollingElement = (document.scrollingElement || document.body)
+      scrollingElement.scrollTop = scrollingElement.scrollHeight
+    } else {
+      records.value = response.data
+    }
+  }).catch(reason => {
+    const error = (typeof reason.response === 'undefined')
+        ? 'Error getting data from backend'
+        : `${reason.response.status}:${reason.response.statusText} (${props.endPoint})`
+    loading_error.value = error
+    loading.value = 'error'
+  })
+}
+
+// --- Watches
+watch(() => props.hideIds, (newVal) => {
+  if (Array.isArray(newVal) && Array.isArray(records.value)) {
+    records.value = records.value.filter(r => !newVal.includes(r.id) && r)
+  }
+}, {deep: true})
+
+watch(() => props.reload, () => reloadData())
+watch(() => props.endPoint, () => reloadData())
+
+// optional proxy (for changeKey generic setter)
+const stateProxy = reactive({
+  page, per_page, order_by, order_method
+})
 </script>
 <template>
   <div class="auto-table mt-2">
@@ -40,22 +386,31 @@ const showColumn = header=>{
         </template>
       </button>
     </div>
+
     <div class="row" v-if="!hideSearch">
       <div class="col-12 mb-3 d-flex justify-content-between flex-column flex-md-row flex-lg-row">
         <div class="sh-search-bar input-group" :class="hasRange ? 'me-2':''">
-          <input @keydown="userTyping" @keyup="userTyping" type="search" v-on:change="reloadData(1)"
-                 v-model="filter_value"
-                 :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'"
-                 class="form-control sh-search-input">
+          <input
+              @keydown="userTyping"
+              @keyup="userTyping"
+              type="search"
+              @change="reloadData(1)"
+              v-model="filter_value"
+              :placeholder="searchPlaceholder ? searchPlaceholder : 'Search'"
+              class="form-control sh-search-input"
+          />
           <span class="input-group-text exact_checkbox" v-if="filter_value.length > 1">
-                    <input @change="reloadData" :value="true" v-model="exactMatch" type="checkbox"/><span class="ms-1">Exact</span>
-                  </span>
+            <input @change="reloadData" :value="true" v-model="exactMatch" type="checkbox"/>
+            <span class="ms-1">Exact</span>
+          </span>
         </div>
+
         <div v-if="hasRange" class="sh-range-selector">
           <sh-range @range-selected="rangeChanged" :selected="selectedRange"/>
         </div>
       </div>
     </div>
+
     <template v-if="hasDefaultSlot">
       <div class="text-center" v-if="loading === 'loading'">
         <div class="spinner-border" role="status">
@@ -63,9 +418,7 @@ const showColumn = header=>{
         </div>
       </div>
       <div v-else-if="loading === 'error'" class="alert alert-danger">
-      <span>
-        {{ loading_error }}
-      </span>
+        <span>{{ loading_error }}</span>
       </div>
       <template v-if="loading === 'done'">
         <template v-for="record in records" :key="record.id">
@@ -73,6 +426,7 @@ const showColumn = header=>{
         </template>
       </template>
     </template>
+
     <template v-else-if="hasRecordsSlot">
       <div class="text-center" v-if="loading === 'loading' && !cacheKey">
         <div class="spinner-border" role="status">
@@ -80,9 +434,7 @@ const showColumn = header=>{
         </div>
       </div>
       <div v-else-if="loading === 'error' && !cacheKey" class="alert alert-danger error-loading">
-      <span>
-        {{ loading_error }}
-      </span>
+        <span>{{ loading_error }}</span>
       </div>
       <template v-if="loading === 'done' || cacheKey">
         <component :is="noRecordsComponent" v-if="!records || records.length === 0">
@@ -91,26 +443,48 @@ const showColumn = header=>{
         <slot name="records" :records="records"></slot>
       </template>
     </template>
-    <table class="table sh-table" :class="tableHover ? 'table-hover':''" v-else-if="windowWidth > 700 || disableMobileResponsive">
+
+    <table
+        class="table sh-table"
+        :class="tableHover ? 'table-hover':''"
+        v-else-if="windowWidth > 700 || disableMobileResponsive"
+    >
       <thead class="sh-thead">
       <tr>
         <template v-for="title in tableHeaders" :key="title">
           <th v-if="showColumn(title)">
-            <a class="text-capitalize" v-on:click="changeKey('order_by',title)"
-               v-if="typeof title === 'string'">{{ title.replace(/_/g, ' ') }}</a>
-            <a class="text-capitalize" v-on:click="changeKey('order_by',title.key)"
-               v-else-if="typeof title === 'object'">{{ title.label ?? title.key.replace(/_/g, ' ') }}</a>
-            <a class="text-capitalize" v-on:click="changeKey('order_by',title(null))"
-               v-else-if="typeof title === 'function'">{{ title(null).replace(/_/g, ' ') }}</a>
-            <a class="text-capitalize" v-else-if="typeof title !== 'undefined'"
-               v-on:click="changeKey('order_by',title)">{{ title.replace(/_/g, ' ') }}</a>
+            <a
+                class="text-capitalize"
+                @click="changeKey('order_by', title)"
+                v-if="typeof title === 'string'"
+            >{{ title.replace(/_/g, ' ') }}</a>
+
+            <a
+                class="text-capitalize"
+                @click="changeKey('order_by', title.key)"
+                v-else-if="typeof title === 'object'"
+            >{{ title.label ?? title.key.replace(/_/g, ' ') }}</a>
+
+            <a
+                class="text-capitalize"
+                @click="changeKey('order_by', title(null))"
+                v-else-if="typeof title === 'function'"
+            >{{ title(null).replace(/_/g, ' ') }}</a>
+
+            <a
+                class="text-capitalize"
+                v-else-if="typeof title !== 'undefined'"
+                @click="changeKey('order_by', title)"
+            >{{ String(title).replace(/_/g, ' ') }}</a>
           </th>
         </template>
+
         <th v-if="actions" class="text-capitalize">
           {{ actions.label }}
         </th>
       </tr>
       </thead>
+
       <tbody class="sh-tbody">
       <tr class="text-center" v-if="loading === 'loading'">
         <td :colspan="tableHeaders.length">
@@ -121,11 +495,13 @@ const showColumn = header=>{
           </div>
         </td>
       </tr>
+
       <tr class="text-center alert alert-danger" v-else-if="loading === 'error'">
         <td :colspan="tableHeaders.length">
           {{ loading_error }}
         </td>
       </tr>
+
       <tr class="no_records" v-else-if="records.length === 0">
         <td :colspan="actions ? tableHeaders.length + 1 : tableHeaders.length">
           <div class="text-center bg-primary-light px-2 py-1 rounded no_records_div">
@@ -133,26 +509,44 @@ const showColumn = header=>{
           </div>
         </td>
       </tr>
-      <tr v-else-if="loading === 'done'" v-for="(record, index) in records" :key="record.id" :class="record.class"
-          @click="rowSelected(record)">
+
+      <tr
+          v-else-if="loading === 'done'"
+          v-for="(record, index) in records"
+          :key="record.id"
+          :class="record.class"
+          @click="rowSelected(record)"
+      >
         <template v-for="key in tableHeaders" :key="key">
           <td v-if="showColumn(key)">
-            <router-link v-if="typeof key === 'string' && links && links[key]"
-                         :target="links[key].target ? '_blank':''" :to="replaceLinkUrl(links[key],record)"
-                         :class="getLinkClass(links[key])" v-html="record[key]"></router-link>
-            <span v-else-if="getFieldType(key) === 'numeric'">{{
-                Intl.NumberFormat().format(record[key])
-              }}</span>
-            <span v-else-if="getFieldType(key) === 'money'"
-                  class="text-success fw-bold">{{ Intl.NumberFormat().format(record[key]) }}</span>
-            <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
-            <span v-else-if="typeof key === 'string'" v-html="record[key]"></span>
-            <span v-else-if="typeof key === 'function'" v-html="key(record, index)"></span>
-            <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"></span>
-            <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"></span>
-            <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="cleanColumn(key)"></component>
-            <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"></span>
-            <span v-else v-html="record[key[0]]"></span>
+            <router-link
+                v-if="typeof key === 'string' && links && links[key]"
+                :target="links[key].target ? '_blank':''"
+                :to="replaceLinkUrl(links[key], record)"
+                :class="getLinkClass(links[key])"
+                v-html="record[key]"
+            />
+            <span v-else-if="getFieldType(key) === 'numeric'">
+                {{ Intl.NumberFormat().format(record[key]) }}
+              </span>
+            <span v-else-if="getFieldType(key) === 'money'" class="text-success fw-bold">
+                {{ Intl.NumberFormat().format(record[key]) }}
+              </span>
+            <span v-else-if="getFieldType(key) === 'date'">
+                {{ formatDate(record[key]) }}
+              </span>
+            <span v-else-if="typeof key === 'string'" v-html="record[key]"/>
+            <span v-else-if="typeof key === 'function'" v-html="key(record, index)"/>
+            <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"/>
+            <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"/>
+            <component
+                v-else-if="typeof key === 'object' && key.component"
+                :is="key.component"
+                :item="record"
+                v-bind="cleanColumn(key)"
+            />
+            <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"/>
+            <span v-else v-html="record[key[0]]"/>
           </td>
         </template>
 
@@ -162,6 +556,7 @@ const showColumn = header=>{
       </tr>
       </tbody>
     </table>
+
     <div v-else>
       <div class="text-center" v-if="loading === 'loading'">
         <div class="text-center">
@@ -170,48 +565,64 @@ const showColumn = header=>{
           </div>
         </div>
       </div>
+
       <div v-else-if="loading === 'error'">
-      <span>
-        {{ loading_error }}
-      </span>
+        <span>{{ loading_error }}</span>
       </div>
+
       <div class="mobile-list-items" v-else-if="loading === 'done'">
         <template v-for="(record,index) in records" :key="record.id">
           <div class="single-mobile-req bg-light p-3" @click="rowSelected(record)">
             <template v-for="key in tableHeaders" :key="key[0]">
               <template v-if="showColumn(key)">
-                <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
-                   v-if="typeof key === 'string' ">
-                  {{ key.replace(/_/g, ' ') }}</p>
+                <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-if="typeof key === 'string' ">
+                  {{ key.replace(/_/g, ' ') }}
+                </p>
                 <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
                    v-else-if="typeof key === 'function'">
-                  {{ key(null).replace(/_/g, ' ') }}</p>
-                <p class="mb-1 font-weight-bold text-capitalize profile-form-title"
-                   v-else-if="typeof key === 'object'">
-                  {{ key.label ?? key.key.replace(/_/g, ' ') }}</p>
-                <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else>{{
-                    key[1].replace(/_/g, ' ')
-                  }}</p>
+                  {{ key(null).replace(/_/g, ' ') }}
+                </p>
+                <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else-if="typeof key === 'object'">
+                  {{ key.label ?? key.key.replace(/_/g, ' ') }}
+                </p>
+                <p class="mb-1 font-weight-bold text-capitalize profile-form-title" v-else>
+                  {{ key[1].replace(/_/g, ' ') }}
+                </p>
+
                 <span>
-                <router-link v-if="typeof key === 'string' && links && links[key]"
-                             :to="replaceLinkUrl(links[key],record)" :class="getLinkClass(links[key])"
-                             v-html="record[key]"></router-link>
-                <span v-else-if="getFieldType(key) === 'numeric'">{{ Intl.NumberFormat().format(record[key]) }}</span>
-                <span v-else-if="getFieldType(key) === 'money'"
-                      class="text-primary fw-bold">{{ Intl.NumberFormat().format(record[key]) }}</span>
-                <span v-else-if="getFieldType(key) === 'date'">{{ formatDate(record[key]) }}</span>
-                <span v-else-if="typeof key    === 'string'" v-html="record[key]"></span>
-                <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"></span>
-                <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"></span>
-                <component v-else-if="typeof key === 'object' && key.component" :is="key.component" :item="record" v-bind="cleanColumn(key)"></component>
-                <span v-else-if="typeof key    === 'object'" v-html="record[key.key ?? key.field]"></span>
-                <span v-else-if="typeof key === 'function'" v-html="key(record, index )"></span>
-                <span v-else v-html="record[key[0]]"></span>
-              </span>
+                  <router-link
+                      v-if="typeof key === 'string' && links && links[key]"
+                      :to="replaceLinkUrl(links[key],record)"
+                      :class="getLinkClass(links[key])"
+                      v-html="record[key]"
+                  />
+                  <span v-else-if="getFieldType(key) === 'numeric'">
+                    {{ Intl.NumberFormat().format(record[key]) }}
+                  </span>
+                  <span v-else-if="getFieldType(key) === 'money'" class="text-primary fw-bold">
+                    {{ Intl.NumberFormat().format(record[key]) }}
+                  </span>
+                  <span v-else-if="getFieldType(key) === 'date'">
+                    {{ formatDate(record[key]) }}
+                  </span>
+                  <span v-else-if="typeof key === 'string'" v-html="record[key]"/>
+                  <span v-else-if="typeof key === 'object' && key.callBack" v-html="key.callBack(record, index)"/>
+                  <span v-else-if="typeof key === 'object' && key.callback" v-html="key.callback(record, index)"/>
+                  <component
+                      v-else-if="typeof key === 'object' && key.component"
+                      :is="key.component"
+                      :item="record"
+                      v-bind="cleanColumn(key)"
+                  />
+                  <span v-else-if="typeof key === 'object'" v-html="record[key.key ?? key.field]"/>
+                  <span v-else-if="typeof key === 'function'" v-html="key(record, index)"/>
+                  <span v-else v-html="record[key[0]]"/>
+                </span>
               </template>
 
-              <hr class="my-2">
+              <hr class="my-2"/>
             </template>
+
             <div v-if="actions">
               <table-actions :emitAction="doEmitAction" :actions="actions" :record="record"/>
             </div>
@@ -219,368 +630,41 @@ const showColumn = header=>{
         </template>
       </div>
     </div>
-    <pagination v-if="pagination_data" @loadMoreRecords="loadMoreRecords" :hide-load-more="hideLoadMore"
-                :per-page="per_page"
-                :hide-count="hideCount" :pagination_data="pagination_data" v-on:changeKey="changeKey"
-                :pagination-style="pageStyle"></pagination>
+
+    <pagination
+        v-if="pagination_data"
+        @loadMoreRecords="loadMoreRecords"
+        :hide-load-more="hideLoadMore"
+        :per-page="per_page"
+        :hide-count="hideCount"
+        :pagination_data="pagination_data"
+        @changeKey="changeKey"
+        :pagination-style="pageStyle"
+    />
+
     <template v-if="actions">
       <template v-for="action in actions.actions" :key="action.label">
-        <sh-canvas @offcanvasClosed="canvasClosed" v-if="action.canvasId" :position="action.canvasPosition"
-                   :canvas-size="action.canvasSize" :canvas-title="action.canvasTitle"
-                   :canvas-id="action.canvasId">
-          <component @recordUpdated="reloadData" v-if="selectedRecord" v-bind="cleanCanvasProps(action)"
-                     :record="selectedRecord"
-                     :is="action.canvasComponent"/>
+        <sh-canvas
+            @offcanvasClosed="canvasClosed"
+            v-if="action.canvasId"
+            :position="action.canvasPosition"
+            :canvas-size="action.canvasSize"
+            :canvas-title="action.canvasTitle"
+            :canvas-id="action.canvasId"
+        >
+          <component
+              @recordUpdated="reloadData"
+              v-if="selectedRecord"
+              v-bind="cleanCanvasProps(action)"
+              :record="selectedRecord"
+              :is="action.canvasComponent"
+          />
         </sh-canvas>
       </template>
     </template>
   </div>
 </template>
-<script>
-import apis from '../repo/helpers/ShApis.js'
-import pagination from './list_templates/Pagination.vue'
-import moment from 'moment'
-import helpers from '../repo/helpers/ShRepo.js'
-import shRepo from '../repo/helpers/ShRepo.js'
-import ShCanvas from './ShCanvas.vue'
-import ShConfirmAction from './ShConfirmAction.vue'
-import ShSilentAction from './ShSilentAction.vue'
-import ShRange from './ShRange.vue'
-import shStorage from '../repo/repositories/ShStorage'
 
-export default {
-  name: 'sh-table',
-  props: ['endPoint','orderBy','orderMethod', 'headers','disableMobileResponsive', 'cacheKey', 'query', 'pageCount', 'actions', 'hideCount', 'hideLoadMore', 'links', 'reload', 'hideSearch', 'sharedData', 'searchPlaceholder', 'event', 'displayMore', 'displayMoreBtnClass', 'moreDetailsColumns', 'moreDetailsFields', 'hasDownload', 'downloadFields', 'tableHover', 'hideIds', 'paginationStyle', 'hasRange','selectedRange','noRecordsMessage'],
-  data(){
-    return {
-      order_by: this.orderBy,
-      order_method: this.orderMethod,
-      per_page: this.pageCount ?? shRepo.getShConfig('tablePerPage', 10),
-      page: 1,
-      exactMatch: false,
-      filter_value: '',
-      loading: 'loading',
-      loading_error: '',
-      records: null,
-      total: 0,
-      pagination_data: null,
-      moreDetailsId: null,
-      moreDetailsModel: null,
-      downloading: false,
-      appUrl: window.VITE_APP_API_URL,
-      hasCanvas: 0,
-      selectedRecord: null,
-      timeOut: null,
-      tableHeaders: [],
-      pageStyle: this.paginationStyle ?? shRepo.getShConfig('tablePaginationStyle', 'loadMore'),
-      range: null,
-      from: null,
-      to: null,
-      period: null,
-      lastId: null
-    }
-  },
-  mounted(){
-    if (this.headers) {
-      this.tableHeaders = this.headers
-    }
-
-    if (this.actions && this.actions.actions) {
-      this.actions.actions.forEach(action => {
-        if (action.canvasComponent) {
-          this.hasCanvas = true
-        }
-      })
-    }
-    if (this.cacheKey) {
-      this.setCachedData()
-    }
-    this.reloadData()
-  },
-  methods: {
-    rangeChanged: function (newRange){
-      this.range = newRange
-      this.from = newRange.from.format('L')
-      this.to = newRange.to.format('L')
-      this.period = newRange.period
-      this.reloadData()
-    },
-    userTyping: function (){
-      if (this.timeOut) {
-        clearTimeout(this.timeOut)
-      }
-      const self = this
-      this.timeOut = setTimeout(() => {
-        self.reloadData(1)
-      }, 800)
-    },
-    cleanCanvasProps: function (actions){
-      let replaced = actions
-      replaced.class = null
-      return replaced
-    },
-    newRecordAdded: function (ev){
-      const record = ev.log
-      if (record.user) {
-        record.user = record.user.name
-      }
-      this.records.unshift(record)
-    },
-    canvasClosed: function (){
-      this.selectedRecord = null
-    },
-    rowSelected: function (row){
-      this.selectedRecord = null
-      const self = this
-      setTimeout(() => {
-        this.selectedRecord = row
-        this.$emit('rowSelected', row)
-      }, 100)
-    },
-    changeKey: function (key, value){
-      this[key] = value
-      if (key === 'order_by') {
-        this.order_method = (this.order_method === 'desc') ? 'asc' : 'desc'
-      }
-      if (key === 'per_page') {
-        this.page = 1
-      }
-      this.reloadData()
-    },
-    getLinkClass: function (config){
-      if (typeof config === 'object') {
-        return config.class
-      }
-      return ''
-    },
-    reloadNotifications: function (){
-      this.reloadData()
-    },
-    replaceActionUrl: function (path, obj){
-      if (path) {
-        var matches = path.match(/\{(.*?)\}/g)
-        try {
-          matches.forEach(key => {
-            key = key.replace('{', '')
-            key = key.replace('}', '')
-            path = path.replace(`{${key}}`, obj[key])
-          })
-          return path
-        } catch (e) {
-          return path
-        }
-      }
-      return ''
-    },
-    doEmitAction: function (action, data){
-      if (typeof action === 'function') {
-        action(data)
-      } else {
-        this.$emit(action, data)
-      }
-    },
-    getFieldType: function (field){
-      const numbers = ['age', 'interest_rate_pa']
-      const moneys = ['amount', 'paid_amount', 'total_paid', 'total', 'monthly_fee', 'share_cost', 'min_contribution', 'min_membership_contribution']
-      const dates = ['invoice_date', 'free_tier_days', 'updated_at', 'created_at', 'end_time']
-      if (numbers.includes(field)) {
-        return 'numeric'
-      }
-      if (moneys.includes(field)) {
-        return 'money'
-      }
-      if (dates.includes(field)) {
-        return 'date'
-      }
-      return 'string'
-    },
-    replaceLinkUrl: function (path, obj){
-      if (typeof path === 'object') {
-       // check path,link or url
-        if (path.link) {
-          path = path.link
-        } else if (path.url) {
-          path = path.url
-        } else if(path.path){
-          path = path.path
-        } else {
-          path = ''
-        }
-      }
-      var matches = path.match(/\{(.*?)\}/g)
-      matches && matches.forEach(key => {
-        key = key.replace('{', '')
-        key = key.replace('}', '')
-        path = path.replace(`{${key}}`, obj[key])
-      })
-      return path
-    },
-    formatDate: function (date){
-      return moment(date).format('lll')
-    },
-    setMoreDetailsModel: function (row){
-      this.moreDetailsModel = null
-      this.moreDetailsModel = row
-    },
-    loadMoreRecords: function (){
-      this.reloadData(this.page + 1, 1)
-    },
-    exportData: function (template){
-      this.downloading = true
-      const headers = []
-      const fields = this.downloadFields ? this.downloadFields : this.headers
-      fields.forEach(header => {
-        if (typeof header === 'string') {
-          headers.push(header)
-        }
-      })
-
-      const data = {
-        titles: headers,
-        export: 1,
-        order_by: this.order_by,
-        order_method: this.order_method,
-        filter_value: this.filter_value,
-        from: this.from,
-        to: this.to,
-        period: this.period,
-        lastId: this.lastId,
-      }
-      apis.doPost(this.endPoint, data).then(res => {
-        this.downloading = false
-        if (res.data.file) {
-          const url = this.appUrl + 'external-download?file=' + res.data.file + '&name=' + res.data.name;
-          window.location.href = url
-          // window.open('https://facebook.com')
-          // window.open(this.appUrl + 'external-download?file=' + res.data.file + '&name=' + res.data.name, '_blank').focus()
-        }
-      }).catch(reason => {
-        this.downloading = false
-        const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText}`
-        helpers.swalError('Error', error)
-      })
-    },
-    setCachedData: function (){
-      if (this.cacheKey) {
-        this.records = shStorage.getItem('sh_table_cache_' + this.cacheKey, null)
-      }
-    },
-    reloadData: function (page, append){
-      if (typeof page !== 'undefined') {
-        this.page = page
-      }
-      if (this.cacheKey && this.records !== null) {
-        this.loading = 'done'
-      } else if (!append) {
-        this.loading = 'loading'
-      }
-      let data = {
-        order_by: this.order_by,
-        order_method: this.order_method,
-        per_page: this.per_page,
-        page: this.page,
-        filter_value: this.filter_value,
-        paginated: true,
-        from: this.from,
-        to: this.to,
-        period: this.period,
-        exact: this.exactMatch,
-        lastId: this.lastId
-      }
-      // remove empty values
-      Object.keys(data).forEach(key => {
-        if (data[key] === null || data[key] === '') {
-          delete data[key]
-        }
-      })
-      if (this.pagination_data) {
-        this.pagination_data.loading = 1
-      }
-      let endPoint = this.endPoint
-      if (!this.endPoint && this.query) {
-        //send ql query
-        endPoint = 'sh-ql'
-        data.query = this.query
-      }
-      apis.doGet(endPoint, data).then(req => {
-        this.$emit('dataReloaded', this.pagination_data)
-        this.loading = 'done'
-        const response = req.data.data
-        this.$emit('dataLoaded', response)
-        if (this.page < 2 && this.cacheKey) {
-          shStorage.setItem('sh_table_cache_' + this.cacheKey, response.data)
-        }
-
-        this.pagination_data = {
-          current: response.current_page,
-          start: response.from,
-          end: response.last_page,
-          record_count: response.total,
-          per_page: response.per_page,
-          loading: 0,
-          displayCount: response.total > response.per_page ? response.per_page : response.total
-        }
-        if (!this.headers && response.total > 0) {
-          this.tableHeaders = Object.keys(response.data[0])
-        }
-        // get  id value of the last record
-        this.lastId = response.data.length > 0 ? response.data[response.data.length - 1].id : null
-        if (append) {
-          this.records.push(...response.data)
-          let totalShown = response.total > response.per_page ? response.per_page * response.current_page : response.total
-          if (totalShown > response.total) {
-            totalShown = response.total
-          }
-          this.pagination_data.displayCount = totalShown
-          const scrollingElement = (document.scrollingElement || document.body)
-          scrollingElement.scrollTop = scrollingElement.scrollHeight
-        } else {
-          this.records = response.data
-        }
-      }).catch(reason => {
-        const error = (typeof reason.response === 'undefined') ? 'Error getting data from backend' : `${reason.response.status}:${reason.response.statusText} (${this.endPoint})`
-        this.loading_error = error
-        this.loading = 'error'
-      })
-    }
-  },
-  watch: {
-    hideIds: {
-      handler(newValue){
-        this.records = this.records.filter(record => !newValue.includes(record.id) && record)
-      },
-      deep: true
-    },
-    reload(){
-      this.reloadData()
-    },
-    endPoint(){
-      this.reloadData()
-    }
-  },
-  components: {
-    ShRange,
-    ShSilentAction,
-    ShConfirmAction,
-    ShCanvas,
-    pagination
-  },
-  computed: {
-    windowWidth: function (){
-      return window.innerWidth
-    },
-    user(){
-      return null
-    },
-    hasDefaultSlot(){
-      return !!this.$slots.default
-    },
-    hasRecordsSlot(){
-      return !!this.$slots.records
-    }
-  }
-}
-</script>
 <style>
 .colored-toast.swal2-icon-success {
   background-color: #a5dc86 !important;

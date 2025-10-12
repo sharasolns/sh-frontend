@@ -1,5 +1,5 @@
 <script setup>
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import shRepo from '../repo/helpers/ShRepo.js'
 import { onMounted, ref } from 'vue'
 
@@ -19,68 +19,79 @@ const emit = defineEmits(['rangeSelected'])
 
 const selectedDate = ref(null)
 const rangeLabel = ref(null)
-const showCustom = ref(false)
 const customFrom = ref(null)
 const customTo = ref(null)
 
-const applyCustom = ()=>{
-  const date = [moment(customFrom.value),moment(customTo.value)]
-  setDate(date,'Custom')
+const applyCustom = () => {
+  const date = [
+    customFrom.value ? DateTime.fromISO(customFrom.value) : DateTime.now(),
+    customTo.value ? DateTime.fromISO(customTo.value) : DateTime.now()
+  ]
+  setDate(date, 'Custom')
 }
 
 const dates = ref([
   {
     label: 'Today',
-    value: [moment(), moment()]
+    value: [DateTime.now().startOf('day'), DateTime.now().endOf('day')]
   },
   {
     label: 'Yesterday',
-    value: [moment().subtract(1, 'days'), moment()]
+    value: [
+      DateTime.now().minus({ days: 1 }).startOf('day'),
+      DateTime.now().minus({ days: 1 }).endOf('day')
+    ]
   },
-    {
+  {
     label: '7 Days',
-    value: [moment().subtract(7, 'days'), moment()]
+    value: [DateTime.now().minus({ days: 7 }).startOf('day'), DateTime.now().endOf('day')]
   },
   {
     label: 'This week',
-    value: [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')]
+    value: [
+      DateTime.now().startOf('week'),
+      DateTime.now().endOf('week')
+    ]
   },
   {
     label: 'This Month',
-    value: [moment().startOf('month'), moment()]
+    value: [DateTime.now().startOf('month'), DateTime.now().endOf('day')]
   },
   {
     label: 'Last Month',
-    value: [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    value: [
+      DateTime.now().minus({ months: 1 }).startOf('month'),
+      DateTime.now().minus({ months: 1 }).endOf('month')
+    ]
   },
   {
     label: 'Last 30 days',
-    value: [moment().subtract(30, 'days'), moment()]
+    value: [DateTime.now().minus({ days: 30 }).startOf('day'), DateTime.now().endOf('day')]
   },
   {
     label: 'Last 60 days',
-    value: [moment().subtract(60, 'days'), moment()]
+    value: [DateTime.now().minus({ days: 60 }).startOf('day'), DateTime.now().endOf('day')]
   },
   {
     label: 'Last 90 days',
-    value: [moment().subtract(90, 'days'), moment()]
+    value: [DateTime.now().minus({ days: 90 }).startOf('day'), DateTime.now().endOf('day')]
   },
-    {
-        label: 'This Year',
-        value: [moment().startOf('year'), moment()]
-    },
+  {
+    label: 'This Year',
+    value: [DateTime.now().startOf('year'), DateTime.now().endOf('day')]
+  },
   {
     label: '1 Year',
-    value: [moment().subtract(12, 'months'), moment()]
+    value: [DateTime.now().minus({ months: 12 }).startOf('day'), DateTime.now().endOf('day')]
   },
   {
     label: 'All Time',
-    value: [moment('@/2021').startOf('year'), moment()]
+    value: [DateTime.fromObject({ year: 2021 }).startOf('year'), DateTime.now().endOf('day')]
   }
 ])
 const  setDate =  (date, label) => {
   selectedDate.value = date
-  rangeLabel.value = '<strong>' + label + '</strong><small>(' + date[0].format('MMMM D, YYYY') + ' - ' + date[1].format('MMMM D, YYYY') + ')</small>'
+  rangeLabel.value = '<strong>' + label + '</strong><small>(' + date[0].toFormat('MMMM d, yyyy') + ' - ' + date[1].toFormat('MMMM d, yyyy') + ')</small>'
   const from = date[0]
   const to = date[1]
   const period = label.toString().toLowerCase().replaceAll(' ','_')
@@ -88,15 +99,18 @@ const  setDate =  (date, label) => {
     from: from,
     to: to,
     period: period,
-    query: `from=${from.format('L')}&to=${to.format('L')}&period=${period}`
+    query: `from=${from.toFormat('MM/dd/yyyy')}&to=${to.toFormat('MM/dd/yyyy')}&period=${period}`
   })
 }
 onMounted(() => {
-  let end = parseInt(moment().format('Y'))
+  let end = parseInt(DateTime.now().toFormat('yyyy'))
   while (end >= props.start) {
     dates.value.push({
       label: end,
-      value: [moment('@/' + end).startOf('year'), moment('@/' + end).endOf('year')]
+      value: [
+        DateTime.fromObject({ year: end }).startOf('year'),
+        DateTime.fromObject({ year: end }).endOf('year')
+      ]
     })
     end--
   }

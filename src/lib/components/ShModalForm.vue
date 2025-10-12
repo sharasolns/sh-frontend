@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import ShModal from './ShModal.vue'
 import ShAutoForm from './ShAutoForm.vue'
 const props = defineProps(['action',
@@ -46,6 +46,18 @@ const formError = (res)=>{
 const emitClick = ()=>{
   emit('click')
 }
+
+
+const allProps = ref({})
+
+// make cleaned props computed
+
+const cleanedProp = computed(()=>{
+  const p = {...props}
+  delete p.class
+  delete p.modalId
+  return p
+})
 </script>
 <template>
   <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal" @click="emitClick">
@@ -53,13 +65,13 @@ const emitClick = ()=>{
   </a>
   <teleport to="body">
     <sh-modal :modal-size="modalSize" :modal-id="realModalId" :modal-title="modalTitle">
-      <sh-auto-form
+      <sh-auto-form v-if="allProps"
           @success="success"
           @field-changed="fieldChanged"
           @form-submitted="formSubmitted"
           @form-error="formError"
           :key="JSON.stringify(currentData ?? {})"
-          v-bind="props"/>
+          v-bind="cleanedProp"/>
     </sh-modal>
   </teleport>
 </template>

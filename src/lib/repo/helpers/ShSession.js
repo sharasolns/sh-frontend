@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import Swal from 'sweetalert2'
 import shRepo from '../helpers/ShRepo.js'
 import ShStorage from '../repositories/ShStorage.js'
@@ -14,7 +14,7 @@ function logoutUser(){
 function sessionRestored(){
   const timeout = ShStorage.getItem('sessionTimeout') * 60
   const last_activity = ShStorage.getItem('last_activity')
-  const pastSeconds = moment().diff(last_activity, 'seconds');
+  const pastSeconds = DateTime.now().diff(DateTime.fromISO(last_activity), 'seconds').seconds;
   if(!ShStorage.getItem('access_token'))
     return false
   return pastSeconds < timeout
@@ -23,8 +23,8 @@ const checkSession = function (isCheking) {
   const timeout = ShStorage.getItem('sessionTimeout')
   const last_activity = ShStorage.getItem('last_activity')
   if (ShStorage.getItem('access_token')) {
-    const pastMinutes = moment().diff(last_activity, 'minutes');
-    const pastSeconds = moment().diff(last_activity, 'seconds');
+    const pastMinutes = DateTime.now().diff(DateTime.fromISO(last_activity), 'minutes').minutes;
+    const pastSeconds = DateTime.now().diff(DateTime.fromISO(last_activity), 'seconds').seconds;
     if(pastMinutes >= timeout) {
       const gracePeriod = pastSeconds - (timeout * 60)
       if (gracePeriod >= 60 ) {
@@ -79,14 +79,14 @@ async function shSwalLogout (seconds = 30) {
     } else {
       window.ShConfirmation = null
       clearInterval(window.shInterval)
-      const timeNow = moment().toISOString()
+      const timeNow = DateTime.now().toISO()
       ShStorage.setItem('last_activity', timeNow)
       startSession()
     }
   })
 }
 function startSession () {
-  const timeNow = moment().toISOString()
+  const timeNow = DateTime.now().toISO()
   const accessToken = ShStorage.getItem('access_token');
   if (accessToken) {
     ShStorage.setItem('last_activity', timeNow)
@@ -101,7 +101,7 @@ const updateSession = () =>{
   if(!window.shInterval) {
     startSession()
   }
-  const timeNow = moment().toISOString()
+  const timeNow = DateTime.now().toISO()
   ShStorage.setItem('last_activity', timeNow)
 }
 export default updateSession
