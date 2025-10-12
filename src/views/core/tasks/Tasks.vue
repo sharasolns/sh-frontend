@@ -59,6 +59,28 @@ onMounted(()=>{
     console.log('Modal hidden')
   },4000)
 })
+
+const taskFields = [
+  {
+    field: 'name',
+    label: 'Name',
+    type: 'text',
+    required: true,
+    col: 'col-12 col-md-6'
+  },
+  {
+    field: 'description',
+    label: 'Description',
+    type: 'textarea',
+    col: 'col-12 col-md-6'
+  },
+  {
+    field: 'phone',
+    label: 'Phone',
+    type: 'phone',
+    col: 'col-12 col-md-6'
+  }
+]
 </script>
 <template>
   <div >
@@ -68,32 +90,9 @@ onMounted(()=>{
         {{ userName }}
         {{ error }}
         {{ status }}
-        <sh-modal-form
-            :fields="['service_id','commission_type','commission']"
-            :action="'/services/providers/store?user_id='"
-            :fill-selects="{
-                  service_id: {
-                  url: '/services/list?all=1',
-                  suggest: true
-                 },
-                 commission_type: {
-                   data: [
-                       {
-                         id: 'fixed',
-                         name: 'Fixed'
-                       },
-                       {
-                         id: 'percentage',
-                         name: 'Percentage'
-                       }
-                   ]
-                 }
-
-            }"
-            class="btn btn-info ms-auto bi-plus"
-        > Add Provider
-        </sh-modal-form>
-        <router-link to="/tasks/form" class="btn btn-info btn-sm"><i class="bi-plus"></i> Add Task</router-link>
+      <sh-modal-form :fields="taskFields" @success="taskAdded" action="tasks/store" class="btn btn-primary">
+        Add Task
+      </sh-modal-form>
         <router-link to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store" class="btn btn-info btn-sm ms-2"><i class="bi-plus"></i> PopupQuery Form</router-link>
         <sh-range @range-selected="rangeSelected"/>
         <sh-table

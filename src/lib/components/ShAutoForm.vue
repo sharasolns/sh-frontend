@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted, ref, watch } from 'vue'
+import { inject, onMounted, ref, useTemplateRef, watch } from 'vue'
 import _ from 'lodash'
 import shApis from '../repo/helpers/ShApis.js'
 import shRepo from '../repo/helpers/ShRepo.js'
@@ -92,7 +92,7 @@ const getFieldComponent = (fieldObj) => {
 }
 const shFormElementClasses = ref(null)
 shFormElementClasses.value = inject('shFormElementClasses')
-const shAutoForm = ref(null)
+const shAutoForm = useTemplateRef('shAutoForm')
 const closeModal = e => {
   setTimeout(() => {
     if(!shAutoForm.value){
