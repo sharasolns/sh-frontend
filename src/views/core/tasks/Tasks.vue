@@ -10,6 +10,7 @@ import ShRange from '@/lib/components/ShRange.vue'
 import ShTabs from '@/lib/components/ShTabs.vue'
 import shRepo from '@/lib/repo/helpers/ShRepo'
 import ShModalForm from '@/lib/components/ShModalForm.vue'
+import ShModalFormAuto from '@/lib/components/ShModalFormAuto.vue'
 import NoRecords from '@/lib/components/others/NoRecords.vue'
 import TabOne from '@/tabs/TabOne.vue'
 import TabTwo from '@/tabs/TabTwo.vue'
@@ -94,9 +95,9 @@ const clicked = ()=>{
         {{ userName }}
         {{ error }}
         {{ status }}
-      <sh-modal-form modal-title="Task Form" @click="clicked" :fields="taskFields" @success="taskAdded" action="tasks/store" class="btn btn-primary">
+      <sh-modal-form-auto modal-title="Task Form" @click="clicked" :fields="taskFields" @success="taskAdded" action="tasks/store" class="btn btn-primary">
         Add Task
-      </sh-modal-form>
+      </sh-modal-form-auto>
         <router-link to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store" class="btn btn-info btn-sm ms-2"><i class="bi-plus"></i> PopupQuery Form</router-link>
         <sh-range @range-selected="rangeSelected"/>
         <sh-table
