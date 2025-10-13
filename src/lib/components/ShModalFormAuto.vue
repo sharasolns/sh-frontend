@@ -1,5 +1,5 @@
 <script setup>
-import ShModalForm from '@/lib/components/ShModalForm.vue'
+import ShModalForm from './ShModalForm.vue'
 </script>
 <template>
   <sh-modal-form>
