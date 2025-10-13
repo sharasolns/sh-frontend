@@ -81,6 +81,10 @@ const taskFields = [
     col: 'col-12 col-md-6'
   }
 ]
+
+const clicked = ()=>{
+  alert('Clicked')
+}
 </script>
 <template>
   <div >
@@ -90,7 +94,7 @@ const taskFields = [
         {{ userName }}
         {{ error }}
         {{ status }}
-      <sh-modal-form :fields="taskFields" @success="taskAdded" action="tasks/store" class="btn btn-primary">
+      <sh-modal-form modal-title="Task Form" @click="clicked" :fields="taskFields" @success="taskAdded" action="tasks/store" class="btn btn-primary">
         Add Task
       </sh-modal-form>
         <router-link to="/tasks?popup=modal&title=New Task&comp=ShQueryForm&fields=name,email,phone&action=tasks/store" class="btn btn-info btn-sm ms-2"><i class="bi-plus"></i> PopupQuery Form</router-link>

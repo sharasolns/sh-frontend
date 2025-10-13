@@ -43,9 +43,6 @@ const formError = (res)=>{
   emit('formError',res)
 }
 
-const emitClick = ()=>{
-  emit('click')
-}
 
 
 const allProps = ref({})
@@ -60,18 +57,18 @@ const cleanedProp = computed(()=>{
 })
 </script>
 <template>
-  <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal" @click="emitClick">
+  <a :class="btnClass" :href="'#' + realModalId" data-bs-toggle="modal">
     <slot></slot>
+    <teleport to="body">
+      <sh-modal :modal-size="modalSize" :modal-id="realModalId" :modal-title="modalTitle">
+        <sh-auto-form v-if="allProps"
+                      @success="success"
+                      @field-changed="fieldChanged"
+                      @form-submitted="formSubmitted"
+                      @form-error="formError"
+                      :key="JSON.stringify(currentData ?? {})"
+                      v-bind="cleanedProp"/>
+      </sh-modal>
+    </teleport>
   </a>
-  <teleport to="body">
-    <sh-modal :modal-size="modalSize" :modal-id="realModalId" :modal-title="modalTitle">
-      <sh-auto-form v-if="allProps"
-          @success="success"
-          @field-changed="fieldChanged"
-          @form-submitted="formSubmitted"
-          @form-error="formError"
-          :key="JSON.stringify(currentData ?? {})"
-          v-bind="cleanedProp"/>
-    </sh-modal>
-  </teleport>
 </template>
