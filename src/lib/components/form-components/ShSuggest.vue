@@ -134,6 +134,7 @@ const initializeExisting = (currentValue)=>{
   }
 }
 watch(()=>props.modelValue, (newValue)=>{
+  selectedSuggestions.value = []
   if(newValue) {
     initializeExisting(newValue)
   }

@@ -27,7 +27,7 @@ onMounted(async ()=>{
 
               <div class="d-flex justify-content-center py-4">
                 <router-link to="/" class="logos d-flex align-items-center w-auto">
-                  <img src="@/assets/logo.png" style="height: 50px !important;" alt="">
+                  <img src="@/views/assets/logo.png" style="height: 50px !important;" alt="">
                 </router-link>
               </div><!-- End Logo -->
 
