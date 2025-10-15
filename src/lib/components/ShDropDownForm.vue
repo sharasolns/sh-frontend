@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import ShModal from './ShModal.vue'
 import ShAutoForm from './ShAutoForm.vue'
 const props = defineProps(['action',
@@ -42,10 +42,14 @@ const formError = (res)=>{
   emit('formError',res)
 }
 const dropdownId = 'dropdown' + (Math.random() + 1).toString(36).substring(2)
+const cleanedProp = computed(()=>{
+  const p = {...props}
+  delete p.class
+  return p
+})
 </script>
 <template>
-  <h5 class="d-none">To prevent default class</h5>
-  <div class="dropdown sh-dropdown-form">
+  <div class="dropdown sh-dropdown-form"  data-bs-auto-close="outside" aria-expanded="false">
     <a :class="btnClass"  href="#" role="button" :id="dropdownId" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
       <slot></slot>
     </a>
@@ -56,7 +60,7 @@ const dropdownId = 'dropdown' + (Math.random() + 1).toString(36).substring(2)
           @form-submitted="formSubmitted"
           @form-error="formError"
           :key="JSON.stringify(currentData ?? {})"
-          v-bind="props"/>
+          v-bind="cleanedProp"/>
     </div>
   </div>
 </template>
