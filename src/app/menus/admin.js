@@ -33,6 +33,12 @@ export default [
         label: 'Tabs',
         icon: 'bi-list',
         path: '/tabs',
+    }, {
+        slug: 'notes',
+        type: 'single',
+        label: 'Dynamic Tabs',
+        icon: 'bi-list',
+        path: '/dynamic-tabs',
     },
     {
         path: '/billing',
