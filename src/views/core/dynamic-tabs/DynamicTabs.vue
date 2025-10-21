@@ -9,7 +9,8 @@ import DynamicTabView from '@/views/core/dynamic-tabs/DynamicTabView.vue'
   <sh-dynamic-tabs :tabs="[
     {
       key: 'tab1',
-      label: 'Tab 1'
+      label: 'Tab 1',
+      me: 'yes'
     },
     {
       key: 'tab2',
@@ -19,7 +20,7 @@ import DynamicTabView from '@/views/core/dynamic-tabs/DynamicTabView.vue'
       key: 'tab3',
       label: 'Tab 3'
     }
-  ]" :defaultComponent="DynamicTabView"/>
+  ]" :add-tab-query="true" :defaultComponent="DynamicTabView"/>
 </template>
 
 <style scoped>

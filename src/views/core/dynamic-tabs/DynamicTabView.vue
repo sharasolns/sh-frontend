@@ -3,12 +3,19 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
 const route = useRoute()
+const props = defineProps({
+  tab: {
+    type: Object,
+    default: null
+  }
+})
 
-const tab = computed(() => route.query.tab)
+const currentTab = computed(() => route.query.tab)
 </script>
 
 <template>
 Tab Dynamic View - Current Tab: {{ tab }}
+  {{ $attrs }}
 </template>
 
 <style scoped>

@@ -3,7 +3,41 @@ import { computed, onMounted, ref, shallowRef } from 'vue'
 import shRepo from '../repo/helpers/ShRepo.js'
 import { useRoute, useRouter } from 'vue-router'
 
-const props = defineProps(['tabs', 'data', 'classes', 'currentTab', 'component', 'baseUrl', 'defaultComponent'])
+// const props = defineProps(['tabs', 'data', 'classes', 'currentTab', 'component', 'baseUrl', 'defaultComponent','addTabQuery'])
+const props = defineProps({
+  tabs: {
+    type: Array,
+    required: true
+  },
+  data: {
+    type: Object,
+    default: () => ({})
+  },
+  classes: {
+    type: String,
+    default: ''
+  },
+  currentTab: {
+    type: String,
+    default: null
+  },
+  component: {
+    type: Object,
+    default: null
+  },
+  baseUrl: {
+    type: String,
+    default: null
+  },
+  defaultComponent: {
+    type: Object,
+    default: () => ({ template: '<div></div>' })
+  },
+  addTabQuery: {
+    type: Boolean,
+    default: false
+  }
+})
 const route = useRoute()
 const router = useRouter()
 const formattedTabs = computed(() => {
@@ -38,7 +72,7 @@ onMounted(() => {
       if (tabFromParam) {
         currentTab.value = tabFromParam
       }
-    } else if(currentTab.value) {
+    } else if(currentTab.value && props.addTabQuery) {
       router.replace({path: tabsBaseUrl, query: {...route.query, tab: getTabKey(currentTab.value)}})
     }
 
@@ -57,7 +91,13 @@ const getTabKey = (tab) => {
   <ul class="nav nav-tabs nav-tabs-bordered" role="tablist"
       :class="shRepo.getShConfig('tabsClass','sh-tabs nav-tabs-bordered') + classes">
     <li class="nav-item" role="presentation" v-for="tab in formattedTabs">
-      <router-link :to="`${tabsBaseUrl}?tab=${getTabKey(tab)}`" @click="setTab(tab)" class="nav-link"
+      <button v-if="!addTabQuery" @click="setTab(tab)" class="nav-link" :class="currentTab === tab ? 'active':''">
+        {{ tab.label }}
+        <template v-if="tab.count || tab.tabCount">
+          <i class="d-none"></i><sup class="sh_tab_count">{{ tab.count ?? tab.tabCount }}</sup>
+        </template>
+      </button>
+      <router-link v-else :to="`${tabsBaseUrl}?tab=${getTabKey(tab)}`" @click="setTab(tab)" class="nav-link"
                    :class="currentTab === tab ? 'active':''">
         {{ tab.label }}
         <template v-if="tab.count || tab.tabCount">
