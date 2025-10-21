@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 
 const route = useRoute()
 const props = defineProps({
@@ -9,7 +9,6 @@ const props = defineProps({
     default: null
   }
 })
-
 const currentTab = computed(() => route.query.tab)
 </script>
 
