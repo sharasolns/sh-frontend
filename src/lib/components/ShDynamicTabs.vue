@@ -108,7 +108,7 @@ const getTabKey = (tab) => {
   </ul>
   <div class="tab-content">
     <template v-if="currentTab">
-      <component v-bind="currentTab" :is="currentTab.component ?? defaultComponent"/>
+      <component :key="getTabKey(currentTab)" v-bind="currentTab" :is="currentTab.component ?? defaultComponent"/>
     </template>
   </div>
 </template>
