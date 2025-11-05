@@ -220,11 +220,14 @@ function formatDate(date, format){
     if (!format) {
         format = 'lll'
     }
+
     const formatMap = {
         'lll': "MMM d, yyyy, h:mm a",
         'LLL': "MMMM d, yyyy, h:mm a",
+        'll': "MMMM d, yyyy",
         'LL': "MMMM d, yyyy",
         'L': "MM/dd/yyyy",
+        'l': "MM/dd/yyyy",
         'YYYY-MM-DD': 'yyyy-MM-dd',
         'YYYY/MM/DD': 'yyyy/MM/dd',
         'YYYY': 'yyyy',
