@@ -16,6 +16,9 @@ onMounted(()=>{
   if(!url.value) {
     url.value = ''
   }
+  if(typeof url.value === 'function'){
+    url.value = url.value(props.record)
+  }
   // replace params in url with record key e.g {id} replaced with record.id
   url.value = url.value.replace(/{(\w+)}/g, (match, key) => {
     return props.record[key]
