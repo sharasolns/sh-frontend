@@ -108,9 +108,8 @@ const clicked = ()=>{
             actions: [
                 {
                 label: 'Edit',
-                path: 'tasks/form/{id}',
+                path: row=>`tasks/form/${row.id}`,
                 class: 'btn btn-info btn-sm',
-                permission: 'tasks.edit'
               },
               {
                 label: 'More',
