@@ -38,6 +38,13 @@ const doEmitAction = (callBack,item)=>{
   }
 }
 
+const actionSuccessful = (res)=>{
+  doEmitAction('actionSuccessful',res,props.record)
+}
+
+const actionFailed = (res)=>{
+  doEmitAction('actionFailed',res,props.record)
+}
 const {user} = storeToRefs(useUserStore())
 </script>
 
@@ -46,8 +53,8 @@ const {user} = storeToRefs(useUserStore())
     <template v-if="!action.validator || action.validator(record)">
   <sh-confirm-action
       v-if="['confirmAction','confirmaction','confirm-action','confirm'].includes(action.type)"
-      @actionSuccessful="doEmitAction('actionSuccessful',record)"
-      @actionFailed="doEmitAction('actionFailed',record)"
+      @actionSuccessful="actionSuccessful"
+      @actionFailed="actionFailed"
       @actionCanceled="doEmitAction('actionCanceled',record)"
       :loading-message="action.label"
       :class="action.class + actionClass" :url="url">
@@ -56,8 +63,8 @@ const {user} = storeToRefs(useUserStore())
   </sh-confirm-action>
   <sh-silent-action
       v-else-if="['silentAction','silentaction','silent-action','silent'].includes(action.type)"
-      @actionSuccessful="doEmitAction('actionSuccessful',record)"
-      @actionFailed="doEmitAction('actionFailed',record)"
+      @actionSuccessful="actionSuccessful"
+      @actionFailed="actionFailed"
       @actionCanceled="doEmitAction('actionCanceled',record)"
       :loading-message="action.label"
       :class="action.class +' '+ actionClass" :url="url">
