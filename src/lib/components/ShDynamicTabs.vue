@@ -86,6 +86,7 @@ function setTab(tab) {
 const getTabKey = (tab) => {
   return tab.key ?? tab.label.replace(/\s+/g, '_').toLowerCase()
 }
+
 </script>
 <template>
   <ul class="nav nav-tabs nav-tabs-bordered" role="tablist"
@@ -108,7 +109,7 @@ const getTabKey = (tab) => {
   </ul>
   <div class="tab-content">
     <template v-if="currentTab">
-      <component :key="getTabKey(currentTab)" v-bind="currentTab" :is="currentTab.component ?? defaultComponent"/>
+      <component :key="getTabKey(currentTab)" v-bind="{...$attrs, ...currentTab}" :is="currentTab.component ?? defaultComponent"/>
     </template>
   </div>
 </template>
