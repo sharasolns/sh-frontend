@@ -2,6 +2,8 @@
 import { computed, onMounted, ref, shallowRef } from 'vue'
 import shRepo from '../repo/helpers/ShRepo.js'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '../repo/stores/ShUser'
 
 // const props = defineProps(['tabs', 'data', 'classes', 'currentTab', 'component', 'baseUrl', 'defaultComponent','addTabQuery'])
 const props = defineProps({
@@ -36,22 +38,44 @@ const props = defineProps({
   addTabQuery: {
     type: Boolean,
     default: false
+  },
+  tabCounts: {
+    type: Object,
+    default: () => ({})
   }
 })
+const {user} = storeToRefs(useUserStore())
 const route = useRoute()
 const router = useRouter()
 const formattedTabs = computed(() => {
   if (!props.tabs || props.tabs.length === 0) {
     return []
   }
-  return props.tabs.map(tab => {
+  return props.tabs.filter(tab => {
+    let newTab = tab
     if (typeof tab === 'string') {
-      return {key: tab, label: tab.replace(/_/g, ' ')}
+      newTab = {key: tab, label: tab.replace(/_/g, ' ')}
     }
     if (typeof tab === 'function') {
-      return tab(props.data)
+      newTab = tab(props.data)
     }
-    return tab
+    if(newTab.validator){
+      if(!newTab.validator()){
+        return false
+      }
+    }
+    if(newTab.permission){
+      if(!user.value || !user.value.isAllowedTo(newTab.permission)){
+        return false
+      }
+    }
+    console.log(newTab)
+    // check if there are tabCounts for this tab
+    // const tabKey = getTabKey(newTab)
+    // if (!newTab.count && props.tabCounts && props.tabCounts[tabKey] !== undefined) {
+    //   newTab.count = props.tabCounts[tabKey]
+    // }
+    return newTab
   })
 })
 const tabsBaseUrl = props.baseUrl ?? route.path

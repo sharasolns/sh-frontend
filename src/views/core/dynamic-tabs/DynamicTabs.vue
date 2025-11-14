@@ -10,11 +10,13 @@ import DynamicTabView from '@/views/core/dynamic-tabs/DynamicTabView.vue'
     {
       key: 'tab1',
       label: 'Tab 1',
+      permission: 'commons.real',
       me: 'yes'
     },
     {
       key: 'tab2',
-      label: 'Tab 2'
+      label: 'Tab 2',
+      count: 23
     },
     {
       key: 'tab3',

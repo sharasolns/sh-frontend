@@ -18,7 +18,8 @@ setTimeout(()=>{
      key: 'active_tasks',
      label: 'All Active Tasks',
      count: 12,
-     validator: ()=>true
+     validator: ()=>true,
+     permissions: 'commons.real'
     }
 ]"
          :base-url="`/tabs`"/>
