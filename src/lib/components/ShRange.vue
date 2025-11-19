@@ -86,7 +86,7 @@ const dates = ref([
   },
   {
     label: 'All Time',
-    value: [DateTime.fromObject({ year: 2021 }).startOf('year'), DateTime.now().endOf('day')]
+    value: [DateTime.fromObject({ year: 2018 }).startOf('year'), DateTime.now().endOf('day')]
   }
 ])
 const  setDate =  (date, label) => {
