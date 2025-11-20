@@ -24,6 +24,10 @@ const fields = [
   {
     field: 'user_id',
     type: 'hidden'
+  },
+  {
+    field: 'phone',
+    type: 'phone'
   }
 ]
 
