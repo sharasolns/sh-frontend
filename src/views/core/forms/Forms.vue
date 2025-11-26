@@ -1,6 +1,7 @@
 <script setup>
 
 import { ShAutoForm } from '@'
+import TestMultiStepForm from '@/components/TestMultiStepForm.vue'
 
 const fields = [
   {
@@ -40,11 +41,22 @@ const recaptcha = data=>{
 
 <template>
 <div class="row">
-  <div class="col-md-4 pe-1">
+  <div class="col-md-12 pe-1">
     <div class="card">
       <div class="card-body">
+        <test-multi-step-form/>
         <h5>Sh Suggest Test</h5>
-        <sh-auto-form :pre-submit-callback="recaptcha" :fields="fields" />
+        <sh-auto-form :steps="[
+            {
+              title: 'Add User',
+              description: 'Add a new user to the system',
+              fields: ['name'],
+              labels: {
+                next: 'Next',
+                previous: 'Back',
+              }
+            }
+        ]" :action="`users:addUser`" :pre-submit-callback="recaptcha" :fields="fields" />
       </div>
     </div>
   </div>
