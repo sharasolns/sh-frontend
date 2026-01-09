@@ -1,7 +1,11 @@
 {
   "name": "@iankibetsh/shframework",
-  "version": "5.7.3",
+  "version": "5.7.4",
   "description": "Vue library for handling laravel backend",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iankibet/shframework.git"
+  },
   "main": "dist/library.js",
   "module": "dist/library.mjs",
   "files": [
