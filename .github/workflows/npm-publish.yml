@@ -30,10 +30,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
-      
-      # 2. PROVENANCE: This links your npm package to this exact GitHub Action run
-      # It is highly recommended when using OIDC/Trusted Publishing
-      - run: npm publish --provenance
-        env:
-          # 3. No secret needed! npm recognizes the OIDC token automatically
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+
+      # FIX: Added --access public and removed the old secret env
+      - run: npm publish --provenance --access public
