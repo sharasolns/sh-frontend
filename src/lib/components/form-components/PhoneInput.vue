@@ -18,7 +18,7 @@ const selectedCountry = ref({
   flag: 'https://www.countryflags.io/KE/flat/64.png'
 });
 const flag = computed(()=> {
-      const homeUrl = import.meta.env.VITE_APP_HOME_URL;
+      const homeUrl = import.meta.env.VITE_APP_HOME_URL ?? '/'
       if (selectedCountry.value) {
         return homeUrl + 'flags/' + selectedCountry.value.isoCode.toLowerCase() + '.svg';
       }
